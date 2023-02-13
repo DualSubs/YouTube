@@ -1,0 +1,10 @@
+#!name=🍿️ DualSubs for ▶️ YouTube 🔓 MitM
+#!desc=(MitM) YouTube字幕增强及双语模块
+#!openUrl=http://boxjs.com/#/app/DualSubs
+#!author=VirgilClyne
+#!homepage=https://github.com/VirgilClyne
+#!manual=https://github.com/DualSubs/DualSubs-YouTube/wiki/🍿-DualSubs-for-▶-YouTube
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Unlock.png
+
+[MITM]
+hostname = %APPEND% www.youtube.com, m.youtube.com, manifest.googlevideo.com, *.googlevideo.com
