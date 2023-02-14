@@ -7,4 +7,4 @@
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Unlock.png
 
 [MITM]
-hostname = %APPEND% www.youtube.com, m.youtube.com, manifest.googlevideo.com, *.googlevideo.com
+hostname = %APPEND% *.youtube.com, *.googlevideo.com, youtubei.googleapis.com
