@@ -11,25 +11,25 @@
   * 支持 🎈Loon(推荐), Surge(推荐), Stash, Shadowrocket, Quantumult X
   * macOS 12.5.1, iOS 16.0, tvOS 15.6.1 测试通过
   * 需要启用`重写`、`脚本`、`MitM`功能
-  * 本项目可视化配置面板订阅及使用方法详见[🧰 BoxJs](https://github.com/DualSubs/DualSubs/wiki/🧰-BoxJs)
+  * 本项目可视化配置面板订阅及使用方法详见[🧰 BoxJs](../../../DualSubs/wiki/🧰-BoxJs)
   * 点击下方链接直达详细说明
   * 手机等竖屏设备可以👈左右👉划动下列表格查看更多模块
 
-| [🍿️ DualSubs<br>for<br>🎦 Streaming Media Platform](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform) | [🍿️ DualSubs<br>for<br>🇳 Netflix](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix) | [🍿️ DualSubs<br>for<br>▶️ YouTube](../../wiki/🍿-DualSubs-for-▶-YouTube) |
+| [🍿️ DualSubs<br>for<br>🎦 Streaming Media Platform](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform) | [🍿️ DualSubs<br>for<br>🇳 Netflix](../../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix) | [🍿️ DualSubs<br>for<br>▶️ YouTube](../../wiki/🍿-DualSubs-for-▶-YouTube) |
 | :---: | :---: | :---: |
-| [简介](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#简介) | [简介](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix#简介) | [简介](../../wiki/🍿-DualSubs-for-▶-YouTube#简介) |
-| [功能列表](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#功能列表) | [功能列表](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix#功能列表) | [功能列表](../../wiki/🍿-DualSubs-for-▶-YouTube#功能列表) |
-| [使用说明](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#使用说明) | [使用说明](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix#使用说明) | [使用说明](../../wiki/🍿-DualSubs-for-▶-YouTube#使用说明) |
-| [安装链接](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#安装链接) | [安装链接](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix#安装链接) | [安装链接](../../wiki/🍿-DualSubs-for-▶-YouTube#安装链接) |
+| [简介](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#简介) | [简介](./../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix#简介) | [简介](../../wiki/🍿-DualSubs-for-▶-YouTube#简介) |
+| [功能列表](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#功能列表) | [功能列表](./../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix#功能列表) | [功能列表](../../wiki/🍿-DualSubs-for-▶-YouTube#功能列表) |
+| [使用说明](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#使用说明) | [使用说明](./../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix#使用说明) | [使用说明](../../wiki/🍿-DualSubs-for-▶-YouTube#使用说明) |
+| [安装链接](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#安装链接) | [安装链接](./../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix#安装链接) | [安装链接](../../wiki/🍿-DualSubs-for-▶-YouTube#安装链接) |
 | 🆕新版<br>v0.7.x | 未发布 | 🆕新版<br>v0.5.x |
-| [更新日志](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#更新日志) | [更新日志](https://github.com/DualSubs/DualSubs/wiki/🍿-DualSubs-for-🇳-Netflix#更新日志) | [更新日志](../../wiki/🍿-DualSubs-for-▶-YouTube#更新日志) |
+| [更新日志](../../../DualSubs/wiki/🍿-DualSubs-for-🎦-Streaming-Media-Platform#更新日志) | [更新日志](./../../DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix#更新日志) | [更新日志](../../wiki/🍿-DualSubs-for-▶-YouTube#更新日志) |
 | [说明/讨论](https://t.me/GetSomeFriesChannel/121) | 说明/讨论 | [说明/讨论](https://t.me/GetSomeFriesChannel/122/) |
 
 ---
 ## How To
-  * [快速创建拥有代理服务器设置及MitM证书的描述文件](https://github.com/DualSubs/DualSubs/wiki/快速创建拥有代理服务器设置及MitM证书的描述文件)
-  * [在Apple TV (tvOS) 上添加描述文件或MitM证书](https://github.com/DualSubs/DualSubs/wiki/在Apple-TV-(tvOS)-上添加描述文件或MitM证书)
-  * [在BoxJs中清除DualSubs的设置或缓存](https://github.com/DualSubs/DualSubs/wiki/在BoxJs中清除DualSubs的储存数据)
+  * [快速创建拥有代理服务器设置及MitM证书的描述文件](../../../DualSubs/wiki/快速创建拥有代理服务器设置及MitM证书的描述文件)
+  * [在Apple TV (tvOS) 上添加描述文件或MitM证书](../../../DualSubs/wiki/在Apple-TV-(tvOS)-上添加描述文件或MitM证书)
+  * [在BoxJs中清除DualSubs的设置或缓存](../../../DualSubs/wiki/在BoxJs中清除DualSubs的储存数据)
 
 ---
 # 鸣谢
