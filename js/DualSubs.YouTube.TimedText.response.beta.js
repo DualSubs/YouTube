@@ -49,9 +49,12 @@ const DataBase = {
 
 if ($request.method == "OPTIONS") $.done();
 if ($response.status != 200 && $response.statusCode != 200) $.done();
-//delete $request.headers["Host"]
-//delete $request.headers["Connection"]
-//delete $request.headers["Range"]
+
+// headers转小写
+for (const [key, value] of Object.entries($request.headers)) {
+	delete $request.headers[key]
+	$request.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {

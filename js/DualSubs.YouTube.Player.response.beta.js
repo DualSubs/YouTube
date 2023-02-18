@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.4.6-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.4.7-youtube-player-beta");
 const URL = new URLs();
 
 const DataBase = {
@@ -48,9 +48,12 @@ const DataBase = {
 
 if ($request.method == "OPTIONS") $.done();
 if ($response.status != 200 && $response.statusCode != 200) $.done();
-//delete $request.headers["Host"]
-//delete $request.headers["Connection"]
-//delete $request.headers["Range"]
+
+// headers转小写
+for (const [key, value] of Object.entries($request.headers)) {
+	delete $request.headers[key]
+	$request.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {
@@ -59,7 +62,7 @@ if ($response.status != 200 && $response.statusCode != 200) $.done();
 		let url = URL.parse($request.url);
 		$.log(`⚠ ${$.name}, url.path=${url.path}`);
 		// 设置格式
-		const Format = $response?.headers?.["Content-Type"]?.split("; ")?.[0]?.split("/")?.[1]
+		const Format = $response?.headers?.["content-type"]?.split("; ")?.[0]?.split("/")?.[1]
 		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 		switch (Format) {
 			case "json":
