@@ -47,6 +47,12 @@ const DataBase = {
 
 if ($request.method == "OPTIONS") $.done();
 
+// headers转小写
+for (const [key, value] of Object.entries($request.headers)) {
+	delete $request.headers[key]
+	$request.headers[key.toLowerCase()] = value
+};
+
 /***************** Processing *****************/
 (async () => {
 	const { Platform, Settings, Caches, Configs } = await setENV("DualSubs", $request.url, DataBase);

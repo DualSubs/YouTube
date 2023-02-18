@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.10-youtube-timedtext-response");
+const $ = new Env("🍿️ DualSubs v0.5.11-youtube-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -49,9 +49,12 @@ const DataBase = {
 
 if ($request.method == "OPTIONS") $.done();
 if ($response.status != 200 && $response.statusCode != 200) $.done();
-//delete $request.headers["Host"]
-//delete $request.headers["Connection"]
-//delete $request.headers["Range"]
+
+// headers转小写
+for (const [key, value] of Object.entries($request.headers)) {
+	delete $request.headers[key]
+	$request.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {
@@ -69,7 +72,7 @@ if ($response.status != 200 && $response.statusCode != 200) $.done();
 				else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
 				else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, 桌面版未选择翻译语言，跳过`, "");
 				else {
-					switch (url.params?.kind) {
+					switch (url.params?.kind || url.params?.caps) {
 						case "asr":
 							break;
 						case "captions":
