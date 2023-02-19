@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.7-youtube-timedtext-request-beta");
+const $ = new Env("🍿️ DualSubs v0.5.8-youtube-timedtext-request-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -59,23 +59,61 @@ for (const [key, value] of Object.entries($request.headers)) {
 	if (Settings.Switch) {
 		let url = URL.parse($request.url);
 		$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-		switch (Settings.Translate.ShowOnly) {
-			case true:
-				$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-				switch (url.params.cplatform) {
-					case "DESKTOP":
+		switch (url.params?.kind) {
+			case "asr":
+				$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+				switch (Settings.Translate.ShowOnly) {
+					case true:
+						$.log(`⚠ ${$.name}, 仅显示翻译后字幕，处理`, "");
+						switch (url.params.cplatform) {
+							case "DESKTOP":
+								$.log(`⚠ ${$.name}, 桌面端，跳过`, "");
+								break;
+							case "MOBILE":
+								$.log(`⚠ ${$.name}, 移动端，处理`, "");
+								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+								break;
+							default:
+								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}，处理`, "");
+								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+								break;
+						};
 						break;
-					case "MOBILE":
+					case false:
 					default:
-						url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+						$.log(`⚠ ${$.name}, 听译字幕不支持双语，跳过`, "");
 						break;
 				};
-				$request.url = URL.stringify(url);
 				break;
-			case false:
+			case "captions":
 			default:
+				$.log(`⚠ ${$.name}, 普通字幕`, "");
+				switch (Settings.Translate.ShowOnly) {
+					case true:
+						$.log(`⚠ ${$.name}, 仅显示翻译后字幕，处理`, "");
+						switch (url.params.cplatform) {
+							case "DESKTOP":
+								$.log(`⚠ ${$.name}, 桌面端，跳过`, "");
+								break;
+							case "MOBILE":
+								$.log(`⚠ ${$.name}, 移动端，处理`, "");
+								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+								break;
+							default:
+								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}，处理`, "");
+								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+								break;
+						};
+						break;
+					case false:
+					default:
+						$.log(`⚠ ${$.name}, 生成双语字幕，跳过`, "");
+						break;
+				};
+
 				break;
 		};
+		$request.url = URL.stringify(url);
 	};
 })()
 	.catch((e) => $.logErr(e))
