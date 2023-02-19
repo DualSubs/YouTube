@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.11-youtube-timedtext-response");
+const $ = new Env("🍿️ DualSubs v0.5.12-youtube-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -72,7 +72,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 				else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
 				else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, 桌面版未选择翻译语言，跳过`, "");
 				else {
-					switch (url.params?.kind || url.params?.caps) {
+					switch (url.params?.kind) {
 						case "asr":
 							break;
 						case "captions":
