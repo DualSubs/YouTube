@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.8-youtube-timedtext-request-beta");
+const $ = new Env("🍿️ DualSubs v0.5.9-youtube-timedtext-request-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -64,17 +64,17 @@ for (const [key, value] of Object.entries($request.headers)) {
 				$.log(`⚠ ${$.name}, 自动生成字幕`, "");
 				switch (Settings.Translate.ShowOnly) {
 					case true:
-						$.log(`⚠ ${$.name}, 仅显示翻译后字幕，处理`, "");
+						$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
 						switch (url.params.cplatform) {
 							case "DESKTOP":
-								$.log(`⚠ ${$.name}, 桌面端，跳过`, "");
+								$.log(`⚠ ${$.name}, 桌面端`, "");
 								break;
 							case "MOBILE":
-								$.log(`⚠ ${$.name}, 移动端，处理`, "");
+								$.log(`⚠ ${$.name}, 移动端`, "");
 								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 								break;
 							default:
-								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}，处理`, "");
+								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
 								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 								break;
 						};
@@ -90,27 +90,26 @@ for (const [key, value] of Object.entries($request.headers)) {
 				$.log(`⚠ ${$.name}, 普通字幕`, "");
 				switch (Settings.Translate.ShowOnly) {
 					case true:
-						$.log(`⚠ ${$.name}, 仅显示翻译后字幕，处理`, "");
+						$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
 						switch (url.params.cplatform) {
 							case "DESKTOP":
-								$.log(`⚠ ${$.name}, 桌面端，跳过`, "");
+								$.log(`⚠ ${$.name}, 桌面端`, "");
 								break;
 							case "MOBILE":
-								$.log(`⚠ ${$.name}, 移动端，处理`, "");
+								$.log(`⚠ ${$.name}, 移动端`, "");
 								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 								break;
 							default:
-								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}，处理`, "");
+								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
 								url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 								break;
 						};
 						break;
 					case false:
 					default:
-						$.log(`⚠ ${$.name}, 生成双语字幕，跳过`, "");
+						$.log(`⚠ ${$.name}, 生成双语字幕`, "");
 						break;
 				};
-
 				break;
 		};
 		$request.url = URL.stringify(url);
