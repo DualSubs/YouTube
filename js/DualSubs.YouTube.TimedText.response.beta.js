@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.12-youtube-timedtext-response-beta");
+const $ = new Env("🍿️ DualSubs v0.5.13-youtube-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -62,21 +62,33 @@ for (const [key, value] of Object.entries($request.headers)) {
 	if (Settings.Switch) {
 		let url = URL.parse($request.url);
 		$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-		switch (Settings.Translate.ShowOnly) {
-			case true:
-				$.log(`⚠ ${$.name}, 仅显示翻译后字幕，跳过`, "");
-				break;
-			case false:
-			default:
-				if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
-				else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
-				else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, 桌面版未选择翻译语言，跳过`, "");
-				else {
-					switch (url.params?.kind) {
-						case "asr":
+		if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=设置语言，跳过`, "");
+		else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=翻译字幕语言，跳过`, "");
+		else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, !翻译语言，但桌面版，跳过`, "");
+		else {
+			switch (url.params?.kind) {
+				case "asr":
+					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+					switch (Settings.Translate.ShowOnly) {
+						case true:
+							$.log(`⚠ ${$.name}, 仅显示翻译后字幕，跳过`, "");
 							break;
-						case "captions":
+						case false:
 						default:
+							$.log(`⚠ ${$.name}, 听译字幕不支持双语，跳过`, "");
+							break;
+					};
+					break;
+				case "captions":
+				default:
+					$.log(`⚠ ${$.name}, 普通字幕`, "");
+					switch (Settings.Translate.ShowOnly) {
+						case true:
+							$.log(`⚠ ${$.name}, 仅显示翻译后字幕，跳过`, "");
+							break;
+						case false:
+						default:
+							$.log(`⚠ ${$.name}, 生成双语字幕，处理`, "");
 							// 创建字幕Object
 							let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
 							// 创建双语字幕Object
@@ -108,8 +120,8 @@ for (const [key, value] of Object.entries($request.headers)) {
 							};
 							break;
 					};
-				}
-				break;
+					break;
+			};
 		};
 	};
 })()
