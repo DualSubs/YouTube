@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.14-youtube-timedtext-response-beta");
+const $ = new Env("🍿️ DualSubs v0.5.15-youtube-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -59,92 +59,103 @@ for (const [key, value] of Object.entries($request.headers)) {
 /***************** Processing *****************/
 (async () => {
 	const { Platform, Settings, Caches, Configs } = await setENV("DualSubs", $request.url, DataBase);
-	if (Settings.Switch) {
-		let url = URL.parse($request.url);
-		$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-		switch (url.params?.kind) {
-			case "asr":
-				$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-				switch (Settings.Translate.ShowOnly) {
-					case true:
-						$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-						switch (url.params.cplatform) {
-							case "DESKTOP":
-								$.log(`⚠ ${$.name}, 桌面端`, "");
-								break;
-							case "MOBILE":
-								$.log(`⚠ ${$.name}, 移动端`, "");
-								break;
-							default:
-								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
-								break;
-						};
-						break;
-					case false:
-					default:
-						$.log(`⚠ ${$.name}, 听译字幕不支持双语，跳过`, "");
-						break;
-				};
-				break;
-			case "captions":
-			default:
-				$.log(`⚠ ${$.name}, 普通字幕`, "");
-				switch (Settings.Translate.ShowOnly) {
-					case true:
-						$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-						switch (url.params.cplatform) {
-							case "DESKTOP":
-								$.log(`⚠ ${$.name}, 桌面端`, "");
-								break;
-							case "MOBILE":
-								$.log(`⚠ ${$.name}, 移动端`, "");
-								break;
-							default:
-								$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
-								break;
-						};
-						break;
-					case false:
-					default:
-						$.log(`⚠ ${$.name}, 生成双语字幕`, "");
-						if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=设置语言，跳过`, "");
-						else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=翻译字幕语言，跳过`, "");
-						else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, !翻译语言，但桌面版，跳过`, "");
-						else {
-							// 创建字幕Object
-							let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
-							// 创建双语字幕Object
-							let DualSub = {};
-							// 设置格式
-							const Format = url.params?.format || url.params?.fmt;
-							$.log(`🚧 ${$.name}, Format: ${Format}`, "");
-							// 处理格式
-							switch (Format) {
-								case "json3":
-									OriginSub = JSON.parse(OriginSub);
-									SecondSub = JSON.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = JSON.stringify(DualSub);
+	switch (Settings.Switch) {
+		case true:
+		case "true":
+		default:
+			$.log(`⚠ ${$.name}, 功能开启`, "");
+			let url = URL.parse($request.url);
+			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
+			switch (url.params?.kind) {
+				case "asr":
+					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+					switch (Settings.Translate.ShowOnly) {
+						case true:
+							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
+							switch (url.params.cplatform) {
+								case "DESKTOP":
+									$.log(`⚠ ${$.name}, 桌面端`, "");
 									break;
-								case "srv3":
-									OriginSub = XML.parse(OriginSub);
-									SecondSub = XML.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = XML.stringify(DualSub);
+								case "MOBILE":
+									$.log(`⚠ ${$.name}, 移动端`, "");
 									break;
-								case "vtt":
-									OriginSub = VTT.parse(OriginSub);
-									SecondSub = VTT.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = VTT.stringify(DualSub);
 								default:
+									$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
 									break;
 							};
-						};
-						break;
-				};
-				break;
-		};
+							break;
+						case false:
+						default:
+							$.log(`⚠ ${$.name}, 听译字幕不支持双语，跳过`, "");
+							break;
+					};
+					break;
+				case "captions":
+				default:
+					$.log(`⚠ ${$.name}, 普通字幕`, "");
+					switch (Settings.Translate.ShowOnly) {
+						case true:
+						case "true":
+							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
+							switch (url.params.cplatform) {
+								case "DESKTOP":
+									$.log(`⚠ ${$.name}, 桌面端`, "");
+									break;
+								case "MOBILE":
+									$.log(`⚠ ${$.name}, 移动端`, "");
+									break;
+								default:
+									$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
+									break;
+							};
+							break;
+						case false:
+						case "false":
+						default:
+							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
+							if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=设置语言，跳过`, "");
+							else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=翻译字幕语言，跳过`, "");
+							else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, !翻译语言，但桌面版，跳过`, "");
+							else {
+								// 创建字幕Object
+								let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
+								// 创建双语字幕Object
+								let DualSub = {};
+								// 设置格式
+								const Format = url.params?.format || url.params?.fmt;
+								$.log(`🚧 ${$.name}, Format: ${Format}`, "");
+								// 处理格式
+								switch (Format) {
+									case "json3":
+										OriginSub = JSON.parse(OriginSub);
+										SecondSub = JSON.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = JSON.stringify(DualSub);
+										break;
+									case "srv3":
+										OriginSub = XML.parse(OriginSub);
+										SecondSub = XML.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = XML.stringify(DualSub);
+										break;
+									case "vtt":
+										OriginSub = VTT.parse(OriginSub);
+										SecondSub = VTT.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = VTT.stringify(DualSub);
+									default:
+										break;
+								};
+							};
+							break;
+					};
+					break;
+			};
+			break;
+		case false:
+		case "false":
+			$.log(`⚠ ${$.name}, 功能关闭`, "");
+			break;
 	};
 })()
 	.catch((e) => $.logErr(e))

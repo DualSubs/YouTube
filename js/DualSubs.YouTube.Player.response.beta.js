@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.4.7-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.4.8-youtube-player-beta");
 const URL = new URLs();
 
 const DataBase = {
@@ -58,47 +58,56 @@ for (const [key, value] of Object.entries($request.headers)) {
 /***************** Processing *****************/
 (async () => {
 	const { Platform, Settings, Caches, Configs } = await setENV("DualSubs", $request.url, DataBase);
-	if (Settings.Switch) {
-		let url = URL.parse($request.url);
-		$.log(`⚠ ${$.name}, url.path=${url.path}`);
-		// 设置格式
-		const Format = $response?.headers?.["content-type"]?.split("; ")?.[0]?.split("/")?.[1]
-		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
-		switch (Format) {
-			case "json":
-				let data = JSON.parse($response.body);
-				// 找节点
-				let Captions = data?.captions
-				if (Captions) { // 有基础字幕
-					$.log(`⚠ ${$.name}, Captions`, "");
-					// 有播放器字幕渲染器
-					if (Captions.playerCaptionsRenderer) {
-						Captions.playerCaptionsRenderer.visibility = "ON" // 字幕选项按钮可见
-						Captions.playerCaptionsRenderer.showAutoCaptions = true; // 包含自动生成的字幕
-					}
-					let Tracklist = Captions?.playerCaptionsTracklistRenderer
-					if (Tracklist) { // 有轨道列表
-						$.log(`⚠ ${$.name}, Tracklist`, "");
-						if (Tracklist?.captionTracks) {
-							// 改翻译可用性
-							Tracklist.captionTracks = Tracklist.captionTracks.map(caption => {
-								caption.isTranslatable = true
-								return caption
-							});
+	switch (Settings.Switch) {
+		case true:
+		case "true":
+		default:
+			$.log(`⚠ ${$.name}, 功能开启`, "");
+			let url = URL.parse($request.url);
+			$.log(`⚠ ${$.name}, url.path=${url.path}`);
+			// 设置格式
+			const Format = $response?.headers?.["content-type"]?.split("; ")?.[0]?.split("/")?.[1]
+			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
+			switch (Format) {
+				case "json":
+					let data = JSON.parse($response.body);
+					// 找节点
+					let Captions = data?.captions
+					if (Captions) { // 有基础字幕
+						$.log(`⚠ ${$.name}, Captions`, "");
+						// 有播放器字幕渲染器
+						if (Captions.playerCaptionsRenderer) {
+							Captions.playerCaptionsRenderer.visibility = "ON" // 字幕选项按钮可见
+							Captions.playerCaptionsRenderer.showAutoCaptions = true; // 包含自动生成的字幕
+						}
+						let Tracklist = Captions?.playerCaptionsTracklistRenderer
+						if (Tracklist) { // 有轨道列表
+							$.log(`⚠ ${$.name}, Tracklist`, "");
+							if (Tracklist?.captionTracks) {
+								// 改翻译可用性
+								Tracklist.captionTracks = Tracklist.captionTracks.map(caption => {
+									caption.isTranslatable = true
+									return caption
+								});
+							};
+							// 加翻译语言
+							if (Tracklist?.translationLanguages) {
+								Tracklist.translationLanguages = Object.assign(Tracklist.translationLanguages, Configs.translationLanguages);
+							} else Tracklist.translationLanguages = Configs.translationLanguages;
 						};
-						// 加翻译语言
-						if (Tracklist?.translationLanguages) {
-							Tracklist.translationLanguages = Object.assign(Tracklist.translationLanguages, Configs.translationLanguages);
-						} else Tracklist.translationLanguages = Configs.translationLanguages;
 					};
-				};
-				$response.body = JSON.stringify(data);
-				break;
-			case "xml":
-			case "x-protobuf":
-			default:
-				break;
-		};
+					$response.body = JSON.stringify(data);
+					break;
+				case "xml":
+				case "x-protobuf":
+				default:
+					break;
+			};
+			break;
+		case false:
+		case "false":
+			$.log(`⚠ ${$.name}, 功能关闭`, "");
+			break;
 	};
 })()
 	.catch((e) => $.logErr(e))
