@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.15-youtube-timedtext-response-beta");
+const $ = new Env("🍿️ DualSubs v0.5.16-youtube-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -69,24 +69,13 @@ for (const [key, value] of Object.entries($request.headers)) {
 			switch (url.params?.kind) {
 				case "asr":
 					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-					switch (Settings.Translate.ShowOnly) {
-						case true:
-							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-							switch (url.params.cplatform) {
-								case "DESKTOP":
-									$.log(`⚠ ${$.name}, 桌面端`, "");
-									break;
-								case "MOBILE":
-									$.log(`⚠ ${$.name}, 移动端`, "");
-									break;
-								default:
-									$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
-									break;
-							};
+					switch (url.params.cplatform) {
+						case "DESKTOP":
+							$.log(`⚠ ${$.name}, 桌面端`, "");
 							break;
-						case false:
+						case "MOBILE":
 						default:
-							$.log(`⚠ ${$.name}, 听译字幕不支持双语，跳过`, "");
+							$.log(`⚠ ${$.name}, 移动端`, "");
 							break;
 					};
 					break;
@@ -102,10 +91,8 @@ for (const [key, value] of Object.entries($request.headers)) {
 									$.log(`⚠ ${$.name}, 桌面端`, "");
 									break;
 								case "MOBILE":
-									$.log(`⚠ ${$.name}, 移动端`, "");
-									break;
 								default:
-									$.log(`⚠ ${$.name}, 未知类型，cplatform=${url?.params?.cplatform}`, "");
+									$.log(`⚠ ${$.name}, 移动端`, "");
 									break;
 							};
 							break;
