@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.12-youtube-timedtext-response");
+const $ = new Env("🍿️ DualSubs v0.5.16-youtube-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -59,58 +59,90 @@ for (const [key, value] of Object.entries($request.headers)) {
 /***************** Processing *****************/
 (async () => {
 	const { Platform, Settings, Caches, Configs } = await setENV("DualSubs", $request.url, DataBase);
-	if (Settings.Switch) {
-		let url = URL.parse($request.url);
-		$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-		switch (Settings.Translate.ShowOnly) {
-			case true:
-				$.log(`⚠ ${$.name}, 仅显示翻译后字幕，跳过`, "");
-				break;
-			case false:
-			default:
-				if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
-				else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 语言相同，跳过`, "");
-				else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, 桌面版未选择翻译语言，跳过`, "");
-				else {
-					switch (url.params?.kind) {
-						case "asr":
+	switch (Settings.Switch) {
+		case true:
+		case "true":
+		default:
+			$.log(`⚠ ${$.name}, 功能开启`, "");
+			let url = URL.parse($request.url);
+			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
+			switch (url.params?.kind) {
+				case "asr":
+					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+					switch (url.params.cplatform) {
+						case "DESKTOP":
+							$.log(`⚠ ${$.name}, 桌面端`, "");
 							break;
-						case "captions":
+						case "MOBILE":
 						default:
-							// 创建字幕Object
-							let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
-							// 创建双语字幕Object
-							let DualSub = {};
-							// 设置格式
-							const Format = url.params?.format || url.params?.fmt;
-							$.log(`🚧 ${$.name}, Format: ${Format}`, "");
-							// 处理格式
-							switch (Format) {
-								case "json3":
-									OriginSub = JSON.parse(OriginSub);
-									SecondSub = JSON.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = JSON.stringify(DualSub);
+							$.log(`⚠ ${$.name}, 移动端`, "");
+							break;
+					};
+					break;
+				case "captions":
+				default:
+					$.log(`⚠ ${$.name}, 普通字幕`, "");
+					switch (Settings.Translate.ShowOnly) {
+						case true:
+						case "true":
+							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
+							switch (url.params.cplatform) {
+								case "DESKTOP":
+									$.log(`⚠ ${$.name}, 桌面端`, "");
 									break;
-								case "srv3":
-									OriginSub = XML.parse(OriginSub);
-									SecondSub = XML.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = XML.stringify(DualSub);
-									break;
-								case "vtt":
-									OriginSub = VTT.parse(OriginSub);
-									SecondSub = VTT.parse(SecondSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-									$response.body = VTT.stringify(DualSub);
+								case "MOBILE":
 								default:
+									$.log(`⚠ ${$.name}, 移动端`, "");
 									break;
 							};
 							break;
+						case false:
+						case "false":
+						default:
+							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
+							if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=设置语言，跳过`, "");
+							else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=翻译字幕语言，跳过`, "");
+							else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, !翻译语言，但桌面版，跳过`, "");
+							else {
+								// 创建字幕Object
+								let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
+								// 创建双语字幕Object
+								let DualSub = {};
+								// 设置格式
+								const Format = url.params?.format || url.params?.fmt;
+								$.log(`🚧 ${$.name}, Format: ${Format}`, "");
+								// 处理格式
+								switch (Format) {
+									case "json3":
+										OriginSub = JSON.parse(OriginSub);
+										SecondSub = JSON.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = JSON.stringify(DualSub);
+										break;
+									case "srv3":
+										OriginSub = XML.parse(OriginSub);
+										SecondSub = XML.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = XML.stringify(DualSub);
+										break;
+									case "vtt":
+										OriginSub = VTT.parse(OriginSub);
+										SecondSub = VTT.parse(SecondSub);
+										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+										$response.body = VTT.stringify(DualSub);
+									default:
+										break;
+								};
+							};
+							break;
 					};
-				}
-				break;
-		};
+					break;
+			};
+			break;
+		case false:
+		case "false":
+			$.log(`⚠ ${$.name}, 功能关闭`, "");
+			break;
 	};
 })()
 	.catch((e) => $.logErr(e))
@@ -340,4 +372,3 @@ function WebVTT(e){return new class{constructor(e=["milliseconds","timeStamp","s
 // refer: https://goessner.net/download/prj/jsonxml/json2xml.js
 // minify: https://www.digitalocean.com/community/tools/minify
 function XMLs(r){return new class{constructor(r){this.name="XML v0.1.4",this.opts=r}parse(r=new String,t=""){const n={"&amp;":"&","&lt;":"<","&gt;":">","&apos;":"'","&quot;":'"'},e="@";let s=function r(t,n){if("string"==typeof t)return t;var s=t.r;if(s)return s;var u,o=function(r,t){if(!r.t)return;for(var n,s,u=r.t.split(/([^\s='"]+(?:\s*=\s*(?:'[\S\s]*?'|"[\S\s]*?"|[^\s'"]*))?)/),o=u.length,l=0;l<o;l++){var c=i(u[l]);if(c){n||(n={});var p=c.indexOf("=");if(p<0)c=e+c,s=null;else{s=c.substr(p+1).replace(/^\s+/,""),c=e+c.substr(0,p).replace(/\s+$/,"");var g=s[0];g!==s[s.length-1]||"'"!==g&&'"'!==g||(s=s.substr(1,s.length-2)),s=a(s)}t&&(s=t(c,s)),f(n,c,s)}}return n}(t,n),l=t.f,c=l.length;if(o||c>1)u=o||{},l.forEach((function(t){"string"==typeof t?f(u,"#",t):f(u,t.n,r(t,n))}));else if(c){var p=l[0];if(u=r(p,n),p.n){var g={};g[p.n]=u,u=g}}else u=t.c?null:"";n&&(u=n(t.n||"",u));return u}(function(r){for(var t=String.prototype.split.call(r,/<([^!<>?](?:'[\S\s]*?'|"[\S\s]*?"|[^'"<>])*|!(?:--[\S\s]*?--|\[[^\[\]'"<>]+\[[\S\s]*?]]|DOCTYPE[^\[<>]*?\[[\S\s]*?]|(?:ENTITY[^"<>]*?"[\S\s]*?")?[\S\s]*?)|\?[\S\s]*?\?)>/),n=t.length,e={f:[]},s=e,f=[],u=0;u<n;){var o=t[u++];o&&g(o);var l=t[u++];l&&c(l)}return e;function c(r){var t=r.length,n=r[0];if("/"===n)for(var e=r.replace(/^\/|[\s\/].*$/g,"").toLowerCase();f.length;){var i=s.n&&s.n.toLowerCase();if(s=f.pop(),i===e)break}else if("?"===n)p({n:"?",r:r.substr(1,t-2)});else if("!"===n)"[CDATA["===r.substr(1,7)&&"]]"===r.substr(-2)?g(r.substr(8,t-10)):p({n:"!",r:r.substr(1)});else{var a=function(r){var t={f:[]},n=(r=r.replace(/\s*\/?$/,"")).search(/[\s='"\/]/);n<0?t.n=r:(t.n=r.substr(0,n),t.t=r.substr(n));return t}(r);p(a),"/"===r[t-1]?a.c=1:(f.push(s),s=a)}}function p(r){s.f.push(r)}function g(r){(r=i(r))&&p(a(r))}}(r),t);return s;function i(r){return r&&r.replace(/^\s+|\s+$/g,"")}function a(r){return r.replace(/(&(?:lt|gt|amp|apos|quot|#(?:\d{1,6}|x[0-9a-fA-F]{1,5}));)/g,(function(r){if("#"===r[1]){var t="x"===r[2]?parseInt(r.substr(3),16):parseInt(r.substr(2),10);if(t>-1)return String.fromCharCode(t)}return n[r]||r}))}function f(r,t,n){if(void 0!==n){var e=r[t];e instanceof Array?e.push(n):r[t]=t in r?[e,n]:n}}}stringify(r=new Object,t=""){var n="";for(var e in r)n+=s(r[e],e,"");return n=t?n.replace(/\t/g,t):n.replace(/\t|\n/g,"");function s(r,t,n){let e="";if(Array.isArray(r))e=r.reduce(((r,e)=>r+(n+s(e,t,n+"\t")+"\n")),"");else if("object"==typeof r){let i=!1;e+=n+"<"+t;for(let t in r)"@"==t.charAt(0)?e+=" "+t.substring(1)+'="'+r[t].toString()+'"':i=!0;if(e+=i?">":"/>",i){for(let t in r)"#"==t?e+=r[t]:"#cdata"==t?e+="<![CDATA["+r[t]+"]]>":"@"!=t.charAt(0)&&(e+=s(r[t],t,n+"\t"));e+=("\n"==e.charAt(e.length-1)?n:"")+"</"+t+">"}}else e+="?"===t?n+"<"+t+r.toString()+t+">":n+"<"+t+">"+r.toString()+"</"+t+">";return e}}}(r)}
-
