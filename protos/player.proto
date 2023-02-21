@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+//option optimize_for = CODE_SIZE;
+
+// https://youtubei.googleapis.com/youtubei/v1/player
+message Player {
+	//ResponseContext responseContext = 7 [json_name = "responseContext"];
+    Captions captions = 10 [json_name = "captions"];
+    message Captions {
+        PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
+
+		message PlayerCaptionsTracklistRenderer {
+			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
+			repeated AudioTracks audioTracks = 2 [json_name = "audioTracks"];
+			repeated TranslationLanguages translationLanguages = 3 [json_name = "translationLanguages"];
+			bool defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
+
+            message CaptionTracks {
+				string baseUrl = 1 [json_name = "baseUrl"];
+				repeated Name name = 2 [json_name = "name"];
+            	string vssId = 3 [json_name = "vssId"];
+            	string languageCode = 4 [json_name = "languageCode"];
+            	optional string kind = 5 [json_name = "kind"];
+            	optional bool rtl = 6 [json_name = "rtl"];
+            	bool isTranslatable = 7 [json_name = "isTranslatable"];
+
+				message Name {
+					repeated Runs runs = 1 [json_name = "runs"];
+
+					message Runs {
+						string text = 1 [json_name = "text"];
+					};
+				};
+			};
+			/*
+			enum Type {
+				OFF = 0;
+				ON = 1;
+				UNKNOWN = 2;
+			};
+			*/
+			message AudioTracks {
+				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
+				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
+				//Type visibility = 5 [json_name = "visibility"];
+				//bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
+
+			};
+
+			message TranslationLanguages {
+				string languageCode = 1 [json_name = "languageCode"];
+				LanguageName languageName = 2 [json_name = "languageName"];
+
+				message LanguageName {
+					repeated Runs runs = 1 [json_name = "runs"];
+
+					message Runs {
+						string text = 1 [json_name = "text"];
+					};
+				};
+			};
+        };
+    };
+};
+
