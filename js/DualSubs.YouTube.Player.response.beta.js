@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.7-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.5.7(11)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -107,7 +107,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 					class Player$Type extends MessageType {
 						constructor() {
 							super("Player", [
-								//{ no: 7, name: "responseContext", kind: "message", jsonName: "responseContext", repeat: 1, T: () => responseContext },
+								//{ no: 7, name: "responseContext", kind: "message", jsonName: "responseContext", repeat: 1 /*RepeatType.PACKED*/, T: () => responseContext },
 								//{ no: 2, name: "p1F2", kind: "message", T: () => p1F2 },
 								{ no: 10, name: "captions", kind: "message", jsonName: "captions", T: () => captions }
 							]);
@@ -198,8 +198,8 @@ for (const [key, value] of Object.entries($request.headers)) {
 					class playerCaptionsTracklistRenderer$Type extends MessageType {
 						constructor() {
 							super("playerCaptionsTracklistRenderer", [
-								{ no: 1, name: "captionTracks", kind: "message", jsonName: "captionTracks", repeat: 1, T: () => captionTracks },
-								//{ no: 2, name: "audioTracks", kind: "message", jsonName: "audioTracks", repeat: 1, T: () => audioTracks },
+								{ no: 1, name: "captionTracks", kind: "message", jsonName: "captionTracks", repeat: 1 /*RepeatType.PACKED*/, T: () => captionTracks },
+								//{ no: 2, name: "audioTracks", kind: "message", jsonName: "audioTracks", repeat: 1 /*RepeatType.PACKED*/, T: () => audioTracks },
 								//{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: () => audioTracks },
 							]);
 						}
@@ -321,7 +321,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 					class name$Type extends MessageType {
 						constructor() {
 							super("name", [
-								{ no: 1, name: "runs", kind: "message", jsonName: "runs", T: () => runs },
+								{ no: 1, name: "runs", kind: "message", jsonName: "runs", repeat: 1 /*RepeatType.PACKED*/, T: () => runs },
 							]);
 						}
 						create(value) {
@@ -392,7 +392,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 						}
 						internalBinaryWrite(message, writer, options) {
 							/* string text = 1; */
-							if (message.text !== "") writer.tag(1, WireType.LengthDelimited).string(message.text);
+							if (message.text !== "") writer.tag(1, WireType.LengthDelimited).int32(message.text);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -406,8 +406,9 @@ for (const [key, value] of Object.entries($request.headers)) {
 					const name = new name$Type();
 					const runs = new runs$Type();
 					const binaryBody = $.isQuanX()? new Uint8Array($response.bodyBytes) : $response.body;
-					data = Player.fromBinary(binaryBody, { readUnknownField: true });
+					let data = Player.fromBinary(binaryBody);
 					$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(data)}`, "");
+					/*
 					// 找功能
 					if (data?.captions) { // 有基础字幕
 						$.log(`⚠ ${$.name}, Captions`, "");
@@ -420,7 +421,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 							$.log(`⚠ ${$.name}, Tracklist`, "");
 							if (data?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
 								// 改翻译可用性
-								data.captions.playerCaptionsTracklistRenderer.captionTracks = data?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => caption.isTranslatable = true);
+								data.captions.playerCaptionsTracklistRenderer.captionTracks = data?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
+									caption.isTranslatable = true;
+									return caption;
+								});
 							};
 							// 加翻译语言
 							if (data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages) {
@@ -429,6 +433,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 							else data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages;
 						};
 					};
+					*/
 					$response.body = Player.toBinary(data);
 					break;
 				default:
