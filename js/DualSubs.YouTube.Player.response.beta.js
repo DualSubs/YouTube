@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.6-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.5.7-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -245,7 +245,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 						constructor() {
 							super("captionTracks", [
 								{ no: 1, name: "baseUrl", kind: "scalar", jsonName: "baseUrl", T: 9 /*ScalarType.STRING*/ },
-								//{ no: 2, name: "name", kind: "message", jsonName: "name", T: () => name },
+								{ no: 2, name: "name", kind: "message", jsonName: "name", T: () => name },
 								{ no: 3, name: "vssId", kind: "scalar", jsonName: "vssId", T: 9 /*ScalarType.STRING*/ },
 								{ no: 4, name: "languageCode", kind: "scalar", jsonName: "languageCode", T: 9 /*ScalarType.STRING*/ },
 								{ no: 5, name: "kind", kind: "scalar", jsonName: "kind", T: 9 /*ScalarType.STRING*/ },
@@ -299,7 +299,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 						}
 						internalBinaryWrite(message, writer, options) {
 							/* string baseUrl = 1; */
-							if (message.baseUrl !== "") writer.tag(1, WireType.LengthDelimited).string(message.baseUrloptions);
+							if (message.baseUrl !== "") writer.tag(1, WireType.LengthDelimited).string(message.baseUrl);
 							/* message name = 2; */
 							if (message.name) name.internalBinaryWrite(message.name, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
 							/* string vssId = 3; */
@@ -318,10 +318,93 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return writer;
 						}
 					};
+					class name$Type extends MessageType {
+						constructor() {
+							super("name", [
+								{ no: 1, name: "runs", kind: "message", jsonName: "runs", T: () => runs },
+							]);
+						}
+						create(value) {
+							const message = { runs: [] };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== void 0)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target != null ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* Player.captions.playerCaptionsTracklistRenderer.captionTracks.name.runs runs */ 1:
+										message.runs = runs.internalBinaryRead(reader, reader.uint32(), options, message.runs);
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							for (let i = 0; i < message.runs.length; i++) runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
+					class runs$Type extends MessageType {
+						constructor() {
+							super("runs", [
+								{ no: 1, name: "text", kind: "scalar", jsonName: "text", T: 9 /*ScalarType.STRING*/ },
+							]);
+						}
+						create(value) {
+							const message = { text: "" };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== void 0)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target != null ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* string text */ 1:
+										message.text = reader.string();
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							/* string text = 1; */
+							if (message.text !== "") writer.tag(1, WireType.LengthDelimited).string(message.text);
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
 					const Player = new Player$Type();
-					var captions = new captions$Type();
-					var playerCaptionsTracklistRenderer = new playerCaptionsTracklistRenderer$Type();
-					var captionTracks = new captionTracks$Type();
+					const captions = new captions$Type();
+					const playerCaptionsTracklistRenderer = new playerCaptionsTracklistRenderer$Type();
+					const captionTracks = new captionTracks$Type();
+					const name = new name$Type();
+					const runs = new runs$Type();
 					const binaryBody = $.isQuanX()? new Uint8Array($response.bodyBytes) : $response.body;
 					data = Player.fromBinary(binaryBody, { readUnknownField: true });
 					$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(data)}`, "");
