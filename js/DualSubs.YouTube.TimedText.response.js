@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.16-youtube-timedtext-response");
+const $ = new Env("🍿️ DualSubs v0.6.1(1)-youtube-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -69,15 +69,6 @@ for (const [key, value] of Object.entries($request.headers)) {
 			switch (url.params?.kind) {
 				case "asr":
 					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-					switch (url.params.cplatform) {
-						case "DESKTOP":
-							$.log(`⚠ ${$.name}, 桌面端`, "");
-							break;
-						case "MOBILE":
-						default:
-							$.log(`⚠ ${$.name}, 移动端`, "");
-							break;
-					};
 					break;
 				case "captions":
 				default:
@@ -86,53 +77,46 @@ for (const [key, value] of Object.entries($request.headers)) {
 						case true:
 						case "true":
 							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-							switch (url.params.cplatform) {
-								case "DESKTOP":
-									$.log(`⚠ ${$.name}, 桌面端`, "");
-									break;
-								case "MOBILE":
-								default:
-									$.log(`⚠ ${$.name}, 移动端`, "");
-									break;
-							};
 							break;
 						case false:
 						case "false":
 						default:
 							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
-							if (url?.params?.lang?.includes(Settings?.Language?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=设置语言，跳过`, "");
-							else if (url?.params?.lang?.includes(url?.params?.tlang?.toLowerCase())) $.log(`⚠ ${$.name}, 字幕语言=翻译字幕语言，跳过`, "");
-							else if (!url?.params?.tlang && url?.params?.cplatform === "DESKTOP") $.log(`⚠ ${$.name}, !翻译语言，但桌面版，跳过`, "");
-							else {
-								// 创建字幕Object
-								let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
-								// 创建双语字幕Object
-								let DualSub = {};
-								// 设置格式
-								const Format = url.params?.format || url.params?.fmt;
-								$.log(`🚧 ${$.name}, Format: ${Format}`, "");
-								// 处理格式
-								switch (Format) {
-									case "json3":
-										OriginSub = JSON.parse(OriginSub);
-										SecondSub = JSON.parse(SecondSub);
-										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-										$response.body = JSON.stringify(DualSub);
-										break;
-									case "srv3":
-										OriginSub = XML.parse(OriginSub);
-										SecondSub = XML.parse(SecondSub);
-										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-										$response.body = XML.stringify(DualSub);
-										break;
-									case "vtt":
-										OriginSub = VTT.parse(OriginSub);
-										SecondSub = VTT.parse(SecondSub);
-										DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-										$response.body = VTT.stringify(DualSub);
-									default:
-										break;
-								};
+							switch (url?.params?.tlang) {
+								case undefined:
+									$.log(`⚠ ${$.name}, 未选择翻译语言，跳过`, "");
+									break;
+								default:
+									// 创建字幕Object
+									let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
+									// 创建双语字幕Object
+									let DualSub = {};
+									// 设置格式
+									const Format = url.params?.format || url.params?.fmt;
+									$.log(`🚧 ${$.name}, Format: ${Format}`, "");
+									// 处理格式
+									switch (Format) {
+										case "json3":
+											OriginSub = JSON.parse(OriginSub);
+											SecondSub = JSON.parse(SecondSub);
+											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+											$response.body = JSON.stringify(DualSub);
+											break;
+										case "srv3":
+											OriginSub = XML.parse(OriginSub);
+											SecondSub = XML.parse(SecondSub);
+											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+											$response.body = XML.stringify(DualSub);
+											break;
+										case "vtt":
+											OriginSub = VTT.parse(OriginSub);
+											SecondSub = VTT.parse(SecondSub);
+											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
+											$response.body = VTT.stringify(DualSub);
+										default:
+											break;
+									};
+									break;
 							};
 							break;
 					};
