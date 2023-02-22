@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(6)-youtube-player");
+const $ = new Env("🍿️ DualSubs v0.6.0(8)-youtube-player");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -693,7 +693,8 @@ for (const [key, value] of Object.entries($response.headers)) {
 							};
 						};
 					};
-					$response.body = Player.toBinary(data);
+					if ($.isQuanX()) $response.bodyBytes = Player.toBinary(data);
+					else $response.body = Player.toBinary(data);
 					break;
 				default:
 					break;
@@ -718,11 +719,15 @@ for (const [key, value] of Object.entries($response.headers)) {
 				else $.done($response)
 				break;
 			case "application/x-protobuf":
-				$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
 				if ($.isQuanX()) {
+					$.log(`${$response.bodyBytes.byteLength}---${$response.bodyBytes.buffer.byteLength}`);
+					$.log(`${$response.bodyBytes.byteOffset}---${$response.bodyBytes.buffer.byteOffset}`);
 					//$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes });
 					$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
-				} else $.done($response)
+				} else {
+					$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
+					$.done($response)
+				}
 				break;
 		};
 	})

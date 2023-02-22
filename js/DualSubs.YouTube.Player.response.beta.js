@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(5)-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.6.0(8)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -72,9 +72,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`);
 			// 设置格式
-			$.log(`🚧 ${$.name}`, `$response.headers: ${JSON.stringify($response?.headers)}`, "");
-			$.log(`🚧 ${$.name}`, `$response.headers["content-type"]: ${$response?.headers?.["content-type"]}`, "");
-			const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
+			const Format = ($.isQuanX()) ? $response?.headers?.["Content-Type"]?.split(";")?.[0] : $response?.headers?.["content-type"]?.split(";")?.[0]
 			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 			// 创建空数据
 			let data = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": {} }, "playerCaptionsTracklistRenderer": { "captionTracks": [], "translationLanguages": [] } } };
@@ -711,7 +709,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 	.catch((e) => $.logErr(e))
 	.finally(() => {
 		// 设置格式
-		const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
+		const Format = ($.isQuanX()) ? $response?.headers?.["Content-Type"]?.split(";")?.[0] : $response?.headers?.["content-type"]?.split(";")?.[0]
 		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 		switch (Format) {
 			case "application/json":
@@ -721,11 +719,15 @@ for (const [key, value] of Object.entries($response.headers)) {
 				else $.done($response)
 				break;
 			case "application/x-protobuf":
-				$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
 				if ($.isQuanX()) {
+					$.log(`${$response.bodyBytes.byteLength}---${$response.bodyBytes.buffer.byteLength}`);
+					$.log(`${$response.bodyBytes.byteOffset}---${$response.bodyBytes.buffer.byteOffset}`);
 					//$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes });
 					$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
-				} else $.done($response)
+				} else {
+					$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
+					$.done($response)
+				}
 				break;
 		};
 	})
