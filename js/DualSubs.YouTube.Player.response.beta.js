@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.9(1)-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.6.0(1)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -68,7 +68,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`);
 			// 设置格式
-			const Format = $response?.headers?.["content-type"]?.split("; ")?.[0]
+			const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
 			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 			// 创建空数据
 			let data = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": {} }, "playerCaptionsTracklistRenderer": { "captionTracks": [], "translationLanguages": [] } } };
@@ -98,14 +98,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 								case "www.youtube.com":
 								case "tv.youtube.com":
 								default:
-									if (data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages) {
-										data.captions.playerCaptionsTracklistRenderer.translationLanguages = Object.assign(data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages, Configs.translationLanguages.DESKTOP);
-									} else data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
 								case "m.youtube.com":
 								case "youtubei.googleapis.com":
-									if (data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages) {
-										data.captions.playerCaptionsTracklistRenderer.translationLanguages = Object.assign(data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages, Configs.translationLanguages.MOBILE);
-									} else data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
 							};
 						};
 					};
@@ -668,13 +664,6 @@ for (const [key, value] of Object.entries($request.headers)) {
 					// 找功能
 					if (data?.captions) { // 有基础字幕
 						$.log(`⚠ ${$.name}, Captions`, "");
-						/*
-						// 有播放器字幕渲染器
-						if (data?.captions.playerCaptionsRenderer) {
-							data.captions.playerCaptionsRenderer.visibility = "ON" // 字幕选项按钮可见
-							data.captions.playerCaptionsRenderer.showAutoCaptions = true; // 包含自动生成的字幕
-						}
-						*/
 						if (data?.captions?.playerCaptionsTracklistRenderer) { // 有轨道列表
 							$.log(`⚠ ${$.name}, Tracklist`, "");
 							if (data?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
@@ -689,14 +678,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 								case "www.youtube.com":
 								case "tv.youtube.com":
 								default:
-									if (data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages) {
-										data.captions.playerCaptionsTracklistRenderer.translationLanguages = Object.assign(data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages, Configs.translationLanguages.DESKTOP);
-									} else data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
 								case "m.youtube.com":
 								case "youtubei.googleapis.com":
-									if (data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages) {
-										data.captions.playerCaptionsTracklistRenderer.translationLanguages = Object.assign(data?.captions?.playerCaptionsTracklistRenderer?.translationLanguages, Configs.translationLanguages.MOBILE);
-									} else data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
 							};
 						};
 					};
@@ -715,7 +700,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 	.catch((e) => $.logErr(e))
 	.finally(() => {
 		// 设置格式
-		const Format = $response?.headers?.["content-type"]?.split("; ")?.[0]
+		const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
 		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 		switch (Format) {
 			case "application/json":

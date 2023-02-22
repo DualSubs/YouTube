@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.11-youtube-timedtext-request-beta");
+const $ = new Env("🍿️ DualSubs v0.6.0-youtube-timedtext-request-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -73,7 +73,6 @@ for (const [key, value] of Object.entries($request.headers)) {
 						case "MOBILE":
 						default:
 							$.log(`⚠ ${$.name}, 移动端`, "");
-							url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 							break;
 					};
 					break;
@@ -91,7 +90,6 @@ for (const [key, value] of Object.entries($request.headers)) {
 								case "MOBILE":
 								default:
 									$.log(`⚠ ${$.name}, 移动端`, "");
-									url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 									break;
 							};
 							break;
