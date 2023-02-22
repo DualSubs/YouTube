@@ -55,6 +55,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 	delete $request.headers[key]
 	$request.headers[key.toLowerCase()] = value
 };
+for (const [key, value] of Object.entries($response.headers)) {
+	delete $response.headers[key]
+	$response.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {
