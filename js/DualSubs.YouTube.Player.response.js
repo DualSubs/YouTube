@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(10)-youtube-player");
+const $ = new Env("🍿️ DualSubs v0.6.0(11)-youtube-player");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -721,9 +721,8 @@ for (const [key, value] of Object.entries($response.headers)) {
 			case "application/x-protobuf":
 				if ($.isQuanX()) {
 					$.log(`${$response.bodyBytes.byteLength}---${$response.bodyBytes.buffer.byteLength}`);
-					$.log(`${$response.bodyBytes.byteOffset}---${$response.bodyBytes.buffer.byteOffset}`);
-					$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes });
-					//$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
+					$.log(`bodyBytes.byteOffset: ${$response.bodyBytes.byteOffset}}`);
+					$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
 				} else {
 					$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
 					$.done($response)
