@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.5.7(11)-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.5.8(2)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -107,31 +107,23 @@ for (const [key, value] of Object.entries($request.headers)) {
 					class Player$Type extends MessageType {
 						constructor() {
 							super("Player", [
-								//{ no: 7, name: "responseContext", kind: "message", jsonName: "responseContext", repeat: 1 /*RepeatType.PACKED*/, T: () => responseContext },
-								//{ no: 2, name: "p1F2", kind: "message", T: () => p1F2 },
-								{ no: 10, name: "captions", kind: "message", jsonName: "captions", T: () => captions }
+								{ no: 10, name: "captions", kind: "message", T: () => Player_Captions }
 							]);
 						}
 						create(value) {
 							const message = {};
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									//case /* repeated Player.responseContext responseContext */ 7:
-										//message.responseContext.push(responseContext.internalBinaryRead(reader, reader.uint32(), options));
-										//break;
-									//case /* p1F2 p1F2 */ 2:
-										//message.p1F2 = p1F2.internalBinaryRead(reader, reader.uint32(), options, message.p1F2);
-										//break;
-									case /* Player.captions captions */ 10:
-										message.captions = captions.internalBinaryRead(reader, reader.uint32(), options, message.captions);
+									case /* Player.Captions captions */ 10:
+										message.captions = Player_Captions.internalBinaryRead(reader, reader.uint32(), options, message.captions);
 										break;
 									default:
 										let u = options.readUnknownField;
@@ -145,35 +137,35 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							//for (let i = 0; i < message.responseContext.length; i++) responseContext.internalBinaryWrite(message.responseContext[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-							if (message.p1F2) p1F2.internalBinaryWrite(message.p1F2, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-							if (message.captions) captions.internalBinaryWrite(message.captions, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+							/* Player.Captions captions = 10; */
+							if (message.captions)
+								Player_Captions.internalBinaryWrite(message.captions, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
-					class captions$Type extends MessageType {
+					class Player_Captions$Type extends MessageType {
 						constructor() {
-							super("captions", [
-								{ no: 51621377, name: "playerCaptionsTracklistRenderer", kind: "message", jsonName: "playerCaptionsTracklistRenderer", T: () => playerCaptionsTracklistRenderer },
+							super("Player.Captions", [
+								{ no: 51621377, name: "playerCaptionsTracklistRenderer", kind: "message", T: () => Player_Captions_PlayerCaptionsTracklistRenderer }
 							]);
 						}
 						create(value) {
 							const message = {};
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* Player.captions.playerCaptionsTracklistRenderer playerCaptionsTracklistRenderer */ 51621377:
-										message.playerCaptionsTracklistRenderer = playerCaptionsTracklistRenderer.internalBinaryRead(reader, reader.uint32(), options, message.playerCaptionsTracklistRenderer);
+									case /* Player.Captions.PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer */ 51621377:
+										message.playerCaptionsTracklistRenderer = Player_Captions_PlayerCaptionsTracklistRenderer.internalBinaryRead(reader, reader.uint32(), options, message.playerCaptionsTracklistRenderer);
 										break;
 									default:
 										let u = options.readUnknownField;
@@ -187,40 +179,48 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
+							/* Player.Captions.PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377; */
 							if (message.playerCaptionsTracklistRenderer)
-								playerCaptionsTracklistRenderer.internalBinaryWrite(message.playerCaptionsTracklistRenderer, writer.tag(51621377, WireType.LengthDelimited).fork(), options).join();
+								Player_Captions_PlayerCaptionsTracklistRenderer.internalBinaryWrite(message.playerCaptionsTracklistRenderer, writer.tag(51621377, WireType.LengthDelimited).fork(), options).join();
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
-					class playerCaptionsTracklistRenderer$Type extends MessageType {
+					class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
 						constructor() {
-							super("playerCaptionsTracklistRenderer", [
-								{ no: 1, name: "captionTracks", kind: "message", jsonName: "captionTracks", repeat: 1 /*RepeatType.PACKED*/, T: () => captionTracks },
-								//{ no: 2, name: "audioTracks", kind: "message", jsonName: "audioTracks", repeat: 1 /*RepeatType.PACKED*/, T: () => audioTracks },
-								//{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: () => audioTracks },
+							super("Player.Captions.PlayerCaptionsTracklistRenderer", [
+								{ no: 1, name: "captionTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks },
+								{ no: 2, name: "audioTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
+								{ no: 3, name: "translationLanguages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages },
+								{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
 							]);
 						}
 						create(value) {
-							const message = { captionTracks: [], audioTracks: [] };
+							const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: false };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* repeated Player.captions.playerCaptionsTracklistRenderer.captionTracks captionTracks */ 1:
-										message.captionTracks.push(captionTracks.internalBinaryRead(reader, reader.uint32(), options));
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks */ 1:
+										message.captionTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryRead(reader, reader.uint32(), options));
 										break;
-									//case /* repeated Player.captions.playerCaptionsTracklistRenderer.audioTracks audioTracks */ 2:
-										//message.audioTracks.push(audioTracks.internalBinaryRead(reader, reader.uint32(), options));
-										//break;
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks */ 2:
+										message.audioTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryRead(reader, reader.uint32(), options));
+										break;
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages */ 3:
+										message.translationLanguages.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryRead(reader, reader.uint32(), options));
+										break;
+									case /* bool defaultAudioTrackIndex */ 4:
+										message.defaultAudioTrackIndex = reader.bool();
+										break;
 									default:
 										let u = options.readUnknownField;
 										if (u === "throw")
@@ -233,43 +233,53 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							for (let i = 0; i < message.captionTracks.length; i++) captionTracks.internalBinaryWrite(message.captionTracks, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-							for (let i = 0; i < message.audioTracks.length; i++) audioTracks.internalBinaryWrite(message.audioTracks, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks = 1; */
+							for (let i = 0; i < message.captionTracks.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryWrite(message.captionTracks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2; */
+							for (let i = 0; i < message.audioTracks.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryWrite(message.audioTracks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3; */
+							for (let i = 0; i < message.translationLanguages.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryWrite(message.translationLanguages[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+							/* bool defaultAudioTrackIndex = 4; */
+							if (message.defaultAudioTrackIndex !== false)
+								writer.tag(4, WireType.Varint).bool(message.defaultAudioTrackIndex);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
-					class captionTracks$Type extends MessageType {
+					class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type extends MessageType {
 						constructor() {
-							super("captionTracks", [
-								{ no: 1, name: "baseUrl", kind: "scalar", jsonName: "baseUrl", T: 9 /*ScalarType.STRING*/ },
-								{ no: 2, name: "name", kind: "message", jsonName: "name", T: () => name },
-								{ no: 3, name: "vssId", kind: "scalar", jsonName: "vssId", T: 9 /*ScalarType.STRING*/ },
-								{ no: 4, name: "languageCode", kind: "scalar", jsonName: "languageCode", T: 9 /*ScalarType.STRING*/ },
-								{ no: 5, name: "kind", kind: "scalar", jsonName: "kind", T: 9 /*ScalarType.STRING*/ },
-								{ no: 6, name: "rtl", kind: "scalar", jsonName: "rtl", T: 8 /*ScalarType.BOOL*/ },
-								{ no: 7, name: "isTranslatable", kind: "scalar", jsonName: "isTranslatable", T: 8 /*ScalarType.BOOL*/ },
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks", [
+								{ no: 1, name: "baseUrl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+								{ no: 2, name: "name", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name },
+								{ no: 3, name: "vssId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+								{ no: 4, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+								{ no: 5, name: "kind", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+								{ no: 6, name: "rtl", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+								{ no: 7, name: "isTranslatable", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
 							]);
 						}
 						create(value) {
-							const message = { baseUrl: "", vssId: "", languageCode: "", kind: "", isTranslatable: 0 };
+							const message = { baseUrl: "", name: [], vssId: "", languageCode: "", isTranslatable: false };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
 									case /* string baseUrl */ 1:
 										message.baseUrl = reader.string();
 										break;
-									case /* Player.captions.playerCaptionsTracklistRenderer.captionTracks.name name */ 2:
-										message.name = name.internalBinaryRead(reader, reader.uint32(), options, message.name);
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name name */ 2:
+										message.name.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name.internalBinaryRead(reader, reader.uint32(), options));
 										break;
 									case /* string vssId */ 3:
 										message.vssId = reader.string();
@@ -277,10 +287,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 									case /* string languageCode */ 4:
 										message.languageCode = reader.string();
 										break;
-									case /* string kind */ 5:
+									case /* optional string kind */ 5:
 										message.kind = reader.string();
 										break;
-									case /* bool rtl */ 6:
+									case /* optional bool rtl */ 6:
 										message.rtl = reader.bool();
 										break;
 									case /* bool isTranslatable */ 7:
@@ -299,45 +309,52 @@ for (const [key, value] of Object.entries($request.headers)) {
 						}
 						internalBinaryWrite(message, writer, options) {
 							/* string baseUrl = 1; */
-							if (message.baseUrl !== "") writer.tag(1, WireType.LengthDelimited).string(message.baseUrl);
-							/* message name = 2; */
-							if (message.name) name.internalBinaryWrite(message.name, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							if (message.baseUrl !== "")
+								writer.tag(1, WireType.LengthDelimited).string(message.baseUrl);
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name name = 2; */
+							for (let i = 0; i < message.name.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name.internalBinaryWrite(message.name[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
 							/* string vssId = 3; */
-							if (message.vssId !== "") writer.tag(3, WireType.LengthDelimited).string(message.vssId);
+							if (message.vssId !== "")
+								writer.tag(3, WireType.LengthDelimited).string(message.vssId);
 							/* string languageCode = 4; */
-							if (message.languageCode !== "") writer.tag(4, WireType.LengthDelimited).string(message.languageCode);
-							/* string kind = 5; */
-							if (message.kind !== "") writer.tag(5, WireType.LengthDelimited).string(message.kind);
-							/* bool rtl = 6; */
-							if (message.rtl !== 0) writer.tag(6, WireType.LengthDelimited).bool(message.rtl);
-							/* bool languageCode = 7; */
-							if (message.isTranslatable !== 0) writer.tag(7, WireType.LengthDelimited).bool(message.isTranslatable);
+							if (message.languageCode !== "")
+								writer.tag(4, WireType.LengthDelimited).string(message.languageCode);
+							/* optional string kind = 5; */
+							if (message.kind !== undefined)
+								writer.tag(5, WireType.LengthDelimited).string(message.kind);
+							/* optional bool rtl = 6; */
+							if (message.rtl !== undefined)
+								writer.tag(6, WireType.Varint).bool(message.rtl);
+							/* bool isTranslatable = 7; */
+							if (message.isTranslatable !== false)
+								writer.tag(7, WireType.Varint).bool(message.isTranslatable);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
-					class name$Type extends MessageType {
+					class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type extends MessageType {
 						constructor() {
-							super("name", [
-								{ no: 1, name: "runs", kind: "message", jsonName: "runs", repeat: 1 /*RepeatType.PACKED*/, T: () => runs },
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name", [
+								{ no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs }
 							]);
 						}
 						create(value) {
 							const message = { runs: [] };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* Player.captions.playerCaptionsTracklistRenderer.captionTracks.name.runs runs */ 1:
-										message.runs = runs.internalBinaryRead(reader, reader.uint32(), options, message.runs);
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs runs */ 1:
+										message.runs.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs.internalBinaryRead(reader, reader.uint32(), options));
 										break;
 									default:
 										let u = options.readUnknownField;
@@ -351,28 +368,30 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							for (let i = 0; i < message.runs.length; i++) runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs runs = 1; */
+							for (let i = 0; i < message.runs.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
-					class runs$Type extends MessageType {
+					class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type extends MessageType {
 						constructor() {
-							super("runs", [
-								{ no: 1, name: "text", kind: "scalar", jsonName: "text", T: 9 /*ScalarType.STRING*/ },
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs", [
+								{ no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
 							]);
 						}
 						create(value) {
 							const message = { text: "" };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-							if (value !== void 0)
+							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target != null ? target : this.create(), end = reader.pos + length;
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
@@ -392,20 +411,245 @@ for (const [key, value] of Object.entries($request.headers)) {
 						}
 						internalBinaryWrite(message, writer, options) {
 							/* string text = 1; */
-							if (message.text !== "") writer.tag(1, WireType.LengthDelimited).int32(message.text);
+							if (message.text !== "")
+								writer.tag(1, WireType.LengthDelimited).string(message.text);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
 							return writer;
 						}
 					};
+					class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
+						constructor() {
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
+								{ no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
+								{ no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+							]);
+						}
+						create(value) {
+							const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0 };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== undefined)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* repeated int32 captionTrackIndices */ 2:
+										if (wireType === WireType.LengthDelimited)
+											for (let e = reader.int32() + reader.pos; reader.pos < e;)
+												message.captionTrackIndices.push(reader.int32());
+										else
+											message.captionTrackIndices.push(reader.int32());
+										break;
+									case /* int32 defaultCaptionTrackIndex */ 3:
+										message.defaultCaptionTrackIndex = reader.int32();
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							/* repeated int32 captionTrackIndices = 2; */
+							if (message.captionTrackIndices.length) {
+								writer.tag(2, WireType.LengthDelimited).fork();
+								for (let i = 0; i < message.captionTrackIndices.length; i++)
+									writer.int32(message.captionTrackIndices[i]);
+								writer.join();
+							}
+							/* int32 defaultCaptionTrackIndex = 3; */
+							if (message.defaultCaptionTrackIndex !== 0)
+								writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
+					class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type extends MessageType {
+						constructor() {
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages", [
+								{ no: 1, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+								{ no: 2, name: "languageName", kind: "message", T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName }
+							]);
+						}
+						create(value) {
+							const message = { languageCode: "" };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== undefined)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* string languageCode */ 1:
+										message.languageCode = reader.string();
+										break;
+									case /* Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName languageName */ 2:
+										message.languageName = Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName.internalBinaryRead(reader, reader.uint32(), options, message.languageName);
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							/* string languageCode = 1; */
+							if (message.languageCode !== "")
+								writer.tag(1, WireType.LengthDelimited).string(message.languageCode);
+							/* Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName languageName = 2; */
+							if (message.languageName)
+								Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName.internalBinaryWrite(message.languageName, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
+					class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type extends MessageType {
+						constructor() {
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName", [
+								{ no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs }
+							]);
+						}
+						create(value) {
+							const message = { runs: [] };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== undefined)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs runs */ 1:
+										message.runs.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs.internalBinaryRead(reader, reader.uint32(), options));
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs runs = 1; */
+							for (let i = 0; i < message.runs.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
+					class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type extends MessageType {
+						constructor() {
+							super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs", [
+								{ no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+							]);
+						}
+						create(value) {
+							const message = { text: "" };
+							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+							if (value !== undefined)
+								reflectionMergePartial(this, message, value);
+							return message;
+						}
+						internalBinaryRead(reader, length, options, target) {
+							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							while (reader.pos < end) {
+								let [fieldNo, wireType] = reader.tag();
+								switch (fieldNo) {
+									case /* string text */ 1:
+										message.text = reader.string();
+										break;
+									default:
+										let u = options.readUnknownField;
+										if (u === "throw")
+											throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+										let d = reader.skip(wireType);
+										if (u !== false)
+											(u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+								}
+							}
+							return message;
+						}
+						internalBinaryWrite(message, writer, options) {
+							/* string text = 1; */
+							if (message.text !== "")
+								writer.tag(1, WireType.LengthDelimited).string(message.text);
+							let u = options.writeUnknownFields;
+							if (u !== false)
+								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+							return writer;
+						}
+					};
+					/**
+					 * @generated MessageType for protobuf message Player
+					 */
 					const Player = new Player$Type();
-					const captions = new captions$Type();
-					const playerCaptionsTracklistRenderer = new playerCaptionsTracklistRenderer$Type();
-					const captionTracks = new captionTracks$Type();
-					const name = new name$Type();
-					const runs = new runs$Type();
-					const binaryBody = $.isQuanX()? new Uint8Array($response.bodyBytes) : $response.body;
+					/**
+					 * @generated MessageType for protobuf message Player.Captions
+					 */
+					const Player_Captions = new Player_Captions$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer = new Player_Captions_PlayerCaptionsTracklistRenderer$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks = new Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type();
+					/**
+					 * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs
+					 */
+					const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type();
+					const binaryBody = $.isQuanX() ? new Uint8Array($response.bodyBytes) : $response.body;
 					let data = Player.fromBinary(binaryBody);
 					$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(data)}`, "");
 					/*
