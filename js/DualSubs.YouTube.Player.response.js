@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(4)-youtube-player");
+const $ = new Env("🍿️ DualSubs v0.6.0(6)-youtube-player");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -56,6 +56,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 	delete $request.headers[key]
 	$request.headers[key.toLowerCase()] = value
 };
+for (const [key, value] of Object.entries($response.headers)) {
+	delete $response.headers[key]
+	$response.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {
@@ -68,7 +72,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`);
 			// 设置格式
-			const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
+			const Format = ($.isQuanX()) ? $response?.headers?.["Content-Type"]?.split(";")?.[0] : $response?.headers?.["content-type"]?.split(";")?.[0]
 			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 			// 创建空数据
 			let data = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": {} }, "playerCaptionsTracklistRenderer": { "captionTracks": [], "translationLanguages": [] } } };
@@ -704,7 +708,7 @@ for (const [key, value] of Object.entries($request.headers)) {
 	.catch((e) => $.logErr(e))
 	.finally(() => {
 		// 设置格式
-		const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
+		const Format = ($.isQuanX()) ? $response?.headers?.["Content-Type"]?.split(";")?.[0] : $response?.headers?.["content-type"]?.split(";")?.[0]
 		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 		switch (Format) {
 			case "application/json":

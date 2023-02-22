@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(4)-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.6.0(5)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -56,6 +56,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 	delete $request.headers[key]
 	$request.headers[key.toLowerCase()] = value
 };
+for (const [key, value] of Object.entries($response.headers)) {
+	delete $response.headers[key]
+	$response.headers[key.toLowerCase()] = value
+};
 
 /***************** Processing *****************/
 (async () => {
@@ -68,6 +72,8 @@ for (const [key, value] of Object.entries($request.headers)) {
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`);
 			// 设置格式
+			$.log(`🚧 ${$.name}`, `$response.headers: ${JSON.stringify($response?.headers)}`, "");
+			$.log(`🚧 ${$.name}`, `$response.headers["content-type"]: ${$response?.headers?.["content-type"]}`, "");
 			const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
 			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 			// 创建空数据
