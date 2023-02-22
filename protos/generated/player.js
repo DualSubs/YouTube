@@ -6,6 +6,24 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+/**
+ * @generated from protobuf enum Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType
+ */
+export var Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType;
+(function (Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType) {
+    /**
+     * @generated from protobuf enum value: UNKNOWN = 0;
+     */
+    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["UNKNOWN"] = 0] = "UNKNOWN";
+    /**
+     * @generated from protobuf enum value: OFF = 1;
+     */
+    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["OFF"] = 1] = "OFF";
+    /**
+     * @generated from protobuf enum value: ON = 2;
+     */
+    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["ON"] = 2] = "ON";
+})(Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType || (Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType = {}));
 // @generated message type with reflection information, may provide speed optimized methods
 class Player$Type extends MessageType {
     constructor() {
@@ -107,11 +125,12 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
             { no: 1, name: "captionTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks },
             { no: 2, name: "audioTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
             { no: 3, name: "translationLanguages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages },
-            { no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "defaultCaptionTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
-        const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: false };
+        const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -131,8 +150,11 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
                 case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages */ 3:
                     message.translationLanguages.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* bool defaultAudioTrackIndex */ 4:
-                    message.defaultAudioTrackIndex = reader.bool();
+                case /* int32 defaultAudioTrackIndex */ 4:
+                    message.defaultAudioTrackIndex = reader.int32();
+                    break;
+                case /* int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];*/ 6:
+                    message.defaultCaptionTrackIndex = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -155,9 +177,12 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
         /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3; */
         for (let i = 0; i < message.translationLanguages.length; i++)
             Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryWrite(message.translationLanguages[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* bool defaultAudioTrackIndex = 4; */
-        if (message.defaultAudioTrackIndex !== false)
-            writer.tag(4, WireType.Varint).bool(message.defaultAudioTrackIndex);
+        /* int32 defaultAudioTrackIndex = 4; */
+        if (message.defaultAudioTrackIndex !== 0)
+            writer.tag(4, WireType.Varint).int32(message.defaultAudioTrackIndex);
+        /* int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"]; */
+        if (message.defaultCaptionTrackIndex !== 0)
+            writer.tag(6, WireType.Varint).int32(message.defaultCaptionTrackIndex);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -356,11 +381,13 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
             { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "visibility", kind: "enum", T: () => ["Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType", Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType] },
+            { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value) {
-        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0 };
+        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0, visibility: 0, hasDefaultTrack: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -380,6 +407,12 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
                     break;
                 case /* int32 defaultCaptionTrackIndex */ 3:
                     message.defaultCaptionTrackIndex = reader.int32();
+                    break;
+                case /* Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility */ 5:
+                    message.visibility = reader.int32();
+                    break;
+                case /* bool hasDefaultTrack */ 6:
+                    message.hasDefaultTrack = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -403,6 +436,12 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         /* int32 defaultCaptionTrackIndex = 3; */
         if (message.defaultCaptionTrackIndex !== 0)
             writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
+        /* Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility = 5; */
+        if (message.visibility !== 0)
+            writer.tag(5, WireType.Varint).int32(message.visibility);
+        /* bool hasDefaultTrack = 6; */
+        if (message.hasDefaultTrack !== false)
+            writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

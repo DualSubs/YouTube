@@ -13,7 +13,8 @@ message Player {
 			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
 			repeated AudioTracks audioTracks = 2 [json_name = "audioTracks"];
 			repeated TranslationLanguages translationLanguages = 3 [json_name = "translationLanguages"];
-			bool defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
+			int32 defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
+			int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];
 
             message CaptionTracks {
 				string baseUrl = 1 [json_name = "baseUrl"];
@@ -32,24 +33,32 @@ message Player {
 					};
 				};
 			};
+			
+			enum visibilityType {
+				UNKNOWN = 0;
+				OFF = 1;
+				ON = 2;
+			};
 			/*
-			enum Type {
-				OFF = 0;
-				ON = 1;
-				UNKNOWN = 2;
+			enum captionsInitialStateType {
+				//UNKNOWN = 0;
+				//OFF = 1;
+				//ON = 2;
+				CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
 			};
 			*/
 			message AudioTracks {
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
 				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
-				//Type visibility = 5 [json_name = "visibility"];
-				//bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-
+				visibilityType visibility = 5 [json_name = "visibility"];
+				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
+				//captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
 			};
 
 			message TranslationLanguages {
 				string languageCode = 1 [json_name = "languageCode"];
 				LanguageName languageName = 2 [json_name = "languageName"];
+				//??? ??? = 3 [json_name = "???"];
 
 				message LanguageName {
 					repeated Runs runs = 1 [json_name = "runs"];

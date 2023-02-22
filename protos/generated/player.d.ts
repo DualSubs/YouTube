@@ -46,9 +46,13 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer {
      */
     translationLanguages: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages[];
     /**
-     * @generated from protobuf field: bool defaultAudioTrackIndex = 4;
+     * @generated from protobuf field: int32 defaultAudioTrackIndex = 4;
      */
-    defaultAudioTrackIndex: boolean;
+    defaultAudioTrackIndex: number;
+    /**
+     * @generated from protobuf field: int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];
+     */
+    defaultCaptionTrackIndex: number;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks
@@ -103,10 +107,11 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_N
 }
 /**
  *
- * enum Type {
- * OFF = 0;
- * ON = 1;
- * UNKNOWN = 2;
+ * enum captionsInitialStateType {
+ * //UNKNOWN = 0;
+ * //OFF = 1;
+ * //ON = 2;
+ * CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
  * };
  *
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks
@@ -120,6 +125,14 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
      * @generated from protobuf field: int32 defaultCaptionTrackIndex = 3;
      */
     defaultCaptionTrackIndex: number;
+    /**
+     * @generated from protobuf field: Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility = 5;
+     */
+    visibility: Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType;
+    /**
+     * @generated from protobuf field: bool hasDefaultTrack = 6;
+     */
+    hasDefaultTrack: boolean;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
@@ -151,6 +164,23 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLang
      * @generated from protobuf field: string text = 1;
      */
     text: string;
+}
+/**
+ * @generated from protobuf enum Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType
+ */
+export declare enum Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType {
+    /**
+     * @generated from protobuf enum value: UNKNOWN = 0;
+     */
+    UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: OFF = 1;
+     */
+    OFF = 1,
+    /**
+     * @generated from protobuf enum value: ON = 2;
+     */
+    ON = 2
 }
 declare class Player$Type extends MessageType<Player> {
     constructor();
