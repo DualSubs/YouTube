@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0(1)-youtube-player-beta");
+const $ = new Env("🍿️ DualSubs v0.6.0(2)-youtube-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -99,9 +99,11 @@ for (const [key, value] of Object.entries($request.headers)) {
 								case "tv.youtube.com":
 								default:
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+									break;
 								case "m.youtube.com":
 								case "youtubei.googleapis.com":
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+									break;
 							};
 						};
 					};
@@ -679,9 +681,11 @@ for (const [key, value] of Object.entries($request.headers)) {
 								case "tv.youtube.com":
 								default:
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+									break;
 								case "m.youtube.com":
 								case "youtubei.googleapis.com":
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+									break;
 							};
 						};
 					};
