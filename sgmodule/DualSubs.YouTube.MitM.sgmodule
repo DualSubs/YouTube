@@ -6,5 +6,8 @@
 #!manual=https://github.com/DualSubs/DualSubs-YouTube/wiki/🍿-DualSubs-for-▶-YouTube
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Unlock.png
 
+[Rule]
+URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJECT-TINYGIF
+
 [MITM]
 hostname = %APPEND% *.youtube.com, *.googlevideo.com, youtubei.googleapis.com
