@@ -92,34 +92,32 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks {
  */
 export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
     /**
-     * @generated from protobuf field: fixed32 AT1 = 1 [json_name = "AT1"];
+     * @generated from protobuf field: int32 AT1 = 1 [json_name = "AT1"];
      */
     aT1: number;
     /**
-     * @generated from protobuf field: repeated int32 captionTrackIndices = 2;
-     */
-    captionTrackIndices: number[];
-    /**
-     * @generated from protobuf field: fixed32 defaultCaptionTrackIndex = 3;
+     * repeated fixed32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
+     *
+     * @generated from protobuf field: int32 defaultCaptionTrackIndex = 3;
      */
     defaultCaptionTrackIndex: number;
     /**
      * visibilityType visibility = 5 [json_name = "visibility"];
      *
-     * @generated from protobuf field: fixed32 AT5 = 5 [json_name = "AT5"];
+     * @generated from protobuf field: int32 AT5 = 5 [json_name = "AT5"];
      */
     aT5: number;
     /**
      * bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
      *
-     * @generated from protobuf field: fixed32 AT6 = 6 [json_name = "AT6"];
+     * @generated from protobuf field: int32 AT6 = 6 [json_name = "AT6"];
      */
     aT6: number;
     /**
      * captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
      * int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
      *
-     * @generated from protobuf field: fixed32 AT11 = 11 [json_name = "AT11"];
+     * @generated from protobuf field: int32 AT11 = 11 [json_name = "AT11"];
      */
     aT11: number;
 }

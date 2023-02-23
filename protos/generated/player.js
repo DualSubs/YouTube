@@ -268,16 +268,15 @@ export const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks = new
 class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
-            { no: 1, name: "AT1", kind: "scalar", jsonName: "AT1", T: 7 /*ScalarType.FIXED32*/ },
-            { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 7 /*ScalarType.FIXED32*/ },
-            { no: 5, name: "AT5", kind: "scalar", jsonName: "AT5", T: 7 /*ScalarType.FIXED32*/ },
-            { no: 6, name: "AT6", kind: "scalar", jsonName: "AT6", T: 7 /*ScalarType.FIXED32*/ },
-            { no: 11, name: "AT11", kind: "scalar", jsonName: "AT11", T: 7 /*ScalarType.FIXED32*/ }
+            { no: 1, name: "AT1", kind: "scalar", jsonName: "AT1", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "AT5", kind: "scalar", jsonName: "AT5", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "AT6", kind: "scalar", jsonName: "AT6", T: 5 /*ScalarType.INT32*/ },
+            { no: 11, name: "AT11", kind: "scalar", jsonName: "AT11", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
-        const message = { aT1: 0, captionTrackIndices: [], defaultCaptionTrackIndex: 0, aT5: 0, aT6: 0, aT11: 0 };
+        const message = { aT1: 0, defaultCaptionTrackIndex: 0, aT5: 0, aT6: 0, aT11: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -288,27 +287,20 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* fixed32 AT1 = 1 [json_name = "AT1"];*/ 1:
-                    message.aT1 = reader.fixed32();
+                case /* int32 AT1 = 1 [json_name = "AT1"];*/ 1:
+                    message.aT1 = reader.int32();
                     break;
-                case /* repeated int32 captionTrackIndices */ 2:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.captionTrackIndices.push(reader.int32());
-                    else
-                        message.captionTrackIndices.push(reader.int32());
+                case /* int32 defaultCaptionTrackIndex */ 3:
+                    message.defaultCaptionTrackIndex = reader.int32();
                     break;
-                case /* fixed32 defaultCaptionTrackIndex */ 3:
-                    message.defaultCaptionTrackIndex = reader.fixed32();
+                case /* int32 AT5 = 5 [json_name = "AT5"];*/ 5:
+                    message.aT5 = reader.int32();
                     break;
-                case /* fixed32 AT5 = 5 [json_name = "AT5"];*/ 5:
-                    message.aT5 = reader.fixed32();
+                case /* int32 AT6 = 6 [json_name = "AT6"];*/ 6:
+                    message.aT6 = reader.int32();
                     break;
-                case /* fixed32 AT6 = 6 [json_name = "AT6"];*/ 6:
-                    message.aT6 = reader.fixed32();
-                    break;
-                case /* fixed32 AT11 = 11 [json_name = "AT11"];*/ 11:
-                    message.aT11 = reader.fixed32();
+                case /* int32 AT11 = 11 [json_name = "AT11"];*/ 11:
+                    message.aT11 = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -322,28 +314,21 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         return message;
     }
     internalBinaryWrite(message, writer, options) {
-        /* fixed32 AT1 = 1 [json_name = "AT1"]; */
+        /* int32 AT1 = 1 [json_name = "AT1"]; */
         if (message.aT1 !== 0)
-            writer.tag(1, WireType.Bit32).fixed32(message.aT1);
-        /* repeated int32 captionTrackIndices = 2; */
-        if (message.captionTrackIndices.length) {
-            writer.tag(2, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.captionTrackIndices.length; i++)
-                writer.int32(message.captionTrackIndices[i]);
-            writer.join();
-        }
-        /* fixed32 defaultCaptionTrackIndex = 3; */
+            writer.tag(1, WireType.Varint).int32(message.aT1);
+        /* int32 defaultCaptionTrackIndex = 3; */
         if (message.defaultCaptionTrackIndex !== 0)
-            writer.tag(3, WireType.Bit32).fixed32(message.defaultCaptionTrackIndex);
-        /* fixed32 AT5 = 5 [json_name = "AT5"]; */
+            writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
+        /* int32 AT5 = 5 [json_name = "AT5"]; */
         if (message.aT5 !== 0)
-            writer.tag(5, WireType.Bit32).fixed32(message.aT5);
-        /* fixed32 AT6 = 6 [json_name = "AT6"]; */
+            writer.tag(5, WireType.Varint).int32(message.aT5);
+        /* int32 AT6 = 6 [json_name = "AT6"]; */
         if (message.aT6 !== 0)
-            writer.tag(6, WireType.Bit32).fixed32(message.aT6);
-        /* fixed32 AT11 = 11 [json_name = "AT11"]; */
+            writer.tag(6, WireType.Varint).int32(message.aT6);
+        /* int32 AT11 = 11 [json_name = "AT11"]; */
         if (message.aT11 !== 0)
-            writer.tag(11, WireType.Bit32).fixed32(message.aT11);
+            writer.tag(11, WireType.Varint).int32(message.aT11);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
