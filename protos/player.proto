@@ -28,13 +28,13 @@ message Player {
 			
 			message AudioTracks {
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
-				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
-				int32 forcedCaptionTrackIndex = 4 [json_name = "forcedCaptionTrackIndex"];
-				int32 visibility = 5 [json_name = "visibility"];
-				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-				bool hasForcedTrack = 7 [json_name = "hasForcedTrack"];
-				string audioTrackId = 8 [json_name = "audioTrackId"];
-				int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
+				optional int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
+				optional int32 forcedCaptionTrackIndex = 4 [json_name = "forcedCaptionTrackIndex"];
+				optional int32 visibility = 5 [json_name = "visibility"];
+				optional bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
+				optional bool hasForcedTrack = 7 [json_name = "hasForcedTrack"];
+				optional string audioTrackId = 8 [json_name = "audioTrackId"];
+				optional int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
 			};
 			
 			message TranslationLanguages {

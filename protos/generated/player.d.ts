@@ -96,33 +96,33 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
      */
     captionTrackIndices: number[];
     /**
-     * @generated from protobuf field: int32 defaultCaptionTrackIndex = 3;
+     * @generated from protobuf field: optional int32 defaultCaptionTrackIndex = 3;
      */
-    defaultCaptionTrackIndex: number;
+    defaultCaptionTrackIndex?: number;
     /**
-     * @generated from protobuf field: int32 forcedCaptionTrackIndex = 4;
+     * @generated from protobuf field: optional int32 forcedCaptionTrackIndex = 4;
      */
-    forcedCaptionTrackIndex: number;
+    forcedCaptionTrackIndex?: number;
     /**
-     * @generated from protobuf field: int32 visibility = 5;
+     * @generated from protobuf field: optional int32 visibility = 5;
      */
-    visibility: number;
+    visibility?: number;
     /**
-     * @generated from protobuf field: bool hasDefaultTrack = 6;
+     * @generated from protobuf field: optional bool hasDefaultTrack = 6;
      */
-    hasDefaultTrack: boolean;
+    hasDefaultTrack?: boolean;
     /**
-     * @generated from protobuf field: bool hasForcedTrack = 7;
+     * @generated from protobuf field: optional bool hasForcedTrack = 7;
      */
-    hasForcedTrack: boolean;
+    hasForcedTrack?: boolean;
     /**
-     * @generated from protobuf field: string audioTrackId = 8;
+     * @generated from protobuf field: optional string audioTrackId = 8;
      */
-    audioTrackId: string;
+    audioTrackId?: string;
     /**
-     * @generated from protobuf field: int32 captionsInitialState = 11;
+     * @generated from protobuf field: optional int32 captionsInitialState = 11;
      */
-    captionsInitialState: number;
+    captionsInitialState?: number;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages

@@ -269,17 +269,17 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
             { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "forcedCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "visibility", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 7, name: "hasForcedTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 8, name: "audioTrackId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "captionsInitialState", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "forcedCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "visibility", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "hasDefaultTrack", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+            { no: 7, name: "hasForcedTrack", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "audioTrackId", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "captionsInitialState", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
-        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0, forcedCaptionTrackIndex: 0, visibility: 0, hasDefaultTrack: false, hasForcedTrack: false, audioTrackId: "", captionsInitialState: 0 };
+        const message = { captionTrackIndices: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -297,25 +297,25 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
                     else
                         message.captionTrackIndices.push(reader.int32());
                     break;
-                case /* int32 defaultCaptionTrackIndex */ 3:
+                case /* optional int32 defaultCaptionTrackIndex */ 3:
                     message.defaultCaptionTrackIndex = reader.int32();
                     break;
-                case /* int32 forcedCaptionTrackIndex */ 4:
+                case /* optional int32 forcedCaptionTrackIndex */ 4:
                     message.forcedCaptionTrackIndex = reader.int32();
                     break;
-                case /* int32 visibility */ 5:
+                case /* optional int32 visibility */ 5:
                     message.visibility = reader.int32();
                     break;
-                case /* bool hasDefaultTrack */ 6:
+                case /* optional bool hasDefaultTrack */ 6:
                     message.hasDefaultTrack = reader.bool();
                     break;
-                case /* bool hasForcedTrack */ 7:
+                case /* optional bool hasForcedTrack */ 7:
                     message.hasForcedTrack = reader.bool();
                     break;
-                case /* string audioTrackId */ 8:
+                case /* optional string audioTrackId */ 8:
                     message.audioTrackId = reader.string();
                     break;
-                case /* int32 captionsInitialState */ 11:
+                case /* optional int32 captionsInitialState */ 11:
                     message.captionsInitialState = reader.int32();
                     break;
                 default:
@@ -337,26 +337,26 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
                 writer.int32(message.captionTrackIndices[i]);
             writer.join();
         }
-        /* int32 defaultCaptionTrackIndex = 3; */
-        if (message.defaultCaptionTrackIndex !== 0)
+        /* optional int32 defaultCaptionTrackIndex = 3; */
+        if (message.defaultCaptionTrackIndex !== undefined)
             writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
-        /* int32 forcedCaptionTrackIndex = 4; */
-        if (message.forcedCaptionTrackIndex !== 0)
+        /* optional int32 forcedCaptionTrackIndex = 4; */
+        if (message.forcedCaptionTrackIndex !== undefined)
             writer.tag(4, WireType.Varint).int32(message.forcedCaptionTrackIndex);
-        /* int32 visibility = 5; */
-        if (message.visibility !== 0)
+        /* optional int32 visibility = 5; */
+        if (message.visibility !== undefined)
             writer.tag(5, WireType.Varint).int32(message.visibility);
-        /* bool hasDefaultTrack = 6; */
-        if (message.hasDefaultTrack !== false)
+        /* optional bool hasDefaultTrack = 6; */
+        if (message.hasDefaultTrack !== undefined)
             writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
-        /* bool hasForcedTrack = 7; */
-        if (message.hasForcedTrack !== false)
+        /* optional bool hasForcedTrack = 7; */
+        if (message.hasForcedTrack !== undefined)
             writer.tag(7, WireType.Varint).bool(message.hasForcedTrack);
-        /* string audioTrackId = 8; */
-        if (message.audioTrackId !== "")
+        /* optional string audioTrackId = 8; */
+        if (message.audioTrackId !== undefined)
             writer.tag(8, WireType.LengthDelimited).string(message.audioTrackId);
-        /* int32 captionsInitialState = 11; */
-        if (message.captionsInitialState !== 0)
+        /* optional int32 captionsInitialState = 11; */
+        if (message.captionsInitialState !== undefined)
             writer.tag(11, WireType.Varint).int32(message.captionsInitialState);
         let u = options.writeUnknownFields;
         if (u !== false)
