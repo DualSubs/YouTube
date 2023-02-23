@@ -63,9 +63,9 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks {
      */
     baseUrl: string;
     /**
-     * @generated from protobuf field: repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name name = 2;
+     * @generated from protobuf field: repeated Name name = 2;
      */
-    name: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name[];
+    name: Name[];
     /**
      * @generated from protobuf field: string vssId = 3;
      */
@@ -88,32 +88,6 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks {
     isTranslatable: boolean;
 }
 /**
- * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name
- */
-export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name {
-    /**
-     * @generated from protobuf field: repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs runs = 1;
-     */
-    runs: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs[];
-}
-/**
- * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs
- */
-export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs {
-    /**
-     * @generated from protobuf field: string text = 1;
-     */
-    text: string;
-}
-/**
- *
- * enum captionsInitialStateType {
- * //UNKNOWN = 0;
- * //OFF = 1;
- * //ON = 2;
- * CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
- * };
- *
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks
  */
 export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
@@ -126,13 +100,17 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
      */
     defaultCaptionTrackIndex: number;
     /**
-     * @generated from protobuf field: Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility = 5;
+     * @generated from protobuf field: visibilityType visibility = 5;
      */
-    visibility: Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType;
+    visibility: visibilityType;
     /**
      * @generated from protobuf field: bool hasDefaultTrack = 6;
      */
     hasDefaultTrack: boolean;
+    /**
+     * @generated from protobuf field: captionsInitialStateType captionsInitialState = 11;
+     */
+    captionsInitialState: captionsInitialStateType;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
@@ -143,32 +121,32 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLang
      */
     languageCode: string;
     /**
-     * @generated from protobuf field: Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName languageName = 2;
+     * @generated from protobuf field: Name languageName = 2;
      */
-    languageName?: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName;
+    languageName?: Name;
 }
 /**
- * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName
+ * @generated from protobuf message Name
  */
-export interface Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName {
+export interface Name {
     /**
-     * @generated from protobuf field: repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs runs = 1;
+     * @generated from protobuf field: repeated Name.Runs runs = 1;
      */
-    runs: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs[];
+    runs: Name_Runs[];
 }
 /**
- * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs
+ * @generated from protobuf message Name.Runs
  */
-export interface Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs {
+export interface Name_Runs {
     /**
      * @generated from protobuf field: string text = 1;
      */
     text: string;
 }
 /**
- * @generated from protobuf enum Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType
+ * @generated from protobuf enum visibilityType
  */
-export declare enum Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType {
+export declare enum visibilityType {
     /**
      * @generated from protobuf enum value: UNKNOWN = 0;
      */
@@ -181,6 +159,31 @@ export declare enum Player_Captions_PlayerCaptionsTracklistRenderer_visibilityTy
      * @generated from protobuf enum value: ON = 2;
      */
     ON = 2
+}
+/**
+ * @generated from protobuf enum captionsInitialStateType
+ */
+export declare enum captionsInitialStateType {
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
+     */
+    CAPTIONS_INITIAL_STATE_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
+     */
+    CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1,
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
+     */
+    CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2,
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
+     */
+    CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3,
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
+     */
+    CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4
 }
 declare class Player$Type extends MessageType<Player> {
     constructor();
@@ -222,26 +225,6 @@ declare class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type
  * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks
  */
 export declare const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type;
-declare class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type extends MessageType<Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name> {
-    constructor();
-    create(value?: PartialMessage<Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name>): Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name;
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name): Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name;
-    internalBinaryWrite(message: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
-}
-/**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name
- */
-export declare const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type;
-declare class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type extends MessageType<Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs> {
-    constructor();
-    create(value?: PartialMessage<Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs>): Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs;
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs): Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs;
-    internalBinaryWrite(message: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
-}
-/**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs
- */
-export declare const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type;
 declare class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType<Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks> {
     constructor();
     create(value?: PartialMessage<Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks>): Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks;
@@ -262,24 +245,24 @@ declare class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguag
  * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
  */
 export declare const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type;
-declare class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type extends MessageType<Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName> {
+declare class Name$Type extends MessageType<Name> {
     constructor();
-    create(value?: PartialMessage<Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName>): Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName;
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName): Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName;
-    internalBinaryWrite(message: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
+    create(value?: PartialMessage<Name>): Name;
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Name): Name;
+    internalBinaryWrite(message: Name, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
 }
 /**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName
+ * @generated MessageType for protobuf message Name
  */
-export declare const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type;
-declare class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type extends MessageType<Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs> {
+export declare const Name: Name$Type;
+declare class Name_Runs$Type extends MessageType<Name_Runs> {
     constructor();
-    create(value?: PartialMessage<Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs>): Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs;
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs): Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs;
-    internalBinaryWrite(message: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
+    create(value?: PartialMessage<Name_Runs>): Name_Runs;
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Name_Runs): Name_Runs;
+    internalBinaryWrite(message: Name_Runs, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
 }
 /**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs
+ * @generated MessageType for protobuf message Name.Runs
  */
-export declare const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs: Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type;
+export declare const Name_Runs: Name_Runs$Type;
 export {};

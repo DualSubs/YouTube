@@ -7,23 +7,49 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
- * @generated from protobuf enum Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType
+ * @generated from protobuf enum visibilityType
  */
-export var Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType;
-(function (Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType) {
+export var visibilityType;
+(function (visibilityType) {
     /**
      * @generated from protobuf enum value: UNKNOWN = 0;
      */
-    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["UNKNOWN"] = 0] = "UNKNOWN";
+    visibilityType[visibilityType["UNKNOWN"] = 0] = "UNKNOWN";
     /**
      * @generated from protobuf enum value: OFF = 1;
      */
-    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["OFF"] = 1] = "OFF";
+    visibilityType[visibilityType["OFF"] = 1] = "OFF";
     /**
      * @generated from protobuf enum value: ON = 2;
      */
-    Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType[Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType["ON"] = 2] = "ON";
-})(Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType || (Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType = {}));
+    visibilityType[visibilityType["ON"] = 2] = "ON";
+})(visibilityType || (visibilityType = {}));
+/**
+ * @generated from protobuf enum captionsInitialStateType
+ */
+export var captionsInitialStateType;
+(function (captionsInitialStateType) {
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
+     */
+    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_UNKNOWN"] = 0] = "CAPTIONS_INITIAL_STATE_UNKNOWN";
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
+     */
+    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_ON_REQUIRED"] = 1] = "CAPTIONS_INITIAL_STATE_ON_REQUIRED";
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
+     */
+    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_OFF_REQUIRED"] = 2] = "CAPTIONS_INITIAL_STATE_OFF_REQUIRED";
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
+     */
+    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_ON_RECOMMENDED"] = 3] = "CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
+    /**
+     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
+     */
+    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED"] = 4] = "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED";
+})(captionsInitialStateType || (captionsInitialStateType = {}));
 // @generated message type with reflection information, may provide speed optimized methods
 class Player$Type extends MessageType {
     constructor() {
@@ -198,7 +224,7 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type extends
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks", [
             { no: 1, name: "baseUrl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "name", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name },
+            { no: 2, name: "name", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Name },
             { no: 3, name: "vssId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "kind", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
@@ -221,8 +247,8 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type extends
                 case /* string baseUrl */ 1:
                     message.baseUrl = reader.string();
                     break;
-                case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name name */ 2:
-                    message.name.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated Name name */ 2:
+                    message.name.push(Name.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* string vssId */ 3:
                     message.vssId = reader.string();
@@ -254,9 +280,9 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type extends
         /* string baseUrl = 1; */
         if (message.baseUrl !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.baseUrl);
-        /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name name = 2; */
+        /* repeated Name name = 2; */
         for (let i = 0; i < message.name.length; i++)
-            Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name.internalBinaryWrite(message.name[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            Name.internalBinaryWrite(message.name[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* string vssId = 3; */
         if (message.vssId !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.vssId);
@@ -283,111 +309,18 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type extends
  */
 export const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type extends MessageType {
-    constructor() {
-        super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name", [
-            { no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs }
-        ]);
-    }
-    create(value) {
-        const message = { runs: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader, length, options, target) {
-        let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs runs */ 1:
-                    message.runs.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message, writer, options) {
-        /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs runs = 1; */
-        for (let i = 0; i < message.runs.length; i++)
-            Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name
- */
-export const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type extends MessageType {
-    constructor() {
-        super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value) {
-        const message = { text: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader, length, options, target) {
-        let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string text */ 1:
-                    message.text = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message, writer, options) {
-        /* string text = 1; */
-        if (message.text !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.text);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks.Name.Runs
- */
-export const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs = new Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks_Name_Runs$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
             { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
             { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "visibility", kind: "enum", T: () => ["Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType", Player_Captions_PlayerCaptionsTracklistRenderer_visibilityType] },
-            { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 5, name: "visibility", kind: "enum", T: () => ["visibilityType", visibilityType] },
+            { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "captionsInitialState", kind: "enum", T: () => ["captionsInitialStateType", captionsInitialStateType] }
         ]);
     }
     create(value) {
-        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0, visibility: 0, hasDefaultTrack: false };
+        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0, visibility: 0, hasDefaultTrack: false, captionsInitialState: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -408,11 +341,14 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
                 case /* int32 defaultCaptionTrackIndex */ 3:
                     message.defaultCaptionTrackIndex = reader.int32();
                     break;
-                case /* Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility */ 5:
+                case /* visibilityType visibility */ 5:
                     message.visibility = reader.int32();
                     break;
                 case /* bool hasDefaultTrack */ 6:
                     message.hasDefaultTrack = reader.bool();
+                    break;
+                case /* captionsInitialStateType captionsInitialState */ 11:
+                    message.captionsInitialState = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -436,12 +372,15 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         /* int32 defaultCaptionTrackIndex = 3; */
         if (message.defaultCaptionTrackIndex !== 0)
             writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
-        /* Player.Captions.PlayerCaptionsTracklistRenderer.visibilityType visibility = 5; */
+        /* visibilityType visibility = 5; */
         if (message.visibility !== 0)
             writer.tag(5, WireType.Varint).int32(message.visibility);
         /* bool hasDefaultTrack = 6; */
         if (message.hasDefaultTrack !== false)
             writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
+        /* captionsInitialStateType captionsInitialState = 11; */
+        if (message.captionsInitialState !== 0)
+            writer.tag(11, WireType.Varint).int32(message.captionsInitialState);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -457,7 +396,7 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type 
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages", [
             { no: 1, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "languageName", kind: "message", T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName }
+            { no: 2, name: "languageName", kind: "message", T: () => Name }
         ]);
     }
     create(value) {
@@ -475,8 +414,8 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type 
                 case /* string languageCode */ 1:
                     message.languageCode = reader.string();
                     break;
-                case /* Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName languageName */ 2:
-                    message.languageName = Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName.internalBinaryRead(reader, reader.uint32(), options, message.languageName);
+                case /* Name languageName */ 2:
+                    message.languageName = Name.internalBinaryRead(reader, reader.uint32(), options, message.languageName);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -493,9 +432,9 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type 
         /* string languageCode = 1; */
         if (message.languageCode !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.languageCode);
-        /* Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName languageName = 2; */
+        /* Name languageName = 2; */
         if (message.languageName)
-            Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName.internalBinaryWrite(message.languageName, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            Name.internalBinaryWrite(message.languageName, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -507,10 +446,10 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type 
  */
 export const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type extends MessageType {
+class Name$Type extends MessageType {
     constructor() {
-        super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName", [
-            { no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs }
+        super("Name", [
+            { no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Name_Runs }
         ]);
     }
     create(value) {
@@ -525,8 +464,8 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_Langu
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs runs */ 1:
-                    message.runs.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated Name.Runs runs */ 1:
+                    message.runs.push(Name_Runs.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -540,9 +479,9 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_Langu
         return message;
     }
     internalBinaryWrite(message, writer, options) {
-        /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs runs = 1; */
+        /* repeated Name.Runs runs = 1; */
         for (let i = 0; i < message.runs.length; i++)
-            Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            Name_Runs.internalBinaryWrite(message.runs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -550,13 +489,13 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_Langu
     }
 }
 /**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName
+ * @generated MessageType for protobuf message Name
  */
-export const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName$Type();
+export const Name = new Name$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type extends MessageType {
+class Name_Runs$Type extends MessageType {
     constructor() {
-        super("Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs", [
+        super("Name.Runs", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -597,6 +536,6 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_Langu
     }
 }
 /**
- * @generated MessageType for protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages.LanguageName.Runs
+ * @generated MessageType for protobuf message Name.Runs
  */
-export const Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs = new Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages_LanguageName_Runs$Type();
+export const Name_Runs = new Name_Runs$Type();

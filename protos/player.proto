@@ -24,51 +24,43 @@ message Player {
             	optional string kind = 5 [json_name = "kind"];
             	optional bool rtl = 6 [json_name = "rtl"];
             	bool isTranslatable = 7 [json_name = "isTranslatable"];
-
-				message Name {
-					repeated Runs runs = 1 [json_name = "runs"];
-
-					message Runs {
-						string text = 1 [json_name = "text"];
-					};
-				};
 			};
 			
-			enum visibilityType {
-				UNKNOWN = 0;
-				OFF = 1;
-				ON = 2;
-			};
-			/*
-			enum captionsInitialStateType {
-				//UNKNOWN = 0;
-				//OFF = 1;
-				//ON = 2;
-				CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
-			};
-			*/
 			message AudioTracks {
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
 				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
 				visibilityType visibility = 5 [json_name = "visibility"];
 				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-				//captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
+				captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
 			};
 
 			message TranslationLanguages {
 				string languageCode = 1 [json_name = "languageCode"];
-				LanguageName languageName = 2 [json_name = "languageName"];
+				Name languageName = 2 [json_name = "languageName"];
 				//??? ??? = 3 [json_name = "???"];
-
-				message LanguageName {
-					repeated Runs runs = 1 [json_name = "runs"];
-
-					message Runs {
-						string text = 1 [json_name = "text"];
-					};
-				};
 			};
+
         };
     };
 };
 
+message Name {
+	repeated Runs runs = 1 [json_name = "runs"];
+	message Runs {
+		string text = 1 [json_name = "text"];
+	};
+};
+
+enum visibilityType {
+	UNKNOWN = 0;
+	OFF = 1;
+	ON = 2;
+};
+
+enum captionsInitialStateType {
+	CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
+	CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
+	CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
+	CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
+	CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
+};
