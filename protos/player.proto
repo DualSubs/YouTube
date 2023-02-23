@@ -27,16 +27,16 @@ message Player {
 			};
 			
 			message AudioTracks {
-				int32 AT1 = 1; // visibility?
+				fixed32 AT1 = 1; // visibility?
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
-				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
+				fixed32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
 				//visibilityType visibility = 5 [json_name = "visibility"];
-				int32 AT5 = 5;
+				fixed32 AT5 = 5;
 				//bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-				int32 AT6 = 6;
+				fixed32 AT6 = 6;
 				//captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
 				//int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
-				int32 AT11 = 11;
+				fixed32 AT11 = 11;
 			};
 			
 			message TranslationLanguages {
