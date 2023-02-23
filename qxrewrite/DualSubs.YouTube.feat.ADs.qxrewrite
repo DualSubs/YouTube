@@ -1,19 +1,15 @@
-#!name=🍿️ DualSubs for ▶️ YouTube
-#!desc=(V0.6) YouTube字幕增强及双语模块
+#!name=🍿️ DualSubs for ▶️ YouTube feat.ADs
+#!desc=(V0.6) YouTube字幕增强及双语模块(配合去广告)
 #!openUrl=http://boxjs.com/#/app/DualSubs.YouTube
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs
 #!manual=https://github.com/DualSubs/DualSubs-YouTube/wiki/🍿-DualSubs-for-▶-YouTube
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
-#[rewrite_local]
-^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ url reject-img
-
 #[Script]
-# DualSubs.YouTube.Player.response
+# DualSubs.YouTube.Player
 ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.Player.response.js
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.Player.response.js
-# DualSubs.YouTube.TimedText.response
+# DualSubs.YouTube.TimedText
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.TimedText.response.js
 
 #[MITM]
