@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.3(8)-youtube-player-beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.4(6)-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -75,7 +75,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 			const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
 			$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
 			// 创建空数据
-			let data = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": {} }, "playerCaptionsTracklistRenderer": { "captionTracks": [], "translationLanguages": [] } } };
+			let data = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
 			// 解析格式
 			switch (Format) {
 				case "application/json":
@@ -88,16 +88,17 @@ for (const [key, value] of Object.entries($response.headers)) {
 							data.captions.playerCaptionsRenderer.visibility = "ON" // 字幕选项按钮可见
 							data.captions.playerCaptionsRenderer.showAutoCaptions = true; // 包含自动生成的字幕
 						}
-						if (data?.captions?.playerCaptionsTracklistRenderer) { // 有轨道列表
+						// 有播放器字幕列表渲染器
+						if (data?.captions?.playerCaptionsTracklistRenderer) {
 							$.log(`⚠ ${$.name}, Tracklist`, "");
 							if (data?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
-								// 改翻译可用性
+								// 改字幕可用性
 								data.captions.playerCaptionsTracklistRenderer.captionTracks = data?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
 									caption.isTranslatable = true;
 									return caption;
 								});
 							};
-							// 加翻译语言
+							// 增加自动翻译可用语言
 							switch (url?.host) {
 								case "www.youtube.com":
 								case "tv.youtube.com":
@@ -292,14 +293,14 @@ for (const [key, value] of Object.entries($response.headers)) {
 						constructor() {
 							super("Player.Captions.PlayerCaptionsTracklistRenderer", [
 								{ no: 1, name: "captionTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks },
-								{ no: 2, name: "audioTracks", kind: "message", T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
+								{ no: 2, name: "audioTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
 								{ no: 3, name: "translationLanguages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages },
 								{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
 								{ no: 6, name: "defaultCaptionTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: 5 /*ScalarType.INT32*/ }
 							]);
 						}
 						create(value) {
-							const message = { captionTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
+							const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
@@ -313,8 +314,8 @@ for (const [key, value] of Object.entries($response.headers)) {
 									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks */ 1:
 										message.captionTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryRead(reader, reader.uint32(), options));
 										break;
-									case /* Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks */ 2:
-										message.audioTracks = Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryRead(reader, reader.uint32(), options, message.audioTracks);
+									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks */ 2:
+										message.audioTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryRead(reader, reader.uint32(), options));
 										break;
 									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages */ 3:
 										message.translationLanguages.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryRead(reader, reader.uint32(), options));
@@ -340,9 +341,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks = 1; */
 							for (let i = 0; i < message.captionTracks.length; i++)
 								Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryWrite(message.captionTracks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-							/* Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2; */
-							if (message.audioTracks)
-								Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryWrite(message.audioTracks, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2; */
+							for (let i = 0; i < message.audioTracks.length; i++)
+								Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryWrite(message.audioTracks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
 							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3; */
 							for (let i = 0; i < message.translationLanguages.length; i++)
 								Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryWrite(message.translationLanguages[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
@@ -445,15 +446,18 @@ for (const [key, value] of Object.entries($response.headers)) {
 					class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
 						constructor() {
 							super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
-								{ no: 1, name: "AT1", kind: "scalar", jsonName: "AT1", T: 5 /*ScalarType.INT32*/ },
-								{ no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-								{ no: 5, name: "AT5", kind: "scalar", jsonName: "AT5", T: 5 /*ScalarType.INT32*/ },
-								{ no: 6, name: "AT6", kind: "scalar", jsonName: "AT6", T: 5 /*ScalarType.INT32*/ },
-								{ no: 11, name: "AT11", kind: "scalar", jsonName: "AT11", T: 5 /*ScalarType.INT32*/ }
+								{ no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
+								{ no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 4, name: "forcedCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 5, name: "visibility", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 6, name: "hasDefaultTrack", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+								{ no: 7, name: "hasForcedTrack", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+								{ no: 8, name: "audioTrackId", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+								{ no: 11, name: "captionsInitialState", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
 							]);
 						}
 						create(value) {
-							const message = { aT1: 0, defaultCaptionTrackIndex: 0, aT5: 0, aT6: 0, aT11: 0 };
+							const message = { captionTrackIndices: [] };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
@@ -464,20 +468,33 @@ for (const [key, value] of Object.entries($response.headers)) {
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* int32 AT1 = 1 [json_name = "AT1"];*/ 1:
-										message.aT1 = reader.int32();
+									case /* repeated int32 captionTrackIndices */ 2:
+										if (wireType === WireType.LengthDelimited)
+											for (let e = reader.int32() + reader.pos; reader.pos < e;)
+												message.captionTrackIndices.push(reader.int32());
+										else
+											message.captionTrackIndices.push(reader.int32());
 										break;
-									case /* int32 defaultCaptionTrackIndex */ 3:
+									case /* optional int32 defaultCaptionTrackIndex */ 3:
 										message.defaultCaptionTrackIndex = reader.int32();
 										break;
-									case /* int32 AT5 = 5 [json_name = "AT5"];*/ 5:
-										message.aT5 = reader.int32();
+									case /* optional int32 forcedCaptionTrackIndex */ 4:
+										message.forcedCaptionTrackIndex = reader.int32();
 										break;
-									case /* int32 AT6 = 6 [json_name = "AT6"];*/ 6:
-										message.aT6 = reader.int32();
+									case /* optional int32 visibility */ 5:
+										message.visibility = reader.int32();
 										break;
-									case /* int32 AT11 = 11 [json_name = "AT11"];*/ 11:
-										message.aT11 = reader.int32();
+									case /* optional bool hasDefaultTrack */ 6:
+										message.hasDefaultTrack = reader.bool();
+										break;
+									case /* optional bool hasForcedTrack */ 7:
+										message.hasForcedTrack = reader.bool();
+										break;
+									case /* optional string audioTrackId */ 8:
+										message.audioTrackId = reader.string();
+										break;
+									case /* optional int32 captionsInitialState */ 11:
+										message.captionsInitialState = reader.int32();
 										break;
 									default:
 										let u = options.readUnknownField;
@@ -491,21 +508,34 @@ for (const [key, value] of Object.entries($response.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							/* int32 AT1 = 1 [json_name = "AT1"]; */
-							if (message.aT1 !== 0)
-								writer.tag(1, WireType.Varint).int32(message.aT1);
-							/* int32 defaultCaptionTrackIndex = 3; */
-							if (message.defaultCaptionTrackIndex !== 0)
+							/* repeated int32 captionTrackIndices = 2; */
+							if (message.captionTrackIndices.length) {
+								writer.tag(2, WireType.LengthDelimited).fork();
+								for (let i = 0; i < message.captionTrackIndices.length; i++)
+									writer.int32(message.captionTrackIndices[i]);
+								writer.join();
+							}
+							/* optional int32 defaultCaptionTrackIndex = 3; */
+							if (message.defaultCaptionTrackIndex !== undefined)
 								writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
-							/* int32 AT5 = 5 [json_name = "AT5"]; */
-							if (message.aT5 !== 0)
-								writer.tag(5, WireType.Varint).int32(message.aT5);
-							/* int32 AT6 = 6 [json_name = "AT6"]; */
-							if (message.aT6 !== 0)
-								writer.tag(6, WireType.Varint).int32(message.aT6);
-							/* int32 AT11 = 11 [json_name = "AT11"]; */
-							if (message.aT11 !== 0)
-								writer.tag(11, WireType.Varint).int32(message.aT11);
+							/* optional int32 forcedCaptionTrackIndex = 4; */
+							if (message.forcedCaptionTrackIndex !== undefined)
+								writer.tag(4, WireType.Varint).int32(message.forcedCaptionTrackIndex);
+							/* optional int32 visibility = 5; */
+							if (message.visibility !== undefined)
+								writer.tag(5, WireType.Varint).int32(message.visibility);
+							/* optional bool hasDefaultTrack = 6; */
+							if (message.hasDefaultTrack !== undefined)
+								writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
+							/* optional bool hasForcedTrack = 7; */
+							if (message.hasForcedTrack !== undefined)
+								writer.tag(7, WireType.Varint).bool(message.hasForcedTrack);
+							/* optional string audioTrackId = 8; */
+							if (message.audioTrackId !== undefined)
+								writer.tag(8, WireType.LengthDelimited).string(message.audioTrackId);
+							/* optional int32 captionsInitialState = 11; */
+							if (message.captionsInitialState !== undefined)
+								writer.tag(11, WireType.Varint).int32(message.captionsInitialState);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -600,16 +630,28 @@ for (const [key, value] of Object.entries($response.headers)) {
 					// 找功能
 					if (data?.captions) { // 有基础字幕
 						$.log(`⚠ ${$.name}, Captions`, "");
-						if (data?.captions?.playerCaptionsTracklistRenderer) { // 有轨道列表
+						// 有播放器字幕列表渲染器
+						if (data?.captions?.playerCaptionsTracklistRenderer) {
 							$.log(`⚠ ${$.name}, Tracklist`, "");
 							if (data?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
-								// 改翻译可用性
+								// 改字幕可用性
 								data.captions.playerCaptionsTracklistRenderer.captionTracks = data?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
 									caption.isTranslatable = true;
 									return caption;
 								});
 							};
-							// 加翻译语言
+							/*
+							if (data?.captions?.playerCaptionsTracklistRenderer?.audioTracks) {
+								// 改音轨可用性
+								data.captions.playerCaptionsTracklistRenderer.audioTracks = data?.captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
+									audio.visibility = 2 //"ON";
+									audio.hasDefaultTrack = true;
+									audio.captionsInitialState = 3 //"CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
+									return audio;
+								});
+							};
+							*/
+							// 增加自动翻译可用语言
 							switch (url?.host) {
 								case "www.youtube.com":
 								case "tv.youtube.com":
@@ -620,15 +662,6 @@ for (const [key, value] of Object.entries($response.headers)) {
 								case "youtubei.googleapis.com":
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
 									break;
-							};
-							if (data?.captions?.playerCaptionsTracklistRenderer?.audioTracks) {
-								data.captions.playerCaptionsTracklistRenderer.audioTracks.AT1 = 1; // visibility?
-								//data.captions.playerCaptionsTracklistRenderer.audioTracks.visibility = 2 //"ON";
-								data.captions.playerCaptionsTracklistRenderer.audioTracks.AT5 = 2; // visibility?
-								//data.captions.playerCaptionsTracklistRenderer.audioTracks.hasDefaultTrack = true;
-								data.captions.playerCaptionsTracklistRenderer.audioTracks.AT6 = 1; // hasDefaultTrack?
-								//data.captions.playerCaptionsTracklistRenderer.audioTracks.captionsInitialState = 3 //"CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
-								data.captions.playerCaptionsTracklistRenderer.audioTracks.AT11 = 3; // captionsInitialState?
 							};
 						};
 					};
