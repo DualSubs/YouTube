@@ -6,50 +6,6 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-/**
- * @generated from protobuf enum visibilityType
- */
-export var visibilityType;
-(function (visibilityType) {
-    /**
-     * @generated from protobuf enum value: UNKNOWN = 0;
-     */
-    visibilityType[visibilityType["UNKNOWN"] = 0] = "UNKNOWN";
-    /**
-     * @generated from protobuf enum value: OFF = 1;
-     */
-    visibilityType[visibilityType["OFF"] = 1] = "OFF";
-    /**
-     * @generated from protobuf enum value: ON = 2;
-     */
-    visibilityType[visibilityType["ON"] = 2] = "ON";
-})(visibilityType || (visibilityType = {}));
-/**
- * @generated from protobuf enum captionsInitialStateType
- */
-export var captionsInitialStateType;
-(function (captionsInitialStateType) {
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
-     */
-    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_UNKNOWN"] = 0] = "CAPTIONS_INITIAL_STATE_UNKNOWN";
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
-     */
-    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_ON_REQUIRED"] = 1] = "CAPTIONS_INITIAL_STATE_ON_REQUIRED";
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
-     */
-    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_OFF_REQUIRED"] = 2] = "CAPTIONS_INITIAL_STATE_OFF_REQUIRED";
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
-     */
-    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_ON_RECOMMENDED"] = 3] = "CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
-     */
-    captionsInitialStateType[captionsInitialStateType["CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED"] = 4] = "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED";
-})(captionsInitialStateType || (captionsInitialStateType = {}));
 // @generated message type with reflection information, may provide speed optimized methods
 class Player$Type extends MessageType {
     constructor() {
@@ -314,9 +270,9 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
             { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
             { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "visibility", kind: "enum", T: () => ["visibilityType", visibilityType] },
+            { no: 5, name: "visibility", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 11, name: "captionsInitialState", kind: "enum", T: () => ["captionsInitialStateType", captionsInitialStateType] }
+            { no: 11, name: "captionsInitialState", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
@@ -341,13 +297,13 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
                 case /* int32 defaultCaptionTrackIndex */ 3:
                     message.defaultCaptionTrackIndex = reader.int32();
                     break;
-                case /* visibilityType visibility */ 5:
+                case /* int32 visibility */ 5:
                     message.visibility = reader.int32();
                     break;
                 case /* bool hasDefaultTrack */ 6:
                     message.hasDefaultTrack = reader.bool();
                     break;
-                case /* captionsInitialStateType captionsInitialState */ 11:
+                case /* int32 captionsInitialState */ 11:
                     message.captionsInitialState = reader.int32();
                     break;
                 default:
@@ -372,13 +328,13 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         /* int32 defaultCaptionTrackIndex = 3; */
         if (message.defaultCaptionTrackIndex !== 0)
             writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
-        /* visibilityType visibility = 5; */
+        /* int32 visibility = 5; */
         if (message.visibility !== 0)
             writer.tag(5, WireType.Varint).int32(message.visibility);
         /* bool hasDefaultTrack = 6; */
         if (message.hasDefaultTrack !== false)
             writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
-        /* captionsInitialStateType captionsInitialState = 11; */
+        /* int32 captionsInitialState = 11; */
         if (message.captionsInitialState !== 0)
             writer.tag(11, WireType.Varint).int32(message.captionsInitialState);
         let u = options.writeUnknownFields;

@@ -100,17 +100,21 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
      */
     defaultCaptionTrackIndex: number;
     /**
-     * @generated from protobuf field: visibilityType visibility = 5;
+     * visibilityType visibility = 5 [json_name = "visibility"];
+     *
+     * @generated from protobuf field: int32 visibility = 5;
      */
-    visibility: visibilityType;
+    visibility: number;
     /**
      * @generated from protobuf field: bool hasDefaultTrack = 6;
      */
     hasDefaultTrack: boolean;
     /**
-     * @generated from protobuf field: captionsInitialStateType captionsInitialState = 11;
+     * captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
+     *
+     * @generated from protobuf field: int32 captionsInitialState = 11;
      */
-    captionsInitialState: captionsInitialStateType;
+    captionsInitialState: number;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
@@ -142,48 +146,6 @@ export interface Name_Runs {
      * @generated from protobuf field: string text = 1;
      */
     text: string;
-}
-/**
- * @generated from protobuf enum visibilityType
- */
-export declare enum visibilityType {
-    /**
-     * @generated from protobuf enum value: UNKNOWN = 0;
-     */
-    UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: OFF = 1;
-     */
-    OFF = 1,
-    /**
-     * @generated from protobuf enum value: ON = 2;
-     */
-    ON = 2
-}
-/**
- * @generated from protobuf enum captionsInitialStateType
- */
-export declare enum captionsInitialStateType {
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
-     */
-    CAPTIONS_INITIAL_STATE_UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
-     */
-    CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1,
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
-     */
-    CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2,
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
-     */
-    CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3,
-    /**
-     * @generated from protobuf enum value: CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
-     */
-    CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4
 }
 declare class Player$Type extends MessageType<Player> {
     constructor();

@@ -29,11 +29,9 @@ message Player {
 			message AudioTracks {
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
 				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
-				//visibilityType visibility = 5 [json_name = "visibility"];
-				int32 visibility = 5 [json_name = "visibility"];
+				visibilityType visibility = 5 [json_name = "visibility"];
 				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-				//captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
-				int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
+				captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
 			};
 
 			message TranslationLanguages {
@@ -52,7 +50,7 @@ message Name {
 		string text = 1 [json_name = "text"];
 	};
 };
-/*
+
 enum visibilityType {
 	UNKNOWN = 0;
 	OFF = 1;
@@ -66,4 +64,3 @@ enum captionsInitialStateType {
 	CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
 	CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
 };
-*/
