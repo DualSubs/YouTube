@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.0-youtube-timedtext-request-beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.1(1)-timedtext-request-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -63,40 +63,29 @@ for (const [key, value] of Object.entries($request.headers)) {
 			$.log(`⚠ ${$.name}, 功能开启`, "");
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-			switch (url.params?.kind) {
-				case "asr":
-					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-					switch (url.params.cplatform) {
-						case "DESKTOP":
-							$.log(`⚠ ${$.name}, 桌面端`, "");
-							break;
-						case "MOBILE":
-						default:
-							$.log(`⚠ ${$.name}, 移动端`, "");
-							break;
-					};
+			switch (url.params.cplatform) {
+				case "DESKTOP":
+					$.log(`⚠ ${$.name}, 桌面端`, "");
 					break;
-				case "captions":
+				case "MOBILE":
 				default:
-					$.log(`⚠ ${$.name}, 普通字幕`, "");
-					switch (Settings.Translate.ShowOnly) {
-						case true:
-						case "true":
-							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
-							switch (url.params.cplatform) {
-								case "DESKTOP":
-									$.log(`⚠ ${$.name}, 桌面端`, "");
+					$.log(`⚠ ${$.name}, 移动端`, "");
+					switch (url.params?.kind) {
+						case "asr":
+							$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+							switch (Settings.Language) {
+								case "OFF":
+									$.log(`⚠ ${$.name}, 兼容字幕：关闭`, "");
 									break;
-								case "MOBILE":
 								default:
-									$.log(`⚠ ${$.name}, 移动端`, "");
+									$.log(`⚠ ${$.name}, 兼容字幕：${Settings.Language}`, "");
+									url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 									break;
 							};
 							break;
-						case false:
-						case "false":
+						case "captions":
 						default:
-							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
+							$.log(`⚠ ${$.name}, 普通字幕`, "");
 							break;
 					};
 					break;
