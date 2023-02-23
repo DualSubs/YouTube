@@ -28,7 +28,7 @@ message Player {
 			
 			message AudioTracks {
 				int32 AT1 = 1; // visibility?
-				//repeated fixed32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
+				//repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
 				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
 				//visibilityType visibility = 5 [json_name = "visibility"];
 				int32 AT5 = 5;

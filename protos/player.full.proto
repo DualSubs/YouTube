@@ -11,7 +11,7 @@ message Player {
 
 		message PlayerCaptionsTracklistRenderer {
 			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
-			repeated AudioTracks audioTracks = 2 [json_name = "audioTracks"];
+			AudioTracks audioTracks = 2 [json_name = "audioTracks"];
 			repeated TranslationLanguages translationLanguages = 3 [json_name = "translationLanguages"];
 			int32 defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
 			int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];
@@ -33,7 +33,7 @@ message Player {
 				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
 				captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
 			};
-
+			
 			message TranslationLanguages {
 				string languageCode = 1 [json_name = "languageCode"];
 				Name languageName = 2 [json_name = "languageName"];
