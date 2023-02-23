@@ -105,14 +105,14 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer", [
             { no: 1, name: "captionTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks },
-            { no: 2, name: "audioTracks", kind: "message", T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
+            { no: 2, name: "audioTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
             { no: 3, name: "translationLanguages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages },
             { no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "defaultCaptionTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
-        const message = { captionTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
+        const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -126,8 +126,8 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
                 case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks */ 1:
                     message.captionTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks */ 2:
-                    message.audioTracks = Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryRead(reader, reader.uint32(), options, message.audioTracks);
+                case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks */ 2:
+                    message.audioTracks.push(Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages */ 3:
                     message.translationLanguages.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryRead(reader, reader.uint32(), options));
@@ -153,9 +153,9 @@ class Player_Captions_PlayerCaptionsTracklistRenderer$Type extends MessageType {
         /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks captionTracks = 1; */
         for (let i = 0; i < message.captionTracks.length; i++)
             Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks.internalBinaryWrite(message.captionTracks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2; */
-        if (message.audioTracks)
-            Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryWrite(message.audioTracks, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2; */
+        for (let i = 0; i < message.audioTracks.length; i++)
+            Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks.internalBinaryWrite(message.audioTracks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3; */
         for (let i = 0; i < message.translationLanguages.length; i++)
             Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryWrite(message.translationLanguages[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
@@ -268,15 +268,18 @@ export const Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks = new
 class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
     constructor() {
         super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
-            { no: 1, name: "AT1", kind: "scalar", jsonName: "AT1", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
             { no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "AT5", kind: "scalar", jsonName: "AT5", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "AT6", kind: "scalar", jsonName: "AT6", T: 5 /*ScalarType.INT32*/ },
-            { no: 11, name: "AT11", kind: "scalar", jsonName: "AT11", T: 5 /*ScalarType.INT32*/ }
+            { no: 4, name: "forcedCaptionTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "visibility", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "hasDefaultTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 7, name: "hasForcedTrack", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "audioTrackId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "captionsInitialState", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value) {
-        const message = { aT1: 0, defaultCaptionTrackIndex: 0, aT5: 0, aT6: 0, aT11: 0 };
+        const message = { captionTrackIndices: [], defaultCaptionTrackIndex: 0, forcedCaptionTrackIndex: 0, visibility: 0, hasDefaultTrack: false, hasForcedTrack: false, audioTrackId: "", captionsInitialState: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -287,20 +290,33 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int32 AT1 = 1 [json_name = "AT1"];*/ 1:
-                    message.aT1 = reader.int32();
+                case /* repeated int32 captionTrackIndices */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.captionTrackIndices.push(reader.int32());
+                    else
+                        message.captionTrackIndices.push(reader.int32());
                     break;
                 case /* int32 defaultCaptionTrackIndex */ 3:
                     message.defaultCaptionTrackIndex = reader.int32();
                     break;
-                case /* int32 AT5 = 5 [json_name = "AT5"];*/ 5:
-                    message.aT5 = reader.int32();
+                case /* int32 forcedCaptionTrackIndex */ 4:
+                    message.forcedCaptionTrackIndex = reader.int32();
                     break;
-                case /* int32 AT6 = 6 [json_name = "AT6"];*/ 6:
-                    message.aT6 = reader.int32();
+                case /* int32 visibility */ 5:
+                    message.visibility = reader.int32();
                     break;
-                case /* int32 AT11 = 11 [json_name = "AT11"];*/ 11:
-                    message.aT11 = reader.int32();
+                case /* bool hasDefaultTrack */ 6:
+                    message.hasDefaultTrack = reader.bool();
+                    break;
+                case /* bool hasForcedTrack */ 7:
+                    message.hasForcedTrack = reader.bool();
+                    break;
+                case /* string audioTrackId */ 8:
+                    message.audioTrackId = reader.string();
+                    break;
+                case /* int32 captionsInitialState */ 11:
+                    message.captionsInitialState = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -314,21 +330,34 @@ class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends M
         return message;
     }
     internalBinaryWrite(message, writer, options) {
-        /* int32 AT1 = 1 [json_name = "AT1"]; */
-        if (message.aT1 !== 0)
-            writer.tag(1, WireType.Varint).int32(message.aT1);
+        /* repeated int32 captionTrackIndices = 2; */
+        if (message.captionTrackIndices.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.captionTrackIndices.length; i++)
+                writer.int32(message.captionTrackIndices[i]);
+            writer.join();
+        }
         /* int32 defaultCaptionTrackIndex = 3; */
         if (message.defaultCaptionTrackIndex !== 0)
             writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
-        /* int32 AT5 = 5 [json_name = "AT5"]; */
-        if (message.aT5 !== 0)
-            writer.tag(5, WireType.Varint).int32(message.aT5);
-        /* int32 AT6 = 6 [json_name = "AT6"]; */
-        if (message.aT6 !== 0)
-            writer.tag(6, WireType.Varint).int32(message.aT6);
-        /* int32 AT11 = 11 [json_name = "AT11"]; */
-        if (message.aT11 !== 0)
-            writer.tag(11, WireType.Varint).int32(message.aT11);
+        /* int32 forcedCaptionTrackIndex = 4; */
+        if (message.forcedCaptionTrackIndex !== 0)
+            writer.tag(4, WireType.Varint).int32(message.forcedCaptionTrackIndex);
+        /* int32 visibility = 5; */
+        if (message.visibility !== 0)
+            writer.tag(5, WireType.Varint).int32(message.visibility);
+        /* bool hasDefaultTrack = 6; */
+        if (message.hasDefaultTrack !== false)
+            writer.tag(6, WireType.Varint).bool(message.hasDefaultTrack);
+        /* bool hasForcedTrack = 7; */
+        if (message.hasForcedTrack !== false)
+            writer.tag(7, WireType.Varint).bool(message.hasForcedTrack);
+        /* string audioTrackId = 8; */
+        if (message.audioTrackId !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.audioTrackId);
+        /* int32 captionsInitialState = 11; */
+        if (message.captionsInitialState !== 0)
+            writer.tag(11, WireType.Varint).int32(message.captionsInitialState);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

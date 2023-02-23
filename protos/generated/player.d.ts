@@ -38,9 +38,9 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer {
      */
     captionTracks: Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks[];
     /**
-     * @generated from protobuf field: Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2;
+     * @generated from protobuf field: repeated Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks audioTracks = 2;
      */
-    audioTracks?: Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks;
+    audioTracks: Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks[];
     /**
      * @generated from protobuf field: repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3;
      */
@@ -92,34 +92,37 @@ export interface Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks {
  */
 export interface Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks {
     /**
-     * @generated from protobuf field: int32 AT1 = 1 [json_name = "AT1"];
+     * @generated from protobuf field: repeated int32 captionTrackIndices = 2;
      */
-    aT1: number;
+    captionTrackIndices: number[];
     /**
-     * repeated fixed32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
-     *
      * @generated from protobuf field: int32 defaultCaptionTrackIndex = 3;
      */
     defaultCaptionTrackIndex: number;
     /**
-     * visibilityType visibility = 5 [json_name = "visibility"];
-     *
-     * @generated from protobuf field: int32 AT5 = 5 [json_name = "AT5"];
+     * @generated from protobuf field: int32 forcedCaptionTrackIndex = 4;
      */
-    aT5: number;
+    forcedCaptionTrackIndex: number;
     /**
-     * bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-     *
-     * @generated from protobuf field: int32 AT6 = 6 [json_name = "AT6"];
+     * @generated from protobuf field: int32 visibility = 5;
      */
-    aT6: number;
+    visibility: number;
     /**
-     * captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
-     * int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
-     *
-     * @generated from protobuf field: int32 AT11 = 11 [json_name = "AT11"];
+     * @generated from protobuf field: bool hasDefaultTrack = 6;
      */
-    aT11: number;
+    hasDefaultTrack: boolean;
+    /**
+     * @generated from protobuf field: bool hasForcedTrack = 7;
+     */
+    hasForcedTrack: boolean;
+    /**
+     * @generated from protobuf field: string audioTrackId = 8;
+     */
+    audioTrackId: string;
+    /**
+     * @generated from protobuf field: int32 captionsInitialState = 11;
+     */
+    captionsInitialState: number;
 }
 /**
  * @generated from protobuf message Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages
