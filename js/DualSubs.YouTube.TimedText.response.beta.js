@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.1(1)-youtube-timedtext-response-beta");
+const $ = new Env("🍿️ DualSubs v0.7.0(5)-youtube-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -71,9 +71,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
 			switch (url.params?.kind) {
-				case "asr":
-					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-					break;
+				//case "asr":
+					//$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+					//break;
 				case "captions":
 				default:
 					$.log(`⚠ ${$.name}, 普通字幕`, "");
@@ -265,11 +265,15 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
 				const timeStamp1 = Sub1.events[index1].tStartMs, timeStamp2 = Sub2.events[index2].tStartMs;
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				const text1 = Sub1.events[index1]?.segs[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs[0].utf8 ?? "";
+				// 自动生成字幕处理
+				if (Sub1.events[index1]?.segs?.length > 1) Sub1.events[index1].segs[0].utf8 = Sub1.events[index1].segs.map(seg => seg.utf8).join("")
+				if (Sub2.events[index2]?.segs?.length > 1) Sub2.events[index2].segs[0].utf8 = Sub2.events[index2].segs.map(seg => seg.utf8).join("")
+				// 普通字幕处理
+				const text1 = Sub1.events[index1]?.segs?.[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs?.[0].utf8 ?? "";
 				//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
 				if (Math.abs(timeStamp1 - timeStamp2) <= 0) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
-					DualSub.events[index0].segs[0].utf8 = Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}`;
+					DualSub.events[index0].segs = [{ "utf8": Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}` }];
 					//$.log(`🚧`, `DualSub.events[index0].segs[0].utf8: ${DualSub.events[index0].segs[0].utf8}`, "");
 					//DualSub.body[index0].tStartMs = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
 					//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
