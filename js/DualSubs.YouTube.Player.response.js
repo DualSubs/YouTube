@@ -2,11 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-<<<<<<< Updated upstream
-const $ = new Env("🍿️ DualSubs v0.6.4(6)-youtube-player");
-=======
 const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.4(6)-player");
->>>>>>> Stashed changes
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
