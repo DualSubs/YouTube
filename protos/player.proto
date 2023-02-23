@@ -11,7 +11,7 @@ message Player {
 
 		message PlayerCaptionsTracklistRenderer {
 			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
-			repeated AudioTracks audioTracks = 2 [json_name = "audioTracks"];
+			AudioTracks audioTracks = 2 [json_name = "audioTracks"];
 			repeated TranslationLanguages translationLanguages = 3 [json_name = "translationLanguages"];
 			int32 defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
 			int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];
@@ -27,15 +27,18 @@ message Player {
 			};
 			
 			message AudioTracks {
+				int32 AT1 = 1; // visibility?
 				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices"];
 				int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
 				//visibilityType visibility = 5 [json_name = "visibility"];
-				int32 visibility = 5 [json_name = "visibility"];
-				bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
+				int32 AT5 = 5;
+				//bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
+				int32 AT6 = 6;
 				//captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
-				int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
+				//int32 captionsInitialState = 11 [json_name = "captionsInitialState"];
+				int32 AT11 = 11;
 			};
-
+			
 			message TranslationLanguages {
 				string languageCode = 1 [json_name = "languageCode"];
 				Name languageName = 2 [json_name = "languageName"];
