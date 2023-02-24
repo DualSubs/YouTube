@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(1)-timedtext-response-beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(8)-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -103,7 +103,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 								}
 								case "srv3": {
 									TransSub = XML.parse(TransSub);
+									$.log(`TransSub: ${JSON.stringify(TransSub)}`)
 									OriginSub = XML.parse(OriginSub);
+									$.log(`OriginSub: ${JSON.stringify(OriginSub)}`)
 									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
@@ -239,7 +241,7 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 					index0 = Options.includes("Reverse") ? index2 : index1;
 					// 自动生成字幕转普通字幕
 					Sub1.events[index1].segs[0].utf8 = Sub1.events[index1].segs.map(seg => seg.utf8).join(" ")
-					Sub2.events[index2].segs[0].utf8 = Sub2.events[index2].segs.map(seg => seg.utf8).join(" ")
+					Sub2.events[index2].segs[0].utf8 = Sub2.events[index2].segs.map(seg => seg.utf8).join("")
 					// 处理普通字幕
 					const text1 = Sub1.events[index1]?.segs?.[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs?.[0].utf8 ?? "";
 					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
@@ -263,8 +265,14 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
 					// 自动生成字幕转普通字幕
-					if (Sub1.timedtext.body.p[index1]?.s) Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1].s?.["#"] ?? Sub1.timedtext.body.p[index1].s.map(seg => seg["#"]).join(" ");
-					if (Sub2.timedtext.body.p[index2]?.s) Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? Sub2.timedtext.body.p[index2].s.map(seg => seg["#"]).join(" ");
+					if (Sub1.timedtext.body.p[index1]?.s) {
+						if (Array.isArray(Sub1.timedtext.body.p[index1]?.s)) Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1]?.s.map(seg => seg["#"]).join(" ");
+						else Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1].s?.["#"] ?? "";
+					}
+					if (Sub2.timedtext.body.p[index2]?.s) {
+						if (Array.isArray(Sub2.timedtext.body.p[index2]?.s)) Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2]?.s.map(seg => seg["#"]).join("");
+						else Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? "";
+					}
 					// 处理普通字幕
 					const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
 					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
