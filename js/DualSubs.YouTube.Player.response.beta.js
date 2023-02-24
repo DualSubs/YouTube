@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.4(6)-player-beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.4(8)-player-beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -295,19 +295,19 @@ for (const [key, value] of Object.entries($response.headers)) {
 								{ no: 1, name: "captionTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_CaptionTracks },
 								{ no: 2, name: "audioTracks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks },
 								{ no: 3, name: "translationLanguages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages },
-								{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-								{ no: 6, name: "defaultCaptionTrackIndex", kind: "scalar", jsonName: "defaultAudioTrackIndex", T: 5 /*ScalarType.INT32*/ }
+								{ no: 4, name: "defaultAudioTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 6, name: "defaultCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
 							]);
 						}
 						create(value) {
-							const message = { captionTracks: [], audioTracks: [], translationLanguages: [], defaultAudioTrackIndex: 0, defaultCaptionTrackIndex: 0 };
+							const message = { captionTracks: [], audioTracks: [], translationLanguages: [] };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							let message = target ?? this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
@@ -320,10 +320,10 @@ for (const [key, value] of Object.entries($response.headers)) {
 									case /* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages */ 3:
 										message.translationLanguages.push(Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryRead(reader, reader.uint32(), options));
 										break;
-									case /* int32 defaultAudioTrackIndex */ 4:
+									case /* optional int32 defaultAudioTrackIndex */ 4:
 										message.defaultAudioTrackIndex = reader.int32();
 										break;
-									case /* int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"];*/ 6:
+									case /* optional int32 defaultCaptionTrackIndex */ 6:
 										message.defaultCaptionTrackIndex = reader.int32();
 										break;
 									default:
@@ -347,11 +347,11 @@ for (const [key, value] of Object.entries($response.headers)) {
 							/* repeated Player.Captions.PlayerCaptionsTracklistRenderer.TranslationLanguages translationLanguages = 3; */
 							for (let i = 0; i < message.translationLanguages.length; i++)
 								Player_Captions_PlayerCaptionsTracklistRenderer_TranslationLanguages.internalBinaryWrite(message.translationLanguages[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-							/* int32 defaultAudioTrackIndex = 4; */
-							if (message.defaultAudioTrackIndex !== 0)
+							/* optional int32 defaultAudioTrackIndex = 4; */
+							if (message.defaultAudioTrackIndex !== undefined)
 								writer.tag(4, WireType.Varint).int32(message.defaultAudioTrackIndex);
-							/* int32 defaultCaptionTrackIndex = 6 [json_name = "defaultAudioTrackIndex"]; */
-							if (message.defaultCaptionTrackIndex !== 0)
+							/* optional int32 defaultCaptionTrackIndex = 6; */
+							if (message.defaultCaptionTrackIndex !== undefined)
 								writer.tag(6, WireType.Varint).int32(message.defaultCaptionTrackIndex);
 							let u = options.writeUnknownFields;
 							if (u !== false)
@@ -363,7 +363,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 						constructor() {
 							super("Player.Captions.PlayerCaptionsTracklistRenderer.CaptionTracks", [
 								{ no: 1, name: "baseUrl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-								{ no: 2, name: "name", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Name },
+								{ no: 2, name: "name", kind: "message", T: () => Name },
 								{ no: 3, name: "vssId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 								{ no: 4, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 								{ no: 5, name: "kind", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
@@ -372,22 +372,22 @@ for (const [key, value] of Object.entries($response.headers)) {
 							]);
 						}
 						create(value) {
-							const message = { baseUrl: "", name: [], vssId: "", languageCode: "", isTranslatable: false };
+							const message = { baseUrl: "", vssId: "", languageCode: "", isTranslatable: false };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							let message = target ?? this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
 									case /* string baseUrl */ 1:
 										message.baseUrl = reader.string();
 										break;
-									case /* repeated Name name */ 2:
-										message.name.push(Name.internalBinaryRead(reader, reader.uint32(), options));
+									case /* Name name */ 2:
+										message.name = Name.internalBinaryRead(reader, reader.uint32(), options, message.name);
 										break;
 									case /* string vssId */ 3:
 										message.vssId = reader.string();
@@ -419,9 +419,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 							/* string baseUrl = 1; */
 							if (message.baseUrl !== "")
 								writer.tag(1, WireType.LengthDelimited).string(message.baseUrl);
-							/* repeated Name name = 2; */
-							for (let i = 0; i < message.name.length; i++)
-								Name.internalBinaryWrite(message.name[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+							/* Name name = 2; */
+							if (message.name)
+								Name.internalBinaryWrite(message.name, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
 							/* string vssId = 3; */
 							if (message.vssId !== "")
 								writer.tag(3, WireType.LengthDelimited).string(message.vssId);
@@ -446,7 +446,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 					class Player_Captions_PlayerCaptionsTracklistRenderer_AudioTracks$Type extends MessageType {
 						constructor() {
 							super("Player.Captions.PlayerCaptionsTracklistRenderer.AudioTracks", [
-								{ no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
+								{ no: 2, name: "captionTrackIndices", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 5 /*ScalarType.INT32*/ },
 								{ no: 3, name: "defaultCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
 								{ no: 4, name: "forcedCaptionTrackIndex", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
 								{ no: 5, name: "visibility", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
@@ -464,11 +464,11 @@ for (const [key, value] of Object.entries($response.headers)) {
 							return message;
 						}
 						internalBinaryRead(reader, length, options, target) {
-							let message = target !== null && target !== void 0 ? target : this.create(), end = reader.pos + length;
+							let message = target ?? this.create(), end = reader.pos + length;
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* repeated int32 captionTrackIndices */ 2:
+									case /* repeated int32 captionTrackIndices = 2 [packed = false];*/ 2:
 										if (wireType === WireType.LengthDelimited)
 											for (let e = reader.int32() + reader.pos; reader.pos < e;)
 												message.captionTrackIndices.push(reader.int32());
@@ -508,13 +508,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							/* repeated int32 captionTrackIndices = 2; */
-							if (message.captionTrackIndices.length) {
-								writer.tag(2, WireType.LengthDelimited).fork();
-								for (let i = 0; i < message.captionTrackIndices.length; i++)
-									writer.int32(message.captionTrackIndices[i]);
-								writer.join();
-							}
+							/* repeated int32 captionTrackIndices = 2 [packed = false]; */
+							for (let i = 0; i < message.captionTrackIndices.length; i++)
+								writer.tag(2, WireType.Varint).int32(message.captionTrackIndices[i]);
 							/* optional int32 defaultCaptionTrackIndex = 3; */
 							if (message.defaultCaptionTrackIndex !== undefined)
 								writer.tag(3, WireType.Varint).int32(message.defaultCaptionTrackIndex);
