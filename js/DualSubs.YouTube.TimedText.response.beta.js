@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.1(5)-timedtext-response-beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(1)-timedtext-response-beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -70,16 +70,9 @@ for (const [key, value] of Object.entries($response.headers)) {
 			$.log(`⚠ ${$.name}, 功能开启`, "");
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-			switch (url.params?.kind) {
-				case "asr":
-					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-					break;
-				case "captions":
-					$.log(`⚠ ${$.name}, 普通字幕`, "");
-					break;
-				default:
-					break;
-			};
+			// 设置格式
+			const Format = url.params?.format || url.params?.fmt;
+			$.log(`🚧 ${$.name}, Format: ${Format}`, "");
 			switch (Settings.Translate.ShowOnly) {
 				case true:
 				case "true":
@@ -88,42 +81,40 @@ for (const [key, value] of Object.entries($response.headers)) {
 				case false:
 				case "false":
 				default:
-					$.log(`⚠ ${$.name}, 生成双语字幕`, "");
+					$.log(`⚠ ${$.name}, 显示双语字幕`, "");
 					switch (url?.params?.tlang) {
 						case undefined:
 							$.log(`⚠ ${$.name}, 未选择翻译语言，跳过`, "");
 							break;
 						default:
-							// 创建字幕Object
-							//let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
+							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
+							// 获取字幕
 							delete url.params?.tlang // 原字幕
 							let TransSub = $response.body;
 							let OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": $request.headers }).then(response => response.body);
-							// 创建双语字幕Object
-							let DualSub = {};
-							// 设置格式
-							const Format = url.params?.format || url.params?.fmt;
-							$.log(`🚧 ${$.name}, Format: ${Format}`, "");
 							// 处理格式
 							switch (Format) {
-								case "json3":
+								case "json3": {
 									TransSub = JSON.parse(TransSub);
 									OriginSub = JSON.parse(OriginSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
 									$response.body = JSON.stringify(DualSub);
 									break;
-								case "srv3":
+								}
+								case "srv3": {
 									TransSub = XML.parse(TransSub);
 									OriginSub = XML.parse(OriginSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
-								case "vtt":
+								}
+								case "vtt": {
 									TransSub = VTT.parse(TransSub);
 									OriginSub = VTT.parse(OriginSub);
-									DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
 									$response.body = VTT.stringify(DualSub);
 									break;
+								}
 								default:
 									break;
 							};
@@ -217,31 +208,6 @@ async function setENV(name, url, database) {
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
 };
 
-/**
- * Get TimedText
- * @author VirgilClyne
- * @param {Object} url - Parsed Request URL
- * @param {Object} headers - Request Headers
- * @param {String} langcode - langcode
- * @return {Promise<*>}
- */
-async function getTimedText(url, headers, langcode) {
-	$.log(`⚠ ${$.name}, Get TimedText URLs`, `url: ${JSON.stringify(url)}`, `langcode: ${langcode}`, "");
-	// 创建字幕Object
-	let OriginSub = {};
-	let SecondSub = {};
-	if (url.params?.tlang) { // 已选
-		SecondSub = $response.body;
-		delete url.params?.tlang // 原字幕
-		OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": headers }).then(response => response.body);
-	} else { // 未选
-		OriginSub = $response.body;
-		url.params.tlang = langcode; // 翻译字幕
-		SecondSub = await $.http.get({ "url": URL.stringify(url), "headers": headers }).then(response => response.body);
-	};
-	return { OriginSub, SecondSub };
-};
-
 /** 
  * Combine Dual Subtitles
  * @param {Object} Sub1 - Sub1
@@ -260,17 +226,15 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 	// 有序数列 用不着排序
 	//FirstSub.body.sort((x, y) => x - y);
 	//SecondSub.body.sort((x, y) => x - y);
-	const length1 = Sub1?.timedtext?.body?.p?.length ?? Sub1?.events?.length ?? Sub1?.body?.length;
-	const length2 = Sub2?.timedtext?.body?.p?.length ?? Sub2?.events?.length ?? Sub2?.body?.length;
 	let index0 = 0, index1 = 0, index2 = 0;
+	// 双指针法查找两个数组中的相同元素
 	switch (Format) {
-		case "json3":
-			// 双指针法查找两个数组中的相同元素
+		case "json3": {
+			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length
 			while (index1 < length1 && index2 < length2) {
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
 				const timeStamp1 = Sub1.events[index1].tStartMs, timeStamp2 = Sub2.events[index2].tStartMs;
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-
 				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
 					// 自动生成字幕转普通字幕
@@ -289,12 +253,12 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 				else index1++; index2++
 			};
 			break;
-		case "srv3":
-			// 双指针法查找两个数组中的相同元素
+		};
+		case "srv3": {
+			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length
 			while (index1 < length1 && index2 < length2) {
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
-				const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10);
-				const timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
+				const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10), timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
 				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
@@ -309,28 +273,20 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 					//$.log(`🚧`, `DualSub.timedtext.body.p[index0]["#"]: ${DualSub.timedtext.body.p[index0]["#"]}`, "");
 					//DualSub.timedtext.body.p[index0]["@t"] = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
 					//DualSub.timedtext.body.p[index0].index = Options.includes("Reverse") ? index2 : index1;
-					/*
-					// 方法2
-					const sentences1 = Sub1.timedtext.body.p[index1]?.s;
-					const sentences2 = Sub2.timedtext.body.p[index1]?.s;
-					if (Array.isArray(sentences1) && Array.isArray(sentences2)) {
-						$.log(`🚧`, `sentences1: ${JSON.stringify(sentences1)}`, `sentences2: ${JSON.stringify(sentences2)}`, "");
-						sentences1[0]["@t"] = timeStamp1;
-						sentences2[0]["@t"] = timeStamp2;
-						DualSub.timedtext.body.p[index0].s = [...sentences1, ...sentences2].sort(compare("@t"));
-					} else if (sentences1 && sentences2) DualSub.timedtext.body.p[index0].s["#"] = Options.includes("Reverse") ? `${sentences2["#"]}&#x000A;${sentences1["#"]}` : `${sentences1["#"]}&#x000A;${sentences2["#"]}`;
-					*/
 				};
 				if (timeStamp2 > timeStamp1) index1++
 				else if (timeStamp2 < timeStamp1) index2++
 				else index1++; index2++
 			};
 			break;
-		case "vtt":
+		};
+		case "vtt": {
+			const length1 = Sub1?.body?.length, length2 = Sub2?.body?.length;
 			while (index1 < length1 && index2 < length2) {
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
 				const timeStamp1 = Sub1.body[index1].timeStamp, timeStamp2 = Sub2.body[index2].timeStamp;
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+				// 处理普通字幕
 				const text1 = Sub1.body[index1]?.text ?? "", text2 = Sub2.body[index2]?.text ?? "";
 				//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
 				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
@@ -345,17 +301,10 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 				else { index1++; index2++ }
 			};
 			break;
+		};
 	}
 	//$.log(`🎉 ${$.name}, Combine Dual Subtitles`, `return DualSub内容: ${JSON.stringify(DualSub)}`, "");
 	return DualSub;
-	/***************** function *****************/
-	function compare(p){ //这是比较函数
-		return function(m,n){
-			var a = m[p];
-			var b = n[p];
-			return a - b; //升序
-		}
-	}
 };
 
 /***************** Env *****************/
