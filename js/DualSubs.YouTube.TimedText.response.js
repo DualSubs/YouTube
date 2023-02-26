@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿️ DualSubs v0.6.1(1)-youtube-timedtext-response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(20)-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -22,7 +22,10 @@ const DataBase = {
 	"YouTube": {
 		"Configs": {
 			"Languages":{"BG":"bg-BG","CS":"cs","DA":"da-DK","DE":"de","EL":"el","EN":"en","EN-GB":"en-GB","EN-US":"en-US","EN-US SDH":"en-US SDH","ES":"es","ES-419":"es-419","ES-ES":"es-ES","ET":"et-EE","FI":"fi","FR":"fr","HU":"hu-HU","ID":"id","IT":"it","JA":"ja","KO":"ko","LT":"lt-LT","LV":"lv-LV","NL":"nl-NL","NO":"nb-NO","PL":"pl-PL","PT":"pt","PT-PT":"pt-PT","PT-BR":"pt-BR","RO":"ro-RO","RU":"ru-RU","SK":"sk-SK","SL":"sl-SI","SV":"sv-SE","IS":"is-IS","ZH":"zh","ZH-HANS":"zh-Hans","ZH-HK":"zh-Hant-HK","ZH-HANT":"zh-Hant","ZH-TW":"zh-TW","YUE":"yue","YUE-HK":"yue-HK"},
-			"translationLanguages":[{"languageCode":"sq","languageName":{"simpleText":"阿尔巴尼亚语"}},{"languageCode":"ar","languageName":{"simpleText":"阿拉伯语"}},{"languageCode":"am","languageName":{"simpleText":"阿姆哈拉语"}},{"languageCode":"az","languageName":{"simpleText":"阿塞拜疆语"}},{"languageCode":"ga","languageName":{"simpleText":"爱尔兰语"}},{"languageCode":"et","languageName":{"simpleText":"爱沙尼亚语"}},{"languageCode":"or","languageName":{"simpleText":"奥里亚语"}},{"languageCode":"eu","languageName":{"simpleText":"巴斯克语"}},{"languageCode":"be","languageName":{"simpleText":"白俄罗斯语"}},{"languageCode":"bg","languageName":{"simpleText":"保加利亚语"}},{"languageCode":"is","languageName":{"simpleText":"冰岛语"}},{"languageCode":"pl","languageName":{"simpleText":"波兰语"}},{"languageCode":"bs","languageName":{"simpleText":"波斯尼亚语"}},{"languageCode":"fa","languageName":{"simpleText":"波斯语"}},{"languageCode":"tt","languageName":{"simpleText":"鞑靼语"}},{"languageCode":"da","languageName":{"simpleText":"丹麦语"}},{"languageCode":"de","languageName":{"simpleText":"德语"}},{"languageCode":"ru","languageName":{"simpleText":"俄语"}},{"languageCode":"fr","languageName":{"simpleText":"法语"}},{"languageCode":"fil","languageName":{"simpleText":"菲律宾语"}},{"languageCode":"fi","languageName":{"simpleText":"芬兰语"}},{"languageCode":"km","languageName":{"simpleText":"高棉语"}},{"languageCode":"ka","languageName":{"simpleText":"格鲁吉亚语"}},{"languageCode":"gu","languageName":{"simpleText":"古吉拉特语"}},{"languageCode":"kk","languageName":{"simpleText":"哈萨克语"}},{"languageCode":"ht","languageName":{"simpleText":"海地克里奥尔语"}},{"languageCode":"ko","languageName":{"simpleText":"韩语"}},{"languageCode":"ha","languageName":{"simpleText":"豪萨语"}},{"languageCode":"nl","languageName":{"simpleText":"荷兰语"}},{"languageCode":"gl","languageName":{"simpleText":"加利西亚语"}},{"languageCode":"ca","languageName":{"simpleText":"加泰罗尼亚语"}},{"languageCode":"cs","languageName":{"simpleText":"捷克语"}},{"languageCode":"kn","languageName":{"simpleText":"卡纳达语"}},{"languageCode":"ky","languageName":{"simpleText":"柯尔克孜语"}},{"languageCode":"xh","languageName":{"simpleText":"科萨语"}},{"languageCode":"co","languageName":{"simpleText":"科西嘉语"}},{"languageCode":"hr","languageName":{"simpleText":"克罗地亚语"}},{"languageCode":"ku","languageName":{"simpleText":"库尔德语"}},{"languageCode":"la","languageName":{"simpleText":"拉丁语"}},{"languageCode":"lv","languageName":{"simpleText":"拉脱维亚语"}},{"languageCode":"lo","languageName":{"simpleText":"老挝语"}},{"languageCode":"lt","languageName":{"simpleText":"立陶宛语"}},{"languageCode":"lb","languageName":{"simpleText":"卢森堡语"}},{"languageCode":"rw","languageName":{"simpleText":"卢旺达语"}},{"languageCode":"ro","languageName":{"simpleText":"罗马尼亚语"}},{"languageCode":"mt","languageName":{"simpleText":"马耳他语"}},{"languageCode":"mr","languageName":{"simpleText":"马拉地语"}},{"languageCode":"mg","languageName":{"simpleText":"马拉加斯语"}},{"languageCode":"ml","languageName":{"simpleText":"马拉雅拉姆语"}},{"languageCode":"ms","languageName":{"simpleText":"马来语"}},{"languageCode":"mk","languageName":{"simpleText":"马其顿语"}},{"languageCode":"mi","languageName":{"simpleText":"毛利语"}},{"languageCode":"mn","languageName":{"simpleText":"蒙古语"}},{"languageCode":"bn","languageName":{"simpleText":"孟加拉语"}},{"languageCode":"my","languageName":{"simpleText":"缅甸语"}},{"languageCode":"hmn","languageName":{"simpleText":"苗语"}},{"languageCode":"af","languageName":{"simpleText":"南非荷兰语"}},{"languageCode":"st","languageName":{"simpleText":"南索托语"}},{"languageCode":"ne","languageName":{"simpleText":"尼泊尔语"}},{"languageCode":"no","languageName":{"simpleText":"挪威语"}},{"languageCode":"pa","languageName":{"simpleText":"旁遮普语"}},{"languageCode":"pt","languageName":{"simpleText":"葡萄牙语"}},{"languageCode":"ps","languageName":{"simpleText":"普什图语"}},{"languageCode":"ny","languageName":{"simpleText":"齐切瓦语"}},{"languageCode":"ja","languageName":{"simpleText":"日语"}},{"languageCode":"sv","languageName":{"simpleText":"瑞典语"}},{"languageCode":"sm","languageName":{"simpleText":"萨摩亚语"}},{"languageCode":"sr","languageName":{"simpleText":"塞尔维亚语"}},{"languageCode":"si","languageName":{"simpleText":"僧伽罗语"}},{"languageCode":"sn","languageName":{"simpleText":"绍纳语"}},{"languageCode":"eo","languageName":{"simpleText":"世界语"}},{"languageCode":"sk","languageName":{"simpleText":"斯洛伐克语"}},{"languageCode":"sl","languageName":{"simpleText":"斯洛文尼亚语"}},{"languageCode":"sw","languageName":{"simpleText":"斯瓦希里语"}},{"languageCode":"gd","languageName":{"simpleText":"苏格兰盖尔语"}},{"languageCode":"ceb","languageName":{"simpleText":"宿务语"}},{"languageCode":"so","languageName":{"simpleText":"索马里语"}},{"languageCode":"tg","languageName":{"simpleText":"塔吉克语"}},{"languageCode":"te","languageName":{"simpleText":"泰卢固语"}},{"languageCode":"ta","languageName":{"simpleText":"泰米尔语"}},{"languageCode":"th","languageName":{"simpleText":"泰语"}},{"languageCode":"tr","languageName":{"simpleText":"土耳其语"}},{"languageCode":"tk","languageName":{"simpleText":"土库曼语"}},{"languageCode":"cy","languageName":{"simpleText":"威尔士语"}},{"languageCode":"ug","languageName":{"simpleText":"维吾尔语"}},{"languageCode":"ur","languageName":{"simpleText":"乌尔都语"}},{"languageCode":"uk","languageName":{"simpleText":"乌克兰语"}},{"languageCode":"uz","languageName":{"simpleText":"乌兹别克语"}},{"languageCode":"es","languageName":{"simpleText":"西班牙语"}},{"languageCode":"fy","languageName":{"simpleText":"西弗里西亚语"}},{"languageCode":"iw","languageName":{"simpleText":"希伯来语"}},{"languageCode":"el","languageName":{"simpleText":"希腊语"}},{"languageCode":"haw","languageName":{"simpleText":"夏威夷语"}},{"languageCode":"sd","languageName":{"simpleText":"信德语"}},{"languageCode":"hu","languageName":{"simpleText":"匈牙利语"}},{"languageCode":"su","languageName":{"simpleText":"巽他语"}},{"languageCode":"hy","languageName":{"simpleText":"亚美尼亚语"}},{"languageCode":"ig","languageName":{"simpleText":"伊博语"}},{"languageCode":"it","languageName":{"simpleText":"意大利语"}},{"languageCode":"yi","languageName":{"simpleText":"意第绪语"}},{"languageCode":"hi","languageName":{"simpleText":"印地语"}},{"languageCode":"id","languageName":{"simpleText":"印度尼西亚语"}},{"languageCode":"en","languageName":{"simpleText":"英语"}},{"languageCode":"yo","languageName":{"simpleText":"约鲁巴语"}},{"languageCode":"vi","languageName":{"simpleText":"越南语"}},{"languageCode":"jv","languageName":{"simpleText":"爪哇语"}},{"languageCode":"zh-Hant","languageName":{"simpleText":"中文（繁体）"}},{"languageCode":"zh-Hans","languageName":{"simpleText":"中文（简体）"}},{"languageCode":"zu","languageName":{"simpleText":"祖鲁语"}}]
+			"translationLanguages":{
+				"DESKTOP":[{"languageCode":"sq","languageName":{"simpleText":"阿尔巴尼亚语"}},{"languageCode":"ak","languageName":{"simpleText":"阿肯语"}},{"languageCode":"ar","languageName":{"simpleText":"阿拉伯语"}},{"languageCode":"am","languageName":{"simpleText":"阿姆哈拉语"}},{"languageCode":"as","languageName":{"simpleText":"阿萨姆语"}},{"languageCode":"az","languageName":{"simpleText":"阿塞拜疆语"}},{"languageCode":"ee","languageName":{"simpleText":"埃维语"}},{"languageCode":"ay","languageName":{"simpleText":"艾马拉语"}},{"languageCode":"ga","languageName":{"simpleText":"爱尔兰语"}},{"languageCode":"et","languageName":{"simpleText":"爱沙尼亚语"}},{"languageCode":"or","languageName":{"simpleText":"奥里亚语"}},{"languageCode":"om","languageName":{"simpleText":"奥罗莫语"}},{"languageCode":"eu","languageName":{"simpleText":"巴斯克语"}},{"languageCode":"be","languageName":{"simpleText":"白俄罗斯语"}},{"languageCode":"bg","languageName":{"simpleText":"保加利亚语"}},{"languageCode":"nso","languageName":{"simpleText":"北索托语"}},{"languageCode":"is","languageName":{"simpleText":"冰岛语"}},{"languageCode":"pl","languageName":{"simpleText":"波兰语"}},{"languageCode":"bs","languageName":{"simpleText":"波斯尼亚语"}},{"languageCode":"fa","languageName":{"simpleText":"波斯语"}},{"languageCode":"bho","languageName":{"simpleText":"博杰普尔语"}},{"languageCode":"ts","languageName":{"simpleText":"聪加语"}},{"languageCode":"tt","languageName":{"simpleText":"鞑靼语"}},{"languageCode":"da","languageName":{"simpleText":"丹麦语"}},{"languageCode":"de","languageName":{"simpleText":"德语"}},{"languageCode":"dv","languageName":{"simpleText":"迪维希语"}},{"languageCode":"ru","languageName":{"simpleText":"俄语"}},{"languageCode":"fr","languageName":{"simpleText":"法语"}},{"languageCode":"sa","languageName":{"simpleText":"梵语"}},{"languageCode":"fil","languageName":{"simpleText":"菲律宾语"}},{"languageCode":"fi","languageName":{"simpleText":"芬兰语"}},{"languageCode":"km","languageName":{"simpleText":"高棉语"}},{"languageCode":"ka","languageName":{"simpleText":"格鲁吉亚语"}},{"languageCode":"gu","languageName":{"simpleText":"古吉拉特语"}},{"languageCode":"gn","languageName":{"simpleText":"瓜拉尼语"}},{"languageCode":"kk","languageName":{"simpleText":"哈萨克语"}},{"languageCode":"ht","languageName":{"simpleText":"海地克里奥尔语"}},{"languageCode":"ko","languageName":{"simpleText":"韩语"}},{"languageCode":"ha","languageName":{"simpleText":"豪萨语"}},{"languageCode":"nl","languageName":{"simpleText":"荷兰语"}},{"languageCode":"gl","languageName":{"simpleText":"加利西亚语"}},{"languageCode":"ca","languageName":{"simpleText":"加泰罗尼亚语"}},{"languageCode":"cs","languageName":{"simpleText":"捷克语"}},{"languageCode":"kn","languageName":{"simpleText":"卡纳达语"}},{"languageCode":"ky","languageName":{"simpleText":"柯尔克孜语"}},{"languageCode":"xh","languageName":{"simpleText":"科萨语"}},{"languageCode":"co","languageName":{"simpleText":"科西嘉语"}},{"languageCode":"hr","languageName":{"simpleText":"克罗地亚语"}},{"languageCode":"qu","languageName":{"simpleText":"克丘亚语"}},{"languageCode":"ku","languageName":{"simpleText":"库尔德语"}},{"languageCode":"la","languageName":{"simpleText":"拉丁语"}},{"languageCode":"lv","languageName":{"simpleText":"拉脱维亚语"}},{"languageCode":"lo","languageName":{"simpleText":"老挝语"}},{"languageCode":"lt","languageName":{"simpleText":"立陶宛语"}},{"languageCode":"ln","languageName":{"simpleText":"林加拉语"}},{"languageCode":"lg","languageName":{"simpleText":"卢干达语"}},{"languageCode":"lb","languageName":{"simpleText":"卢森堡语"}},{"languageCode":"rw","languageName":{"simpleText":"卢旺达语"}},{"languageCode":"ro","languageName":{"simpleText":"罗马尼亚语"}},{"languageCode":"mt","languageName":{"simpleText":"马耳他语"}},{"languageCode":"mr","languageName":{"simpleText":"马拉地语"}},{"languageCode":"mg","languageName":{"simpleText":"马拉加斯语"}},{"languageCode":"ml","languageName":{"simpleText":"马拉雅拉姆语"}},{"languageCode":"ms","languageName":{"simpleText":"马来语"}},{"languageCode":"mk","languageName":{"simpleText":"马其顿语"}},{"languageCode":"mi","languageName":{"simpleText":"毛利语"}},{"languageCode":"mn","languageName":{"simpleText":"蒙古语"}},{"languageCode":"bn","languageName":{"simpleText":"孟加拉语"}},{"languageCode":"my","languageName":{"simpleText":"缅甸语"}},{"languageCode":"hmn","languageName":{"simpleText":"苗语"}},{"languageCode":"af","languageName":{"simpleText":"南非荷兰语"}},{"languageCode":"st","languageName":{"simpleText":"南索托语"}},{"languageCode":"ne","languageName":{"simpleText":"尼泊尔语"}},{"languageCode":"no","languageName":{"simpleText":"挪威语"}},{"languageCode":"pa","languageName":{"simpleText":"旁遮普语"}},{"languageCode":"pt","languageName":{"simpleText":"葡萄牙语"}},{"languageCode":"ps","languageName":{"simpleText":"普什图语"}},{"languageCode":"ny","languageName":{"simpleText":"齐切瓦语"}},{"languageCode":"ja","languageName":{"simpleText":"日语"}},{"languageCode":"sv","languageName":{"simpleText":"瑞典语"}},{"languageCode":"sm","languageName":{"simpleText":"萨摩亚语"}},{"languageCode":"sr","languageName":{"simpleText":"塞尔维亚语"}},{"languageCode":"si","languageName":{"simpleText":"僧伽罗语"}},{"languageCode":"sn","languageName":{"simpleText":"绍纳语"}},{"languageCode":"eo","languageName":{"simpleText":"世界语"}},{"languageCode":"sk","languageName":{"simpleText":"斯洛伐克语"}},{"languageCode":"sl","languageName":{"simpleText":"斯洛文尼亚语"}},{"languageCode":"sw","languageName":{"simpleText":"斯瓦希里语"}},{"languageCode":"gd","languageName":{"simpleText":"苏格兰盖尔语"}},{"languageCode":"ceb","languageName":{"simpleText":"宿务语"}},{"languageCode":"so","languageName":{"simpleText":"索马里语"}},{"languageCode":"tg","languageName":{"simpleText":"塔吉克语"}},{"languageCode":"te","languageName":{"simpleText":"泰卢固语"}},{"languageCode":"ta","languageName":{"simpleText":"泰米尔语"}},{"languageCode":"th","languageName":{"simpleText":"泰语"}},{"languageCode":"ti","languageName":{"simpleText":"提格利尼亚语"}},{"languageCode":"tr","languageName":{"simpleText":"土耳其语"}},{"languageCode":"tk","languageName":{"simpleText":"土库曼语"}},{"languageCode":"cy","languageName":{"simpleText":"威尔士语"}},{"languageCode":"ug","languageName":{"simpleText":"维吾尔语"}},{"languageCode":"und","languageName":{"simpleText":"未知语言"}},{"languageCode":"ur","languageName":{"simpleText":"乌尔都语"}},{"languageCode":"uk","languageName":{"simpleText":"乌克兰语"}},{"languageCode":"uz","languageName":{"simpleText":"乌兹别克语"}},{"languageCode":"es","languageName":{"simpleText":"西班牙语"}},{"languageCode":"fy","languageName":{"simpleText":"西弗里西亚语"}},{"languageCode":"iw","languageName":{"simpleText":"希伯来语"}},{"languageCode":"el","languageName":{"simpleText":"希腊语"}},{"languageCode":"haw","languageName":{"simpleText":"夏威夷语"}},{"languageCode":"sd","languageName":{"simpleText":"信德语"}},{"languageCode":"hu","languageName":{"simpleText":"匈牙利语"}},{"languageCode":"su","languageName":{"simpleText":"巽他语"}},{"languageCode":"hy","languageName":{"simpleText":"亚美尼亚语"}},{"languageCode":"ig","languageName":{"simpleText":"伊博语"}},{"languageCode":"it","languageName":{"simpleText":"意大利语"}},{"languageCode":"yi","languageName":{"simpleText":"意第绪语"}},{"languageCode":"hi","languageName":{"simpleText":"印地语"}},{"languageCode":"id","languageName":{"simpleText":"印度尼西亚语"}},{"languageCode":"en","languageName":{"simpleText":"英语"}},{"languageCode":"yo","languageName":{"simpleText":"约鲁巴语"}},{"languageCode":"vi","languageName":{"simpleText":"越南语"}},{"languageCode":"jv","languageName":{"simpleText":"爪哇语"}},{"languageCode":"zh-Hant","languageName":{"simpleText":"中文（繁体）"}},{"languageCode":"zh-Hans","languageName":{"simpleText":"中文（简体）"}},{"languageCode":"zu","languageName":{"simpleText":"祖鲁语"}},{"languageCode":"kri","languageName":{"simpleText":"Kri"}}],
+				"MOBILE":[{"languageCode":"sq","languageName":{"runs":[{"text":"阿尔巴尼亚语"}]}},{"languageCode":"ak","languageName":{"runs":[{"text":"阿肯语"}]}},{"languageCode":"ar","languageName":{"runs":[{"text":"阿拉伯语"}]}},{"languageCode":"am","languageName":{"runs":[{"text":"阿姆哈拉语"}]}},{"languageCode":"as","languageName":{"runs":[{"text":"阿萨姆语"}]}},{"languageCode":"az","languageName":{"runs":[{"text":"阿塞拜疆语"}]}},{"languageCode":"ee","languageName":{"runs":[{"text":"埃维语"}]}},{"languageCode":"ay","languageName":{"runs":[{"text":"艾马拉语"}]}},{"languageCode":"ga","languageName":{"runs":[{"text":"爱尔兰语"}]}},{"languageCode":"et","languageName":{"runs":[{"text":"爱沙尼亚语"}]}},{"languageCode":"or","languageName":{"runs":[{"text":"奥里亚语"}]}},{"languageCode":"om","languageName":{"runs":[{"text":"奥罗莫语"}]}},{"languageCode":"eu","languageName":{"runs":[{"text":"巴斯克语"}]}},{"languageCode":"be","languageName":{"runs":[{"text":"白俄罗斯语"}]}},{"languageCode":"bg","languageName":{"runs":[{"text":"保加利亚语"}]}},{"languageCode":"nso","languageName":{"runs":[{"text":"北索托语"}]}},{"languageCode":"is","languageName":{"runs":[{"text":"冰岛语"}]}},{"languageCode":"pl","languageName":{"runs":[{"text":"波兰语"}]}},{"languageCode":"bs","languageName":{"runs":[{"text":"波斯尼亚语"}]}},{"languageCode":"fa","languageName":{"runs":[{"text":"波斯语"}]}},{"languageCode":"bho","languageName":{"runs":[{"text":"博杰普尔语"}]}},{"languageCode":"ts","languageName":{"runs":[{"text":"聪加语"}]}},{"languageCode":"tt","languageName":{"runs":[{"text":"鞑靼语"}]}},{"languageCode":"da","languageName":{"runs":[{"text":"丹麦语"}]}},{"languageCode":"de","languageName":{"runs":[{"text":"德语"}]}},{"languageCode":"dv","languageName":{"runs":[{"text":"迪维希语"}]}},{"languageCode":"ru","languageName":{"runs":[{"text":"俄语"}]}},{"languageCode":"fr","languageName":{"runs":[{"text":"法语"}]}},{"languageCode":"sa","languageName":{"runs":[{"text":"梵语"}]}},{"languageCode":"fil","languageName":{"runs":[{"text":"菲律宾语"}]}},{"languageCode":"fi","languageName":{"runs":[{"text":"芬兰语"}]}},{"languageCode":"km","languageName":{"runs":[{"text":"高棉语"}]}},{"languageCode":"ka","languageName":{"runs":[{"text":"格鲁吉亚语"}]}},{"languageCode":"gu","languageName":{"runs":[{"text":"古吉拉特语"}]}},{"languageCode":"gn","languageName":{"runs":[{"text":"瓜拉尼语"}]}},{"languageCode":"kk","languageName":{"runs":[{"text":"哈萨克语"}]}},{"languageCode":"ht","languageName":{"runs":[{"text":"海地克里奥尔语"}]}},{"languageCode":"ko","languageName":{"runs":[{"text":"韩语"}]}},{"languageCode":"ha","languageName":{"runs":[{"text":"豪萨语"}]}},{"languageCode":"nl","languageName":{"runs":[{"text":"荷兰语"}]}},{"languageCode":"gl","languageName":{"runs":[{"text":"加利西亚语"}]}},{"languageCode":"ca","languageName":{"runs":[{"text":"加泰罗尼亚语"}]}},{"languageCode":"cs","languageName":{"runs":[{"text":"捷克语"}]}},{"languageCode":"kn","languageName":{"runs":[{"text":"卡纳达语"}]}},{"languageCode":"ky","languageName":{"runs":[{"text":"柯尔克孜语"}]}},{"languageCode":"xh","languageName":{"runs":[{"text":"科萨语"}]}},{"languageCode":"co","languageName":{"runs":[{"text":"科西嘉语"}]}},{"languageCode":"hr","languageName":{"runs":[{"text":"克罗地亚语"}]}},{"languageCode":"qu","languageName":{"runs":[{"text":"克丘亚语"}]}},{"languageCode":"ku","languageName":{"runs":[{"text":"库尔德语"}]}},{"languageCode":"la","languageName":{"runs":[{"text":"拉丁语"}]}},{"languageCode":"lv","languageName":{"runs":[{"text":"拉脱维亚语"}]}},{"languageCode":"lo","languageName":{"runs":[{"text":"老挝语"}]}},{"languageCode":"lt","languageName":{"runs":[{"text":"立陶宛语"}]}},{"languageCode":"ln","languageName":{"runs":[{"text":"林加拉语"}]}},{"languageCode":"lg","languageName":{"runs":[{"text":"卢干达语"}]}},{"languageCode":"lb","languageName":{"runs":[{"text":"卢森堡语"}]}},{"languageCode":"rw","languageName":{"runs":[{"text":"卢旺达语"}]}},{"languageCode":"ro","languageName":{"runs":[{"text":"罗马尼亚语"}]}},{"languageCode":"mt","languageName":{"runs":[{"text":"马耳他语"}]}},{"languageCode":"mr","languageName":{"runs":[{"text":"马拉地语"}]}},{"languageCode":"mg","languageName":{"runs":[{"text":"马拉加斯语"}]}},{"languageCode":"ml","languageName":{"runs":[{"text":"马拉雅拉姆语"}]}},{"languageCode":"ms","languageName":{"runs":[{"text":"马来语"}]}},{"languageCode":"mk","languageName":{"runs":[{"text":"马其顿语"}]}},{"languageCode":"mi","languageName":{"runs":[{"text":"毛利语"}]}},{"languageCode":"mn","languageName":{"runs":[{"text":"蒙古语"}]}},{"languageCode":"bn","languageName":{"runs":[{"text":"孟加拉语"}]}},{"languageCode":"my","languageName":{"runs":[{"text":"缅甸语"}]}},{"languageCode":"hmn","languageName":{"runs":[{"text":"苗语"}]}},{"languageCode":"af","languageName":{"runs":[{"text":"南非荷兰语"}]}},{"languageCode":"st","languageName":{"runs":[{"text":"南索托语"}]}},{"languageCode":"ne","languageName":{"runs":[{"text":"尼泊尔语"}]}},{"languageCode":"no","languageName":{"runs":[{"text":"挪威语"}]}},{"languageCode":"pa","languageName":{"runs":[{"text":"旁遮普语"}]}},{"languageCode":"pt","languageName":{"runs":[{"text":"葡萄牙语"}]}},{"languageCode":"ps","languageName":{"runs":[{"text":"普什图语"}]}},{"languageCode":"ny","languageName":{"runs":[{"text":"齐切瓦语"}]}},{"languageCode":"ja","languageName":{"runs":[{"text":"日语"}]}},{"languageCode":"sv","languageName":{"runs":[{"text":"瑞典语"}]}},{"languageCode":"sm","languageName":{"runs":[{"text":"萨摩亚语"}]}},{"languageCode":"sr","languageName":{"runs":[{"text":"塞尔维亚语"}]}},{"languageCode":"si","languageName":{"runs":[{"text":"僧伽罗语"}]}},{"languageCode":"sn","languageName":{"runs":[{"text":"绍纳语"}]}},{"languageCode":"eo","languageName":{"runs":[{"text":"世界语"}]}},{"languageCode":"sk","languageName":{"runs":[{"text":"斯洛伐克语"}]}},{"languageCode":"sl","languageName":{"runs":[{"text":"斯洛文尼亚语"}]}},{"languageCode":"sw","languageName":{"runs":[{"text":"斯瓦希里语"}]}},{"languageCode":"gd","languageName":{"runs":[{"text":"苏格兰盖尔语"}]}},{"languageCode":"ceb","languageName":{"runs":[{"text":"宿务语"}]}},{"languageCode":"so","languageName":{"runs":[{"text":"索马里语"}]}},{"languageCode":"tg","languageName":{"runs":[{"text":"塔吉克语"}]}},{"languageCode":"te","languageName":{"runs":[{"text":"泰卢固语"}]}},{"languageCode":"ta","languageName":{"runs":[{"text":"泰米尔语"}]}},{"languageCode":"th","languageName":{"runs":[{"text":"泰语"}]}},{"languageCode":"ti","languageName":{"runs":[{"text":"提格利尼亚语"}]}},{"languageCode":"tr","languageName":{"runs":[{"text":"土耳其语"}]}},{"languageCode":"tk","languageName":{"runs":[{"text":"土库曼语"}]}},{"languageCode":"cy","languageName":{"runs":[{"text":"威尔士语"}]}},{"languageCode":"ug","languageName":{"runs":[{"text":"维吾尔语"}]}},{"languageCode":"und","languageName":{"runs":[{"text":"未知语言"}]}},{"languageCode":"ur","languageName":{"runs":[{"text":"乌尔都语"}]}},{"languageCode":"uk","languageName":{"runs":[{"text":"乌克兰语"}]}},{"languageCode":"uz","languageName":{"runs":[{"text":"乌兹别克语"}]}},{"languageCode":"es","languageName":{"runs":[{"text":"西班牙语"}]}},{"languageCode":"fy","languageName":{"runs":[{"text":"西弗里西亚语"}]}},{"languageCode":"iw","languageName":{"runs":[{"text":"希伯来语"}]}},{"languageCode":"el","languageName":{"runs":[{"text":"希腊语"}]}},{"languageCode":"haw","languageName":{"runs":[{"text":"夏威夷语"}]}},{"languageCode":"sd","languageName":{"runs":[{"text":"信德语"}]}},{"languageCode":"hu","languageName":{"runs":[{"text":"匈牙利语"}]}},{"languageCode":"su","languageName":{"runs":[{"text":"巽他语"}]}},{"languageCode":"hy","languageName":{"runs":[{"text":"亚美尼亚语"}]}},{"languageCode":"ig","languageName":{"runs":[{"text":"伊博语"}]}},{"languageCode":"it","languageName":{"runs":[{"text":"意大利语"}]}},{"languageCode":"yi","languageName":{"runs":[{"text":"意第绪语"}]}},{"languageCode":"hi","languageName":{"runs":[{"text":"印地语"}]}},{"languageCode":"id","languageName":{"runs":[{"text":"印度尼西亚语"}]}},{"languageCode":"en","languageName":{"runs":[{"text":"英语"}]}},{"languageCode":"yo","languageName":{"runs":[{"text":"约鲁巴语"}]}},{"languageCode":"vi","languageName":{"runs":[{"text":"越南语"}]}},{"languageCode":"jv","languageName":{"runs":[{"text":"爪哇语"}]}},{"languageCode":"zh-Hant","languageName":{"runs":[{"text":"中文（繁体）"}]}},{"languageCode":"zh-Hans","languageName":{"runs":[{"text":"中文（简体）"}]}},{"languageCode":"zu","languageName":{"runs":[{"text":"祖鲁语"}]}},{"languageCode":"kri","languageName":{"runs":[{"text":"Kri"}]}}]
+			}
 		}
 	},
 	"Netflix": {
@@ -70,56 +73,54 @@ for (const [key, value] of Object.entries($response.headers)) {
 			$.log(`⚠ ${$.name}, 功能开启`, "");
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
-			switch (url.params?.kind) {
-				case "asr":
-					$.log(`⚠ ${$.name}, 自动生成字幕`, "");
+			// 设置格式
+			const Format = url.params?.format || url.params?.fmt;
+			$.log(`🚧 ${$.name}, Format: ${Format}`, "");
+			switch (Settings.Translate.ShowOnly) {
+				case true:
+				case "true":
+					$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
 					break;
-				case "captions":
+				case false:
+				case "false":
 				default:
-					$.log(`⚠ ${$.name}, 普通字幕`, "");
-					switch (Settings.Translate.ShowOnly) {
-						case true:
-						case "true":
-							$.log(`⚠ ${$.name}, 仅显示翻译后字幕`, "");
+					$.log(`⚠ ${$.name}, 显示双语字幕`, "");
+					switch (url?.params?.tlang) {
+						case undefined:
+							$.log(`⚠ ${$.name}, 未选择翻译语言，跳过`, "");
 							break;
-						case false:
-						case "false":
 						default:
 							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
-							switch (url?.params?.tlang) {
-								case undefined:
-									$.log(`⚠ ${$.name}, 未选择翻译语言，跳过`, "");
+							// 获取字幕
+							delete url.params?.tlang // 原字幕
+							let TransSub = $response.body;
+							let OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": $request.headers }).then(response => response.body);
+							// 处理格式
+							switch (Format) {
+								case "json3": {
+									TransSub = JSON.parse(TransSub);
+									OriginSub = JSON.parse(OriginSub);
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									$response.body = JSON.stringify(DualSub);
 									break;
+								}
+								case "srv3": {
+									TransSub = XML.parse(TransSub);
+									$.log(`TransSub: ${JSON.stringify(TransSub)}`)
+									OriginSub = XML.parse(OriginSub);
+									$.log(`OriginSub: ${JSON.stringify(OriginSub)}`)
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									$response.body = XML.stringify(DualSub);
+									break;
+								}
+								case "vtt": {
+									TransSub = VTT.parse(TransSub);
+									OriginSub = VTT.parse(OriginSub);
+									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									$response.body = VTT.stringify(DualSub);
+									break;
+								}
 								default:
-									// 创建字幕Object
-									let { OriginSub, SecondSub } = await getTimedText(url, { ...$request.headers ?? {}, "x-surge-skip-scripting": "true" }, Configs.Languages[Settings.Language]);
-									// 创建双语字幕Object
-									let DualSub = {};
-									// 设置格式
-									const Format = url.params?.format || url.params?.fmt;
-									$.log(`🚧 ${$.name}, Format: ${Format}`, "");
-									// 处理格式
-									switch (Format) {
-										case "json3":
-											OriginSub = JSON.parse(OriginSub);
-											SecondSub = JSON.parse(SecondSub);
-											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-											$response.body = JSON.stringify(DualSub);
-											break;
-										case "srv3":
-											OriginSub = XML.parse(OriginSub);
-											SecondSub = XML.parse(SecondSub);
-											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-											$response.body = XML.stringify(DualSub);
-											break;
-										case "vtt":
-											OriginSub = VTT.parse(OriginSub);
-											SecondSub = VTT.parse(SecondSub);
-											DualSub = await CombineDualSubs(Format, OriginSub, SecondSub, 0, Settings.Tolerance, [Settings.Position]);
-											$response.body = VTT.stringify(DualSub);
-										default:
-											break;
-									};
 									break;
 							};
 							break;
@@ -212,31 +213,6 @@ async function setENV(name, url, database) {
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
 };
 
-/**
- * Get TimedText
- * @author VirgilClyne
- * @param {Object} url - Parsed Request URL
- * @param {Object} headers - Request Headers
- * @param {String} langcode - langcode
- * @return {Promise<*>}
- */
-async function getTimedText(url, headers, langcode) {
-	$.log(`⚠ ${$.name}, Get TimedText URLs`, `url: ${JSON.stringify(url)}`, `langcode: ${langcode}`, "");
-	// 创建字幕Object
-	let OriginSub = {};
-	let SecondSub = {};
-	if (url.params?.tlang) { // 已选
-		SecondSub = $response.body;
-		delete url.params?.tlang // 原字幕
-		OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": headers }).then(response => response.body);
-	} else { // 未选
-		OriginSub = $response.body;
-		url.params.tlang = langcode; // 翻译字幕
-		SecondSub = await $.http.get({ "url": URL.stringify(url), "headers": headers }).then(response => response.body);
-	};
-	return { OriginSub, SecondSub };
-};
-
 /** 
  * Combine Dual Subtitles
  * @param {Object} Sub1 - Sub1
@@ -246,7 +222,7 @@ async function getTimedText(url, headers, langcode) {
  * @param {Array} options - options = ["Forward", "Reverse", "ShowOnly"]
  * @return {Promise<*>}
  */
-async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0, Tolerance = 1000, Options = ["Forward"]) {
+async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0, Tolerance = 0, Options = ["Forward"]) {
 	$.log(`⚠ ${$.name}, Combine Dual Subtitles`, `Offset:${Offset}, Tolerance:${Tolerance}, Options:${Options}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub1内容: ${JSON.stringify(Sub1)}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub2内容: ${JSON.stringify(Sub2)}`, "");
@@ -255,72 +231,107 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 	// 有序数列 用不着排序
 	//FirstSub.body.sort((x, y) => x - y);
 	//SecondSub.body.sort((x, y) => x - y);
-	const length1 = Sub1?.timedtext?.body?.p?.length ?? Sub1?.events?.length ?? Sub1?.body?.length;
-	const length2 = Sub2?.timedtext?.body?.p?.length ?? Sub2?.events?.length ?? Sub2?.body?.length;
 	let index0 = 0, index1 = 0, index2 = 0;
+	// 双指针法查找两个数组中的相同元素
 	switch (Format) {
-		case "json3":
-			// 双指针法查找两个数组中的相同元素
+		case "json3": {
+			// 自动生成字幕转普通字幕
+			if (DualSub?.wpWinPositions) {
+				$.log(`🚧`, `DualSub是自动生成字幕`, "");
+				index0 = 1, index1 = 1, index2 = 1;
+				//delete DualSub.wpWinPositions;
+				/*
+				DualSub.events = DualSub.events.map(event => {
+					delete event.wWinId;
+					return event;
+				});
+				*/
+				//delete Sub1.events[0];
+				//delete Sub2.events[0];
+				//delete DualSub.events[0];
+			};
+			// 处理普通字幕
+			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length
 			while (index1 < length1 && index2 < length2) {
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
 				const timeStamp1 = Sub1.events[index1].tStartMs, timeStamp2 = Sub2.events[index2].tStartMs;
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				const text1 = Sub1.events[index1]?.segs[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs[0].utf8 ?? "";
-				//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= 0) {
+				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
-					DualSub.events[index0].segs[0].utf8 = Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}`;
+					// 自动生成字幕转普通字幕
+					Sub1.events[index1].segs[0].utf8 = Sub1.events[index1].segs.map(seg => seg.utf8).join(" ")
+					Sub2.events[index2].segs[0].utf8 = Sub2.events[index2].segs.map(seg => seg.utf8).join("")
+					// 处理普通字幕
+					const text1 = Sub1.events[index1]?.segs?.[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs?.[0].utf8 ?? "";
+					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
+					DualSub.events[index0].segs = [{ "utf8": Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}` }];
+					delete DualSub.events[index0].wWinId
 					//$.log(`🚧`, `DualSub.events[index0].segs[0].utf8: ${DualSub.events[index0].segs[0].utf8}`, "");
 					//DualSub.body[index0].tStartMs = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
 					//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
-				}
-				if (timeStamp2 > timeStamp1) index1++
-				else if (timeStamp2 < timeStamp1) index2++
-				else index1++; index2++
-			};
-			break;
-		case "srv3":
-			// 双指针法查找两个数组中的相同元素
-			while (index1 < length1 && index2 < length2) {
-				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
-				const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10);
-				const timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
-				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= 0) {
-					index0 = Options.includes("Reverse") ? index2 : index1;
-					const text1 = Sub1.timedtext.body.p[index1]?.["#"];
-					const text2 = Sub2.timedtext.body.p[index2]?.["#"];
-					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-					if (text1 && text2) {
-						DualSub.timedtext.body.p[index0]["#"] = Options.includes("Reverse") ? `${text2}&#x000A;${text1}` : `${text1}&#x000A;${text2}`;
-						//$.log(`🚧`, `DualSub.timedtext.body.p[index0]["#"]: ${DualSub.timedtext.body.p[index0]["#"]}`, "");
-					}
-					//DualSub.timedtext.body.p[index0]["@t"] = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
-					//DualSub.timedtext.body.p[index0].index = Options.includes("Reverse") ? index2 : index1;
-					/*
-					const sentences1 = Sub1.timedtext.body.p[index1]?.s;
-					const sentences2 = Sub2.timedtext.body.p[index1]?.s;
-					if (Array.isArray(sentences1) && Array.isArray(sentences2)) {
-						$.log(`🚧`, `sentences1: ${JSON.stringify(sentences1)}`, `sentences2: ${JSON.stringify(sentences2)}`, "");
-						sentences1[0]["@t"] = timeStamp1;
-						sentences2[0]["@t"] = timeStamp2;
-						DualSub.timedtext.body.p[index0].s = [...sentences1, ...sentences2].sort(compare("@t"));
-					} else if (sentences1 && sentences2) DualSub.timedtext.body.p[index0].s["#"] = Options.includes("Reverse") ? `${sentences2["#"]}&#x000A;${sentences1["#"]}` : `${sentences1["#"]}&#x000A;${sentences2["#"]}`;
-					*/
 				};
 				if (timeStamp2 > timeStamp1) index1++
 				else if (timeStamp2 < timeStamp1) index2++
 				else index1++; index2++
 			};
 			break;
-		case "vtt":
+		};
+		case "srv3": {
+			// 自动生成字幕转普通字幕
+			/*
+			if (DualSub?.timedtext?.head) {
+				$.log(`🚧`, `DualSub是自动生成字幕`, "");
+				//delete DualSub.timedtext.head;
+				//delete DualSub.timedtext.body.w;
+				DualSub.timedtext.body.p = DualSub.timedtext.body.p.map(para => {
+					delete para["@w"];
+					delete para["@a"];
+					return para;
+				});
+			};
+			*/
+			// 处理普通字幕
+			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length
+			while (index1 < length1 && index2 < length2) {
+				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
+				const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10), timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
+				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
+					index0 = Options.includes("Reverse") ? index2 : index1;
+					// 自动生成字幕转普通字幕
+					if (Sub1.timedtext.body.p[index1]?.s) {
+						if (Array.isArray(Sub1.timedtext.body.p[index1]?.s)) Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1]?.s.map(seg => seg["#"]).join(" ");
+						else Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1].s?.["#"] ?? "";
+					}
+					if (Sub2.timedtext.body.p[index2]?.s) {
+						if (Array.isArray(Sub2.timedtext.body.p[index2]?.s)) Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2]?.s.map(seg => seg["#"]).join("");
+						else Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? "";
+					}
+					delete DualSub.timedtext.body.p[index0].s;
+					// 处理普通字幕
+					const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
+					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
+					DualSub.timedtext.body.p[index0]["#"] = Options.includes("Reverse") ? `${text2}&#x000A;${text1}` : `${text1}&#x000A;${text2}`;
+					//$.log(`🚧`, `DualSub.timedtext.body.p[index0]["#"]: ${DualSub.timedtext.body.p[index0]["#"]}`, "");
+					//DualSub.timedtext.body.p[index0]["@t"] = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
+					//DualSub.timedtext.body.p[index0].index = Options.includes("Reverse") ? index2 : index1;
+				};
+				if (timeStamp2 > timeStamp1) index1++
+				else if (timeStamp2 < timeStamp1) index2++
+				else index1++; index2++
+			};
+			break;
+		};
+		case "vtt": {
+			const length1 = Sub1?.body?.length, length2 = Sub2?.body?.length;
 			while (index1 < length1 && index2 < length2) {
 				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
 				const timeStamp1 = Sub1.body[index1].timeStamp, timeStamp2 = Sub2.body[index2].timeStamp;
 				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+				// 处理普通字幕
 				const text1 = Sub1.body[index1]?.text ?? "", text2 = Sub2.body[index2]?.text ?? "";
 				//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= 0) {
+				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
 					index0 = Options.includes("Reverse") ? index2 : index1;
 					DualSub.body[index0].text = Options.includes("Reverse") ? `${text2}\n${text1}` : Options.includes("ShowOnly") ? text2 : `${text1}\n${text2}`;
 					//$.log(`🚧`, `index0: ${index0}`, `text: ${DualSub.body[index0].text}`, "");
@@ -332,17 +343,10 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 				else { index1++; index2++ }
 			};
 			break;
+		};
 	}
 	//$.log(`🎉 ${$.name}, Combine Dual Subtitles`, `return DualSub内容: ${JSON.stringify(DualSub)}`, "");
 	return DualSub;
-	/***************** function *****************/
-	function compare(p){ //这是比较函数
-		return function(m,n){
-			var a = m[p];
-			var b = n[p];
-			return a - b; //升序
-		}
-	}
 };
 
 /***************** Env *****************/
