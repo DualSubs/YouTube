@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(20)-timedtext-response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(10)-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -236,19 +236,9 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 	switch (Format) {
 		case "json3": {
 			// 自动生成字幕转普通字幕
-			if (DualSub?.wpWinPositions) {
+			if (DualSub?.events?.[0]?.id) {
 				$.log(`🚧`, `DualSub是自动生成字幕`, "");
 				index0 = 1, index1 = 1, index2 = 1;
-				//delete DualSub.wpWinPositions;
-				/*
-				DualSub.events = DualSub.events.map(event => {
-					delete event.wWinId;
-					return event;
-				});
-				*/
-				//delete Sub1.events[0];
-				//delete Sub2.events[0];
-				//delete DualSub.events[0];
 			};
 			// 处理普通字幕
 			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length
@@ -278,18 +268,10 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 		};
 		case "srv3": {
 			// 自动生成字幕转普通字幕
-			/*
 			if (DualSub?.timedtext?.head) {
 				$.log(`🚧`, `DualSub是自动生成字幕`, "");
-				//delete DualSub.timedtext.head;
-				//delete DualSub.timedtext.body.w;
-				DualSub.timedtext.body.p = DualSub.timedtext.body.p.map(para => {
-					delete para["@w"];
-					delete para["@a"];
-					return para;
-				});
+				DualSub.timedtext.head.wp[1]["@rc"] = "1";
 			};
-			*/
 			// 处理普通字幕
 			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length
 			while (index1 < length1 && index2 < length2) {
@@ -302,12 +284,13 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 					if (Sub1.timedtext.body.p[index1]?.s) {
 						if (Array.isArray(Sub1.timedtext.body.p[index1]?.s)) Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1]?.s.map(seg => seg["#"]).join(" ");
 						else Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1].s?.["#"] ?? "";
-					}
+					};
 					if (Sub2.timedtext.body.p[index2]?.s) {
 						if (Array.isArray(Sub2.timedtext.body.p[index2]?.s)) Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2]?.s.map(seg => seg["#"]).join("");
 						else Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? "";
-					}
+					};
 					delete DualSub.timedtext.body.p[index0].s;
+					//if (DualSub.timedtext.body.p[index0]?.["@a"]) DualSub.timedtext.body.p[index0]["#"] = "&#x000A;";
 					// 处理普通字幕
 					const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
 					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
