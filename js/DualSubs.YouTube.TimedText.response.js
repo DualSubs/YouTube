@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(10)-timedtext-response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(11)-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -106,9 +106,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 								}
 								case "srv3": {
 									TransSub = XML.parse(TransSub);
-									$.log(`TransSub: ${JSON.stringify(TransSub)}`)
 									OriginSub = XML.parse(OriginSub);
-									$.log(`OriginSub: ${JSON.stringify(OriginSub)}`)
 									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
@@ -290,7 +288,6 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 						else Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? "";
 					};
 					delete DualSub.timedtext.body.p[index0].s;
-					//if (DualSub.timedtext.body.p[index0]?.["@a"]) DualSub.timedtext.body.p[index0]["#"] = "&#x000A;";
 					// 处理普通字幕
 					const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
 					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
