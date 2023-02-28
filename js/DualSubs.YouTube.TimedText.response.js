@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(11)-timedtext-response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.4(12)-timedtext-response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -76,6 +76,10 @@ for (const [key, value] of Object.entries($response.headers)) {
 			// 设置格式
 			const Format = url.params?.format || url.params?.fmt;
 			$.log(`🚧 ${$.name}, Format: ${Format}`, "");
+			const Kind = url.params?.kind;
+			$.log(`🚧 ${$.name}, Kind: ${Kind}`, "");
+			Settings.External.Offset = 0;
+			Settings.Tolerance = 0;
 			switch (Settings.Translate.ShowOnly) {
 				case true:
 				case "true":
@@ -100,21 +104,21 @@ for (const [key, value] of Object.entries($response.headers)) {
 								case "json3": {
 									TransSub = JSON.parse(TransSub);
 									OriginSub = JSON.parse(OriginSub);
-									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = JSON.stringify(DualSub);
 									break;
 								}
 								case "srv3": {
 									TransSub = XML.parse(TransSub);
 									OriginSub = XML.parse(OriginSub);
-									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
 								}
 								case "vtt": {
 									TransSub = VTT.parse(TransSub);
 									OriginSub = VTT.parse(OriginSub);
-									let DualSub = await CombineDualSubs(Format, OriginSub, TransSub, 0, 0, [Settings.Position]);
+									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = VTT.stringify(DualSub);
 									break;
 								}
@@ -215,12 +219,14 @@ async function setENV(name, url, database) {
  * Combine Dual Subtitles
  * @param {Object} Sub1 - Sub1
  * @param {Object} Sub2 - Sub2
+ * @param {Array} Format - options = ["json", "srv3", "vtt"]
+ * @param {Array} Kind - options = ["asr", "captions"]
  * @param {Number} Offset - Offset
  * @param {Number} Tolerance - Tolerance
- * @param {Array} options - options = ["Forward", "Reverse", "ShowOnly"]
+ * @param {Array} Options - options = ["Forward", "Reverse", "ShowOnly"]
  * @return {Promise<*>}
  */
-async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0, Tolerance = 0, Options = ["Forward"]) {
+async function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions", Offset = 0, Tolerance = 0, Options = ["Forward"]) {
 	$.log(`⚠ ${$.name}, Combine Dual Subtitles`, `Offset:${Offset}, Tolerance:${Tolerance}, Options:${Options}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub1内容: ${JSON.stringify(Sub1)}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub2内容: ${JSON.stringify(Sub2)}`, "");
@@ -233,98 +239,131 @@ async function CombineDualSubs(Format = "VTT", Sub1 = {}, Sub2 = {}, Offset = 0,
 	// 双指针法查找两个数组中的相同元素
 	switch (Format) {
 		case "json3": {
-			// 自动生成字幕转普通字幕
-			if (DualSub?.events?.[0]?.id) {
-				$.log(`🚧`, `DualSub是自动生成字幕`, "");
-				index0 = 1, index1 = 1, index2 = 1;
-			};
-			// 处理普通字幕
-			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length
-			while (index1 < length1 && index2 < length2) {
-				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
-				const timeStamp1 = Sub1.events[index1].tStartMs, timeStamp2 = Sub2.events[index2].tStartMs;
-				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
-					index0 = Options.includes("Reverse") ? index2 : index1;
+			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length;
+			switch (Kind) {
+				case "asr":
 					// 自动生成字幕转普通字幕
-					Sub1.events[index1].segs[0].utf8 = Sub1.events[index1].segs.map(seg => seg.utf8).join(" ")
-					Sub2.events[index2].segs[0].utf8 = Sub2.events[index2].segs.map(seg => seg.utf8).join("")
+					$.log(`🚧`, `DualSub是自动生成字幕`, "");
+					index0 = 1, index1 = 1, index2 = 1;
+					Sub1.events = Sub1.events.map(event => {
+						if (event?.segs) {
+							if (Array.isArray(event?.segs)) event.segs = [{ "utf8": event.segs.map(seg => seg.utf8).join(" ") }];
+						};
+						delete event.wWinId;
+						return event;
+					});
+					Sub2.events = Sub2.events.map(event => {
+						if (event?.segs) {
+							if (Array.isArray(event?.segs)) event.segs = [{ "utf8": event.segs.map(seg => seg.utf8).join(" ") }];
+						};
+						delete event.wWinId;
+						return event;
+					});
+					//break; 不要break，连续处理
+				case "captions":
 					// 处理普通字幕
-					const text1 = Sub1.events[index1]?.segs?.[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs?.[0].utf8 ?? "";
-					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-					DualSub.events[index0].segs = [{ "utf8": Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}` }];
-					delete DualSub.events[index0].wWinId
-					//$.log(`🚧`, `DualSub.events[index0].segs[0].utf8: ${DualSub.events[index0].segs[0].utf8}`, "");
-					//DualSub.body[index0].tStartMs = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
-					//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
-				};
-				if (timeStamp2 > timeStamp1) index1++
-				else if (timeStamp2 < timeStamp1) index2++
-				else index1++; index2++
+					while (index1 < length1 && index2 < length2) {
+						//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
+						const timeStamp1 = Sub1.events[index1].tStartMs, timeStamp2 = Sub2.events[index2].tStartMs;
+						//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+						if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
+							index0 = Options.includes("Reverse") ? index2 : index1;
+							// 处理普通字幕
+							const text1 = Sub1.events[index1]?.segs?.[0].utf8 ?? "", text2 = Sub2.events[index2]?.segs?.[0].utf8 ?? "";
+							//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
+							DualSub.events[index0].segs = [{ "utf8": Options.includes("Reverse") ? `${text2}\n${text1}` : `${text1}\n${text2}` }];
+							//$.log(`🚧`, `DualSub.events[index0].segs[0].utf8: ${DualSub.events[index0].segs[0].utf8}`, "");
+							//DualSub.body[index0].tStartMs = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
+							//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
+						};
+						if (timeStamp2 > timeStamp1) index1++
+						else if (timeStamp2 < timeStamp1) index2++
+						else { index1++; index2++ };
+					};
+					break;
 			};
 			break;
 		};
 		case "srv3": {
-			// 自动生成字幕转普通字幕
-			if (DualSub?.timedtext?.head) {
-				$.log(`🚧`, `DualSub是自动生成字幕`, "");
-				DualSub.timedtext.head.wp[1]["@rc"] = "1";
-			};
-			// 处理普通字幕
-			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length
-			while (index1 < length1 && index2 < length2) {
-				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
-				const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10), timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
-				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
-					index0 = Options.includes("Reverse") ? index2 : index1;
+			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length;
+			switch (Kind) {
+				case "asr":
 					// 自动生成字幕转普通字幕
-					if (Sub1.timedtext.body.p[index1]?.s) {
-						if (Array.isArray(Sub1.timedtext.body.p[index1]?.s)) Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1]?.s.map(seg => seg["#"]).join(" ");
-						else Sub1.timedtext.body.p[index1]["#"] = Sub1.timedtext.body.p[index1].s?.["#"] ?? "";
-					};
-					if (Sub2.timedtext.body.p[index2]?.s) {
-						if (Array.isArray(Sub2.timedtext.body.p[index2]?.s)) Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2]?.s.map(seg => seg["#"]).join("");
-						else Sub2.timedtext.body.p[index2]["#"] = Sub2.timedtext.body.p[index2].s?.["#"] ?? "";
-					};
-					delete DualSub.timedtext.body.p[index0].s;
+					$.log(`🚧`, `DualSub是自动生成字幕`, "");
+					DualSub.timedtext.head.wp[1]["@rc"] = "1";
+					Sub1.timedtext.body.p = Sub1.timedtext.body.p.map(para => {
+						if (para?.s) {
+							if (Array.isArray(para?.s)) para["#"] = para?.s.map(seg => seg["#"]).join(" ");
+							else para["#"] = para.s?.["#"] ?? "";
+							delete para.s;
+						};
+						return para;
+					});
+					Sub2.timedtext.body.p = Sub2.timedtext.body.p.map(para => {
+						if (para?.s) {
+							if (Array.isArray(para?.s)) para["#"] = para?.s.map(seg => seg["#"]).join(" ");
+							else para["#"] = para.s?.["#"] ?? "";
+							delete para.s;
+						};
+						return para;
+					});
+					//break; 不要break，连续处理
+				case "captions":
 					// 处理普通字幕
-					const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
-					//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-					DualSub.timedtext.body.p[index0]["#"] = Options.includes("Reverse") ? `${text2}&#x000A;${text1}` : `${text1}&#x000A;${text2}`;
-					//$.log(`🚧`, `DualSub.timedtext.body.p[index0]["#"]: ${DualSub.timedtext.body.p[index0]["#"]}`, "");
-					//DualSub.timedtext.body.p[index0]["@t"] = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
-					//DualSub.timedtext.body.p[index0].index = Options.includes("Reverse") ? index2 : index1;
-				};
-				if (timeStamp2 > timeStamp1) index1++
-				else if (timeStamp2 < timeStamp1) index2++
-				else index1++; index2++
+					while (index1 < length1 && index2 < length2) {
+						//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
+						const timeStamp1 = parseInt(Sub1.timedtext.body.p[index1]["@t"], 10), timeStamp2 = parseInt(Sub2.timedtext.body.p[index2]["@t"], 10);
+						//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+						if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
+							index0 = Options.includes("Reverse") ? index2 : index1;
+							// 处理普通字幕
+							const text1 = Sub1.timedtext.body.p[index1]?.["#"] ?? "", text2 = Sub2.timedtext.body.p[index2]?.["#"] ?? "";
+							//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
+							DualSub.timedtext.body.p[index0]["#"] = Options.includes("Reverse") ? `${text2}&#x000A;${text1}` : `${text1}&#x000A;${text2}`;
+							//$.log(`🚧`, `DualSub.timedtext.body.p[index0]["#"]: ${DualSub.timedtext.body.p[index0]["#"]}`, "");
+							//DualSub.timedtext.body.p[index0]["@t"] = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
+							//DualSub.timedtext.body.p[index0].index = Options.includes("Reverse") ? index2 : index1;
+						};
+						if (timeStamp2 > timeStamp1) index1++
+						else if (timeStamp2 < timeStamp1) index2++
+						else { index1++; index2++ };
+					};
+					break;
 			};
 			break;
 		};
 		case "vtt": {
 			const length1 = Sub1?.body?.length, length2 = Sub2?.body?.length;
-			while (index1 < length1 && index2 < length2) {
-				//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
-				const timeStamp1 = Sub1.body[index1].timeStamp, timeStamp2 = Sub2.body[index2].timeStamp;
-				//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
-				// 处理普通字幕
-				const text1 = Sub1.body[index1]?.text ?? "", text2 = Sub2.body[index2]?.text ?? "";
-				//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
-				if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
-					index0 = Options.includes("Reverse") ? index2 : index1;
-					DualSub.body[index0].text = Options.includes("Reverse") ? `${text2}\n${text1}` : Options.includes("ShowOnly") ? text2 : `${text1}\n${text2}`;
-					//$.log(`🚧`, `index0: ${index0}`, `text: ${DualSub.body[index0].text}`, "");
-					//DualSub.body[index0].timeStamp = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
-					//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
-				}
-				if (timeStamp2 > timeStamp1) index1++
-				else if (timeStamp2 < timeStamp1) index2++
-				else { index1++; index2++ }
+			switch (Kind) {
+				case "asr":
+					// 自动生成字幕转普通字幕
+					$.log(`🚧`, `DualSub是自动生成字幕`, "");
+				case "captions":
+					// 处理普通字幕
+					while (index1 < length1 && index2 < length2) {
+						//$.log(`🚧`, `index1/length1: ${index1}/${length1}`, `index2/length2: ${index2}/${length2}`, "");
+						const timeStamp1 = Sub1.body[index1].timeStamp, timeStamp2 = Sub2.body[index2].timeStamp;
+						//$.log(`🚧`, `timeStamp1: ${timeStamp1}`, `timeStamp2: ${timeStamp2}`, "");
+						// 处理普通字幕
+						const text1 = Sub1.body[index1]?.text ?? "", text2 = Sub2.body[index2]?.text ?? "";
+						//$.log(`🚧`, `text1: ${text1}`, `text2: ${text2}`, "");
+						if (Math.abs(timeStamp1 - timeStamp2) <= Tolerance) {
+							index0 = Options.includes("Reverse") ? index2 : index1;
+							// 处理普通字幕
+							DualSub.body[index0].text = Options.includes("Reverse") ? `${text2}\n${text1}` : Options.includes("ShowOnly") ? text2 : `${text1}\n${text2}`;
+							//$.log(`🚧`, `index0: ${index0}`, `text: ${DualSub.body[index0].text}`, "");
+							//DualSub.body[index0].timeStamp = Options.includes("Reverse") ? timeStamp2 : timeStamp1;
+							//DualSub.body[index0].index = Options.includes("Reverse") ? index2 : index1;
+						};
+						if (timeStamp2 > timeStamp1) index1++
+						else if (timeStamp2 < timeStamp1) index2++
+						else { index1++; index2++ }
+					};
+					break;
 			};
 			break;
 		};
-	}
+	};
 	//$.log(`🎉 ${$.name}, Combine Dual Subtitles`, `return DualSub内容: ${JSON.stringify(DualSub)}`, "");
 	return DualSub;
 };
