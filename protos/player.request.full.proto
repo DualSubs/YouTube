@@ -4,9 +4,23 @@ syntax = "proto3";
 
 // https://youtubei.googleapis.com/youtubei/v1/player
 message Player {
-	//Context context = 1 [json_name = "context"];
+	Context context = 1 [json_name = "context"];
 	//Context context = 1 [json_name = "responseContext"];
     Captions captions = 10 [json_name = "captions"];
+	message Context {
+		Client client = 1 [json_name = "client"];
+
+		message Client {
+			string hl = 1 [json_name = "hl"];
+			string gl = 1 [json_name = "gl"];
+			string deviceMake = 12 [json_name = "deviceMake"];
+			string browserVersion = 17 [json_name = "browserVersion"];
+			string osName = 18 [json_name = "osName"];
+			string osVersion = 19 [json_name = "osVersion"];
+			string timeZone = 80 [json_name = "timeZone"];
+		};
+	};
+
     message Captions {
         PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
 

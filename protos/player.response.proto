@@ -4,7 +4,8 @@ syntax = "proto3";
 
 // https://youtubei.googleapis.com/youtubei/v1/player
 message Player {
-	//ResponseContext responseContext = 7 [json_name = "responseContext"];
+	//Context context = 1 [json_name = "context"];
+	//Context context = 1 [json_name = "responseContext"];
     Captions captions = 10 [json_name = "captions"];
     message Captions {
         PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
