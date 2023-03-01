@@ -6,7 +6,11 @@ syntax = "proto3";
 message Player {
 	Context context = 1 [json_name = "context"];
 	//Context context = 1 [json_name = "responseContext"];
+	string videoId = 2;
+	//optional int32 startTimeSecs = 3;
+	PlaybackContext playbackContext = 4;
     Captions captions = 10 [json_name = "captions"];
+
 	message Context {
 		Client client = 1 [json_name = "client"];
 
@@ -14,71 +18,33 @@ message Player {
 			string hl = 1 [json_name = "hl"];
 			string gl = 1 [json_name = "gl"];
 			string deviceMake = 12 [json_name = "deviceMake"];
-			string browserVersion = 17 [json_name = "browserVersion"];
+			string deviceModel = 13 [json_name = "deviceModel"];
+			//string visitorData = 14 [json_name = "visitorData"];
+			//string userAgent = 15 [json_name = "userAgent"];
+			//string clientName = 16 [json_name = "clientName"];
+			string clientVersion = 17 [json_name = "clientVersion"];
+			//string browserVersion = 17 [json_name = "browserVersion"];
 			string osName = 18 [json_name = "osName"];
 			string osVersion = 19 [json_name = "osVersion"];
+			//int32 screenWidthPoints = 37; //??
+			//int32 screenHeightPoints = 38; //??
+			//optional int32 screenPixelDensity = 41 //??
+			//int32 screenWidthPoints = 55; //??
+			//int32 screenHeightPoints = 56; //??
+			//configInfo configInfo = 62;
+			//optional int32 screenDensityFloat = 65; //??
+			//optional int32 utcOffsetMinutes = 63;
+			//userInterfaceThemType userInterfaceTheme = 78; //??
 			string timeZone = 80 [json_name = "timeZone"];
 		};
 	};
 
-    message Captions {
-        PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
+	message PlaybackContext {
+		ContentPlaybackContext contentPlaybackContext = 1;
 
-		message PlayerCaptionsTracklistRenderer {
-			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
-			repeated AudioTracks audioTracks = 2 [json_name = "audioTracks"];
-			repeated TranslationLanguages translationLanguages = 3 [json_name = "translationLanguages"];
-			optional int32 defaultAudioTrackIndex = 4 [json_name = "defaultAudioTrackIndex"];
-			optional int32 defaultCaptionTrackIndex = 6 [json_name = "defaultCaptionTrackIndex"];
-
-            message CaptionTracks {
-				string baseUrl = 1 [json_name = "baseUrl"];
-				Name name = 2 [json_name = "name"];
-            	string vssId = 3 [json_name = "vssId"];
-            	string languageCode = 4 [json_name = "languageCode"];
-            	optional string kind = 5 [json_name = "kind"];
-            	optional bool rtl = 6 [json_name = "rtl"];
-            	bool isTranslatable = 7 [json_name = "isTranslatable"];
-			};
-			
-			message AudioTracks {
-				repeated int32 captionTrackIndices = 2 [json_name = "captionTrackIndices", packed = false];
-				optional int32 defaultCaptionTrackIndex = 3 [json_name = "defaultCaptionTrackIndex"];
-				optional int32 forcedCaptionTrackIndex = 4 [json_name = "forcedCaptionTrackIndex"];
-				optional visibilityType visibility = 5 [json_name = "visibility"];
-				optional bool hasDefaultTrack = 6 [json_name = "hasDefaultTrack"];
-				optional bool hasForcedTrack = 7 [json_name = "hasForcedTrack"];
-				optional string audioTrackId = 8 [json_name = "audioTrackId"];
-				optional captionsInitialStateType captionsInitialState = 11 [json_name = "captionsInitialState"];
-			};
-			
-			message TranslationLanguages {
-				string languageCode = 1 [json_name = "languageCode"];
-				Name languageName = 2 [json_name = "languageName"];
-				//??? ??? = 3 [json_name = "???"];
-			};
-
-        };
-    };
-};
-
-message Name {
-	repeated Runs runs = 1 [json_name = "runs"];
-	message Runs {
-		string text = 1 [json_name = "text"];
+		message ContentPlaybackContext {
+			//optional string currentUrl = 1; //??
+			//optional string html5Preference = 10; //??
+		};
 	};
-};
-
-enum visibilityType {
-	UNKNOWN = 0;
-	OFF = 1;
-	ON = 2;
-};
-
-enum captionsInitialStateType {
-	CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
-	CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
-	CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
-	CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
-	CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
 };
