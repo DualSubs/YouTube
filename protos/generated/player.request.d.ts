@@ -108,21 +108,21 @@ export interface Player_PlaybackContext_ContentPlaybackContext {
     /**
      * optional string currentUrl = 1; //??
      *
-     * @generated from protobuf field: bool ID4 = 4 [json_name = "ID4"];
+     * @generated from protobuf field: optional int32 id4 = 4;
      */
-    iD4: boolean;
+    id4?: number;
     /**
-     * @generated from protobuf field: bool ID6 = 6 [json_name = "ID6"];
+     * @generated from protobuf field: optional int32 id6 = 6;
      */
-    iD6: boolean;
+    id6?: number;
     /**
-     * @generated from protobuf field: bool ID8 = 8 [json_name = "ID8"];
+     * @generated from protobuf field: optional int32 id8 = 8;
      */
-    iD8: boolean;
+    id8?: number;
     /**
-     * @generated from protobuf field: bool ID9 = 9 [json_name = "ID9"];
+     * @generated from protobuf field: optional int32 id9 = 9;
      */
-    iD9: boolean;
+    id9?: number;
 }
 declare class Player$Type extends MessageType<Player> {
     constructor();
