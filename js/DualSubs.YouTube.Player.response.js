@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.4(8)-player");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.5(1) player.response");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -658,6 +658,10 @@ for (const [key, value] of Object.entries($response.headers)) {
 								case "youtubei.googleapis.com":
 									data.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
 									break;
+							};
+							// 改默认字幕索引值，来指定“源语言”，从而启用“自动翻译”
+							if (!data?.captions?.playerCaptionsTracklistRenderer?.defaultCaptionTrackIndex) {
+								data.captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
 							};
 						};
 					};
