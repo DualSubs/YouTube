@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.1(1) player.request.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.1(3) player.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -325,14 +325,14 @@ for (const [key, value] of Object.entries($request.headers)) {
 					class Player_PlaybackContext_ContentPlaybackContext$Type extends MessageType {
 						constructor() {
 							super("Player.PlaybackContext.ContentPlaybackContext", [
-								{ no: 4, name: "ID4", kind: "scalar", jsonName: "ID4", T: 8 /*ScalarType.BOOL*/ },
-								{ no: 6, name: "ID6", kind: "scalar", jsonName: "ID6", T: 8 /*ScalarType.BOOL*/ },
-								{ no: 8, name: "ID8", kind: "scalar", jsonName: "ID8", T: 8 /*ScalarType.BOOL*/ },
-								{ no: 9, name: "ID9", kind: "scalar", jsonName: "ID9", T: 8 /*ScalarType.BOOL*/ }
+								{ no: 4, name: "id4", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 6, name: "id6", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 8, name: "id8", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 9, name: "id9", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
 							]);
 						}
 						create(value) {
-							const message = { iD4: false, iD6: false, iD8: false, iD9: false };
+							const message = {};
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
@@ -343,17 +343,17 @@ for (const [key, value] of Object.entries($request.headers)) {
 							while (reader.pos < end) {
 								let [fieldNo, wireType] = reader.tag();
 								switch (fieldNo) {
-									case /* bool ID4 = 4 [json_name = "ID4"];*/ 4:
-										message.iD4 = reader.bool();
+									case /* optional int32 id4 */ 4:
+										message.id4 = reader.int32();
 										break;
-									case /* bool ID6 = 6 [json_name = "ID6"];*/ 6:
-										message.iD6 = reader.bool();
+									case /* optional int32 id6 */ 6:
+										message.id6 = reader.int32();
 										break;
-									case /* bool ID8 = 8 [json_name = "ID8"];*/ 8:
-										message.iD8 = reader.bool();
+									case /* optional int32 id8 */ 8:
+										message.id8 = reader.int32();
 										break;
-									case /* bool ID9 = 9 [json_name = "ID9"];*/ 9:
-										message.iD9 = reader.bool();
+									case /* optional int32 id9 */ 9:
+										message.id9 = reader.int32();
 										break;
 									default:
 										let u = options.readUnknownField;
@@ -367,18 +367,18 @@ for (const [key, value] of Object.entries($request.headers)) {
 							return message;
 						}
 						internalBinaryWrite(message, writer, options) {
-							/* bool ID4 = 4 [json_name = "ID4"]; */
-							if (message.iD4 !== false)
-								writer.tag(4, WireType.Varint).bool(message.iD4);
-							/* bool ID6 = 6 [json_name = "ID6"]; */
-							if (message.iD6 !== false)
-								writer.tag(6, WireType.Varint).bool(message.iD6);
-							/* bool ID8 = 8 [json_name = "ID8"]; */
-							if (message.iD8 !== false)
-								writer.tag(8, WireType.Varint).bool(message.iD8);
-							/* bool ID9 = 9 [json_name = "ID9"]; */
-							if (message.iD9 !== false)
-								writer.tag(9, WireType.Varint).bool(message.iD9);
+							/* optional int32 id4 = 4; */
+							if (message.id4 !== undefined)
+								writer.tag(4, WireType.Varint).int32(message.id4);
+							/* optional int32 id6 = 6; */
+							if (message.id6 !== undefined)
+								writer.tag(6, WireType.Varint).int32(message.id6);
+							/* optional int32 id8 = 8; */
+							if (message.id8 !== undefined)
+								writer.tag(8, WireType.Varint).int32(message.id8);
+							/* optional int32 id9 = 9; */
+							if (message.id9 !== undefined)
+								writer.tag(9, WireType.Varint).int32(message.id9);
 							let u = options.writeUnknownFields;
 							if (u !== false)
 								(u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -414,10 +414,10 @@ for (const [key, value] of Object.entries($request.headers)) {
 						$.log(`⚠ ${$.name}, playbackContext`, "");
 						if (data?.playbackContext.contentPlaybackContext) { // 有播放设置内容
 							//data.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
-							data.playbackContext.contentPlaybackContext.ID4 = true; // 
-							data.playbackContext.contentPlaybackContext.ID6 = true; // 
-							data.playbackContext.contentPlaybackContext.ID8 = true; // 
-							data.playbackContext.contentPlaybackContext.ID9 = true; // 
+							data.playbackContext.contentPlaybackContext.id4 = 1; // 
+							data.playbackContext.contentPlaybackContext.id6 = 1; // 
+							data.playbackContext.contentPlaybackContext.id8 = 1; // 
+							data.playbackContext.contentPlaybackContext.id9 = 1; // 
                         };
 					};
 					// 找功能
