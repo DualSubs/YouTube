@@ -44,10 +44,10 @@ message Player {
 
 		message ContentPlaybackContext {
 			//optional string currentUrl = 1; //??
-			bool ID4 = 4; //??
-			bool ID6 = 6; //??
-			bool ID8 = 8; //??
-			bool ID9 = 9; //??
+			optional int32 id4 = 4; //??
+			optional int32 id6 = 6; //??
+			optional int32 id8 = 8; //??
+			optional int32 id9 = 9; //??
 			//optional string html5Preference = 10; //??
 		};
 	};
