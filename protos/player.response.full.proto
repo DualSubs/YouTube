@@ -9,6 +9,7 @@ message Player {
 	PlaybackTracking playbackTracking = 9;
     Captions captions = 10;
 	VideoDetails videoDetails = 11;
+	repeated Annotations annotations = 13;
 
 	message Context {
 		repeated ServiceTrackingParams serviceTrackingParams = 6;
@@ -128,11 +129,23 @@ message Player {
 
 		message Thumbnail {
 			repeated Thumbnails thumbnails = 1;
+		};
+	};
 
-			message Thumbnails {
-				string url = 1;
-				int32 width = 2;
-				int32 height = 3;
+	message Annotations {
+		PlayerAnnotationsExpandedRenderer playerAnnotationsExpandedRenderer = 49483894;
+
+		message PlayerAnnotationsExpandedRenderer {
+			FeaturedChannel featuredChannel = 2;
+
+			message FeaturedChannel {
+				int32 startTimeMs = 1;
+				int32 endTimeMs = 2;
+				Watermark watermark = 6;
+
+				message Watermark {
+					repeated Thumbnails thumbnails = 1;
+				};
 			};
 		};
 	};
@@ -145,6 +158,11 @@ message Name {
 	};
 };
 
+message Thumbnails {
+	string url = 1;
+	int32 width = 2;
+	int32 height = 3;
+};
 
 enum serviceType {
 	GFEEDBACK = 2;
