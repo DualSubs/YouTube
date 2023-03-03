@@ -4,9 +4,71 @@ syntax = "proto3";
 
 // https://youtubei.googleapis.com/youtubei/v1/player
 message Player {
-	//Context context = 1 [json_name = "context"];
-	//Context context = 1 [json_name = "responseContext"];
-    Captions captions = 10 [json_name = "captions"];
+	Context context = 1 [json_name = "responseContext"];
+	StreamingData streamingData = 4;
+	PlaybackTracking playbackTracking = 9;
+    Captions captions = 10;
+	VideoDetails videoDetails = 11;
+
+	message Context {
+		repeated ServiceTrackingParams serviceTrackingParams = 6;
+
+		message ServiceTrackingParams {
+			serviceType service = 1;
+			map<string, string> params = 2;
+		};
+	};
+
+	message StreamingData {
+		int32 expiresInSeconds = 1;
+		//repeated Formats formats = 2;
+		repeated AdaptiveFormats adaptiveFormats = 3;
+		string hlsManifestUrl = 5;
+
+		message AdaptiveFormats {
+			int32 itag = 1;
+			string url = 2;
+			string mimeType = 5;
+			int32 bitrate = 6;
+			int32 width = 7;
+			int32 height = 8;
+			optional initRange = 9;
+			optional indexRange = 10;
+			int32 lastModified = 11;
+			string quality = 16;
+			int32 fps = 25;
+			string qualityLabel = 26;
+			//projectionType projectionType = 27; //enum
+			int32 averageBitrate = 31;
+			optional ColorInfo colorInfo = 33;
+			int32 approxDurationMs = 44;
+
+			message ColorInfo {
+				//primaries = 1; //enum
+				//transferCharacteristics = 2; //enum
+				//matrixCoefficients = 3; //enum
+			};
+		};
+	};
+
+	message PlaybackTracking {
+		URL videostatsPlaybackUrl = 1;
+		URL videostatsDelayplayUrl = 2;
+		URL videostatsWatchtimeUrl = 3;
+		URL ptrackingUrl = 4;
+		URL qoeUrl = 5;
+		URL atrUrl = 13;
+		repeated int32 videostatsScheduledFlushWalltimeSeconds = 16;
+		int32 videostatsDefaultFlushIntervalSeconds = 17;
+		URL youtubeRemarketingUrl = 18;
+		URL googleRemarketingUrl = 19;
+
+		message URL {
+			string baseUrl = 1;
+			optional int32 elapsedMediaTimeSeconds = 2;
+		};
+	};
+
     message Captions {
         PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
 
@@ -46,6 +108,34 @@ message Player {
 
         };
     };
+
+	message VideoDetails {
+		string videoId = 1;
+		string title = 15;
+		int32 lengthSeconds = 16;
+		repeated string keywords = 18;
+		string channelId = 19;
+		optional bool isOwnerViewing = 20;
+		string shortDescription = 21;
+		optional bool isCrawlable = 22;
+		Thumbnail thumbnail = 25;
+		optional bool allowRatings = 31;
+		string viewCount = 32;
+		string author = 33;
+		optional bool isPrivate = 37;
+		optional bool isUnpluggedCorpus = 38;
+		optional bool isLiveContent = 41;
+
+		message Thumbnail {
+			repeated Thumbnails thumbnails = 1;
+
+			message Thumbnails {
+				string url = 1;
+				int32 width = 2;
+				int32 height = 3;
+			};
+		};
+	};
 };
 
 message Name {
@@ -53,6 +143,16 @@ message Name {
 	message Runs {
 		string text = 1 [json_name = "text"];
 	};
+};
+
+
+enum serviceType {
+	GFEEDBACK = 2;
+	//CSI = ?; //??
+	//??? = 3; //??
+	GUIDED_HELP = 4;
+	ECATCHER = 6;
+	//??? = 7; //??
 };
 
 enum visibilityType {
