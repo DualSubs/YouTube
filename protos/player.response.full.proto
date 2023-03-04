@@ -10,6 +10,9 @@ message Player {
     Captions captions = 10;
 	VideoDetails videoDetails = 11;
 	repeated Annotations annotations = 13;
+	Storyboards storyboards = 16;
+	Attestation attestation = 22;
+	Endscreen endscreen = 32;
 
 	message Context {
 		repeated ServiceTrackingParams serviceTrackingParams = 6;
@@ -149,6 +152,67 @@ message Player {
 			};
 		};
 	};
+
+	message Storyboards {
+		PlayerStoryboardSpecRenderer playerStoryboardSpecRenderer = 55735497;
+
+		message PlayerStoryboardSpecRenderer {
+			string spec = 1;
+		};
+	};
+
+	message Attestation {
+		PlayerAttestationRenderer playerAttestationRenderer = 59961494;
+
+		message PlayerAttestationRenderer {
+			string challenge = 1;
+		};
+	};
+
+	message Endscreen {
+		EndscreenRenderer endscreenRenderer = 106301526;
+
+		message EndscreenRenderer {
+			repeated Elements elements = 1;
+
+			message Elements {
+				EndscreenElementRenderer endscreenElementRenderer = 105860658;
+
+				message EndscreenElementRenderer {
+					StyleType style = 1;
+					Image image = 2;
+					Icon icon = 3;
+					float left = 6;
+					float width = 7;
+					float top = 8;
+					float aspectRatio = 9;
+					int32 startMs = 10;
+					int32 endMs = 11;
+					Title title = 12;
+
+					message Image {
+						repeated Thumbnails thumbnails = 1;
+					};
+
+					message Icon {
+						repeated Thumbnails thumbnails = 1;
+					};
+
+					message Title {
+						Accessibility accessibility = 3;
+
+						message Accessibility {
+							AccessibilityData accessibilityData = 75730170;
+
+							messsage AccessibilityData {
+								string label = 2;
+							};
+						};
+					};
+				};
+			};
+		};
+	};
 };
 
 message Name {
@@ -186,3 +250,7 @@ enum captionsInitialStateType {
 	CAPTIONS_INITIAL_STATE_ON_RECOMMENDED = 3;
 	CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED = 4;
 };
+
+enum StyleType {
+	CHANNEL = 3;
+}
