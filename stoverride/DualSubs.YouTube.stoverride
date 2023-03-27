@@ -34,11 +34,11 @@ http:
 
 script-providers:
   DualSubs.YouTube.Player:
-    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.Player.response.js
+    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/v0.5.16/js/DualSubs.YouTube.Player.response.js
     interval: 86400
   DualSubs.YouTube.TimedText.request:
-    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.TimedText.request.js
+    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/v0.5.16/js/DualSubs.YouTube.TimedText.request.js
     interval: 86400
   DualSubs.YouTube.TimedText.response:
-    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.TimedText.response.js
+    url: https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/v0.5.16/js/DualSubs.YouTube.TimedText.response.js
     interval: 86400
