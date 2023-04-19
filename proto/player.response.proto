@@ -6,66 +6,17 @@ syntax = "proto3";
 message Player {
 	//Context context = 1 [json_name = "context"];
 	//Context context = 1 [json_name = "responseContext"];
-	StreamingData streamingData = 4;
-    Captions captions = 10 [json_name = "captions"];
+	//PlaybackTracking playbackTracking = 9;
+	//StreamingData streamingData = 4;
+	Captions captions = 10 [json_name = "captions"];
+	//VideoDetails videoDetails = 11;
+	//repeated Annotations annotations = 13;
+	//Storyboards storyboards = 16;
+	//Attestation attestation = 22;
+	//Endscreen endscreen = 32;
 
-	message StreamingData {
-		int32 expiresInSeconds = 1;
-		//repeated Formats formats = 2;
-		repeated AdaptiveFormats adaptiveFormats = 3;
-		string hlsManifestUrl = 5;
-
-		message AdaptiveFormats {
-			int32 itag = 1;
-			string url = 2;
-			string mimeType = 5;
-			optional int32 bitrate = 6;
-			optional int32 width = 7;
-			optional int32 height = 8;
-			optional int32 initRange = 9;
-			optional int32 indexRange = 10;
-			int64 lastModified = 11 [jstype = JS_NUMBER];
-			string quality = 16;
-			optional string xtag = 23;
-			optional int32 fps = 25;
-			optional string qualityLabel = 26;
-			//projectionType projectionType = 27; //enum
-			optional AudioTrack audioTrack = 28;
-			optional int32 averageBitrate = 31;
-			//optional ColorInfo colorInfo = 33;
-			//int64 targetDurationSec = 35 [jstype = JS_NUMBER];
-			//int64 maxDvrDurationSec = 38 [jstype = JS_NUMBER];
-			//optional bool highReplication = 39;
-			optional CaptionTrack captionTrack = 42;
-			//optional AudioQuality audioQuality = 43;
-			//optional int32 approxDurationMs = 44;
-			//optional string audioSampleRate = 45;
-			//optional int32 audioChannels = 46;
-
-			message AudioTrack {
-				string displayName = 4;
-				string languageCode = 5;
-				bool audioIsDefault = 6;
-			};
-
-			message CaptionTrack {
-				string displayName = 1;
-				string vssId = 2;
-				string languageCode = 3;
-				string kind = 4;
-				string id = 5;
-			};
-
-			message ColorInfo {
-				//primaries = 1; //enum
-				//transferCharacteristics = 2; //enum
-				//matrixCoefficients = 3; //enum
-			};
-		};
-	};
-
-    message Captions {
-        PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
+	message Captions {
+		PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
 
 		message PlayerCaptionsTracklistRenderer {
 			repeated CaptionTracks captionTracks = 1 [json_name = "captionTracks"];
@@ -101,8 +52,8 @@ message Player {
 				//??? ??? = 3 [json_name = "???"];
 			};
 
-        };
-    };
+		};
+	};
 };
 
 message Name {
