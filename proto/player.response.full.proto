@@ -36,8 +36,8 @@ message Player {
 			int32 bitrate = 6;
 			int32 width = 7;
 			int32 height = 8;
-			optional initRange = 9;
-			optional indexRange = 10;
+			optional int32 initRange = 9;
+			optional int32 indexRange = 10;
 			int32 lastModified = 11;
 			string quality = 16;
 			int32 fps = 25;
@@ -204,7 +204,7 @@ message Player {
 						message Accessibility {
 							AccessibilityData accessibilityData = 75730170;
 
-							messsage AccessibilityData {
+							message AccessibilityData {
 								string label = 2;
 							};
 						};

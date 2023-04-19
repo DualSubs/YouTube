@@ -6,7 +6,41 @@ syntax = "proto3";
 message Player {
 	//Context context = 1 [json_name = "context"];
 	//Context context = 1 [json_name = "responseContext"];
+	StreamingData streamingData = 4;
     Captions captions = 10 [json_name = "captions"];
+
+	message StreamingData {
+		int32 expiresInSeconds = 1;
+		//repeated Formats formats = 2;
+		repeated AdaptiveFormats adaptiveFormats = 3;
+		string hlsManifestUrl = 5;
+
+		message AdaptiveFormats {
+			int32 itag = 1;
+			string url = 2;
+			string mimeType = 5;
+			int32 bitrate = 6;
+			int32 width = 7;
+			int32 height = 8;
+			optional int32 initRange = 9;
+			optional int32 indexRange = 10;
+			int32 lastModified = 11;
+			string quality = 16;
+			int32 fps = 25;
+			string qualityLabel = 26;
+			//projectionType projectionType = 27; //enum
+			int32 averageBitrate = 31;
+			optional ColorInfo colorInfo = 33;
+			int32 approxDurationMs = 44;
+
+			message ColorInfo {
+				//primaries = 1; //enum
+				//transferCharacteristics = 2; //enum
+				//matrixCoefficients = 3; //enum
+			};
+		};
+	};
+
     message Captions {
         PlayerCaptionsTracklistRenderer playerCaptionsTracklistRenderer = 51621377 [json_name = "playerCaptionsTracklistRenderer"];
 
