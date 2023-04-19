@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.6(13) player.response.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.6(17) player.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -331,11 +331,13 @@ for (const [key, value] of Object.entries($response.headers)) {
 								{ no: 26, name: "qualityLabel", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
 								{ no: 28, name: "audioTrack", kind: "message", T: () => Player_StreamingData_AdaptiveFormats_AudioTrack },
 								{ no: 31, name: "averageBitrate", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+								{ no: 35, name: "targetDurationSec", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+								{ no: 38, name: "maxDvrDurationSec", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
 								{ no: 42, name: "captionTrack", kind: "message", T: () => Player_StreamingData_AdaptiveFormats_CaptionTrack }
 							]);
 						}
 						create(value) {
-							const message = { itag: 0, url: "", mimeType: "", lastModified: 0, quality: "" };
+							const message = { itag: 0, url: "", mimeType: "", lastModified: 0, quality: "", targetDurationSec: 0, maxDvrDurationSec: 0 };
 							globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
 							if (value !== undefined)
 								reflectionMergePartial(this, message, value);
@@ -390,6 +392,12 @@ for (const [key, value] of Object.entries($response.headers)) {
 										break;
 									case /* optional int32 averageBitrate */ 31:
 										message.averageBitrate = reader.int32();
+										break;
+									case /* double targetDurationSec */ 35:
+										message.targetDurationSec = reader.double();
+										break;
+									case /* double maxDvrDurationSec */ 38:
+										message.maxDvrDurationSec = reader.double();
 										break;
 									case /* optional Player.StreamingData.AdaptiveFormats.CaptionTrack captionTrack */ 42:
 										message.captionTrack = Player_StreamingData_AdaptiveFormats_CaptionTrack.internalBinaryRead(reader, reader.uint32(), options, message.captionTrack);
@@ -451,6 +459,12 @@ for (const [key, value] of Object.entries($response.headers)) {
 							/* optional int32 averageBitrate = 31; */
 							if (message.averageBitrate !== undefined)
 								writer.tag(31, WireType.Varint).int32(message.averageBitrate);
+							/* double targetDurationSec = 35; */
+							if (message.targetDurationSec !== 0)
+								writer.tag(35, WireType.Bit64).double(message.targetDurationSec);
+							/* double maxDvrDurationSec = 38; */
+							if (message.maxDvrDurationSec !== 0)
+								writer.tag(38, WireType.Bit64).double(message.maxDvrDurationSec);
 							/* optional Player.StreamingData.AdaptiveFormats.CaptionTrack captionTrack = 42; */
 							if (message.captionTrack)
 								Player_StreamingData_AdaptiveFormats_CaptionTrack.internalBinaryWrite(message.captionTrack, writer.tag(42, WireType.LengthDelimited).fork(), options).join();
