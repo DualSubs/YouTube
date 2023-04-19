@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.5(1) player.response.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.6.6(1) player.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -65,7 +65,6 @@ for (const [key, value] of Object.entries($response.headers)) {
 (async () => {
 	const { Platform, Settings, Caches, Configs } = await setENV("DualSubs", $request.url, DataBase);
 	switch (Settings.Switch) {
-		case true:
 		case "true":
 		default:
 			$.log(`⚠ ${$.name}, 功能开启`, "");
@@ -623,6 +622,18 @@ for (const [key, value] of Object.entries($response.headers)) {
 					const binaryBody = $.isQuanX() ? new Uint8Array($response.bodyBytes) : $response.body;
 					data = Player.fromBinary(binaryBody);
 					$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(data)}`, "");
+					let UF = UnknownFieldHandler.list(data);
+					//$.log(`🚧 ${$.name}`, `UF: ${JSON.stringify(UF)}`, "");
+					if (UF) {
+						UF = UF.map(uf => {
+							//uf.no; // 22
+							//uf.wireType; // WireType.Varint
+							// use the binary reader to decode the raw data:
+							let reader = new BinaryReader(uf.data);
+							let addedNumber = reader.int32(); // 7777
+							$.log(`🚧 ${$.name}`, `no: ${uf.no}, wireType: ${uf.wireType}, reader: ${reader}, addedNumber: ${addedNumber}`, "");
+						});
+					};
 					// 找功能
 					if (data?.captions) { // 有基础字幕
 						$.log(`⚠ ${$.name}, Captions`, "");
@@ -672,7 +683,6 @@ for (const [key, value] of Object.entries($response.headers)) {
 					break;
 			};
 			break;
-		case false:
 		case "false":
 			$.log(`⚠ ${$.name}, 功能关闭`, "");
 			break;
@@ -680,17 +690,19 @@ for (const [key, value] of Object.entries($response.headers)) {
 })()
 	.catch((e) => $.logErr(e))
 	.finally(() => {
-		// 设置格式
-		const Format = $response?.headers?.["content-type"]?.split(";")?.[0]
-		$.log(`🚧 ${$.name}`, `Format: ${Format}`, "");
-		switch (Format) {
+		//$.log(`🚧 ${$.name}, finally`, `$response:${JSON.stringify($response)}`, "");
+		$.log(`🎉 ${$.name}, finally`, `$response`, "");
+		switch ($response?.headers?.["content-type"]?.split(";")?.[0]) {
 			case "application/json":
 			case "text/xml":
 			default:
+				// 返回普通数据
 				if ($.isQuanX()) $.done({ headers: $response.headers, body: $response.body })
 				else $.done($response)
 				break;
 			case "application/x-protobuf":
+			case "application/grpc":
+				// 返回二进制数据
 				if ($.isQuanX()) {
 					$.log(`${$response.bodyBytes.byteLength}---${$response.bodyBytes.buffer.byteLength}`);
 					$.log(`bodyBytes.byteOffset: ${$response.bodyBytes.byteOffset}}`);
@@ -699,6 +711,11 @@ for (const [key, value] of Object.entries($response.headers)) {
 					$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
 					$.done($response)
 				}
+				break;
+			case undefined: // 视为无body
+				// 返回普通数据
+				if ($.isQuanX()) $.done({ headers: $response.headers })
+				else $.done($response)
 				break;
 		};
 	})
@@ -760,7 +777,7 @@ async function setENV(name, url, database) {
 		$.log(`🚧 ${$.name}, Set Environment Variables`, `platform: ${platform}`, "");
 		Settings = await getENV(name, platform, database).then(v=> v.Settings);
 	};
-	Settings.Switch = JSON.parse(Settings.Switch) //  BoxJs字符串转Boolean
+	//Settings.Switch = JSON.parse(Settings.Switch) //  BoxJs字符串转Boolean
 	if (typeof Settings.Types === "string") Settings.Types = Settings.Types.split(",") // BoxJs字符串转数组
 	if (Array.isArray(Settings.Types)) {
 		if (!Verify.GoogleCloud.Auth) Settings.Types = Settings.Types.filter(e => e !== "GoogleCloud"); // 移除不可用类型
