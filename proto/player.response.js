@@ -128,22 +128,23 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
             { no: 1, name: "itag", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "mimeType", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "bitrate", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "height", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "bitrate", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "width", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "height", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
             { no: 9, name: "initRange", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
             { no: 10, name: "indexRange", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
-            { no: 11, name: "lastModified", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 11, name: "lastModified", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 16, name: "quality", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 25, name: "fps", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 26, name: "qualityLabel", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 31, name: "averageBitrate", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 33, name: "colorInfo", kind: "message", T: () => Player_StreamingData_AdaptiveFormats_ColorInfo },
-            { no: 44, name: "approxDurationMs", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 23, name: "xtag", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 25, name: "fps", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 26, name: "qualityLabel", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 28, name: "audioTrack", kind: "message", T: () => Player_StreamingData_AdaptiveFormats_AudioTrack },
+            { no: 31, name: "averageBitrate", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 42, name: "captionTrack", kind: "message", T: () => Player_StreamingData_AdaptiveFormats_CaptionTrack }
         ]);
     }
     create(value) {
-        const message = { itag: 0, url: "", mimeType: "", bitrate: 0, width: 0, height: 0, lastModified: 0, quality: "", fps: 0, qualityLabel: "", averageBitrate: 0, approxDurationMs: 0 };
+        const message = { itag: 0, url: "", mimeType: "", lastModified: 0, quality: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial(this, message, value);
@@ -163,13 +164,13 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
                 case /* string mimeType */ 5:
                     message.mimeType = reader.string();
                     break;
-                case /* int32 bitrate */ 6:
+                case /* optional int32 bitrate */ 6:
                     message.bitrate = reader.int32();
                     break;
-                case /* int32 width */ 7:
+                case /* optional int32 width */ 7:
                     message.width = reader.int32();
                     break;
-                case /* int32 height */ 8:
+                case /* optional int32 height */ 8:
                     message.height = reader.int32();
                     break;
                 case /* optional int32 initRange */ 9:
@@ -178,26 +179,29 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
                 case /* optional int32 indexRange */ 10:
                     message.indexRange = reader.int32();
                     break;
-                case /* int32 lastModified */ 11:
-                    message.lastModified = reader.int32();
+                case /* int64 lastModified = 11 [jstype = JS_NUMBER];*/ 11:
+                    message.lastModified = reader.int64().toNumber();
                     break;
                 case /* string quality */ 16:
                     message.quality = reader.string();
                     break;
-                case /* int32 fps */ 25:
+                case /* optional string xtag */ 23:
+                    message.xtag = reader.string();
+                    break;
+                case /* optional int32 fps */ 25:
                     message.fps = reader.int32();
                     break;
-                case /* string qualityLabel */ 26:
+                case /* optional string qualityLabel */ 26:
                     message.qualityLabel = reader.string();
                     break;
-                case /* int32 averageBitrate */ 31:
+                case /* optional Player.StreamingData.AdaptiveFormats.AudioTrack audioTrack */ 28:
+                    message.audioTrack = Player_StreamingData_AdaptiveFormats_AudioTrack.internalBinaryRead(reader, reader.uint32(), options, message.audioTrack);
+                    break;
+                case /* optional int32 averageBitrate */ 31:
                     message.averageBitrate = reader.int32();
                     break;
-                case /* optional Player.StreamingData.AdaptiveFormats.ColorInfo colorInfo */ 33:
-                    message.colorInfo = Player_StreamingData_AdaptiveFormats_ColorInfo.internalBinaryRead(reader, reader.uint32(), options, message.colorInfo);
-                    break;
-                case /* int32 approxDurationMs */ 44:
-                    message.approxDurationMs = reader.int32();
+                case /* optional Player.StreamingData.AdaptiveFormats.CaptionTrack captionTrack */ 42:
+                    message.captionTrack = Player_StreamingData_AdaptiveFormats_CaptionTrack.internalBinaryRead(reader, reader.uint32(), options, message.captionTrack);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -220,14 +224,14 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
         /* string mimeType = 5; */
         if (message.mimeType !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.mimeType);
-        /* int32 bitrate = 6; */
-        if (message.bitrate !== 0)
+        /* optional int32 bitrate = 6; */
+        if (message.bitrate !== undefined)
             writer.tag(6, WireType.Varint).int32(message.bitrate);
-        /* int32 width = 7; */
-        if (message.width !== 0)
+        /* optional int32 width = 7; */
+        if (message.width !== undefined)
             writer.tag(7, WireType.Varint).int32(message.width);
-        /* int32 height = 8; */
-        if (message.height !== 0)
+        /* optional int32 height = 8; */
+        if (message.height !== undefined)
             writer.tag(8, WireType.Varint).int32(message.height);
         /* optional int32 initRange = 9; */
         if (message.initRange !== undefined)
@@ -235,27 +239,30 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
         /* optional int32 indexRange = 10; */
         if (message.indexRange !== undefined)
             writer.tag(10, WireType.Varint).int32(message.indexRange);
-        /* int32 lastModified = 11; */
+        /* int64 lastModified = 11 [jstype = JS_NUMBER]; */
         if (message.lastModified !== 0)
-            writer.tag(11, WireType.Varint).int32(message.lastModified);
+            writer.tag(11, WireType.Varint).int64(message.lastModified);
         /* string quality = 16; */
         if (message.quality !== "")
             writer.tag(16, WireType.LengthDelimited).string(message.quality);
-        /* int32 fps = 25; */
-        if (message.fps !== 0)
+        /* optional string xtag = 23; */
+        if (message.xtag !== undefined)
+            writer.tag(23, WireType.LengthDelimited).string(message.xtag);
+        /* optional int32 fps = 25; */
+        if (message.fps !== undefined)
             writer.tag(25, WireType.Varint).int32(message.fps);
-        /* string qualityLabel = 26; */
-        if (message.qualityLabel !== "")
+        /* optional string qualityLabel = 26; */
+        if (message.qualityLabel !== undefined)
             writer.tag(26, WireType.LengthDelimited).string(message.qualityLabel);
-        /* int32 averageBitrate = 31; */
-        if (message.averageBitrate !== 0)
+        /* optional Player.StreamingData.AdaptiveFormats.AudioTrack audioTrack = 28; */
+        if (message.audioTrack)
+            Player_StreamingData_AdaptiveFormats_AudioTrack.internalBinaryWrite(message.audioTrack, writer.tag(28, WireType.LengthDelimited).fork(), options).join();
+        /* optional int32 averageBitrate = 31; */
+        if (message.averageBitrate !== undefined)
             writer.tag(31, WireType.Varint).int32(message.averageBitrate);
-        /* optional Player.StreamingData.AdaptiveFormats.ColorInfo colorInfo = 33; */
-        if (message.colorInfo)
-            Player_StreamingData_AdaptiveFormats_ColorInfo.internalBinaryWrite(message.colorInfo, writer.tag(33, WireType.LengthDelimited).fork(), options).join();
-        /* int32 approxDurationMs = 44; */
-        if (message.approxDurationMs !== 0)
-            writer.tag(44, WireType.Varint).int32(message.approxDurationMs);
+        /* optional Player.StreamingData.AdaptiveFormats.CaptionTrack captionTrack = 42; */
+        if (message.captionTrack)
+            Player_StreamingData_AdaptiveFormats_CaptionTrack.internalBinaryWrite(message.captionTrack, writer.tag(42, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -266,6 +273,142 @@ class Player_StreamingData_AdaptiveFormats$Type extends MessageType {
  * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats
  */
 export const Player_StreamingData_AdaptiveFormats = new Player_StreamingData_AdaptiveFormats$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Player_StreamingData_AdaptiveFormats_AudioTrack$Type extends MessageType {
+    constructor() {
+        super("Player.StreamingData.AdaptiveFormats.AudioTrack", [
+            { no: 4, name: "displayName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "audioIsDefault", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value) {
+        const message = { displayName: "", languageCode: "", audioIsDefault: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader, length, options, target) {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string displayName */ 4:
+                    message.displayName = reader.string();
+                    break;
+                case /* string languageCode */ 5:
+                    message.languageCode = reader.string();
+                    break;
+                case /* bool audioIsDefault */ 6:
+                    message.audioIsDefault = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message, writer, options) {
+        /* string displayName = 4; */
+        if (message.displayName !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.displayName);
+        /* string languageCode = 5; */
+        if (message.languageCode !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.languageCode);
+        /* bool audioIsDefault = 6; */
+        if (message.audioIsDefault !== false)
+            writer.tag(6, WireType.Varint).bool(message.audioIsDefault);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats.AudioTrack
+ */
+export const Player_StreamingData_AdaptiveFormats_AudioTrack = new Player_StreamingData_AdaptiveFormats_AudioTrack$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Player_StreamingData_AdaptiveFormats_CaptionTrack$Type extends MessageType {
+    constructor() {
+        super("Player.StreamingData.AdaptiveFormats.CaptionTrack", [
+            { no: 1, name: "displayName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "vssId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "languageCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "kind", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value) {
+        const message = { displayName: "", vssId: "", languageCode: "", kind: "", id: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader, length, options, target) {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string displayName */ 1:
+                    message.displayName = reader.string();
+                    break;
+                case /* string vssId */ 2:
+                    message.vssId = reader.string();
+                    break;
+                case /* string languageCode */ 3:
+                    message.languageCode = reader.string();
+                    break;
+                case /* string kind */ 4:
+                    message.kind = reader.string();
+                    break;
+                case /* string id */ 5:
+                    message.id = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message, writer, options) {
+        /* string displayName = 1; */
+        if (message.displayName !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.displayName);
+        /* string vssId = 2; */
+        if (message.vssId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.vssId);
+        /* string languageCode = 3; */
+        if (message.languageCode !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.languageCode);
+        /* string kind = 4; */
+        if (message.kind !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.kind);
+        /* string id = 5; */
+        if (message.id !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.id);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats.CaptionTrack
+ */
+export const Player_StreamingData_AdaptiveFormats_CaptionTrack = new Player_StreamingData_AdaptiveFormats_CaptionTrack$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Player_StreamingData_AdaptiveFormats_ColorInfo$Type extends MessageType {
     constructor() {

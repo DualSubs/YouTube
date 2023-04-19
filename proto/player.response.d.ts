@@ -61,17 +61,17 @@ export interface Player_StreamingData_AdaptiveFormats {
      */
     mimeType: string;
     /**
-     * @generated from protobuf field: int32 bitrate = 6;
+     * @generated from protobuf field: optional int32 bitrate = 6;
      */
-    bitrate: number;
+    bitrate?: number;
     /**
-     * @generated from protobuf field: int32 width = 7;
+     * @generated from protobuf field: optional int32 width = 7;
      */
-    width: number;
+    width?: number;
     /**
-     * @generated from protobuf field: int32 height = 8;
+     * @generated from protobuf field: optional int32 height = 8;
      */
-    height: number;
+    height?: number;
     /**
      * @generated from protobuf field: optional int32 initRange = 9;
      */
@@ -81,7 +81,7 @@ export interface Player_StreamingData_AdaptiveFormats {
      */
     indexRange?: number;
     /**
-     * @generated from protobuf field: int32 lastModified = 11;
+     * @generated from protobuf field: int64 lastModified = 11 [jstype = JS_NUMBER];
      */
     lastModified: number;
     /**
@@ -89,27 +89,78 @@ export interface Player_StreamingData_AdaptiveFormats {
      */
     quality: string;
     /**
-     * @generated from protobuf field: int32 fps = 25;
+     * @generated from protobuf field: optional string xtag = 23;
      */
-    fps: number;
+    xtag?: string;
     /**
-     * @generated from protobuf field: string qualityLabel = 26;
+     * @generated from protobuf field: optional int32 fps = 25;
      */
-    qualityLabel: string;
+    fps?: number;
+    /**
+     * @generated from protobuf field: optional string qualityLabel = 26;
+     */
+    qualityLabel?: string;
     /**
      * projectionType projectionType = 27; //enum
      *
-     * @generated from protobuf field: int32 averageBitrate = 31;
+     * @generated from protobuf field: optional Player.StreamingData.AdaptiveFormats.AudioTrack audioTrack = 28;
      */
-    averageBitrate: number;
+    audioTrack?: Player_StreamingData_AdaptiveFormats_AudioTrack;
     /**
-     * @generated from protobuf field: optional Player.StreamingData.AdaptiveFormats.ColorInfo colorInfo = 33;
+     * @generated from protobuf field: optional int32 averageBitrate = 31;
      */
-    colorInfo?: Player_StreamingData_AdaptiveFormats_ColorInfo;
+    averageBitrate?: number;
     /**
-     * @generated from protobuf field: int32 approxDurationMs = 44;
+     * optional ColorInfo colorInfo = 33;
+     * int64 targetDurationSec = 35 [jstype = JS_NUMBER];
+     * int64 maxDvrDurationSec = 38 [jstype = JS_NUMBER];
+     * optional bool highReplication = 39;
+     *
+     * @generated from protobuf field: optional Player.StreamingData.AdaptiveFormats.CaptionTrack captionTrack = 42;
      */
-    approxDurationMs: number;
+    captionTrack?: Player_StreamingData_AdaptiveFormats_CaptionTrack;
+}
+/**
+ * @generated from protobuf message Player.StreamingData.AdaptiveFormats.AudioTrack
+ */
+export interface Player_StreamingData_AdaptiveFormats_AudioTrack {
+    /**
+     * @generated from protobuf field: string displayName = 4;
+     */
+    displayName: string;
+    /**
+     * @generated from protobuf field: string languageCode = 5;
+     */
+    languageCode: string;
+    /**
+     * @generated from protobuf field: bool audioIsDefault = 6;
+     */
+    audioIsDefault: boolean;
+}
+/**
+ * @generated from protobuf message Player.StreamingData.AdaptiveFormats.CaptionTrack
+ */
+export interface Player_StreamingData_AdaptiveFormats_CaptionTrack {
+    /**
+     * @generated from protobuf field: string displayName = 1;
+     */
+    displayName: string;
+    /**
+     * @generated from protobuf field: string vssId = 2;
+     */
+    vssId: string;
+    /**
+     * @generated from protobuf field: string languageCode = 3;
+     */
+    languageCode: string;
+    /**
+     * @generated from protobuf field: string kind = 4;
+     */
+    kind: string;
+    /**
+     * @generated from protobuf field: string id = 5;
+     */
+    id: string;
 }
 /**
  * primaries = 1; //enum
@@ -285,6 +336,26 @@ declare class Player_StreamingData_AdaptiveFormats$Type extends MessageType<Play
  * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats
  */
 export declare const Player_StreamingData_AdaptiveFormats: Player_StreamingData_AdaptiveFormats$Type;
+declare class Player_StreamingData_AdaptiveFormats_AudioTrack$Type extends MessageType<Player_StreamingData_AdaptiveFormats_AudioTrack> {
+    constructor();
+    create(value?: PartialMessage<Player_StreamingData_AdaptiveFormats_AudioTrack>): Player_StreamingData_AdaptiveFormats_AudioTrack;
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_StreamingData_AdaptiveFormats_AudioTrack): Player_StreamingData_AdaptiveFormats_AudioTrack;
+    internalBinaryWrite(message: Player_StreamingData_AdaptiveFormats_AudioTrack, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
+}
+/**
+ * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats.AudioTrack
+ */
+export declare const Player_StreamingData_AdaptiveFormats_AudioTrack: Player_StreamingData_AdaptiveFormats_AudioTrack$Type;
+declare class Player_StreamingData_AdaptiveFormats_CaptionTrack$Type extends MessageType<Player_StreamingData_AdaptiveFormats_CaptionTrack> {
+    constructor();
+    create(value?: PartialMessage<Player_StreamingData_AdaptiveFormats_CaptionTrack>): Player_StreamingData_AdaptiveFormats_CaptionTrack;
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Player_StreamingData_AdaptiveFormats_CaptionTrack): Player_StreamingData_AdaptiveFormats_CaptionTrack;
+    internalBinaryWrite(message: Player_StreamingData_AdaptiveFormats_CaptionTrack, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter;
+}
+/**
+ * @generated MessageType for protobuf message Player.StreamingData.AdaptiveFormats.CaptionTrack
+ */
+export declare const Player_StreamingData_AdaptiveFormats_CaptionTrack: Player_StreamingData_AdaptiveFormats_CaptionTrack$Type;
 declare class Player_StreamingData_AdaptiveFormats_ColorInfo$Type extends MessageType<Player_StreamingData_AdaptiveFormats_ColorInfo> {
     constructor();
     create(value?: PartialMessage<Player_StreamingData_AdaptiveFormats_ColorInfo>): Player_StreamingData_AdaptiveFormats_ColorInfo;

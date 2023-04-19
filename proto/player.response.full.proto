@@ -33,19 +33,42 @@ message Player {
 			int32 itag = 1;
 			string url = 2;
 			string mimeType = 5;
-			int32 bitrate = 6;
-			int32 width = 7;
-			int32 height = 8;
+			optional int32 bitrate = 6;
+			optional int32 width = 7;
+			optional int32 height = 8;
 			optional int32 initRange = 9;
 			optional int32 indexRange = 10;
 			int32 lastModified = 11;
 			string quality = 16;
-			int32 fps = 25;
-			string qualityLabel = 26;
+			optional string xtag = 23;
+			optional int32 fps = 25;
+			optional string qualityLabel = 26;
 			//projectionType projectionType = 27; //enum
-			int32 averageBitrate = 31;
-			optional ColorInfo colorInfo = 33;
-			int32 approxDurationMs = 44;
+			optional AudioTrack audioTrack = 28;
+			optional int32 averageBitrate = 31;
+			//optional ColorInfo colorInfo = 33;
+			int64 targetDurationSec = 35 [jstype = JS_NUMBER];
+			int64 maxDvrDurationSec = 38 [jstype = JS_NUMBER];
+			optional bool highReplication = 39;
+			optional CaptionTrack captionTrack = 42;
+			//optional AudioQuality audioQuality = 43;
+			optional int32 approxDurationMs = 44;
+			optional string audioSampleRate = 45;
+			optional int32 audioChannels = 46;
+
+			message AudioTrack {
+				string displayName = 4;
+				string languageCode = 5;
+				bool audioIsDefault = 6;
+			};
+
+			message CaptionTrack {
+				string displayName = 1;
+				string vssId = 2;
+				string languageCode = 3;
+				string kind = 4;
+				string id = 5;
+			};
 
 			message ColorInfo {
 				//primaries = 1; //enum
@@ -237,6 +260,17 @@ enum serviceType {
 	//??? = 7; //??
 };
 
+enum ProjectionType {
+	//UNKNOWN = 0;
+	RECTANGULAR = 1;
+	//EQUIRECTANGULAR = 2;
+	//SPHERICAL = 3;
+};
+
+enum AudioQuality {
+	AUDIO_QUALITY_MEDIUM = 20;
+};
+
 enum visibilityType {
 	UNKNOWN = 0;
 	OFF = 1;
@@ -253,4 +287,4 @@ enum captionsInitialStateType {
 
 enum StyleType {
 	CHANNEL = 3;
-}
+};
