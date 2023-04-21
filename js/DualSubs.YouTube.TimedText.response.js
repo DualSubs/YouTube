@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(10) timedtext.response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(12) timedtext.response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -85,7 +85,7 @@ if ($response.statusCode != 200 && $response.status != 200) $.done();
 						default:
 							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
 							// 获取字幕
-							url.params.lang = getCache(Caches, url.params?.v) ?? url.params.lang; // 主语言
+							url.params.lang = Caches.map.get(url.params?.v) ?? url.params.lang; // 主语言
 							delete url.params?.tlang // 原字幕
 							let TransSub = $response.body;
 							let OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": $request.headers }).then(response => response.body);
@@ -128,7 +128,7 @@ if ($response.statusCode != 200 && $response.status != 200) $.done();
 })()
 	.catch((e) => $.logErr(e))
 	.finally(() => {
-		const Format = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
+		const Format = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
 		$.log(`🎉 ${$.name}, finally`, `Format:${Format}`, "");
 		//$.log(`🚧 ${$.name}, finally`, `$response:${JSON.stringify($response)}`, "");
 		$.log(`🎉 ${$.name}, finally`, `$response`, "");
@@ -154,7 +154,7 @@ if ($response.statusCode != 200 && $response.status != 200) $.done();
 		};
 	})
 
-/***************** Async Function *****************/
+/***************** Function *****************/
 /**
  * Set Environment Variables
  * @author VirgilClyne
@@ -212,25 +212,10 @@ function setENV(name, url, database) {
 	Settings.CacheSize = parseInt(Settings.CacheSize, 10) // BoxJs字符串转数字
 	Settings.Tolerance = parseInt(Settings.Tolerance, 10) // BoxJs字符串转数字
 	$.log(`🎉 ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
+	/***************** Caches *****************/
+	Caches.map = new Map(Caches?.map ?? []); // Array转Map
+	//$.log(`🎉 ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
-};
-
-/**
- * Get Cache
- * @author VirgilClyne
- * @param {Object} cache - Caches
- * @param {String} v - v
- * @param {String} lang - lang
- * @param {String} tlang - tlang
- * @return {Array<Boolean>} is setJSON success?
- */
-function getCache(cache, v) {
-	$.log(`⚠ ${$.name}, Get Cache`, `cache: ${JSON.stringify(cache)}`, "");
-	const tlang = cache.tlang; // 保存目标语言
-	cache.map = new Map(cache?.map ?? []); // Array转Map
-	const lang = cache.map.get(v); // 保存原文语言
-	$.log(`🎉 ${$.name}, Get Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
-	return lang;
 };
 
 /** 

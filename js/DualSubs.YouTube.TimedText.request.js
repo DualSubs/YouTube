@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(11) timedtext.request");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(12) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -49,7 +49,6 @@ const DataBase = {
 };
 
 if ($request.method == "OPTIONS") $.done();
-
 // 构造回复数据
 let $response = undefined;
 
@@ -152,7 +151,7 @@ let $response = undefined;
 		};
 	})
 
-/***************** Async Function *****************/
+/***************** Function *****************/
 /**
  * Set Environment Variables
  * @author VirgilClyne
@@ -210,6 +209,9 @@ function setENV(name, url, database) {
 	Settings.CacheSize = parseInt(Settings.CacheSize, 10) // BoxJs字符串转数字
 	Settings.Tolerance = parseInt(Settings.Tolerance, 10) // BoxJs字符串转数字
 	$.log(`🎉 ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
+	/***************** Caches *****************/
+	Caches.map = new Map(Caches?.map ?? []); // Array转Map
+	//$.log(`🎉 ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
 };
 
@@ -217,17 +219,16 @@ function setENV(name, url, database) {
  * Set Cache
  * @author VirgilClyne
  * @param {Object} settings - Settings
- * @param {Object} cache - Caches
- * @param {String} v - v
- * @param {String} lang - lang
- * @param {String} tlang - tlang
+ * @param {Object} cache - Cache
+ * @param {String} v - video id
+ * @param {String} lang - original lang
+ * @param {String} tlang - translate lang
  * @return {Array<Boolean>} is setJSON success?
  */
 function setCache(settings, cache, v, lang, tlang) {
 	$.log(`⚠ ${$.name}, Set Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
 	let isSaved = false;
 	cache.tlang = tlang; // 保存目标语言
-	cache.map = new Map(cache?.map ?? []); // Array转Map
 	if (v && lang && !tlang) cache.map.set(v, lang); // 保存原文语言
 	cache.map = Array.from(cache.map); // Map转Array
 	cache.map = cache.map.slice(-settings.CacheSize); // 限制缓存大小
