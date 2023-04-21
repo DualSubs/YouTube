@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.2(2) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(6) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -65,6 +65,7 @@ let $response = undefined;
 			$.log(`⚠ ${$.name}, 功能开启`, "");
 			let url = URL.parse($request.url);
 			$.log(`⚠ ${$.name}, url.path=${url.path}`, "");
+			setCache(Caches, url?.params?.v, url?.params?.lang, url?.params?.tlang)
 			switch (url.params.cplatform) {
 				case "DESKTOP":
 					$.log(`⚠ ${$.name}, 桌面端`, "");
@@ -81,7 +82,7 @@ let $response = undefined;
 									break;
 								default:
 									$.log(`⚠ ${$.name}, 兼容字幕：${Settings.Language}`, "");
-									url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+									//url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 									break;
 							};
 							break;
@@ -182,7 +183,7 @@ function setENV(name, url, database) {
 													: "Universal"
 	$.log(`🚧 ${$.name}, Set Environment Variables`, `Platform: ${Platform}`, "");
 	/***************** Settings *****************/
-	let { Settings, Caches = [], Configs } = getENV(name, Platform, database);
+	let { Settings, Caches, Configs } = getENV(name, Platform, database);
 	if (Platform == "Apple") {
 		let platform = /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/subscription\//i.test(url) ? "Apple_TV_Plus"
 			: /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/workout\//i.test(url) ? "Apple_Fitness"
@@ -208,6 +209,29 @@ function setENV(name, url, database) {
 	Settings.Tolerance = parseInt(Settings.Tolerance, 10) // BoxJs字符串转数字
 	$.log(`🎉 ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
+};
+
+/**
+ * Set Cache
+ * @author VirgilClyne
+ * @param {Object} cache - Caches
+ * @param {String} v - v
+ * @param {String} lang - lang
+ * @param {String} tlang - tlang
+ * @return {Array<Boolean>} is setJSON success?
+ */
+function setCache(cache, v, lang, tlang) {
+	$.log(`⚠ ${$.name}, Set Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
+	let isSaved = false;
+	cache.tlang = tlang; // 保存目标语言
+	cache.map = new Map(cache?.map ?? []); // Array转Map
+	if (v && lang && !tlang) cache.map.set(v, lang); // 保存原文语言
+	cache.map = Array.from(cache.map); // Map转Array
+	console.log(cache);
+	isSaved = $.setjson(cache, "@DualSubs.YouTube.Caches");
+	$.log(`🚧 ${$.name}, Set Cache`, `cache: ${JSON.stringify(cache)}`, "");
+	$.log(`🎉 ${$.name}, Set Cache`, `$.setjson ? ${isSaved}`, "");
+	return isSaved;
 };
 
 /***************** Env *****************/
