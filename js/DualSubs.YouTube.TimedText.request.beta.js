@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(7) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.3(8) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Verify": {
@@ -46,13 +46,13 @@ const DataBase = {
 };
 
 if ($request.method == "OPTIONS") $.done();
-
+/*
 // headers转小写
 for (const [key, value] of Object.entries($request.headers)) {
 	delete $request.headers[key]
 	$request.headers[key.toLowerCase()] = value
 };
-
+*/
 // 构造回复数据
 let $response = undefined;
 
