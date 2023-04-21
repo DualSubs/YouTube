@@ -1,19 +1,20 @@
-#!name=🍿️ DualSubs for ▶️ YouTube
+#!name=🍿️ DualSubs: ▶️ YouTube
 #!desc=(V0.6) YouTube字幕增强及双语模块
 #!openUrl=http://boxjs.com/#/app/DualSubs.YouTube
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs
-#!manual=https://github.com/DualSubs/DualSubs-YouTube/wiki/🍿-DualSubs-for-▶-YouTube
-#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+#!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs-for-▶-YouTube
+#!icon=https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png
 
 [Rewrite]
 # 使用reject-img减少开销
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
 
 [Script]
-http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, max-size=0, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response, argument=
-http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, binary-body-mode=1, max-size=0, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response, argument=
-http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/DualSubs/DualSubs-YouTube/main/js/DualSubs.YouTube.TimedText.response.js, tag=DualSubs.YouTube.TimedText.response, argument=
+http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response.json, argument=
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, binary-body-mode=1, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response.proto, argument=
+http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js, tag=DualSubs.YouTube.TimedText.request, argument=
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.response.js, tag=DualSubs.YouTube.TimedText.response, argument=
 
 [MITM]
 hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
