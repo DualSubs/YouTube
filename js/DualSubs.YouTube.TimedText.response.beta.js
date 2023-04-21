@@ -51,8 +51,8 @@ const DataBase = {
 };
 
 if ($request.method == "OPTIONS") $.done();
-if ($response.status != 200 && $response.statusCode != 200) $.done();
-
+if ($response.statusCode != 200 && $response.status != 200) $.done();
+/*
 // headers转小写
 for (const [key, value] of Object.entries($request.headers)) {
 	delete $request.headers[key]
@@ -62,7 +62,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 	delete $response.headers[key]
 	$response.headers[key.toLowerCase()] = value
 };
-
+*/
 /***************** Processing *****************/
 (async () => {
 	const { Platform, Settings, Caches, Configs } = setENV("DualSubs", $request.url, DataBase);
@@ -136,9 +136,11 @@ for (const [key, value] of Object.entries($response.headers)) {
 })()
 	.catch((e) => $.logErr(e))
 	.finally(() => {
+		const Format = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
+		$.log(`🎉 ${$.name}, finally`, `Format:${Format}`, "");
 		//$.log(`🚧 ${$.name}, finally`, `$response:${JSON.stringify($response)}`, "");
 		$.log(`🎉 ${$.name}, finally`, `$response`, "");
-		switch ($response?.headers?.["content-type"]?.split(";")?.[0]) {
+		switch (Format) {
 			case "application/json":
 			case "text/xml":
 			default:
@@ -200,7 +202,7 @@ function setENV(name, url, database) {
 													: "Universal"
 	$.log(`🚧 ${$.name}, Set Environment Variables`, `Platform: ${Platform}`, "");
 	/***************** Settings *****************/
-	let { Settings, Caches = [], Configs } = getENV(name, Platform, database);
+	let { Settings, Caches, Configs } = getENV(name, Platform, database);
 	if (Platform == "Apple") {
 		let platform = /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/subscription\//i.test(url) ? "Apple_TV_Plus"
 			: /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/workout\//i.test(url) ? "Apple_Fitness"
