@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(2) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(10) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -78,7 +78,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 			const Kind = url.params?.kind;
 			$.log(`🚧 ${$.name}, Kind: ${Kind}`, "");
 			Settings.External.Offset = 0;
-			Settings.Tolerance = 0;
+			Settings.Tolerance = 100;
 			switch (Settings.Translate.ShowOnly) {
 				case true:
 				case "true":
@@ -95,29 +95,31 @@ for (const [key, value] of Object.entries($response.headers)) {
 						default:
 							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
 							// 获取字幕
+							url.params.lang = getCache(Caches, url.params?.v) ?? url.params.lang; // 主语言
 							delete url.params?.tlang // 原字幕
 							let TransSub = $response.body;
 							let OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": $request.headers }).then(response => response.body);
+							// 合成双语字幕
 							// 处理格式
 							switch (Format) {
 								case "json3": {
 									TransSub = JSON.parse(TransSub);
 									OriginSub = JSON.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = JSON.stringify(DualSub);
 									break;
 								}
 								case "srv3": {
 									TransSub = XML.parse(TransSub);
 									OriginSub = XML.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
 								}
 								case "vtt": {
 									TransSub = VTT.parse(TransSub);
 									OriginSub = VTT.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = VTT.stringify(DualSub);
 									break;
 								}
@@ -230,6 +232,24 @@ function setENV(name, url, database) {
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
 };
 
+/**
+ * Get Cache
+ * @author VirgilClyne
+ * @param {Object} cache - Caches
+ * @param {String} v - v
+ * @param {String} lang - lang
+ * @param {String} tlang - tlang
+ * @return {Array<Boolean>} is setJSON success?
+ */
+function getCache(cache, v) {
+	$.log(`⚠ ${$.name}, Get Cache`, `cache: ${JSON.stringify(cache)}`, "");
+	const tlang = cache.tlang; // 保存目标语言
+	cache.map = new Map(cache?.map ?? []); // Array转Map
+	const lang = cache.map.get(v); // 保存原文语言
+	$.log(`🎉 ${$.name}, Get Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
+	return lang;
+};
+
 /** 
  * Combine Dual Subtitles
  * @param {Object} Sub1 - Sub1
@@ -239,9 +259,9 @@ function setENV(name, url, database) {
  * @param {Number} Offset - Offset
  * @param {Number} Tolerance - Tolerance
  * @param {Array} Options - options = ["Forward", "Reverse", "ShowOnly"]
- * @return {Promise<*>}
+ * @return {String} DualSub
  */
-async function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions", Offset = 0, Tolerance = 0, Options = ["Forward"]) {
+function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions", Offset = 0, Tolerance = 0, Options = ["Forward"]) {
 	$.log(`⚠ ${$.name}, Combine Dual Subtitles`, `Offset:${Offset}, Tolerance:${Tolerance}, Options:${Options}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub1内容: ${JSON.stringify(Sub1)}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub2内容: ${JSON.stringify(Sub2)}`, "");
@@ -380,6 +400,7 @@ async function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "ca
 		};
 	};
 	//$.log(`🎉 ${$.name}, Combine Dual Subtitles`, `return DualSub内容: ${JSON.stringify(DualSub)}`, "");
+	$.log(`🎉 ${$.name}, Combine Dual Subtitles`, "");
 	return DualSub;
 };
 
