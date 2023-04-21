@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(2) timedtext.response");
+const $ = new Env("🍿 DualSubs for ▶ YouTube v0.7.5(10) timedtext.response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -14,7 +14,7 @@ const DataBase = {
 		"Settings":{"Translator":{"Times":3,"Interval":100,"Exponential":true}}
 	},
 	"Default": {
-		"Settings":{"Switch":true,"Types":["Official","Google","GoogleCloud","Azure","DeepL"],"Type":"Google","Languages":["ZH","EN"],"Language":"ZH","Translate":{"ShowOnly":false},"External":{"URL":null,"Offset":0,"ShowOnly":false},"Position":"Forward","CacheSize":6,"Tolerance":1000},
+		"Settings":{"Switch":true,"Types":["Official","Google","GoogleCloud","Azure","DeepL"],"Type":"Google","Languages":["ZH","EN"],"Language":"ZH","Translate":{"ShowOnly":false},"External":{"URL":null,"Offset":0,"ShowOnly":false},"Position":"Forward","CacheSize":20,"Tolerance":1000},
 		"Configs": {
 			"Languages":{"AUTO":"","AR":["ar","ar-001"],"BG":["bg","bg-BG","bul"],"CS":["cs","cs-CZ","ces"],"DA":["da","da-DK","dan"],"DE":["de","de-DE","deu"],"EL":["el","el-GR","ell"],"EN":["en","en-US","eng","en-GB","en-UK","en-CA","en-US SDH"],"EN-CA":["en-CA","en","eng"],"EN-GB":["en-UK","en","eng"],"EN-US":["en-US","en","eng"],"EN-US SDH":["en-US SDH","en-US","en","eng"],"ES":["es","es-419","es-ES","spa","es-419 SDH"],"ES-419":["es-419","es","spa"],"ES-419 SDH":["es-419 SDH","es-419","es","spa"],"ES-ES":["es-ES","es","spa"],"ET":["et","et-EE","est"],"FI":["fi","fi-FI","fin"],"FR":["fr","fr-CA","fr-FR","fra"],"FR-CA":["fr-CA","fr","fra"],"FR-DR":["fr-FR","fr","fra"],"HU":["hu","hu-HU","hun"],"ID":["id","id-id"],"IT":["it","it-IT","ita"],"JA":["ja","ja-JP","jpn"],"KO":["ko","ko-KR","kor"],"LT":["lt","lt-LT","lit"],"LV":["lv","lv-LV","lav"],"NL":["nl","nl-NL","nld"],"NO":["no","nb-NO","nor"],"PL":["pl","pl-PL"],"PT":["pt","pt-PT","pt-BR","por"],"PT-PT":["pt-PT","pt","por"],"PT-BR":["pt-BR","pt","por"],"RO":["ro","ro-RO","ron"],"RU":["ru","ru-RU","rus"],"SK":["sk","sk-SK","slk"],"SL":["sl","sl-SI","slv"],"SV":["sv","sv-SE","swe"],"IS":["is","is-IS","isl"],"ZH":["zh","cmn","zho","zh-CN","zh-Hans","cmn-Hans","zh-TW","zh-Hant","cmn-Hant","zh-HK","yue-Hant","yue"],"ZH-CN":["zh-CN","zh-Hans","cmn-Hans","zho"],"ZH-HANS":["zh-Hans","cmn-Hans","zh-CN","zho"],"ZH-HK":["zh-HK","yue-Hant","yue","zho"],"ZH-TW":["zh-TW","zh-Hant","cmn-Hant","zho"],"ZH-HANT":["zh-Hant","cmn-Hant","zh-TW","zho"],"YUE":["yue","yue-Hant","zh-HK","zho"],"YUE-HK":["yue-Hant","yue","zh-HK","zho"]}
 		}
@@ -51,17 +51,7 @@ const DataBase = {
 };
 
 if ($request.method == "OPTIONS") $.done();
-if ($response.status != 200 && $response.statusCode != 200) $.done();
-
-// headers转小写
-for (const [key, value] of Object.entries($request.headers)) {
-	delete $request.headers[key]
-	$request.headers[key.toLowerCase()] = value
-};
-for (const [key, value] of Object.entries($response.headers)) {
-	delete $response.headers[key]
-	$response.headers[key.toLowerCase()] = value
-};
+if ($response.statusCode != 200 && $response.status != 200) $.done();
 
 /***************** Processing *****************/
 (async () => {
@@ -78,7 +68,7 @@ for (const [key, value] of Object.entries($response.headers)) {
 			const Kind = url.params?.kind;
 			$.log(`🚧 ${$.name}, Kind: ${Kind}`, "");
 			Settings.External.Offset = 0;
-			Settings.Tolerance = 0;
+			Settings.Tolerance = 100;
 			switch (Settings.Translate.ShowOnly) {
 				case true:
 				case "true":
@@ -95,29 +85,31 @@ for (const [key, value] of Object.entries($response.headers)) {
 						default:
 							$.log(`⚠ ${$.name}, 生成双语字幕`, "");
 							// 获取字幕
+							url.params.lang = getCache(Caches, url.params?.v) ?? url.params.lang; // 主语言
 							delete url.params?.tlang // 原字幕
 							let TransSub = $response.body;
 							let OriginSub = await $.http.get({ "url": URL.stringify(url), "headers": $request.headers }).then(response => response.body);
+							// 合成双语字幕
 							// 处理格式
 							switch (Format) {
 								case "json3": {
 									TransSub = JSON.parse(TransSub);
 									OriginSub = JSON.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = JSON.stringify(DualSub);
 									break;
 								}
 								case "srv3": {
 									TransSub = XML.parse(TransSub);
 									OriginSub = XML.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = XML.stringify(DualSub);
 									break;
 								}
 								case "vtt": {
 									TransSub = VTT.parse(TransSub);
 									OriginSub = VTT.parse(OriginSub);
-									let DualSub = await CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
+									let DualSub = CombineDualSubs(OriginSub, TransSub, Format, Kind, 0, Settings.Tolerance, [Settings.Position]);
 									$response.body = VTT.stringify(DualSub);
 									break;
 								}
@@ -136,9 +128,11 @@ for (const [key, value] of Object.entries($response.headers)) {
 })()
 	.catch((e) => $.logErr(e))
 	.finally(() => {
+		const Format = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
+		$.log(`🎉 ${$.name}, finally`, `Format:${Format}`, "");
 		//$.log(`🚧 ${$.name}, finally`, `$response:${JSON.stringify($response)}`, "");
 		$.log(`🎉 ${$.name}, finally`, `$response`, "");
-		switch ($response?.headers?.["content-type"]?.split(";")?.[0]) {
+		switch (Format) {
 			case "application/json":
 			case "text/xml":
 			default:
@@ -149,14 +143,8 @@ for (const [key, value] of Object.entries($response.headers)) {
 			case "application/x-protobuf":
 			case "application/grpc":
 				// 返回二进制数据
-				if ($.isQuanX()) {
-					//$.log(`${$response.bodyBytes.byteLength}---${$response.bodyBytes.buffer.byteLength}`);
-					//$.log(`bodyBytes.byteOffset: ${$response.bodyBytes.byteOffset}}`);
-					$.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
-				} else {
-					//$.log(`${$response.body.byteLength}---${$response.body.buffer.byteLength}`);
-					$.done($response)
-				}
+				if ($.isQuanX()) $.done({ headers: $response.headers, bodyBytes: $response.bodyBytes.buffer.slice($response.bodyBytes.byteOffset, $response.bodyBytes.byteLength + $response.bodyBytes.byteOffset) });
+				else $.done($response)
 				break;
 			case undefined: // 视为无body
 				// 返回普通数据
@@ -200,7 +188,7 @@ function setENV(name, url, database) {
 													: "Universal"
 	$.log(`🚧 ${$.name}, Set Environment Variables`, `Platform: ${Platform}`, "");
 	/***************** Settings *****************/
-	let { Settings, Caches = [], Configs } = getENV(name, Platform, database);
+	let { Settings, Caches, Configs } = getENV(name, Platform, database);
 	if (Platform == "Apple") {
 		let platform = /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/subscription\//i.test(url) ? "Apple_TV_Plus"
 			: /\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/workout\//i.test(url) ? "Apple_Fitness"
@@ -227,6 +215,24 @@ function setENV(name, url, database) {
 	return { Platform, Verify, Advanced, Settings, Caches, Configs };
 };
 
+/**
+ * Get Cache
+ * @author VirgilClyne
+ * @param {Object} cache - Caches
+ * @param {String} v - v
+ * @param {String} lang - lang
+ * @param {String} tlang - tlang
+ * @return {Array<Boolean>} is setJSON success?
+ */
+function getCache(cache, v) {
+	$.log(`⚠ ${$.name}, Get Cache`, `cache: ${JSON.stringify(cache)}`, "");
+	const tlang = cache.tlang; // 保存目标语言
+	cache.map = new Map(cache?.map ?? []); // Array转Map
+	const lang = cache.map.get(v); // 保存原文语言
+	$.log(`🎉 ${$.name}, Get Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
+	return lang;
+};
+
 /** 
  * Combine Dual Subtitles
  * @param {Object} Sub1 - Sub1
@@ -236,9 +242,9 @@ function setENV(name, url, database) {
  * @param {Number} Offset - Offset
  * @param {Number} Tolerance - Tolerance
  * @param {Array} Options - options = ["Forward", "Reverse", "ShowOnly"]
- * @return {Promise<*>}
+ * @return {String} DualSub
  */
-async function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions", Offset = 0, Tolerance = 0, Options = ["Forward"]) {
+function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions", Offset = 0, Tolerance = 0, Options = ["Forward"]) {
 	$.log(`⚠ ${$.name}, Combine Dual Subtitles`, `Offset:${Offset}, Tolerance:${Tolerance}, Options:${Options}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub1内容: ${JSON.stringify(Sub1)}`, "");
 	//$.log(`🚧 ${$.name}, Combine Dual Subtitles`,`Sub2内容: ${JSON.stringify(Sub2)}`, "");
@@ -377,6 +383,7 @@ async function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "ca
 		};
 	};
 	//$.log(`🎉 ${$.name}, Combine Dual Subtitles`, `return DualSub内容: ${JSON.stringify(DualSub)}`, "");
+	$.log(`🎉 ${$.name}, Combine Dual Subtitles`, "");
 	return DualSub;
 };
 
