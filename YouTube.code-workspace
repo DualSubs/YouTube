@@ -7,8 +7,8 @@
 	"settings": {
 		"files.autoSave": "onFocusChange",
 		"editor.renderWhitespace": "all",
-		"editor.formatOnPaste": true,
-		"editor.formatOnType": true,
+		"editor.formatOnPaste": false,
+		"editor.formatOnType": false,
 		"diffEditor.codeLens": true
 	}
 }
