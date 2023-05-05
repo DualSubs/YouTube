@@ -17,6 +17,7 @@
 		"FR": "fr",
 		"HU": "hu-HU",
 		"ID": "id",
+		"IS": "is-IS",
 		"IT": "it",
 		"JA": "ja",
 		"KO": "ko",
@@ -33,21 +34,20 @@
 		"SK": "sk-SK",
 		"SL": "sl-SI",
 		"SV": "sv-SE",
-		"IS": "is-IS",
+		"YUE": "yue",
+		"YUE-HK": "yue-HK",
 		"ZH": "zh",
 		"ZH-HANS": "zh-Hans",
 		"ZH-HK": "zh-Hant-HK",
 		"ZH-HANT": "zh-Hant",
-		"ZH-TW": "zh-TW",
-		"YUE": "yue",
-		"YUE-HK": "yue-HK"
+		"ZH-TW": "zh-TW"
 	},
 	"translationLanguages": {
 		"DESKTOP": [
 			{
 				"languageCode": "sq",
 				"languageName": {
-					"simpleText": "Gjuha shqipe - 阿尔巴尼亚语"
+					"simpleText": "Shqip - 阿尔巴尼亚语"
 				}
 			},
 			{
@@ -59,7 +59,7 @@
 			{
 				"languageCode": "ar",
 				"languageName": {
-					"simpleText": "اَلْعَرَبِيَّةُ - 阿拉伯语"
+					"simpleText": "العربية - 阿拉伯语"
 				}
 			},
 			{
@@ -71,121 +71,121 @@
 			{
 				"languageCode": "as",
 				"languageName": {
-					"simpleText": "阿萨姆语"
+					"simpleText": "অসমীয়া - 阿萨姆语"
 				}
 			},
 			{
 				"languageCode": "az",
 				"languageName": {
-					"simpleText": "阿塞拜疆语"
+					"simpleText": "آذربايجان ديلی - 阿塞拜疆语"
 				}
 			},
 			{
 				"languageCode": "ee",
 				"languageName": {
-					"simpleText": "埃维语"
+					"simpleText": "Èʋegbe - 埃维语"
 				}
 			},
 			{
 				"languageCode": "ay",
 				"languageName": {
-					"simpleText": "艾马拉语"
+					"simpleText": "Aymar aru - 艾马拉语"
 				}
 			},
 			{
 				"languageCode": "ga",
 				"languageName": {
-					"simpleText": "爱尔兰语"
+					"simpleText": "Gaeilge - 爱尔兰语"
 				}
 			},
 			{
 				"languageCode": "et",
 				"languageName": {
-					"simpleText": "爱沙尼亚语"
+					"simpleText": "Eesti - 爱沙尼亚语"
 				}
 			},
 			{
 				"languageCode": "or",
 				"languageName": {
-					"simpleText": "奥里亚语"
+					"simpleText": "ଓଡ଼ିଆ - 奥里亚语"
 				}
 			},
 			{
 				"languageCode": "om",
 				"languageName": {
-					"simpleText": "奥罗莫语"
+					"simpleText": "Afaan Oromoo - 奥罗莫语"
 				}
 			},
 			{
 				"languageCode": "eu",
 				"languageName": {
-					"simpleText": "巴斯克语"
+					"simpleText": "Euskara - 巴斯克语"
 				}
 			},
 			{
 				"languageCode": "be",
 				"languageName": {
-					"simpleText": "白俄罗斯语"
+					"simpleText": "Беларуская - 白俄罗斯语"
 				}
 			},
 			{
 				"languageCode": "bg",
 				"languageName": {
-					"simpleText": "保加利亚语"
+					"simpleText": "Български - 保加利亚语"
 				}
 			},
 			{
 				"languageCode": "nso",
 				"languageName": {
-					"simpleText": "北索托语"
+					"simpleText": "Sesotho sa Leboa - 北索托语"
 				}
 			},
 			{
 				"languageCode": "is",
 				"languageName": {
-					"simpleText": "冰岛语"
+					"simpleText": "Íslenska - 冰岛语"
 				}
 			},
 			{
 				"languageCode": "pl",
 				"languageName": {
-					"simpleText": "波兰语"
+					"simpleText": "Polski - 波兰语"
 				}
 			},
 			{
 				"languageCode": "bs",
 				"languageName": {
-					"simpleText": "波斯尼亚语"
+					"simpleText": "Bosanski - 波斯尼亚语"
 				}
 			},
 			{
 				"languageCode": "fa",
 				"languageName": {
-					"simpleText": "波斯语"
+					"simpleText": "فارسی - 波斯语"
 				}
 			},
 			{
 				"languageCode": "bho",
 				"languageName": {
-					"simpleText": "博杰普尔语"
+					"simpleText": "भोजपुरी - 博杰普尔语"
 				}
 			},
 			{
 				"languageCode": "ts",
 				"languageName": {
-					"simpleText": "聪加语"
+					"simpleText": "Xitsonga - 聪加语"
 				}
 			},
 			{
 				"languageCode": "tt",
 				"languageName": {
-					"simpleText": "鞑靼语"
+					"simpleText": "Татарча - 鞑靼语"
 				}
 			},
 			{
 				"languageCode": "da",
 				"languageName": {
-					"simpleText": "丹麦语"
+					"simpleText": "Dansk - 丹麦语"
 				}
 			},
 			{
@@ -197,13 +197,13 @@
 			{
 				"languageCode": "dv",
 				"languageName": {
-					"simpleText": "迪维希语"
+					"simpleText": "ދިވެހިބަސް - 迪维希语"
 				}
 			},
 			{
 				"languageCode": "ru",
 				"languageName": {
-					"simpleText": "ру́сский язы́к - 俄语"
+					"simpleText": "Русский - 俄语"
 				}
 			},
 			{
@@ -215,7 +215,7 @@
 			{
 				"languageCode": "sa",
 				"languageName": {
-					"simpleText": "梵语"
+					"simpleText": "संस्कृतम् - 梵语"
 				}
 			},
 			{
@@ -233,49 +233,49 @@
 			{
 				"languageCode": "km",
 				"languageName": {
-					"simpleText": "高棉语"
+					"simpleText": "ភាសាខ្មែរ - 高棉语"
 				}
 			},
 			{
 				"languageCode": "ka",
 				"languageName": {
-					"simpleText": "格鲁吉亚语"
+					"simpleText": "ქართული - 格鲁吉亚语"
 				}
 			},
 			{
 				"languageCode": "gu",
 				"languageName": {
-					"simpleText": "古吉拉特语"
+					"simpleText": "ગુજરાતી - 古吉拉特语"
 				}
 			},
 			{
 				"languageCode": "gn",
 				"languageName": {
-					"simpleText": "瓜拉尼语"
+					"simpleText": "Avañe'ẽ - 瓜拉尼语"
 				}
 			},
 			{
 				"languageCode": "kk",
 				"languageName": {
-					"simpleText": "قازاق ٴتىلى - 哈萨克语"
+					"simpleText": "Қазақ тілі - 哈萨克语"
 				}
 			},
 			{
 				"languageCode": "ht",
 				"languageName": {
-					"simpleText": "海地克里奥尔语"
+					"simpleText": "Kreyòl ayisyen - 海地克里奥尔语"
 				}
 			},
 			{
 				"languageCode": "ko",
 				"languageName": {
-					"simpleText": "한국말 - 韩语"
+					"simpleText": "한국어 - 韩语"
 				}
 			},
 			{
 				"languageCode": "ha",
 				"languageName": {
-					"simpleText": "豪萨语"
+					"simpleText": "هَوُسَ - 豪萨语"
 				}
 			},
 			{
@@ -287,61 +287,61 @@
 			{
 				"languageCode": "gl",
 				"languageName": {
-					"simpleText": "加利西亚语"
+					"simpleText": "Galego - 加利西亚语"
 				}
 			},
 			{
 				"languageCode": "ca",
 				"languageName": {
-					"simpleText": "加泰罗尼亚语"
+					"simpleText": "català - 加泰罗尼亚语"
 				}
 			},
 			{
 				"languageCode": "cs",
 				"languageName": {
-					"simpleText": "捷克语"
+					"simpleText": "čeština - 捷克语"
 				}
 			},
 			{
 				"languageCode": "kn",
 				"languageName": {
-					"simpleText": "卡纳达语"
+					"simpleText": "ಕನ್ನಡ - 卡纳达语"
 				}
 			},
 			{
 				"languageCode": "ky",
 				"languageName": {
-					"simpleText": "柯尔克孜语"
+					"simpleText": "кыргыз тили - 吉尔吉斯语"
 				}
 			},
 			{
 				"languageCode": "xh",
 				"languageName": {
-					"simpleText": "科萨语"
+					"simpleText": "isiXhosa - 科萨语"
 				}
 			},
 			{
 				"languageCode": "co",
 				"languageName": {
-					"simpleText": "科西嘉语"
+					"simpleText": "corsu - 科西嘉语"
 				}
 			},
 			{
 				"languageCode": "hr",
 				"languageName": {
-					"simpleText": "克罗地亚语"
+					"simpleText": "hrvatski - 克罗地亚语"
 				}
 			},
 			{
 				"languageCode": "qu",
 				"languageName": {
-					"simpleText": "克丘亚语"
+					"simpleText": "Runa Simi - 克丘亚语"
 				}
 			},
 			{
 				"languageCode": "ku",
 				"languageName": {
-					"simpleText": "库尔德语"
+					"simpleText": "Kurdî - 库尔德语"
 				}
 			},
 			{
@@ -353,133 +353,133 @@
 			{
 				"languageCode": "lv",
 				"languageName": {
-					"simpleText": "拉脱维亚语"
+					"simpleText": "latviešu valoda - 拉脱维亚语"
 				}
 			},
 			{
 				"languageCode": "lo",
 				"languageName": {
-					"simpleText": "老挝语"
+					"simpleText": "ພາສາລາວ - 老挝语"
 				}
 			},
 			{
 				"languageCode": "lt",
 				"languageName": {
-					"simpleText": "立陶宛语"
+					"simpleText": "lietuvių kalba - 立陶宛语"
 				}
 			},
 			{
 				"languageCode": "ln",
 				"languageName": {
-					"simpleText": "林加拉语"
+					"simpleText": "lingála - 林加拉语"
 				}
 			},
 			{
 				"languageCode": "lg",
 				"languageName": {
-					"simpleText": "卢干达语"
+					"simpleText": "Luganda - 卢干达语"
 				}
 			},
 			{
 				"languageCode": "lb",
 				"languageName": {
-					"simpleText": "卢森堡语"
+					"simpleText": "Lëtzebuergesch - 卢森堡语"
 				}
 			},
 			{
 				"languageCode": "rw",
 				"languageName": {
-					"simpleText": "卢旺达语"
+					"simpleText": "Kinyarwanda - 卢旺达语"
 				}
 			},
 			{
 				"languageCode": "ro",
 				"languageName": {
-					"simpleText": "罗马尼亚语"
+					"simpleText": "Română - 罗马尼亚语"
 				}
 			},
 			{
 				"languageCode": "mt",
 				"languageName": {
-					"simpleText": "马耳他语"
+					"simpleText": "Malti - 马耳他语"
 				}
 			},
 			{
 				"languageCode": "mr",
 				"languageName": {
-					"simpleText": "马拉地语"
+					"simpleText": "मराठी - 马拉地语"
 				}
 			},
 			{
 				"languageCode": "mg",
 				"languageName": {
-					"simpleText": "马拉加斯语"
+					"simpleText": "Malagasy - 马拉加斯语"
 				}
 			},
 			{
 				"languageCode": "ml",
 				"languageName": {
-					"simpleText": "马拉雅拉姆语"
+					"simpleText": "മലയാളം - 马拉雅拉姆语"
 				}
 			},
 			{
 				"languageCode": "ms",
 				"languageName": {
-					"simpleText": "马来语"
+					"simpleText": "bahasa Melayu - 马来语"
 				}
 			},
 			{
 				"languageCode": "mk",
 				"languageName": {
-					"simpleText": "马其顿语"
+					"simpleText": "македонски јазик - 马其顿语"
 				}
 			},
 			{
 				"languageCode": "mi",
 				"languageName": {
-					"simpleText": "毛利语"
+					"simpleText": "te reo Māori - 毛利语"
 				}
 			},
 			{
 				"languageCode": "mn",
 				"languageName": {
-					"simpleText": "蒙古语"
+					"simpleText": "Монгол хэл - 蒙古语"
 				}
 			},
 			{
 				"languageCode": "bn",
 				"languageName": {
-					"simpleText": "孟加拉语"
+					"simpleText": "বাংলা - 孟加拉语"
 				}
 			},
 			{
 				"languageCode": "my",
 				"languageName": {
-					"simpleText": "缅甸语"
+					"simpleText": "ဗမာစာ - 缅甸语"
 				}
 			},
 			{
 				"languageCode": "hmn",
 				"languageName": {
-					"simpleText": "苗语"
+					"simpleText": "Hmoob - 苗语"
 				}
 			},
 			{
 				"languageCode": "af",
 				"languageName": {
-					"simpleText": "南非荷兰语"
+					"simpleText": "Afrikaans - 南非荷兰语"
 				}
 			},
 			{
 				"languageCode": "st",
 				"languageName": {
-					"simpleText": "南索托语"
+					"simpleText": "Sesotho - 南索托语"
 				}
 			},
 			{
 				"languageCode": "ne",
 				"languageName": {
-					"simpleText": "尼泊尔语"
+					"simpleText": "नेपाली - 尼泊尔语"
 				}
 			},
 			{
@@ -491,7 +491,7 @@
 			{
 				"languageCode": "pa",
 				"languageName": {
-					"simpleText": "旁遮普语"
+					"simpleText": "ਪੰਜਾਬੀ - 旁遮普语"
 				}
 			},
 			{
@@ -503,169 +503,169 @@
 			{
 				"languageCode": "ps",
 				"languageName": {
-					"simpleText": "普什图语"
+					"simpleText": "پښتو - 普什图语"
 				}
 			},
 			{
 				"languageCode": "ny",
 				"languageName": {
-					"simpleText": "齐切瓦语"
+					"simpleText": "chiCheŵa - 齐切瓦语"
 				}
 			},
 			{
 				"languageCode": "ja",
 				"languageName": {
-					"simpleText": "にほんご - 日语"
+					"simpleText": "日本語 - 日语"
 				}
 			},
 			{
 				"languageCode": "sv",
 				"languageName": {
-					"simpleText": "svenska - 瑞典语"
+					"simpleText": "Svenska - 瑞典语"
 				}
 			},
 			{
 				"languageCode": "sm",
 				"languageName": {
-					"simpleText": "萨摩亚语"
+					"simpleText": "Gagana fa'a Samoa - 萨摩亚语"
 				}
 			},
 			{
 				"languageCode": "sr",
 				"languageName": {
-					"simpleText": "塞尔维亚语"
+					"simpleText": "Српски језик - 塞尔维亚语"
 				}
 			},
 			{
 				"languageCode": "si",
 				"languageName": {
-					"simpleText": "僧伽罗语"
+					"simpleText": "සිංහල - 僧伽罗语"
 				}
 			},
 			{
 				"languageCode": "sn",
 				"languageName": {
-					"simpleText": "绍纳语"
+					"simpleText": "ChiShona - 绍纳语"
 				}
 			},
 			{
 				"languageCode": "eo",
 				"languageName": {
-					"simpleText": "世界语"
+					"simpleText": "Esperanto - 世界语"
 				}
 			},
 			{
 				"languageCode": "sk",
 				"languageName": {
-					"simpleText": "斯洛伐克语"
+					"simpleText": "slovenčina - 斯洛伐克语"
 				}
 			},
 			{
 				"languageCode": "sl",
 				"languageName": {
-					"simpleText": "斯洛文尼亚语"
+					"simpleText": "slovenščina - 斯洛文尼亚语"
 				}
 			},
 			{
 				"languageCode": "sw",
 				"languageName": {
-					"simpleText": "斯瓦希里语"
+					"simpleText": "Kiswahili - 斯瓦希里语"
 				}
 			},
 			{
 				"languageCode": "gd",
 				"languageName": {
-					"simpleText": "苏格兰盖尔语"
+					"simpleText": "Gàidhlig - 苏格兰盖尔语"
 				}
 			},
 			{
 				"languageCode": "ceb",
 				"languageName": {
-					"simpleText": "宿务语"
+					"simpleText": "Binisaya - 宿务语"
 				}
 			},
 			{
 				"languageCode": "so",
 				"languageName": {
-					"simpleText": "索马里语"
+					"simpleText": "Soomaaliga - 索马里语"
 				}
 			},
 			{
 				"languageCode": "tg",
 				"languageName": {
-					"simpleText": "塔吉克语"
+					"simpleText": "тоҷикӣ - 塔吉克语"
 				}
 			},
 			{
 				"languageCode": "te",
 				"languageName": {
-					"simpleText": "泰卢固语"
+					"simpleText": "తెలుగు - 泰卢固语"
 				}
 			},
 			{
 				"languageCode": "ta",
 				"languageName": {
-					"simpleText": "泰米尔语"
+					"simpleText": "தமிழ் - 泰米尔语"
 				}
 			},
 			{
 				"languageCode": "th",
 				"languageName": {
-					"simpleText": "ภาษาไทย - 泰语"
+					"simpleText": "ไทย - 泰语"
 				}
 			},
 			{
 				"languageCode": "ti",
 				"languageName": {
-					"simpleText": "提格利尼亚语"
+					"simpleText": "ትግርኛ - 提格利尼亚语"
 				}
 			},
 			{
 				"languageCode": "tr",
 				"languageName": {
-					"simpleText": "土耳其语"
+					"simpleText": "Türkçe - 土耳其语"
 				}
 			},
 			{
 				"languageCode": "tk",
 				"languageName": {
-					"simpleText": "土库曼语"
+					"simpleText": "Türkmen - 土库曼语"
 				}
 			},
 			{
 				"languageCode": "cy",
 				"languageName": {
-					"simpleText": "威尔士语"
+					"simpleText": "Cymraeg - 威尔士语"
 				}
 			},
 			{
 				"languageCode": "ug",
 				"languageName": {
-					"simpleText": "ئۇيغۇر - 维吾尔语"
+					"simpleText": "ئۇيغۇرچە - 维吾尔语"
 				}
 			},
 			{
 				"languageCode": "und",
 				"languageName": {
-					"simpleText": "未知语言"
+					"simpleText": "Unknown - 未知语言"
 				}
 			},
 			{
 				"languageCode": "ur",
 				"languageName": {
-					"simpleText": "乌尔都语"
+					"simpleText": "اردو - 乌尔都语"
 				}
 			},
 			{
 				"languageCode": "uk",
 				"languageName": {
-					"simpleText": "українська мова - 乌克兰语"
+					"simpleText": "українська - 乌克兰语"
 				}
 			},
 			{
 				"languageCode": "uz",
 				"languageName": {
-					"simpleText": "乌兹别克语"
+					"simpleText": "O'zbek - 乌兹别克语"
 				}
 			},
 			{
@@ -677,13 +677,13 @@
 			{
 				"languageCode": "fy",
 				"languageName": {
-					"simpleText": "西弗里西亚语"
+					"simpleText": "Frysk - 西弗里西亚语"
 				}
 			},
 			{
 				"languageCode": "iw",
 				"languageName": {
-					"simpleText": "希伯来语"
+					"simpleText": "עברית - 希伯来语"
 				}
 			},
 			{
@@ -695,37 +695,37 @@
 			{
 				"languageCode": "haw",
 				"languageName": {
-					"simpleText": "夏威夷语"
+					"simpleText": "ʻŌlelo Hawaiʻi - 夏威夷语"
 				}
 			},
 			{
 				"languageCode": "sd",
 				"languageName": {
-					"simpleText": "信德语"
+					"simpleText": "سنڌي - 信德语"
 				}
 			},
 			{
 				"languageCode": "hu",
 				"languageName": {
-					"simpleText": "匈牙利语"
+					"simpleText": "magyar - 匈牙利语"
 				}
 			},
 			{
 				"languageCode": "su",
 				"languageName": {
-					"simpleText": "巽他语"
+					"simpleText": "Basa Sunda - 巽他语"
 				}
 			},
 			{
 				"languageCode": "hy",
 				"languageName": {
-					"simpleText": "亚美尼亚语"
+					"simpleText": "հայերեն - 亚美尼亚语"
 				}
 			},
 			{
 				"languageCode": "ig",
 				"languageName": {
-					"simpleText": "伊博语"
+					"simpleText": "Igbo - 伊博语"
 				}
 			},
 			{
@@ -737,13 +737,13 @@
 			{
 				"languageCode": "yi",
 				"languageName": {
-					"simpleText": "意第绪语"
+					"simpleText": "ייִדיש - 意第绪语"
 				}
 			},
 			{
 				"languageCode": "hi",
 				"languageName": {
-					"simpleText": "印地语"
+					"simpleText": "हिन्दी - 印地语"
 				}
 			},
 			{
@@ -761,7 +761,7 @@
 			{
 				"languageCode": "yo",
 				"languageName": {
-					"simpleText": "约鲁巴语"
+					"simpleText": "Yorùbá - 约鲁巴语"
 				}
 			},
 			{
@@ -773,13 +773,13 @@
 			{
 				"languageCode": "jv",
 				"languageName": {
-					"simpleText": "爪哇语"
+					"simpleText": "Basa Jawa - 爪哇语"
 				}
 			},
 			{
 				"languageCode": "zh-Hant",
 				"languageName": {
-					"simpleText": "中文（繁体）"
+					"simpleText": "中文（繁體）- 中文（繁体）"
 				}
 			},
 			{
@@ -791,13 +791,13 @@
 			{
 				"languageCode": "zu",
 				"languageName": {
-					"simpleText": "祖鲁语"
+					"simpleText": "isiZulu - 祖鲁语"
 				}
 			},
 			{
 				"languageCode": "kri",
 				"languageName": {
-					"simpleText": "Kri"
+					"simpleText": "Krìì - 克里语"
 				}
 			}
 		],
@@ -807,7 +807,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "Gjuha shqipe - 阿尔巴尼亚语"
+							"text": "Shqip - 阿尔巴尼亚语"
 						}
 					]
 				}
@@ -827,7 +827,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "اَلْعَرَبِيَّةُ - 阿拉伯语"
+							"text": "العربية - 阿拉伯语"
 						}
 					]
 				}
@@ -847,7 +847,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "阿萨姆语"
+							"text": "অসমীয়া - 阿萨姆语"
 						}
 					]
 				}
@@ -857,7 +857,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "阿塞拜疆语"
+							"text": "Azərbaycanca - 阿塞拜疆语"
 						}
 					]
 				}
@@ -867,7 +867,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "埃维语"
+							"text": "Eʋegbe - 埃维语"
 						}
 					]
 				}
@@ -877,7 +877,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "艾马拉语"
+							"text": "Aymar - 艾马拉语"
 						}
 					]
 				}
@@ -887,7 +887,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "爱尔兰语"
+							"text": "Gaeilge - 爱尔兰语"
 						}
 					]
 				}
@@ -897,7 +897,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "爱沙尼亚语"
+							"text": "Eesti - 爱沙尼亚语"
 						}
 					]
 				}
@@ -907,7 +907,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "奥里亚语"
+							"text": "ଓଡ଼ିଆ - 奥里亚语"
 						}
 					]
 				}
@@ -917,7 +917,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "奥罗莫语"
+							"text": "Oromoo - 奥罗莫语"
 						}
 					]
 				}
@@ -927,7 +927,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "巴斯克语"
+							"text": "Euskara - 巴斯克语"
 						}
 					]
 				}
@@ -937,7 +937,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "白俄罗斯语"
+							"text": "Беларуская - 白俄罗斯语"
 						}
 					]
 				}
@@ -947,7 +947,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "保加利亚语"
+							"text": "Български - 保加利亚语"
 						}
 					]
 				}
@@ -957,7 +957,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "北索托语"
+							"text": "Sesotho sa Leboa - 北索托语"
 						}
 					]
 				}
@@ -967,7 +967,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "冰岛语"
+							"text": "Íslenska - 冰岛语"
 						}
 					]
 				}
@@ -977,7 +977,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "波兰语"
+							"text": "Polski - 波兰语"
 						}
 					]
 				}
@@ -987,7 +987,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "波斯尼亚语"
+							"text": "Bosanski - 波斯尼亚语"
 						}
 					]
 				}
@@ -997,7 +997,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "波斯语"
+							"text": "فارسی - 波斯语"
 						}
 					]
 				}
@@ -1007,7 +1007,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "博杰普尔语"
+							"text": "भोजपुरी - 博杰普尔语"
 						}
 					]
 				}
@@ -1017,7 +1017,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "聪加语"
+							"text": "Xitsonga - 聪加语"
 						}
 					]
 				}
@@ -1027,7 +1027,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "鞑靼语"
+							"text": "Татарча - 鞑靼语"
 						}
 					]
 				}
@@ -1037,7 +1037,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "丹麦语"
+							"text": "Dansk - 丹麦语"
 						}
 					]
 				}
@@ -1057,7 +1057,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "迪维希语"
+							"text": "ދިވެހިބަސް - 迪维希语"
 						}
 					]
 				}
@@ -1067,7 +1067,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "ру́сский язы́к - 俄语"
+							"text": "Русский - 俄语"
 						}
 					]
 				}
@@ -1077,7 +1077,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "français - 法语"
+							"text": "Français - 法语"
 						}
 					]
 				}
@@ -1087,7 +1087,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "梵语"
+							"text": "संस्कृतम् - 梵语"
 						}
 					]
 				}
@@ -1107,7 +1107,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "suomi - 芬兰语"
+							"text": "Suomi - 芬兰语"
 						}
 					]
 				}
@@ -1117,7 +1117,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "高棉语"
+							"text": "ភាសាខ្មែរ - 高棉语"
 						}
 					]
 				}
@@ -1127,7 +1127,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "格鲁吉亚语"
+							"text": "ქართული - 格鲁吉亚语"
 						}
 					]
 				}
@@ -1137,7 +1137,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "古吉拉特语"
+							"text": "ગુજરાતી - 古吉拉特语"
 						}
 					]
 				}
@@ -1147,7 +1147,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "瓜拉尼语"
+							"text": "Avañe'ẽ - 瓜拉尼语"
 						}
 					]
 				}
@@ -1157,7 +1157,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "قازاق ٴتىلى - 哈萨克语"
+							"text": "Қазақ тілі - 哈萨克语"
 						}
 					]
 				}
@@ -1187,7 +1187,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "豪萨语"
+							"text": "هَوُسَ - 豪萨语"
 						}
 					]
 				}
@@ -1207,7 +1207,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "加利西亚语"
+							"text": "Galego - 加利西亚语"
 						}
 					]
 				}
@@ -1217,7 +1217,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "加泰罗尼亚语"
+							"text": "Català - 加泰罗尼亚语"
 						}
 					]
 				}
@@ -1227,7 +1227,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "捷克语"
+							"text": "Čeština - 捷克语"
 						}
 					]
 				}
@@ -1237,7 +1237,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "卡纳达语"
+							"text": "ಕನ್ನಡ - 卡纳达语"
 						}
 					]
 				}
@@ -1247,7 +1247,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "柯尔克孜语"
+							"text": "Кыргызча - 吉尔吉斯语"
 						}
 					]
 				}
@@ -1257,7 +1257,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "科萨语"
+							"text": "isiXhosa - 科萨语"
 						}
 					]
 				}
@@ -1267,7 +1267,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "科西嘉语"
+							"text": "Corsu - 科西嘉语"
 						}
 					]
 				}
@@ -1277,7 +1277,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "克罗地亚语"
+							"text": "Hrvatski - 克罗地亚语"
 						}
 					]
 				}
@@ -1287,7 +1287,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "克丘亚语"
+							"text": "Runa Simi - 克丘亚语"
 						}
 					]
 				}
@@ -1297,7 +1297,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "库尔德语"
+							"text": "Kurdî - 库尔德语"
 						}
 					]
 				}
@@ -1317,7 +1317,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "拉脱维亚语"
+							"text": "Latviešu - 拉脱维亚语"
 						}
 					]
 				}
@@ -1327,7 +1327,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "老挝语"
+							"text": "ລາວ - 老挝语"
 						}
 					]
 				}
@@ -1337,7 +1337,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "立陶宛语"
+							"text": "Lietuvių - 立陶宛语"
 						}
 					]
 				}
@@ -1347,7 +1347,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "林加拉语"
+							"text": "Lingála - 林加拉语"
 						}
 					]
 				}
@@ -1357,7 +1357,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "卢干达语"
+							"text": "Luganda - 卢干达语"
 						}
 					]
 				}
@@ -1367,7 +1367,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "卢森堡语"
+							"text": "Lëtzebuergesch - 卢森堡语"
 						}
 					]
 				}
@@ -1377,7 +1377,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "卢旺达语"
+							"text": "Kinyarwanda - 卢旺达语"
 						}
 					]
 				}
@@ -1387,7 +1387,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "罗马尼亚语"
+							"text": "Română - 罗马尼亚语"
 						}
 					]
 				}
@@ -1397,7 +1397,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马耳他语"
+							"text": "Malti - 马耳他语"
 						}
 					]
 				}
@@ -1407,7 +1407,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马拉地语"
+							"text": "मराठी - 马拉地语"
 						}
 					]
 				}
@@ -1417,7 +1417,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马拉加斯语"
+							"text": "Malagasy - 马拉加斯语"
 						}
 					]
 				}
@@ -1427,7 +1427,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马拉雅拉姆语"
+							"text": "മലയാളം - 马拉雅拉姆语"
 						}
 					]
 				}
@@ -1437,7 +1437,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马来语"
+							"text": "Bahasa Melayu - 马来语"
 						}
 					]
 				}
@@ -1447,7 +1447,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "马其顿语"
+							"text": "македонски - 马其顿语"
 						}
 					]
 				}
@@ -1457,7 +1457,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "毛利语"
+							"text": "Māori - 毛利语"
 						}
 					]
 				}
@@ -1467,7 +1467,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "蒙古语"
+							"text": "Монгол - 蒙古语"
 						}
 					]
 				}
@@ -1477,7 +1477,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "孟加拉语"
+							"text": "বাংলা - 孟加拉语"
 						}
 					]
 				}
@@ -1487,7 +1487,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "缅甸语"
+							"text": "ဗမာစာ - 缅甸语"
 						}
 					]
 				}
@@ -1497,7 +1497,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "苗语"
+							"text": "Hmoob - 苗语"
 						}
 					]
 				}
@@ -1507,7 +1507,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "南非荷兰语"
+							"text": "Afrikaans - 南非荷兰语"
 						}
 					]
 				}
@@ -1517,7 +1517,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "南索托语"
+							"text": "Sesotho - 南索托语"
 						}
 					]
 				}
@@ -1527,7 +1527,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "尼泊尔语"
+							"text": "नेपाली - 尼泊尔语"
 						}
 					]
 				}
@@ -1547,7 +1547,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "旁遮普语"
+							"text": "ਪੰਜਾਬੀ - 旁遮普语"
 						}
 					]
 				}
@@ -1567,7 +1567,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "普什图语"
+							"text": "پښتو - 普什图语"
 						}
 					]
 				}
@@ -1577,7 +1577,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "齐切瓦语"
+							"text": "chiCheŵa - 齐切瓦语"
 						}
 					]
 				}
@@ -1587,7 +1587,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "にほんご - 日语"
+							"text": "日本語 - 日语"
 						}
 					]
 				}
@@ -1597,7 +1597,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "svenska - 瑞典语"
+							"text": "Svenska - 瑞典语"
 						}
 					]
 				}
@@ -1607,7 +1607,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "萨摩亚语"
+							"text": "Gagana Samoa - 萨摩亚语"
 						}
 					]
 				}
@@ -1617,7 +1617,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "塞尔维亚语"
+							"text": "Српски језик - 塞尔维亚语"
 						}
 					]
 				}
@@ -1627,7 +1627,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "僧伽罗语"
+							"text": "සිංහල - 僧伽罗语"
 						}
 					]
 				}
@@ -1637,7 +1637,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "绍纳语"
+							"text": "ChiShona - 绍纳语"
 						}
 					]
 				}
@@ -1647,7 +1647,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "世界语"
+							"text": "Esperanto - 世界语"
 						}
 					]
 				}
@@ -1657,7 +1657,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "斯洛伐克语"
+							"text": "Slovenčina - 斯洛伐克语"
 						}
 					]
 				}
@@ -1667,7 +1667,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "斯洛文尼亚语"
+							"text": "Slovenščina - 斯洛文尼亚语"
 						}
 					]
 				}
@@ -1677,7 +1677,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "斯瓦希里语"
+							"text": "Kiswahili - 斯瓦希里语"
 						}
 					]
 				}
@@ -1687,7 +1687,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "苏格兰盖尔语"
+							"text": "Gàidhlig - 苏格兰盖尔语"
 						}
 					]
 				}
@@ -1697,7 +1697,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "宿务语"
+							"text": "Cebuano - 宿务语"
 						}
 					]
 				}
@@ -1707,7 +1707,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "索马里语"
+							"text": "Soomaaliga - 索马里语"
 						}
 					]
 				}
@@ -1717,7 +1717,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "塔吉克语"
+							"text": "тоҷикӣ - 塔吉克语"
 						}
 					]
 				}
@@ -1727,7 +1727,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "泰卢固语"
+							"text": "తెలుగు - 泰卢固语"
 						}
 					]
 				}
@@ -1737,7 +1737,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "泰米尔语"
+							"text": "தமிழ் - 泰米尔语"
 						}
 					]
 				}
@@ -1747,7 +1747,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "ภาษาไทย - 泰语"
+							"text": "ไทย - 泰语"
 						}
 					]
 				}
@@ -1757,7 +1757,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "提格利尼亚语"
+							"text": "ትግርኛ - 提格利尼亚语"
 						}
 					]
 				}
@@ -1767,7 +1767,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "土耳其语"
+							"text": "Türkçe - 土耳其语"
 						}
 					]
 				}
@@ -1777,7 +1777,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "土库曼语"
+							"text": "Türkmen - 土库曼语"
 						}
 					]
 				}
@@ -1787,7 +1787,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "威尔士语"
+							"text": "Cymraeg - 威尔士语"
 						}
 					]
 				}
@@ -1797,7 +1797,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "ئۇيغۇر - 维吾尔语"
+							"text": "ئۇيغۇرچە - 维吾尔语"
 						}
 					]
 				}
@@ -1807,7 +1807,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "未知语言"
+							"text": "Unknown - 未知语言"
 						}
 					]
 				}
@@ -1817,7 +1817,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "乌尔都语"
+							"text": "اردو - 乌尔都语"
 						}
 					]
 				}
@@ -1827,7 +1827,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "українська мова - 乌克兰语"
+							"text": "Українська - 乌克兰语"
 						}
 					]
 				}
@@ -1837,7 +1837,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "乌兹别克语"
+							"text": "O‘zbek - 乌兹别克语"
 						}
 					]
 				}
@@ -1857,7 +1857,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "西弗里西亚语"
+							"text": "Frysk - 西弗里西亚语"
 						}
 					]
 				}
@@ -1867,7 +1867,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "希伯来语"
+							"text": "עברית - 希伯来语"
 						}
 					]
 				}
@@ -1887,7 +1887,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "夏威夷语"
+							"text": "ʻŌlelo Hawaiʻi - 夏威夷语"
 						}
 					]
 				}
@@ -1897,7 +1897,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "信德语"
+							"text": "سنڌي - 信德语"
 						}
 					]
 				}
@@ -1907,7 +1907,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "匈牙利语"
+							"text": "Magyar - 匈牙利语"
 						}
 					]
 				}
@@ -1917,7 +1917,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "巽他语"
+							"text": "Basa Sunda - 巽他语"
 						}
 					]
 				}
@@ -1927,7 +1927,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "亚美尼亚语"
+							"text": "Հայերեն - 亚美尼亚语"
 						}
 					]
 				}
@@ -1937,7 +1937,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "伊博语"
+							"text": "Igbo - 伊博语"
 						}
 					]
 				}
@@ -1957,7 +1957,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "意第绪语"
+							"text": "ייִדיש - 意第绪语"
 						}
 					]
 				}
@@ -1967,7 +1967,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "印地语"
+							"text": "हिन्दी - 印地语"
 						}
 					]
 				}
@@ -1997,7 +1997,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "约鲁巴语"
+							"text": "Yorùbá - 约鲁巴语"
 						}
 					]
 				}
@@ -2017,7 +2017,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "爪哇语"
+							"text": "Basa Jawa - 爪哇语"
 						}
 					]
 				}
@@ -2027,7 +2027,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "中文（繁体）"
+							"text": "中文（繁體） - 中文（繁体）"
 						}
 					]
 				}
@@ -2047,7 +2047,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "祖鲁语"
+							"text": "isiZulu - 祖鲁语"
 						}
 					]
 				}
@@ -2057,7 +2057,7 @@
 				"languageName": {
 					"runs": [
 						{
-							"text": "Kri"
+							"text": "Krìì - 克里语"
 						}
 					]
 				}
