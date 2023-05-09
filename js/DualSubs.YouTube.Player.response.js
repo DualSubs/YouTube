@@ -45,12 +45,12 @@ const DataBase = {
 				case "text/html":
 				default:
 					break;
+				case "text/xml":
+				case "application/xml":
+					break;
 				case "text/plist":
 				case "application/plist":
 				case "application/x-plist":
-					break;
-				case "text/xml":
-				case "application/xml":
 					break;
 				case "text/vtt":
 				case "application/vtt":

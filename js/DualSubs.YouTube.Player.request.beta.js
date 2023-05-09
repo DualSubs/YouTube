@@ -54,18 +54,18 @@ let $response = undefined;
 						case "text/html":
 						default:
 							break;
+						case "text/xml":
+						case "application/xml":
+							//body = XML.parse($response.body);
+							//$.log(body);
+							//$response.body = XML.stringify(body);
+							break;
 						case "text/plist":
 						case "application/plist":
 						case "application/x-plist":
 							//body = await PLIST("plist2json", $request.body);
 							//$.log(body);
 							//$request.body = await PLIST("json2plist", body);
-							break;
-						case "text/xml":
-						case "application/xml":
-							//body = XML.parse($response.body);
-							//$.log(body);
-							//$response.body = XML.stringify(body);
 							break;
 						case "text/vtt":
 						case "application/vtt":

@@ -75,19 +75,19 @@ const DataBase = {
 								case "text/html":
 								default:
 									break;
-								case "text/plist":
-								case "application/plist":
-								case "application/x-plist":
-									//body = await PLIST("plist2json", $request.body);
-									//$.log(body);
-									//$request.body = await PLIST("json2plist", body);
-									break;
 								case "text/xml":
 								case "application/xml":
 									body = XML.parse($response.body);
 									OriginSub = XML.parse(OriginSub);
 									body = CombineDualSubs(OriginSub, body, Format, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
 									$response.body = XML.stringify(body);
+									break;
+								case "text/plist":
+								case "application/plist":
+								case "application/x-plist":
+									//body = await PLIST("plist2json", $request.body);
+									//$.log(body);
+									//$request.body = await PLIST("json2plist", body);
 									break;
 								case "text/vtt":
 								case "application/vtt":
