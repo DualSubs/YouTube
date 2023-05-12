@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.5(1) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.5(2) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -97,17 +97,25 @@ let $response = undefined;
 							switch (PATH) {
 								case "api/timedtext":
 									setCache(Settings, Caches, url?.params?.v, url?.params?.lang, url?.params?.tlang);
-									switch (Settings.Language) {
-										case "OFF":
-											$.log(`⚠ ${$.name}, 翻译字幕：关闭`, "");
+									switch (url?.params?.tlang) {
+										case undefined: // 视为未指定翻译语言
+											$.log(`⚠ ${$.name}, 翻译字幕：未指定翻译语言`, "");
+											switch (Settings.Language) {
+												case "OFF":
+													$.log(`⚠ ${$.name}, 翻译字幕：关闭`, "");
+													break;
+												case "AUTO":
+													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
+													if (Caches?.tlang) url.params.tlang = Caches.tlang; // 翻译字幕
+													break;
+												default: // 其他语言
+													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
+													url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+													break;
+											};
 											break;
-										case "AUTO":
-											$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-											if (Caches?.tlang) url.params.tlang = Caches.tlang; // 翻译字幕
-											break;
-										default: // 其他语言
-											$.log(`⚠ ${$.name}, 翻译字幕：固定${Settings.Language}`, "");
-											url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
+										case "default": // 已指定翻译语言
+											$.log(`⚠ ${$.name}, 翻译字幕：已指定翻译语言`, "");
 											break;
 									};
 									break;
