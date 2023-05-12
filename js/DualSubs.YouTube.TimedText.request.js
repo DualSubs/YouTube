@@ -2,11 +2,11 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.4(1) timedtext.request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.5(2) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
-		"Settings":{"Switch":true,"Types":["Official","Google","GoogleCloud","Azure","DeepL"],"Type":"Google","Languages":["ZH","EN"],"Language":"ZH","Translate":{"ShowOnly":false},"External":{"URL":null,"Offset":0,"ShowOnly":false},"Position":"Forward","CacheSize":20,"Tolerance":1000},
+		"Settings":{"Switch":true,"Types":["Official","Google","GoogleCloud","Azure","DeepL"],"Type":"Google","Languages":["ZH","EN"],"Language":"AUTO","Translate":{"ShowOnly":false},"External":{"URL":null,"Offset":0,"ShowOnly":false},"Position":"Forward","CacheSize":20,"Tolerance":1000},
 		"Configs": {
 			"Languages":{"AUTO":"","AR":["ar","ar-001"],"BG":["bg","bg-BG","bul"],"CS":["cs","cs-CZ","ces"],"DA":["da","da-DK","dan"],"DE":["de","de-DE","deu"],"EL":["el","el-GR","ell"],"EN":["en","en-US","eng","en-GB","en-UK","en-CA","en-US SDH"],"EN-CA":["en-CA","en","eng"],"EN-GB":["en-UK","en","eng"],"EN-US":["en-US","en","eng"],"EN-US SDH":["en-US SDH","en-US","en","eng"],"ES":["es","es-419","es-ES","spa","es-419 SDH"],"ES-419":["es-419","es","spa"],"ES-419 SDH":["es-419 SDH","es-419","es","spa"],"ES-ES":["es-ES","es","spa"],"ET":["et","et-EE","est"],"FI":["fi","fi-FI","fin"],"FR":["fr","fr-CA","fr-FR","fra"],"FR-CA":["fr-CA","fr","fra"],"FR-DR":["fr-FR","fr","fra"],"HU":["hu","hu-HU","hun"],"ID":["id","id-id"],"IT":["it","it-IT","ita"],"JA":["ja","ja-JP","jpn"],"KO":["ko","ko-KR","kor"],"LT":["lt","lt-LT","lit"],"LV":["lv","lv-LV","lav"],"NL":["nl","nl-NL","nld"],"NO":["no","nb-NO","nor"],"PL":["pl","pl-PL"],"PT":["pt","pt-PT","pt-BR","por"],"PT-PT":["pt-PT","pt","por"],"PT-BR":["pt-BR","pt","por"],"RO":["ro","ro-RO","ron"],"RU":["ru","ru-RU","rus"],"SK":["sk","sk-SK","slk"],"SL":["sl","sl-SI","slv"],"SV":["sv","sv-SE","swe"],"IS":["is","is-IS","isl"],"ZH":["zh","cmn","zho","zh-CN","zh-Hans","cmn-Hans","zh-TW","zh-Hant","cmn-Hant","zh-HK","yue-Hant","yue"],"ZH-CN":["zh-CN","zh-Hans","cmn-Hans","zho"],"ZH-HANS":["zh-Hans","cmn-Hans","zh-CN","zho"],"ZH-HK":["zh-HK","yue-Hant","yue","zho"],"ZH-TW":["zh-TW","zh-Hant","cmn-Hant","zho"],"ZH-HANT":["zh-Hant","cmn-Hant","zh-TW","zho"],"YUE":["yue","yue-Hant","zh-HK","zho"],"YUE-HK":["yue-Hant","yue","zh-HK","zho"]}
 		}
@@ -85,31 +85,25 @@ let $response = undefined;
 							switch (PATH) {
 								case "api/timedtext":
 									setCache(Settings, Caches, url?.params?.v, url?.params?.lang, url?.params?.tlang);
-									switch (url.params.cplatform) {
-										case "DESKTOP":
-											$.log(`⚠ ${$.name}, 桌面端`, "");
-											break;
-										case "MOBILE":
-										default:
-											$.log(`⚠ ${$.name}, 移动端`, "");
-											switch (url.params?.kind) {
-												case "asr":
-													$.log(`⚠ ${$.name}, 自动生成字幕`, "");
-													switch (Settings.Language) {
-														case "OFF":
-															$.log(`⚠ ${$.name}, 兼容字幕：关闭`, "");
-															break;
-														default:
-															$.log(`⚠ ${$.name}, 兼容字幕：${Settings.Language}`, "");
-															//url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
-															break;
-													};
+									switch (url?.params?.tlang) {
+										case undefined: // 视为未指定翻译语言
+											$.log(`⚠ ${$.name}, 翻译字幕：未指定翻译语言`, "");
+											switch (Settings.Language) {
+												case "OFF":
+													$.log(`⚠ ${$.name}, 翻译字幕：关闭`, "");
 													break;
-												case "captions":
-												default:
-													$.log(`⚠ ${$.name}, 普通字幕`, "");
+												case "AUTO":
+													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
+													if (Caches?.tlang) url.params.tlang = Caches.tlang; // 翻译字幕
+													break;
+												default: // 其他语言
+													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
+													url.params.tlang = Configs.Languages[Settings.Language]; // 翻译字幕
 													break;
 											};
+											break;
+										case "default": // 已指定翻译语言
+											$.log(`⚠ ${$.name}, 翻译字幕：已指定翻译语言`, "");
 											break;
 									};
 									break;
@@ -255,7 +249,7 @@ function setENV(name, platform, database) {
 function setCache(settings, cache, v, lang, tlang) {
 	$.log(`⚠ ${$.name}, Set Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
 	let isSaved = false;
-	cache.tlang = tlang; // 保存目标语言
+	if (tlang) cache.tlang = tlang; // 保存目标语言
 	if (v && lang && !tlang) cache.map.set(v, lang); // 保存原文语言
 	cache.map = Array.from(cache.map); // Map转Array
 	cache.map = cache.map.slice(-settings.CacheSize); // 限制缓存大小
