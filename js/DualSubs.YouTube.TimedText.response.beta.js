@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.6(1) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.7.6(2) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -79,7 +79,7 @@ const DataBase = {
 								case "application/xml":
 									body = XML.parse($response.body);
 									OriginSub = XML.parse(OriginSub);
-									body = CombineDualSubs(OriginSub, body, Format, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
+									body = CombineDualSubs(OriginSub, body, Format || FORMAT, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
 									$response.body = XML.stringify(body);
 									break;
 								case "text/plist":
@@ -93,14 +93,14 @@ const DataBase = {
 								case "application/vtt":
 									body = VTT.parse($response.body);
 									OriginSub = VTT.parse(OriginSub);
-									body = CombineDualSubs(OriginSub, body, Format, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
+									body = CombineDualSubs(OriginSub, body, Format || FORMAT, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
 									$response.body = VTT.stringify(body);
 									break;
 								case "text/json":
 								case "application/json":
 									body = JSON.parse($response.body);
 									OriginSub = JSON.parse(OriginSub);
-									body = CombineDualSubs(OriginSub, body, Format, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
+									body = CombineDualSubs(OriginSub, body, Format || FORMAT, Kind, Settings.External.Offset, Settings.Tolerance, [Settings.Position]);
 									$response.body = JSON.stringify(body);
 									break;
 								case "application/x-protobuf":
@@ -185,10 +185,11 @@ const DataBase = {
 function setENV(name, platform, database) {
 	$.log(`⚠ ${$.name}, Set Environment Variables`, "");
 	let { Settings, Caches, Configs } = getENV(name, platform, database);
-	if (typeof Settings.Types === "string") Settings.Types = Settings.Types.split(",") // BoxJs字符串转数组
-	Settings.External.Offset = parseInt(Settings.External?.Offset, 10) // BoxJs字符串转数字
-	Settings.CacheSize = parseInt(Settings.CacheSize, 10) // BoxJs字符串转数字
-	Settings.Tolerance = parseInt(Settings.Tolerance, 10) // BoxJs字符串转数字
+	/***************** Settings *****************/
+	if (typeof Settings?.Types === "string") Settings.Types = Settings.Types.split(",") // BoxJs字符串转数组
+	if (Settings?.External?.Offset) Settings.External.Offset = parseInt(Settings.External?.Offset, 10) // BoxJs字符串转数字
+	if (Settings?.CacheSize) Settings.CacheSize = parseInt(Settings.CacheSize, 10) // BoxJs字符串转数字
+	if (Settings?.Tolerance) Settings.Tolerance = parseInt(Settings.Tolerance, 10) // BoxJs字符串转数字
 	$.log(`🎉 ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
 	$.log(`🎉 ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
@@ -220,6 +221,8 @@ function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions
 	let index0 = 0, index1 = 0, index2 = 0;
 	// 双指针法查找两个数组中的相同元素
 	switch (Format) {
+		case "text/json":
+		case "application/json":
 		case "json3": {
 			const length1 = Sub1?.events?.length, length2 = Sub2?.events?.length;
 			switch (Kind) {
@@ -266,6 +269,8 @@ function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions
 			};
 			break;
 		};
+		case "text/xml":
+		case "application/xml":
 		case "srv3": {
 			const length1 = Sub1?.timedtext?.body?.p?.length, length2 = Sub2?.timedtext?.body?.p?.length;
 			switch (Kind) {
@@ -314,6 +319,8 @@ function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions
 			};
 			break;
 		};
+		case "text/vtt":
+		case "application/vtt":
 		case "vtt": {
 			const length1 = Sub1?.body?.length, length2 = Sub2?.body?.length;
 			switch (Kind) {
