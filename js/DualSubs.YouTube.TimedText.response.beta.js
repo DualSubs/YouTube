@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(1) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -63,12 +63,12 @@ const DataBase = {
 	// 获取平台
 	const Platform = getPlatform(HOST);
 	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	// 设置自定义参数
-	const Type = url?.params?.subtype || url?.params?.dualsubs || Settings.Type, Languages = url?.params?.sublang || Settings.Languages;
-	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 	// 获取字幕格式与字幕类型
 	const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");
+	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
+	// 设置自定义参数
+	let Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
+	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 	let Names = [];
 	switch (Platform) {
 		case "YouTube":
@@ -87,6 +87,9 @@ const DataBase = {
 	switch (Settings.Switch) {
 		case true:
 		default:
+			if (!Type) Type = Settings.Type;
+			if (!Languages) Languages =Settings.Languages;
+			$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建字幕请求队列
 			let requests = [];
 			// 创建第二字幕Object

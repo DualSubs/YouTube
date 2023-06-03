@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(1) player.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) player.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -57,26 +57,20 @@ const DataBase = {
 	const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = PATH.split("/");
 	// 解析格式
 	const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
-	$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
+	$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");	
 	// 获取平台
 	const Platform = getPlatform(HOST);
 	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	// 设置自定义参数
-	const Type = url?.params?.subtype || url?.params?.dualsubs || Settings.Type, Languages = url?.params?.sublang || Settings.Languages;
-	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
-	// 获取字幕格式与字幕类型
-	const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");
 	let Names = [];
 	switch (Platform) {
 		case "YouTube":
-			Names = ["YouTube", Type];
+			Names = ["YouTube"];
 			break;
 		case "Netflix":
-			Names = ["Netflix", Type];
+			Names = ["Netflix"];
 			break;
 		default:
-			Names = ["Universal", Type];
+			Names = ["Universal"];
 			break;
 	};
 	$.log(`🚧 ${$.name}, Names: ${Names}`, "");
@@ -88,7 +82,7 @@ const DataBase = {
 			// 创建空数据
 			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
 			// 格式判断
-			switch (Format || FORMAT) {
+			switch (FORMAT) {
 				case undefined: // 视为无body
 					break;
 				case "application/x-www-form-urlencoded":

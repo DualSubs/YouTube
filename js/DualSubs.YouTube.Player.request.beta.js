@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(1) player.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) player.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -64,22 +64,16 @@ let $response = undefined;
 	// 获取平台
 	const Platform = getPlatform(HOST);
 	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	// 设置自定义参数
-	const Type = url?.params?.subtype || url?.params?.dualsubs || Settings.Type, Languages = url?.params?.sublang || Settings.Languages;
-	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
-	// 获取字幕格式与字幕类型
-	const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");
 	let Names = [];
 	switch (Platform) {
 		case "YouTube":
-			Names = ["YouTube", Type];
+			Names = ["YouTube"];
 			break;
 		case "Netflix":
-			Names = ["Netflix", Type];
+			Names = ["Netflix"];
 			break;
 		default:
-			Names = ["Universal", Type];
+			Names = ["Universal"];
 			break;
 	};
 	$.log(`🚧 ${$.name}, Names: ${Names}`, "");
@@ -225,18 +219,22 @@ let $response = undefined;
 						case "application/x-www-form-urlencoded":
 						case "text/plain":
 						case "text/html":
-							case "srv3":
-								case "text/xml":
+						case "srv3":
+						case "text/xml":
 						case "application/xml":
 						case "text/plist":
 						case "application/plist":
 						case "application/x-plist":
-							case "vtt":
-								case "webvtt":
+						case "vtt":
+						case "webvtt":
 						case "text/vtt":
 						case "application/vtt":
+						case "json3":
 						case "text/json":
 						case "application/json":
+						case "m3u8":
+						case "application/x-mpegurl":
+						case "application/vnd.apple.mpegurl":
 						default:
 							// 返回普通数据
 							$.done({ status: $response.status, headers: $response.headers, body: $response.body });

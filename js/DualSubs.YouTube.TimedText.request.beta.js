@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(1) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -64,12 +64,12 @@ let $response = undefined;
 	// 获取平台
 	const Platform = getPlatform(HOST);
 	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	// 设置自定义参数
-	const Type = url?.params?.subtype || url?.params?.dualsubs || Settings.Type, Languages = url?.params?.sublang || Settings.Languages;
-	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 	// 获取字幕格式与字幕类型
 	const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");
+	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
+	// 设置自定义参数
+	let Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
+	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 	let Names = [];
 	switch (Platform) {
 		case "YouTube":
@@ -88,6 +88,9 @@ let $response = undefined;
 	switch (Settings.Switch) {
 		case true:
 		default:
+			if (!Type) Type = Settings.Type;
+			if (!Languages) Languages =Settings.Languages;
+			$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
 			// 方法判断
