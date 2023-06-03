@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(3) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(5) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -56,40 +56,24 @@ let $response = undefined;
 
 /***************** Processing *****************/
 (async () => {
-	let url = URL.parse($request.url);
-	const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = PATH.split("/");
-	// 解析格式
-	const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
-	$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
-	// 获取平台
-	const Platform = getPlatform(HOST);
-	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	// 获取字幕格式与字幕类型
-	const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-	$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
-	// 设置自定义参数
-	let Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
-	$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
-	let Names = [];
-	switch (Platform) {
-		case "YouTube":
-			Names = ["YouTube", Type];
-			break;
-		case "Netflix":
-			Names = ["Netflix", Type];
-			break;
-		default:
-			Names = ["Universal", Type];
-			break;
-	};
-	$.log(`🚧 ${$.name}, Names: ${Names}`, "");
-	const { Settings, Caches, Configs } = setENV("DualSubs", Names, DataBase);
+	const { Settings, Caches, Configs } = setENV("DualSubs", ["YouTube", "Official"], DataBase);
 	$.log(`⚠ ${$.name}`, `Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
 		default:
-			if (!Type) Type = Settings.Type;
-			if (!Languages) Languages =Settings.Languages;
+			let url = URL.parse($request.url);
+			const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = PATH.split("/");
+			// 解析格式
+			const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
+			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
+			// 获取平台
+			const Platform = getPlatform(HOST);
+			$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
+			// 获取字幕格式与字幕类型
+			const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
+			$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
+			// 设置自定义参数
+			const Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
 			$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
@@ -156,9 +140,9 @@ let $response = undefined;
 										$.setjson(Caches.Player, `@DualSubs.${"YouTube"}.Caches.Player`);
 									};
 									if (url?.params?.v && url?.params?.lang && !url?.params?.tlang) {
-										Caches.Playlists.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
-										Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
-										$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Official"}.Caches.Playlists.Subtitle`);
+										Caches.Player.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
+										Caches.Player.Subtitle = setCache(Caches?.Player.Subtitle, Settings.CacheSize);
+										$.setjson(Caches.Player.Subtitle, `@DualSubs.${"YouTube"}.Caches.Player.Subtitle`);
 									};
 									switch (url?.params?.tlang) {
 										case undefined: // 视为未指定翻译语言

@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) player.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(3) player.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -53,32 +53,19 @@ const DataBase = {
 
 /***************** Processing *****************/
 (async () => {
-	let url = URL.parse($request.url);
-	const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = PATH.split("/");
-	// 解析格式
-	const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
-	$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");	
-	// 获取平台
-	const Platform = getPlatform(HOST);
-	$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-	let Names = [];
-	switch (Platform) {
-		case "YouTube":
-			Names = ["YouTube"];
-			break;
-		case "Netflix":
-			Names = ["Netflix"];
-			break;
-		default:
-			Names = ["Universal"];
-			break;
-	};
-	$.log(`🚧 ${$.name}, Names: ${Names}`, "");
-	const { Settings, Caches, Configs } = setENV("DualSubs", Names, DataBase);
+	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", DataBase);
 	$.log(`⚠ ${$.name}`, `Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
 		default:
+			let url = URL.parse($request.url);
+			const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = PATH.split("/");
+			// 解析格式
+			const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
+			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");	
+			// 获取平台
+			const Platform = getPlatform(HOST);
+			$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
 			// 创建空数据
 			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
 			// 格式判断
