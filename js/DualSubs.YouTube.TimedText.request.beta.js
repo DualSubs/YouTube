@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(3) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -150,7 +150,16 @@ let $response = undefined;
 							// 路径判断
 							switch (PATH) {
 								case "api/timedtext":
-									setCache(Settings, Caches, url?.params?.v, url?.params?.lang, url?.params?.tlang);
+									// 格式化缓存
+									if (url?.params?.tlang) {
+										Caches.Player.tlang = url.params.tlang; // 保存目标语言
+										$.setjson(Caches.Player, `@DualSubs.${"YouTube"}.Caches.Player`);
+									};
+									if (url?.params?.v && url?.params?.lang && !url?.params?.tlang) {
+										Caches.Playlists.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
+										Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
+										$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Official"}.Caches.Playlists.Subtitle`);
+									};
 									switch (url?.params?.tlang) {
 										case undefined: // 视为未指定翻译语言
 											$.log(`⚠ ${$.name}, 翻译字幕：未指定翻译语言`, "");
@@ -160,7 +169,7 @@ let $response = undefined;
 													break;
 												case "AUTO":
 													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-													if (Caches?.tlang) url.params.tlang = Caches.tlang; // 翻译字幕
+													if (Caches?.Player?.tlang) url.params.tlang = Caches.Player.tlang; // 翻译字幕
 													break;
 												default: // 其他语言
 													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Languages[0]}`, "");
@@ -328,8 +337,12 @@ function setENV(name, platforms, database) {
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
-	$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
-	Caches.map = new Map(Caches?.map ?? []); // Array转Map
+	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
+	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
+	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
+	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
+	if (typeof Caches.Player !== "object" || Array.isArray(Caches.Player)) Caches.Player = {}; // 创建Playlists缓存
+	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
 };
@@ -337,25 +350,16 @@ function setENV(name, platforms, database) {
 /**
  * Set Cache
  * @author VirgilClyne
- * @param {Object} settings - Settings
- * @param {Object} cache - Cache
- * @param {String} v - video id
- * @param {String} lang - original lang
- * @param {String} tlang - translate lang
- * @return {Array<Boolean>} is setJSON success?
+ * @param {Map} cache - Playlists Cache / Subtitles Cache
+ * @param {Number} cacheSize - Cache Size
+ * @return {Boolean} isSaved
  */
-function setCache(settings, cache, v, lang, tlang) {
-	$.log(`⚠ ${$.name}, Set Cache`, `v: ${v}, lang: ${lang}, tlang: ${tlang}`, "");
-	let isSaved = false;
-	if (tlang) cache.tlang = tlang; // 保存目标语言
-	if (v && lang && !tlang) cache.map.set(v, lang); // 保存原文语言
-	cache.map = Array.from(cache.map); // Map转Array
-	cache.map = cache.map.slice(-settings.CacheSize); // 限制缓存大小
-	console.log(cache);
-	isSaved = $.setjson(cache, "@DualSubs.YouTube.Caches");
-	//$.log(`🚧 ${$.name}, Set Cache`, `cache: ${JSON.stringify(cache)}`, "");
-	$.log(`🎉 ${$.name}, Set Cache`, `$.setjson ? ${isSaved}`, "");
-	return isSaved;
+function setCache(cache, cacheSize = 100) {
+	$.log(`☑️ ${$.name}, Set Cache, cacheSize: ${cacheSize}`, "");
+	cache = Array.from(cache || []); // Map转Array
+	cache = cache.slice(-cacheSize); // 限制缓存大小
+	$.log(`✅ ${$.name}, Set Cache`, "");
+	return cache;
 };
 
 /***************** Env *****************/

@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(2) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(3) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -108,7 +108,7 @@ const DataBase = {
 							Settings.Offset = 0;
 							Settings.Tolerance = 100;
 							// 获取字幕
-							url.params.lang = Caches.map.get(url.params?.v) ?? url.params.lang; // 主语言
+							url.params.lang = Caches.Playlists.Subtitle.get(url.params?.v) ?? url.params.lang; // 主语言
 							delete url.params?.tlang // 原字幕
 							let request = {
 								"url": URL.stringify(url),
@@ -315,8 +315,12 @@ function setENV(name, platforms, database) {
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
-	$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
-	Caches.map = new Map(Caches?.map ?? []); // Array转Map
+	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
+	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
+	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
+	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
+	if (typeof Caches.Player !== "object" || Array.isArray(Caches.Player)) Caches.Player = {}; // 创建Playlists缓存
+	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
 };
