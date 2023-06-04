@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(8) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(11) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -138,8 +138,8 @@ let $response = undefined;
 								case "api/timedtext":
 									// 格式化缓存
 									if (url?.params?.tlang) {
-										Caches.Player.tlang = url.params.tlang; // 保存目标语言
-										$.setjson(Caches.Player, `@DualSubs.${"YouTube"}.Caches.Player`);
+										Caches.tlang = url.params.tlang; // 保存目标语言
+										$.setdata(Caches.tlang, `@DualSubs.${"YouTube"}.Caches.tlang`);
 									};
 									if (url?.params?.v && url?.params?.lang && !url?.params?.tlang) {
 										Caches.Playlists.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
@@ -155,7 +155,7 @@ let $response = undefined;
 													break;
 												case "AUTO":
 													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-													if (Caches?.Player?.tlang) url.params.tlang = Caches.Player.tlang; // 翻译字幕
+													if (Caches?.tlang) url.params.tlang = Caches.tlang; // 翻译字幕
 													break;
 												default: // 其他语言
 													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
@@ -306,7 +306,6 @@ function setENV(name, platforms, database) {
 	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
 	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
 	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
-	if (typeof Caches.Player !== "object" || Array.isArray(Caches.Player)) Caches.Player = {}; // 创建Playlists缓存
 	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
