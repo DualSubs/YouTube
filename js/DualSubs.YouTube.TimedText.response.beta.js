@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(5) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(6) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -65,19 +65,14 @@ const DataBase = {
 			// 解析格式
 			const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
 			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
-			// 获取平台
-			const Platform = getPlatform(HOST);
-			$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
 			// 获取字幕格式与字幕类型
 			const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-			$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
+			$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");
 			// 设置自定义参数
 			const Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
 			$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建字幕请求队列
 			let requests = [];
-			// 创建第二字幕Object
-			let OriginSub = {}, SecondSub = {};
 			// 处理类型
 			switch (Type) {
 				case "Official":
@@ -118,6 +113,8 @@ const DataBase = {
 					requests.push(request);
 					break;
 			};
+			// 创建第二字幕Object
+			let OriginSub = {}, SecondSub = {};
 			// 格式判断
 			switch (Format || FORMAT) {
 				case undefined: // 视为无body
@@ -263,27 +260,6 @@ const DataBase = {
 	})
 
 /***************** Function *****************/
-function getPlatform(host) {
-	$.log(`☑️ ${$.name}, Get Platform`, "");
-	/***************** Platform *****************/
-	let Platform = /\.apple\.com/i.test(host) ? "Apple"
-		: /\.(dssott|starott)\.com/i.test(host) ? "Disney_Plus"
-			: /\.(hls\.row\.aiv-cdn|akamaihd|cloudfront)\.net/i.test(host) ? "Prime_Video"
-				: /prd\.media\.h264\.io/i.test(host) ? "Max"
-					: /\.(api\.hbo|hbomaxcdn)\.com/i.test(host) ? "HBO_Max"
-						: /\.(hulustream|huluim)\.com/i.test(host) ? "Hulu"
-							: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(host) ? "Paramount_Plus"
-								: /dplus-ph-/i.test(host) ? "Discovery_Plus_Ph"
-									: /\.peacocktv\.com/i.test(host) ? "Peacock_TV"
-										: /\.uplynk\.com/i.test(host) ? "Discovery_Plus"
-											: /\.fubo\.tv/i.test(host) ? "Fubo_TV"
-												: /(\.youtube|youtubei\.googleapis)\.com/i.test(host) ? "YouTube"
-													: /\.(netflix\.com|nflxvideo\.net)/i.test(host) ? "Netflix"
-														: "Universal";
-	$.log(`✅ ${$.name}, Get Platform`, `Platform: ${Platform}`, "");
-	return Platform;
-};
-
 /**
  * Set Environment Variables
  * @author VirgilClyne

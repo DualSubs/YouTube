@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(3) player.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(4) player.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -66,9 +66,6 @@ let $response = undefined;
 			// 解析格式
 			const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
 			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
-			// 获取平台
-			const Platform = getPlatform(HOST);
-			$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
 			// 创建空数据
 			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
 			// 方法判断
@@ -86,6 +83,14 @@ let $response = undefined;
 						case "text/html":
 						default:
 							break;
+						case "m3u8":
+						case "application/x-mpegurl":
+						case "application/vnd.apple.mpegurl":
+							//body = M3U8.parse($response.body);
+							//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
+							//$response.body = M3U8.stringify(body);
+							break;
+						case "srv3":
 						case "text/xml":
 						case "application/xml":
 							//body = XML.parse($response.body);
@@ -99,12 +104,15 @@ let $response = undefined;
 							//$.log(body);
 							//$request.body = await PLIST("json2plist", body);
 							break;
+						case "vtt":
+						case "webvtt":
 						case "text/vtt":
 						case "application/vtt":
 							//body = VTT.parse($response.body);
 							//$.log(body);
 							//$response.body = VTT.stringify(body);
 							break;
+						case "json3":
 						case "text/json":
 						case "application/json":
 							body = JSON.parse($request.body);
@@ -287,27 +295,6 @@ let $response = undefined;
 	})
 
 /***************** Function *****************/
-function getPlatform(host) {
-	$.log(`☑️ ${$.name}, Get Platform`, "");
-	/***************** Platform *****************/
-	let Platform = /\.apple\.com/i.test(host) ? "Apple"
-		: /\.(dssott|starott)\.com/i.test(host) ? "Disney_Plus"
-			: /\.(hls\.row\.aiv-cdn|akamaihd|cloudfront)\.net/i.test(host) ? "Prime_Video"
-				: /prd\.media\.h264\.io/i.test(host) ? "Max"
-					: /\.(api\.hbo|hbomaxcdn)\.com/i.test(host) ? "HBO_Max"
-						: /\.(hulustream|huluim)\.com/i.test(host) ? "Hulu"
-							: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(host) ? "Paramount_Plus"
-								: /dplus-ph-/i.test(host) ? "Discovery_Plus_Ph"
-									: /\.peacocktv\.com/i.test(host) ? "Peacock_TV"
-										: /\.uplynk\.com/i.test(host) ? "Discovery_Plus"
-											: /\.fubo\.tv/i.test(host) ? "Fubo_TV"
-												: /(\.youtube|youtubei\.googleapis)\.com/i.test(host) ? "YouTube"
-													: /\.(netflix\.com|nflxvideo\.net)/i.test(host) ? "Netflix"
-														: "Universal";
-	$.log(`✅ ${$.name}, Get Platform`, `Platform: ${Platform}`, "");
-	return Platform;
-};
-
 /**
  * Set Environment Variables
  * @author VirgilClyne
@@ -323,8 +310,12 @@ function setENV(name, platforms, database) {
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
-	$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
-	Caches.map = new Map(Caches?.map ?? []); // Array转Map
+	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
+	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
+	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
+	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
+	if (typeof Caches.Player !== "object" || Array.isArray(Caches.Player)) Caches.Player = {}; // 创建Playlists缓存
+	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
 };

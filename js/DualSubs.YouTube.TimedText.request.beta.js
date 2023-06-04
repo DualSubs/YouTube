@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(5) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(6) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -66,15 +66,6 @@ let $response = undefined;
 			// 解析格式
 			const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
 			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, `HOST: ${HOST}`, `PATH: ${PATH}`, `PATHs: ${PATHs}`, `FORMAT: ${FORMAT}`, "");
-			// 获取平台
-			const Platform = getPlatform(HOST);
-			$.log(`⚠ ${$.name}`, `Platform: ${Platform}`, "");
-			// 获取字幕格式与字幕类型
-			const Format = url.params?.fmt || url.params?.format || PATHs?.[PATHs?.length - 1]?.split(".")?.[1], Kind = url.params?.kind;
-			$.log(`🚧 ${$.name}, Format: ${Format}, Kind: ${Kind}`, "");	
-			// 设置自定义参数
-			const Type = url?.params?.subtype || url?.params?.dualsubs || "Official", Languages = url?.params?.sublang;
-			$.log(`🚧 ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
 			// 方法判断
@@ -92,6 +83,14 @@ let $response = undefined;
 						case "text/html":
 						default:
 							break;
+						case "m3u8":
+						case "application/x-mpegurl":
+						case "application/vnd.apple.mpegurl":
+							//body = M3U8.parse($response.body);
+							//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
+							//$response.body = M3U8.stringify(body);
+							break;
+						case "srv3":
 						case "text/xml":
 						case "application/xml":
 							//body = XML.parse($response.body);
@@ -105,12 +104,15 @@ let $response = undefined;
 							//$.log(body);
 							//$request.body = await PLIST("json2plist", body);
 							break;
+						case "vtt":
+						case "webvtt":
 						case "text/vtt":
 						case "application/vtt":
 							//body = VTT.parse($response.body);
 							//$.log(body);
 							//$response.body = VTT.stringify(body);
 							break;
+						case "json3":
 						case "text/json":
 						case "application/json":
 							//body = JSON.parse($request.body);
@@ -156,8 +158,8 @@ let $response = undefined;
 													if (Caches?.Player?.tlang) url.params.tlang = Caches.Player.tlang; // 翻译字幕
 													break;
 												default: // 其他语言
-													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Languages[0]}`, "");
-													url.params.tlang = Configs.Languages.YouTube[Settings.Languages[0]]; // 翻译字幕
+													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
+													url.params.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
 													break;
 											};
 											break;
@@ -285,27 +287,6 @@ let $response = undefined;
 	})
 
 /***************** Function *****************/
-function getPlatform(host) {
-	$.log(`☑️ ${$.name}, Get Platform`, "");
-	/***************** Platform *****************/
-	let Platform = /\.apple\.com/i.test(host) ? "Apple"
-		: /\.(dssott|starott)\.com/i.test(host) ? "Disney_Plus"
-			: /\.(hls\.row\.aiv-cdn|akamaihd|cloudfront)\.net/i.test(host) ? "Prime_Video"
-				: /prd\.media\.h264\.io/i.test(host) ? "Max"
-					: /\.(api\.hbo|hbomaxcdn)\.com/i.test(host) ? "HBO_Max"
-						: /\.(hulustream|huluim)\.com/i.test(host) ? "Hulu"
-							: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(host) ? "Paramount_Plus"
-								: /dplus-ph-/i.test(host) ? "Discovery_Plus_Ph"
-									: /\.peacocktv\.com/i.test(host) ? "Peacock_TV"
-										: /\.uplynk\.com/i.test(host) ? "Discovery_Plus"
-											: /\.fubo\.tv/i.test(host) ? "Fubo_TV"
-												: /(\.youtube|youtubei\.googleapis)\.com/i.test(host) ? "YouTube"
-													: /\.(netflix\.com|nflxvideo\.net)/i.test(host) ? "Netflix"
-														: "Universal";
-	$.log(`✅ ${$.name}, Get Platform`, `Platform: ${Platform}`, "");
-	return Platform;
-};
-
 /**
  * Set Environment Variables
  * @author VirgilClyne
