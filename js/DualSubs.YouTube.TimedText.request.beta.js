@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(6) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(7) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -142,9 +142,9 @@ let $response = undefined;
 										$.setjson(Caches.Player, `@DualSubs.${"YouTube"}.Caches.Player`);
 									};
 									if (url?.params?.v && url?.params?.lang && !url?.params?.tlang) {
-										Caches.Player.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
-										Caches.Player.Subtitle = setCache(Caches?.Player.Subtitle, Settings.CacheSize);
-										$.setjson(Caches.Player.Subtitle, `@DualSubs.${"YouTube"}.Caches.Player.Subtitle`);
+										Caches.Playlists.Subtitle.set(url.params.v, url.params.lang); // 保存原文语言
+										Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
+										$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Official"}.Caches.Playlists.Subtitle`);
 									};
 									switch (url?.params?.tlang) {
 										case undefined: // 视为未指定翻译语言
@@ -302,7 +302,7 @@ function setENV(name, platforms, database) {
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
-	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
+	$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
 	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
 	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
 	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
