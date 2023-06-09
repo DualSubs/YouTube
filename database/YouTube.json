@@ -1,4 +1,5 @@
 {
+	"Settings": { "Switch": true, "Type": "Official", "Language": "AUTO", "ShowOnly": false },
 	"Languages": {
 		"BG": "bg-BG",
 		"CS": "cs",
