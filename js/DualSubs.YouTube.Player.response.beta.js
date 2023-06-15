@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(7) player.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(8) player.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -201,7 +201,6 @@ const DataBase = {
 											return caption;
 										});
 									};
-									/*
 									if (body?.captions?.playerCaptionsTracklistRenderer?.audioTracks) {
 										// 改音轨可用性
 										body.captions.playerCaptionsTracklistRenderer.audioTracks = body?.captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
@@ -211,7 +210,6 @@ const DataBase = {
 											return audio;
 										});
 									};
-									*/
 									// 增加自动翻译可用语言
 									switch (HOST) {
 										case "www.youtube.com":
