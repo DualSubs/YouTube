@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(1) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(2) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -280,6 +280,11 @@ function setENV(name, platforms, database) {
 	let { Settings, Caches, Configs } = getENV(name, platforms, database);
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
+	if ($.isLoon()){
+		Settings.ShowOnly = $persistentStore.read("@DualSubs.YouTube.Settings.ShowOnly") || Settings.ShowOnly;
+		if (Settings.ShowOnly === "true" || Settings.ShowOnly === "false") Settings.ShowOnly = JSON.parse(Settings.ShowOnly); // 字符串转Boolean
+		Settings.Position = $persistentStore.read("@DualSubs.Official.Settings.Position") || Settings.Position;
+	};
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
 	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
