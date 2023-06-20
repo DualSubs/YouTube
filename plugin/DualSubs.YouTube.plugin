@@ -5,6 +5,8 @@
 #!homepage=https://github.com/DualSubs/YouTube
 #!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
 #!icon=https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png
+#!select=仅输出译文,是,否
+#!select=字幕译文位置,译文位于外文之上,译文位于外文之下
 
 [Rewrite]
 # 使用reject-img减少开销
