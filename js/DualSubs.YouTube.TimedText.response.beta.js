@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(2) timedtext.response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(3) timedtext.response.beta");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -280,10 +280,29 @@ function setENV(name, platforms, database) {
 	let { Settings, Caches, Configs } = getENV(name, platforms, database);
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
-	if ($.isLoon()){
-		Settings.ShowOnly = $persistentStore.read("@DualSubs.YouTube.Settings.ShowOnly") || Settings.ShowOnly;
-		if (Settings.ShowOnly === "true" || Settings.ShowOnly === "false") Settings.ShowOnly = JSON.parse(Settings.ShowOnly); // 字符串转Boolean
-		Settings.Position = $persistentStore.read("@DualSubs.Official.Settings.Position") || Settings.Position;
+	if ($.isLoon()) {
+		Settings.ShowOnly = $persistentStore.read("仅输出译文") || Settings.ShowOnly;
+		switch (Settings.ShowOnly) {
+			case "是":
+				Settings.ShowOnly = true;
+				break;
+			case "否":
+				Settings.ShowOnly = false;
+				break;
+			default:
+				break;
+		};
+		Settings.Position = $persistentStore.read("字幕译文位置") || Settings.Position;
+		switch (Settings.Position) {
+			case "译文位于外文之上":
+				Settings.Position = "Forward";
+				break;
+			case "译文位于外文之下":
+				Settings.Position = "Reverse";
+				break;
+			default:
+				break;
+		};
 	};
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
