@@ -1,8 +1,8 @@
 /*
-README:https://github.com/DualSubs/DualSubs/
+README: https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(2) timedtext.request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(4) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -139,22 +139,19 @@ let $response = undefined;
 													break;
 												case "AUTO":
 													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-													if (Caches?.tlang) {
-														if (url.query.tlang === Caches.tlang) delete url?.query?.tlang
-														else url.query.tlang = Caches.tlang; // 翻译字幕
-													}
+													if (Caches?.tlang) url.query.tlang = Caches.tlang; // 翻译字幕
 													break;
 												default: // 其他语言
 													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
-													if (url.query.tlang === Configs.Languages.YouTube[Settings.Language]) delete url?.query?.tlang
-													else url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
+													url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
 													break;
 											};
 											break;
-										case "default": // 已指定翻译语言
+										default: // 已指定翻译语言
 											$.log(`⚠ ${$.name}, 翻译字幕：已指定翻译语言`, "");
 											break;
 									};
+									if (url?.query?.tlang === url?.query?.lang) delete url?.query?.tlang // 翻译语言与目标语言相同，删除翻译语言
 									break;
 							};
 							break;
