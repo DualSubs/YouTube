@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.0(13) timedtext.request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(2) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -139,11 +139,15 @@ let $response = undefined;
 													break;
 												case "AUTO":
 													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-													if (Caches?.tlang) url.query.tlang = Caches.tlang; // 翻译字幕
+													if (Caches?.tlang) {
+														if (url.query.tlang === Caches.tlang) delete url?.query?.tlang
+														else url.query.tlang = Caches.tlang; // 翻译字幕
+													}
 													break;
 												default: // 其他语言
 													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
-													url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
+													if (url.query.tlang === Configs.Languages.YouTube[Settings.Language]) delete url?.query?.tlang
+													else url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
 													break;
 											};
 											break;
@@ -157,7 +161,6 @@ let $response = undefined;
 					};
 					if ($request?.headers?.Host) $request.headers.Host = url.host;
 					$request.url = URL.stringify(url);
-					//$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 					break;
 				case "CONNECT":
 				case "TRACE":

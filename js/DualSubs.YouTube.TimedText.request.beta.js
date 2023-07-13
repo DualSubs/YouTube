@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/DualSubs/
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(1) timedtext.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(2) timedtext.request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default": {
@@ -154,11 +154,15 @@ let $response = undefined;
 													break;
 												case "AUTO":
 													$.log(`⚠ ${$.name}, 翻译字幕：自动`, "");
-													if (Caches?.tlang) url.query.tlang = Caches.tlang; // 翻译字幕
+													if (Caches?.tlang) {
+														if (url.query.tlang === Caches.tlang) delete url?.query?.tlang
+														else url.query.tlang = Caches.tlang; // 翻译字幕
+													}
 													break;
 												default: // 其他语言
 													$.log(`⚠ ${$.name}, 翻译字幕：固定 ${Settings.Language}`, "");
-													url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
+													if (url.query.tlang === Configs.Languages.YouTube[Settings.Language]) delete url?.query?.tlang
+													else url.query.tlang = Configs.Languages.YouTube[Settings.Language]; // 翻译字幕
 													break;
 											};
 											break;
@@ -299,11 +303,6 @@ function setENV(name, platforms, database) {
 	let { Settings, Caches, Configs } = getENV(name, platforms, database);
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
-	if ($.isLoon()){
-		Settings.ShowOnly = $persistentStore.read("@DualSubs.YouTube.Settings.ShowOnly") || Settings.ShowOnly;
-		if (Settings.ShowOnly === "true" || Settings.ShowOnly === "false") Settings.ShowOnly = JSON.parse(Settings.ShowOnly); // 字符串转Boolean
-		Settings.Position = $persistentStore.read("@DualSubs.Official.Settings.Position") || Settings.Position;
-	};
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
 	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
