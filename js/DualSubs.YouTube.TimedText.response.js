@@ -1,8 +1,8 @@
 /*
-README:https://github.com/DualSubs
+README: https://github.com/DualSubs
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(3) timedtext.response");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.8.1(4) timedtext.response");
 const URL = new URLs();
 const XML = new XMLs();
 const VTT = new WebVTT(["milliseconds", "timeStamp", "singleLine", "\n"]); // "multiLine"
@@ -120,7 +120,7 @@ const DataBase = {
 					requests.push(request);
 					break;
 			};
-			// 创建第二字幕Object
+			// 创建字幕Object
 			let OriginSub = {}, SecondSub = {};
 			// 格式判断
 			switch (Format || FORMAT) {
@@ -254,7 +254,7 @@ function setENV(name, platforms, database) {
 	let { Settings, Caches, Configs } = getENV(name, platforms, database);
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
-	if ($.isLoon()) {
+	if ($.isLoon() && platforms.includes("YouTube")) {
 		Settings.ShowOnly = $persistentStore.read("仅输出译文") || Settings.ShowOnly;
 		switch (Settings.ShowOnly) {
 			case "是":
@@ -401,6 +401,8 @@ function CombineDualSubs(Sub1 = {}, Sub2 = {}, Format = "srv3", Kind = "captions
 				case "asr":
 					// 自动生成字幕转普通字幕
 					$.log(`🚧`, `DualSub是自动生成字幕`, "");
+					// vtt字幕不需要特殊处理
+					//break; 不要break，连续处理
 				case "captions":
 					// 处理普通字幕
 					while (index1 < length1 && index2 < length2) {
