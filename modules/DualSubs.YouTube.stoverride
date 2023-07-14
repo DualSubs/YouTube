@@ -21,26 +21,22 @@ http:
       name: DualSubs.YouTube.Player.response
       type: response
       require-body: true
-      timeout: 10
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$
       name: DualSubs.YouTube.Player.response
       type: response
       require-body: true
-      timeout: 10
       binary-mode: true
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$
       name: DualSubs.YouTube.TimedText.request
       type: request
       require-body: false
-      timeout: 10
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*tlang=.*)$
       name: DualSubs.Subtitles.Composite.response
       type: response
       require-body: true
-      timeout: 10
       argument:
 
 script-providers:
