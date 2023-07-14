@@ -1,0 +1,22 @@
+#!name=🍿️ DualSubs: ▶️ YouTube
+#!desc=YouTube字幕增强及双语模块
+#!openUrl=http://boxjs.com/#/app/DualSubs.YouTube
+#!author=VirgilClyne
+#!homepage=https://github.com/DualSubs/YouTube
+#!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
+#!icon=https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png
+#!select=仅输出译文,是,否
+#!select=字幕译文位置,译文位于外文之上,译文位于外文之下
+
+[Rewrite]
+# 使用reject-img减少开销
+^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
+
+[Script]
+http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response.json, argument=
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$ requires-body=1, binary-body-mode=1, timeout=30, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js, tag=DualSubs.YouTube.Player.response.proto, argument=
+http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js, tag=DualSubs.YouTube.TimedText.request, argument=
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*tlang=.*)$ requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js, tag=DualSubs.Subtitles.Composite.response, argument=
+
+[MITM]
+hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
