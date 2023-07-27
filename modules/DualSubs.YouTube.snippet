@@ -17,7 +17,9 @@
 # DualSubs.YouTube.TimedText.request
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js
 # DualSubs.Subtitles.Composite.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*tlang=.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=(Official|External).*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
+# DualSubs.Subtitles.Translate.response
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=Translate.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
 
 #[MITM]
 hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

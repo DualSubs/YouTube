@@ -33,8 +33,13 @@ http:
       type: request
       require-body: false
       argument:
-    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*tlang=.*)$
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=(Official|External).*)$
       name: DualSubs.Subtitles.Composite.response
+      type: response
+      require-body: true
+      argument:
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=Translate.*)$
+      name: DualSubs.Subtitles.Translate.response
       type: response
       require-body: true
       argument:
@@ -48,4 +53,7 @@ script-providers:
     interval: 86400
   DualSubs.Subtitles.Composite.response:
     url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
+    interval: 86400
+  DualSubs.Subtitles.Translate.response:
+    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
     interval: 86400
