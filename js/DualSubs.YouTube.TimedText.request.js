@@ -2,7 +2,7 @@
 README: https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.0(4) timedtext.request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.0(5) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -162,18 +162,8 @@ let $response = undefined;
 												break;
 											case "Translate":
 												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
-												switch (Kind) { // 类型判断
-													case "asr":
-														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
-														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
-														if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
-														break;
-													case "captions":
-													default:
-														$.log(`⚠ ${$.name}, 普通字幕`, "");
-														delete url?.query?.tlang;
-														url.query.subtype = "Translate"; // 翻译字幕
-												};
+												delete url?.query?.tlang;
+												url.query.subtype = "Translate"; // 翻译字幕
 												break;
 											case "External":
 												$.log(`⚠ ${$.name}, 外挂字幕：URL`, "");
