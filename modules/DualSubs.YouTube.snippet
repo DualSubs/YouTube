@@ -1,5 +1,5 @@
 #!name=🍿️ DualSubs: ▶️ YouTube
-#!desc=YouTube字幕增强及双语模块
+#!desc=YouTube字幕增强及双语模块(兼容模式，仅可官方字幕)
 #!openUrl=http://boxjs.com/#/app/DualSubs.YouTube
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs/YouTube
@@ -11,15 +11,13 @@
 
 #[Script]
 # DualSubs.YouTube.Player.response.json
-^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
+^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
 # DualSubs.YouTube.Player.response.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
 # DualSubs.YouTube.TimedText.request
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$ url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js
 # DualSubs.Subtitles.Composite.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=(Official|External).*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
-# DualSubs.Subtitles.Translate.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=Translate.*)$ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
 
 #[MITM]
 hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
