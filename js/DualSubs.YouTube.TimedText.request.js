@@ -2,7 +2,7 @@
 README: https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.0(5) timedtext.request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.0(6) timedtext.request");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -178,6 +178,7 @@ let $response = undefined;
 					};
 					if ($request?.headers?.Host) $request.headers.Host = url.host;
 					$request.url = URL.stringify(url);
+					$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 					break;
 				case "CONNECT":
 				case "TRACE":
@@ -308,36 +309,34 @@ function setENV(name, platforms, database) {
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	if ($.isLoon() && platforms.includes("YouTube")) {
-		Settings.ShowOnly = $persistentStore.read("自动显示翻译字幕") || Settings.AutoCC;
+		Settings.AutoCC = $persistentStore.read("自动显示翻译字幕") ?? Settings.AutoCC;
 		switch (Settings.AutoCC) {
 			case "是":
+			default:
 				Settings.AutoCC = true;
 				break;
 			case "否":
 				Settings.AutoCC = false;
 				break;
-			default:
-				break;
 		};
+		Settings.ShowOnly = $persistentStore.read("仅输出译文") ?? Settings.ShowOnly;
 		switch (Settings.ShowOnly) {
 			case "是":
 				Settings.ShowOnly = true;
 				break;
 			case "否":
+			default:
 				Settings.ShowOnly = false;
 				break;
-			default:
-				break;
 		};
-		Settings.Position = $persistentStore.read("字幕译文位置") || Settings.Position;
+		Settings.Position = $persistentStore.read("字幕译文位置") ?? Settings.Position;
 		switch (Settings.Position) {
 			case "译文位于外文之上":
+			default:
 				Settings.Position = "Forward";
 				break;
 			case "译文位于外文之下":
 				Settings.Position = "Reverse";
-				break;
-			default:
 				break;
 		};
 	};
