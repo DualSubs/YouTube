@@ -17,18 +17,18 @@ http:
   rewrite:
     - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
   script:
-    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.*)$
+    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player
       name: DualSubs.YouTube.Player.response
       type: response
       require-body: true
       argument:
-    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.*)$
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player
       name: DualSubs.YouTube.Player.response
       type: response
       require-body: true
       binary-mode: true
       argument:
-    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*)$
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext
       name: DualSubs.YouTube.TimedText.request
       type: request
       require-body: false
