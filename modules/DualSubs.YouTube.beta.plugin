@@ -17,8 +17,8 @@
 http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/DualSubs.YouTube.Player.response.beta.js, tag=DualSubs.YouTube.Player.response.json, argument=
 http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/DualSubs.YouTube.Player.response.beta.js, tag=DualSubs.YouTube.Player.response.proto, argument=
 http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/DualSubs.YouTube.TimedText.request.beta.js, tag=DualSubs.YouTube.TimedText.request, argument=
-http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=(Official|External).*)$ requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Composite.response.beta.js, tag=DualSubs.Subtitles.Composite.response, argument=
-http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=Translate.*)$ requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Translate.response.beta.js, tag=DualSubs.Subtitles.Translate.response, argument=
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Composite.response.beta.js, tag=DualSubs.Subtitles.Composite.response, argument=
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Translate.response.beta.js, tag=DualSubs.Subtitles.Translate.response, argument=
 
 [MITM]
 hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
