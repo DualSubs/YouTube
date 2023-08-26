@@ -33,12 +33,12 @@ http:
       type: request
       require-body: false
       argument:
-    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=(Official|External).*)$
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External)
       name: DualSubs.Subtitles.Composite.response
       type: response
       require-body: true
       argument:
-    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.*subtype=Translate.*)$
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate
       name: DualSubs.Subtitles.Translate.response
       type: response
       require-body: true
