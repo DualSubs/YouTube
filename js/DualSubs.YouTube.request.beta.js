@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.1.0(1) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.2.0(1) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -156,34 +156,79 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							switch (FORMAT) {
 								case "application/x-protobuf":
 								case "application/vnd.google.protobuf":
-									/******************  initialization start  *******************/
-									// proto/generated/youtube.request.js
-									class Player$Type extends MessageType{constructor(){super("Player",[{no:1,name:"context",kind:"message",T:()=>Player_Context},{no:2,name:"videoId",kind:"scalar",T:9},{no:4,name:"playbackContext",kind:"message",T:()=>Player_PlaybackContext}])}create(value){const message={videoId:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.context=Player_Context.internalBinaryRead(reader,reader.uint32(),options,message.context);break;case 2:message.videoId=reader.string();break;case 4:message.playbackContext=Player_PlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.playbackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.context&&Player_Context.internalBinaryWrite(message.context,writer.tag(1,WireType.LengthDelimited).fork(),options).join(),""!==message.videoId&&writer.tag(2,WireType.LengthDelimited).string(message.videoId),message.playbackContext&&Player_PlaybackContext.internalBinaryWrite(message.playbackContext,writer.tag(4,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
-									const Player = new Player$Type();
-									class Player_Context$Type extends MessageType{constructor(){super("Player.Context",[{no:1,name:"client",kind:"message",T:()=>Player_Context_Client}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.client=Player_Context_Client.internalBinaryRead(reader,reader.uint32(),options,message.client);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.client&&Player_Context_Client.internalBinaryWrite(message.client,writer.tag(1,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
-									const Player_Context = new Player_Context$Type();
-									class Player_Context_Client$Type extends MessageType{constructor(){super("Player.Context.Client",[{no:1,name:"hl",kind:"scalar",T:9},{no:2,name:"gl",kind:"scalar",T:9},{no:12,name:"deviceMake",kind:"scalar",T:9},{no:13,name:"deviceModel",kind:"scalar",T:9},{no:17,name:"clientVersion",kind:"scalar",T:9},{no:18,name:"osName",kind:"scalar",T:9},{no:19,name:"osVersion",kind:"scalar",T:9},{no:80,name:"timeZone",kind:"scalar",T:9}])}create(value){const message={hl:"",gl:"",deviceMake:"",deviceModel:"",clientVersion:"",osName:"",osVersion:"",timeZone:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.hl=reader.string();break;case 2:message.gl=reader.string();break;case 12:message.deviceMake=reader.string();break;case 13:message.deviceModel=reader.string();break;case 17:message.clientVersion=reader.string();break;case 18:message.osName=reader.string();break;case 19:message.osVersion=reader.string();break;case 80:message.timeZone=reader.string();break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){""!==message.hl&&writer.tag(1,WireType.LengthDelimited).string(message.hl),""!==message.gl&&writer.tag(2,WireType.LengthDelimited).string(message.gl),""!==message.deviceMake&&writer.tag(12,WireType.LengthDelimited).string(message.deviceMake),""!==message.deviceModel&&writer.tag(13,WireType.LengthDelimited).string(message.deviceModel),""!==message.clientVersion&&writer.tag(17,WireType.LengthDelimited).string(message.clientVersion),""!==message.osName&&writer.tag(18,WireType.LengthDelimited).string(message.osName),""!==message.osVersion&&writer.tag(19,WireType.LengthDelimited).string(message.osVersion),""!==message.timeZone&&writer.tag(80,WireType.LengthDelimited).string(message.timeZone);let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
-									const Player_Context_Client = new Player_Context_Client$Type();
-									class Player_PlaybackContext$Type extends MessageType{constructor(){super("Player.PlaybackContext",[{no:1,name:"contentPlaybackContext",kind:"message",T:()=>Player_PlaybackContext_ContentPlaybackContext}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.contentPlaybackContext=Player_PlaybackContext_ContentPlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.contentPlaybackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.contentPlaybackContext&&Player_PlaybackContext_ContentPlaybackContext.internalBinaryWrite(message.contentPlaybackContext,writer.tag(1,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
-									const Player_PlaybackContext = new Player_PlaybackContext$Type();
-									class Player_PlaybackContext_ContentPlaybackContext$Type extends MessageType{constructor(){super("Player.PlaybackContext.ContentPlaybackContext",[{no:4,name:"id4",kind:"scalar",opt:!0,T:5},{no:6,name:"id6",kind:"scalar",opt:!0,T:5},{no:8,name:"id8",kind:"scalar",opt:!0,T:5},{no:9,name:"id9",kind:"scalar",opt:!0,T:5}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 4:message.id4=reader.int32();break;case 6:message.id6=reader.int32();break;case 8:message.id8=reader.int32();break;case 9:message.id9=reader.int32();break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){void 0!==message.id4&&writer.tag(4,WireType.Varint).int32(message.id4),void 0!==message.id6&&writer.tag(6,WireType.Varint).int32(message.id6),void 0!==message.id8&&writer.tag(8,WireType.Varint).int32(message.id8),void 0!==message.id9&&writer.tag(9,WireType.Varint).int32(message.id9);let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
-									const Player_PlaybackContext_ContentPlaybackContext = new Player_PlaybackContext_ContentPlaybackContext$Type();
-									/******************  initialization finish  *******************/
-									body = Player.fromBinary(rawBody);
-									$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
-									// 找功能
-									if (body?.playbackContext) { // 有播放设置
-										$.log(`⚠ ${$.name}, playbackContext`, "");
-										if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
-											//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
-											body.playbackContext.contentPlaybackContext.id4 = 1; // 
-											body.playbackContext.contentPlaybackContext.id6 = 1; // 
-											body.playbackContext.contentPlaybackContext.id8 = 1; // 
-											body.playbackContext.contentPlaybackContext.id9 = 1; // 
+									switch (url.path) {
+										case "youtubei/v1/player":
+										/******************  initialization start  *******************/
+										// proto/youtube.player.request.js
+										class Player$Type extends MessageType{constructor(){super("Player",[{no:1,name:"context",kind:"message",T:()=>Player_Context},{no:2,name:"videoId",kind:"scalar",T:9},{no:4,name:"playbackContext",kind:"message",T:()=>Player_PlaybackContext}])}create(value){const message={videoId:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.context=Player_Context.internalBinaryRead(reader,reader.uint32(),options,message.context);break;case 2:message.videoId=reader.string();break;case 4:message.playbackContext=Player_PlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.playbackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.context&&Player_Context.internalBinaryWrite(message.context,writer.tag(1,WireType.LengthDelimited).fork(),options).join(),""!==message.videoId&&writer.tag(2,WireType.LengthDelimited).string(message.videoId),message.playbackContext&&Player_PlaybackContext.internalBinaryWrite(message.playbackContext,writer.tag(4,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
+										const Player = new Player$Type();
+										class Player_Context$Type extends MessageType{constructor(){super("Player.Context",[{no:1,name:"client",kind:"message",T:()=>Player_Context_Client}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.client=Player_Context_Client.internalBinaryRead(reader,reader.uint32(),options,message.client);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.client&&Player_Context_Client.internalBinaryWrite(message.client,writer.tag(1,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
+										const Player_Context = new Player_Context$Type();
+										class Player_Context_Client$Type extends MessageType{constructor(){super("Player.Context.Client",[{no:1,name:"hl",kind:"scalar",T:9},{no:2,name:"gl",kind:"scalar",T:9},{no:12,name:"deviceMake",kind:"scalar",T:9},{no:13,name:"deviceModel",kind:"scalar",T:9},{no:17,name:"clientVersion",kind:"scalar",T:9},{no:18,name:"osName",kind:"scalar",T:9},{no:19,name:"osVersion",kind:"scalar",T:9},{no:80,name:"timeZone",kind:"scalar",T:9}])}create(value){const message={hl:"",gl:"",deviceMake:"",deviceModel:"",clientVersion:"",osName:"",osVersion:"",timeZone:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.hl=reader.string();break;case 2:message.gl=reader.string();break;case 12:message.deviceMake=reader.string();break;case 13:message.deviceModel=reader.string();break;case 17:message.clientVersion=reader.string();break;case 18:message.osName=reader.string();break;case 19:message.osVersion=reader.string();break;case 80:message.timeZone=reader.string();break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){""!==message.hl&&writer.tag(1,WireType.LengthDelimited).string(message.hl),""!==message.gl&&writer.tag(2,WireType.LengthDelimited).string(message.gl),""!==message.deviceMake&&writer.tag(12,WireType.LengthDelimited).string(message.deviceMake),""!==message.deviceModel&&writer.tag(13,WireType.LengthDelimited).string(message.deviceModel),""!==message.clientVersion&&writer.tag(17,WireType.LengthDelimited).string(message.clientVersion),""!==message.osName&&writer.tag(18,WireType.LengthDelimited).string(message.osName),""!==message.osVersion&&writer.tag(19,WireType.LengthDelimited).string(message.osVersion),""!==message.timeZone&&writer.tag(80,WireType.LengthDelimited).string(message.timeZone);let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
+										const Player_Context_Client = new Player_Context_Client$Type();
+										class Player_PlaybackContext$Type extends MessageType{constructor(){super("Player.PlaybackContext",[{no:1,name:"contentPlaybackContext",kind:"message",T:()=>Player_PlaybackContext_ContentPlaybackContext}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.contentPlaybackContext=Player_PlaybackContext_ContentPlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.contentPlaybackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.contentPlaybackContext&&Player_PlaybackContext_ContentPlaybackContext.internalBinaryWrite(message.contentPlaybackContext,writer.tag(1,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
+										const Player_PlaybackContext = new Player_PlaybackContext$Type();
+										class Player_PlaybackContext_ContentPlaybackContext$Type extends MessageType{constructor(){super("Player.PlaybackContext.ContentPlaybackContext",[{no:4,name:"id4",kind:"scalar",opt:!0,T:5},{no:6,name:"id6",kind:"scalar",opt:!0,T:5},{no:8,name:"id8",kind:"scalar",opt:!0,T:5},{no:9,name:"id9",kind:"scalar",opt:!0,T:5}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 4:message.id4=reader.int32();break;case 6:message.id6=reader.int32();break;case 8:message.id8=reader.int32();break;case 9:message.id9=reader.int32();break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){void 0!==message.id4&&writer.tag(4,WireType.Varint).int32(message.id4),void 0!==message.id6&&writer.tag(6,WireType.Varint).int32(message.id6),void 0!==message.id8&&writer.tag(8,WireType.Varint).int32(message.id8),void 0!==message.id9&&writer.tag(9,WireType.Varint).int32(message.id9);let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
+										const Player_PlaybackContext_ContentPlaybackContext = new Player_PlaybackContext_ContentPlaybackContext$Type();
+										/******************  initialization finish  *******************/
+										body = Player.fromBinary(rawBody);
+										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+										// 找功能
+										if (body?.playbackContext) { // 有播放设置
+											$.log(`⚠ ${$.name}, playbackContext`, "");
+											if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
+												//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+												body.playbackContext.contentPlaybackContext.id4 = 1; // 
+												body.playbackContext.contentPlaybackContext.id6 = 1; // 
+												body.playbackContext.contentPlaybackContext.id8 = 1; // 
+												body.playbackContext.contentPlaybackContext.id9 = 1; // 
+											};
 										};
+										// 找功能
+										rawBody = Player.toBinary(body);
+										break;
+									case "youtubei/v1/browse":
+										/******************  initialization start  *******************/
+										// proto/youtube.player.request.js
+										class Browse$Type extends MessageType {
+											constructor() {
+												super("Browse", [
+													{ no: 1, name: "context", kind: "message", T: () => Context },
+													{ no: 2, name: "browseId", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+												]);
+											}
+										};
+										const Browse = new Browse$Type();
+										class Context$Type extends MessageType {
+											constructor() {
+												super("Context", [
+													{ no: 1, name: "client", kind: "message", T: () => Client }
+												]);
+											}
+										};
+										const Context = new Context$Type();
+										class Client$Type extends MessageType {
+											constructor() {
+												super("Client", [
+													{ no: 1, name: "hl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 2, name: "gl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 12, name: "deviceMake", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 13, name: "deviceModel", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 17, name: "clientVersion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 18, name: "osName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 19, name: "osVersion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 80, name: "timeZone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+												]);
+											}
+										};
+										const Client = new Client$Type();
+										/******************  initialization finish  *******************/
+										body = Browse.fromBinary(rawBody);
+										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+										if (body?.browseId?.startsWith?.("MPLYt_")) url.query.subtype = "Translate";
+										rawBody = Browse.toBinary(body);
+										break;
 									};
-									// 找功能
-									rawBody = Player.toBinary(body);
 									break;
 								case "application/grpc":
 								case "application/grpc+proto":
