@@ -132,7 +132,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									};
 									break;
 								case "youtubei/v1/browse":
-									if (body.brosweId.startsWith(MPLYt)) url.query.subtype = "Translate";
+									if (body?.browseId?.startsWith?.("MPLYt_")) url.query.subtype = "Translate";
 									break;
 								};
 							$request.body = JSON.stringify(body);
