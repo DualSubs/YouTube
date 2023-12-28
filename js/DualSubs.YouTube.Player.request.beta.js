@@ -2,11 +2,11 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.0(5) player.request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.0.0(1) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
-		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":100}
+		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":50}
 	},
 	"Universal":{
 		"Settings":{"Switch":true,"Types":["Official","Translate"],"Languages":["EN","ZH"]},
@@ -31,15 +31,15 @@ const DataBase = {
 		}
 	},
 	"Official":{
-		"Settings":{"CacheSize":100,"Position":"Reverse","Offset":0,"Tolerance":1000}
+		"Settings":{"CacheSize":50,"Position":"Reverse","Offset":0,"Tolerance":1000}
 	},
 	"Translate":{
 		"Settings":{"Vendor":"Google","ShowOnly":false,"Position":"Forward","CacheSize":10,"Method":"Part","Times":3,"Interval":500,"Exponential":true},
 		"Configs":{
 			"Languages":{
-				"Google":{"AUTO":"auto","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","ZH":"zh","ZH-HANS":"zh-CN","ZH-HK":"zh-TW","ZH-HANT":"zh-TW"},
-				"Microsoft":{"AUTO":"","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","ZH":"zh-Hans","ZH-HANS":"zh-Hans","ZH-HK":"yue","ZH-HANT":"zh-Hant"},
-				"DeepL":{"AUTO":"","BG":"BG","CS":"CS","DA":"DA","DE":"de","EL":"el","EN":"EN-US","EN-GB":"EN-GB","EN-US":"EN-US","EN-US SDH":"EN-US","ES":"ES","ES-419":"ES","ES-ES":"ES","ET":"ET","FI":"FI","FR":"FR","HU":"HU","IT":"IT","JA":"JA","KO":"ko","LT":"LT","LV":"LV","NL":"NL","PL":"PL","PT":"PT-PT","PT-PT":"PT-PT","PT-BR":"PT-BR","RO":"RO","RU":"RU","SK":"SK","SL":"SL","SV":"SV","ZH":"ZH","ZH-HANS":"ZH","ZH-HK":"ZH","ZH-HANT":"ZH"}
+				"Google":{"AUTO":"auto","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","TR":"tr","IS":"is","ZH":"zh","ZH-HANS":"zh-CN","ZH-HK":"zh-TW","ZH-HANT":"zh-TW"},
+				"Microsoft":{"AUTO":"","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","TR":"tr","ZH":"zh-Hans","ZH-HANS":"zh-Hans","ZH-HK":"yue","ZH-HANT":"zh-Hant"},
+				"DeepL":{"AUTO":"","BG":"BG","CS":"CS","DA":"DA","DE":"de","EL":"el","EN":"EN-US","EN-GB":"EN-GB","EN-US":"EN-US","EN-US SDH":"EN-US","ES":"ES","ES-419":"ES","ES-ES":"ES","ET":"ET","FI":"FI","FR":"FR","HU":"HU","IT":"IT","JA":"JA","KO":"ko","LT":"LT","LV":"LV","NL":"NL","PL":"PL","PT":"PT-PT","PT-PT":"PT-PT","PT-BR":"PT-BR","RO":"RO","RU":"RU","SK":"SK","SL":"SL","SV":"SV","TR":"TR","ZH":"ZH","ZH-HANS":"ZH","ZH-HK":"ZH","ZH-HANT":"ZH"}
 			}
 		}
 	},
@@ -47,7 +47,7 @@ const DataBase = {
 		"Settings":{"URL":undefined,"ShowOnly":false,"Position":"Forward","Offset":0,"Tolerance":1000}
 	},
 	"API":{
-		"Settings":{"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Azure":{"Version":"Azure","Region":undefined,"Mode":"Key","Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined}}
+		"Settings":{"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Microsoft":{"Version":"Azure","Mode":"Token","Region":undefined,"Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined},"DeepLX":{"Endpoint":undefined,"Auth":undefined}}
 	}
 };
 
@@ -98,6 +98,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/x-mpegURL":
 						case "application/x-mpegurl":
 						case "application/vnd.apple.mpegurl":
+						case "audio/mpegurl":
 							//body = M3U8.parse($response.body);
 							//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
 							//$response.body = M3U8.stringify(body);
@@ -130,6 +131,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							$request.body = JSON.stringify(body);
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
@@ -144,6 +146,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							/******************  initialization finish  *******************/
 							switch (FORMAT) {
 								case "application/x-protobuf":
+								case "application/vnd.google.protobuf":
 									/******************  initialization start  *******************/
 									// proto/generated/youtube.request.js
 									class Player$Type extends MessageType{constructor(){super("Player",[{no:1,name:"context",kind:"message",T:()=>Player_Context},{no:2,name:"videoId",kind:"scalar",T:9},{no:4,name:"playbackContext",kind:"message",T:()=>Player_PlaybackContext}])}create(value){const message={videoId:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.context=Player_Context.internalBinaryRead(reader,reader.uint32(),options,message.context);break;case 2:message.videoId=reader.string();break;case 4:message.playbackContext=Player_PlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.playbackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.context&&Player_Context.internalBinaryWrite(message.context,writer.tag(1,WireType.LengthDelimited).fork(),options).join(),""!==message.videoId&&writer.tag(2,WireType.LengthDelimited).string(message.videoId),message.playbackContext&&Player_PlaybackContext.internalBinaryWrite(message.playbackContext,writer.tag(4,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
@@ -220,6 +223,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							$.done({ status: $response.status, headers: $response.headers, body: $response.body });
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						//case "applecation/octet-stream":
@@ -246,6 +250,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							$.done({ url: $request.url, headers: $request.headers, body: $request.body })
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						//case "applecation/octet-stream":
@@ -278,7 +283,8 @@ function detectPlatform(url) {
 												: /\.viki\.io/i.test(url) ? "Viki"
 													: /(\.youtube|youtubei\.googleapis)\.com/i.test(url) ? "YouTube"
 														: /\.(netflix\.com|nflxvideo\.net)/i.test(url) ? "Netflix"
-															: "Universal";
+															: /\.spotify\.com/i.test(url) ? "Spotify"
+																: "Universal";
 	$.log(`✅ ${$.name}, Detect Platform, Platform: ${Platform}`, "");
 	return Platform;
 };
@@ -381,25 +387,35 @@ function detectFormat(url, body) {
 		case undefined:
 			const HEADER = body?.substring?.(0, 6).trim?.();
 			$.log(`🚧 ${$.name}`, `detectFormat, HEADER: ${HEADER}`, "");
-			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0): ${HEADER?.substring?.(0)}`, "");
-			switch (HEADER?.substring?.(0)) {
-				case "<":
-				case "W":
+			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0, 1): ${HEADER?.substring?.(0, 1)}`, "");
+			switch (HEADER) {
+				case "<?xml":
+					format = "text/xml";
+					break;
+				case "WEBVTT":
+					format = "text/vtt";
+					break;
 				default:
-					switch (HEADER) {
-						case "<?xml":
-							format = "text/xml";
-							break;
-						case "WEBVTT":
-						default:
+					switch (HEADER?.substring?.(0, 1)) {
+						case "0":
+						case "1":
+						case "2":
+						case "3":
+						case "4":
+						case "5":
+						case "6":
+						case "7":
+						case "8":
+						case "9":
 							format = "text/vtt";
 							break;
+						case "{":
+							format = "application/json";
+							break;
 						case undefined:
+						default:
 							break;
 					};
-					break;
-				case "{":
-					format = "application/json";
 					break;
 				case undefined:
 					break;
