@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.0.0(2) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.1.0(1) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -121,13 +121,20 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "text/json":
 						case "application/json":
 							body = JSON.parse($request.body);
-							// 找功能
-							if (body?.playbackContext) { // 有播放设置
-								$.log(`⚠ ${$.name}, playbackContext`, "");
-								if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
-									body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+							switch (url.path) {
+								case "youtubei/v1/player":
+									// 找功能
+									if (body?.playbackContext) { // 有播放设置
+										$.log(`⚠ ${$.name}, playbackContext`, "");
+										if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
+											body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+										};
+									};
+									break;
+								case "youtubei/v1/browse":
+									if (body.brosweId.startsWith(MPLYt)) url.query.subtype = "Translate";
+									break;
 								};
-							};
 							$request.body = JSON.stringify(body);
 							break;
 						case "application/x-protobuf":
@@ -191,6 +198,9 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				case "GET":
 				case "HEAD":
 				case "OPTIONS":
+					if ($request?.headers?.Host) $request.headers.Host = url.host;
+					$request.url = URL.stringify(url);
+					$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 					break;
 				case "CONNECT":
 				case "TRACE":
