@@ -89,6 +89,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				case "application/x-mpegURL":
 				case "application/x-mpegurl":
 				case "application/vnd.apple.mpegurl":
+				case "audio/mpegurl":
 					//body = M3U8.parse($response.body);
 					//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
 					//$response.body = M3U8.stringify(body);
@@ -361,22 +362,24 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 function detectPlatform(url) {
 	$.log(`☑️ ${$.name}, Detect Platform`, "");
 	/***************** Platform *****************/
-	let Platform = /\.apple\.com/i.test(url) ? "Apple"
-		: /\.(dssott|starott)\.com/i.test(url) ? "Disney+"
-			: /(\.(hls\.row\.aiv-cdn|akamaihd|cloudfront)\.net)|s3\.amazonaws\.com\/aiv-prod-timedtext\//i.test(url) ? "PrimeVideo"
-				: /prd\.media\.h264\.io/i.test(url) ? "Max"
-					: /\.(api\.hbo|hbomaxcdn)\.com/i.test(url) ? "HBOMax"
-						: /\.(hulustream|huluim)\.com/i.test(url) ? "Hulu"
-							: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(url) ? "Paramount+"
-								: /dplus-ph-/i.test(url) ? "Discovery+Ph"
-									: /\.peacocktv\.com/i.test(url) ? "PeacockTV"
-										: /\.uplynk\.com/i.test(url) ? "Discovery+"
-											: /\.fubo\.tv/i.test(url) ? "FuboTV"
-												: /\.viki\.io/i.test(url) ? "Viki"
-													: /(\.youtube|youtubei\.googleapis)\.com/i.test(url) ? "YouTube"
-														: /\.(netflix\.com|nflxvideo\.net)/i.test(url) ? "Netflix"
-															: /\.spotify\.com/i.test(url) ? "Spotify"
-																: "Universal";
+	let Platform = /\.(netflix\.com|nflxvideo\.net)/i.test(url) ? "Netflix"
+		: /(\.youtube|youtubei\.googleapis)\.com/i.test(url) ? "YouTube"
+			: /\.spotify\.com/i.test(url) ? "Spotify"
+				: /\.apple\.com/i.test(url) ? "Apple"
+					: /\.(dssott|starott)\.com/i.test(url) ? "Disney+"
+						: /(\.(pv-cdn|aiv-cdn|akamaihd|cloudfront)\.net)|s3\.amazonaws\.com\/aiv-prod-timedtext\//i.test(url) ? "PrimeVideo"
+							: /prd\.media\.h264\.io/i.test(url) ? "Max"
+								: /\.(api\.hbo|hbomaxcdn)\.com/i.test(url) ? "HBOMax"
+									: /\.(hulustream|huluim)\.com/i.test(url) ? "Hulu"
+										: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(url) ? "Paramount+"
+											: /\.uplynk\.com/i.test(url) ? "Discovery+"
+												: /dplus-ph-/i.test(url) ? "Discovery+Ph"
+													: /\.peacocktv\.com/i.test(url) ? "PeacockTV"
+														: /\.fubo\.tv/i.test(url) ? "FuboTV"
+															: /\.viki\.io/i.test(url) ? "Viki"
+																: /(epixhls\.akamaized\.net|epix\.services\.io)/i.test(url) ? "MGM+"
+																	: /\.nebula\.app|/i.test(url) ? "Nebula"
+																		: "Universal";
 	$.log(`✅ ${$.name}, Detect Platform, Platform: ${Platform}`, "");
 	return Platform;
 };
@@ -449,8 +452,7 @@ function setENV(name, platforms, database) {
  */
 function detectFormat(url, body) {
 	let format = undefined;
-	$.log(`☑️ ${$.name}`, `detectFormat`, "");
-	$.log(`🚧 ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
+	$.log(`☑️ ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
 	switch (url?.format ?? url?.query?.fmt ?? url?.query?.format) {
 		case "txt":
 			format = "text/plain";
@@ -480,25 +482,35 @@ function detectFormat(url, body) {
 		case undefined:
 			const HEADER = body?.substring?.(0, 6).trim?.();
 			$.log(`🚧 ${$.name}`, `detectFormat, HEADER: ${HEADER}`, "");
-			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0): ${HEADER?.substring?.(0)}`, "");
-			switch (HEADER?.substring?.(0)) {
-				case "<":
-				case "W":
-				default:
+			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0, 1): ${HEADER?.substring?.(0, 1)}`, "");
 					switch (HEADER) {
 						case "<?xml":
 							format = "text/xml";
 							break;
 						case "WEBVTT":
-						default:
 							format = "text/vtt";
 							break;
-						case undefined:
+						default:
+							switch (HEADER?.substring?.(0, 1)) {
+								case "0":
+								case "1":
+								case "2":
+								case "3":
+								case "4":
+								case "5":
+								case "6":
+								case "7":
+								case "8":
+								case "9":
+									format = "text/vtt";
+									break;
+								case "{":
+									format = "application/json";
+									break;
+								case undefined:
+								default:
 							break;
 					};
-					break;
-				case "{":
-					format = "application/json";
 					break;
 				case undefined:
 					break;

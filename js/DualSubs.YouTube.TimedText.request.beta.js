@@ -6,7 +6,7 @@ const $ = new Env("🍿 DualSubs: ▶ YouTube v0.9.1(5) timedtext.request.beta")
 const URL = new URLs();
 const DataBase = {
 	"Default":{
-		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":100}
+		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":50}
 	},
 	"Universal":{
 		"Settings":{"Switch":true,"Types":["Official","Translate"],"Languages":["EN","ZH"]},
@@ -31,15 +31,15 @@ const DataBase = {
 		}
 	},
 	"Official":{
-		"Settings":{"CacheSize":100,"Position":"Reverse","Offset":0,"Tolerance":1000}
+		"Settings":{"CacheSize":50,"Position":"Reverse","Offset":0,"Tolerance":1000}
 	},
 	"Translate":{
 		"Settings":{"Vendor":"Google","ShowOnly":false,"Position":"Forward","CacheSize":10,"Method":"Part","Times":3,"Interval":500,"Exponential":true},
 		"Configs":{
 			"Languages":{
-				"Google":{"AUTO":"auto","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","ZH":"zh","ZH-HANS":"zh-CN","ZH-HK":"zh-TW","ZH-HANT":"zh-TW"},
-				"Microsoft":{"AUTO":"","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","ZH":"zh-Hans","ZH-HANS":"zh-Hans","ZH-HK":"yue","ZH-HANT":"zh-Hant"},
-				"DeepL":{"AUTO":"","BG":"BG","CS":"CS","DA":"DA","DE":"de","EL":"el","EN":"EN-US","EN-GB":"EN-GB","EN-US":"EN-US","EN-US SDH":"EN-US","ES":"ES","ES-419":"ES","ES-ES":"ES","ET":"ET","FI":"FI","FR":"FR","HU":"HU","IT":"IT","JA":"JA","KO":"ko","LT":"LT","LV":"LV","NL":"NL","PL":"PL","PT":"PT-PT","PT-PT":"PT-PT","PT-BR":"PT-BR","RO":"RO","RU":"RU","SK":"SK","SL":"SL","SV":"SV","ZH":"ZH","ZH-HANS":"ZH","ZH-HK":"ZH","ZH-HANT":"ZH"}
+				"Google":{"AUTO":"auto","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","TR":"tr","ZH":"zh","ZH-HANS":"zh-CN","ZH-HK":"zh-TW","ZH-HANT":"zh-TW"},
+				"Microsoft":{"AUTO":"","AR":"ar","BG":"bg","CS":"cs","DA":"da","DE":"de","EL":"el","EN":"en","EN-GB":"en","EN-US":"en","EN-US SDH":"en","ES":"es","ES-419":"es","ES-ES":"es","ET":"et","FI":"fi","FR":"fr","HU":"hu","IT":"it","JA":"ja","KO":"ko","LT":"lt","LV":"lv","NL":"nl","NO":"no","PL":"pl","PT":"pt","PT-PT":"pt","PT-BR":"pt","RO":"ro","RU":"ru","SK":"sk","SL":"sl","SV":"sv","IS":"is","TR":"tr","ZH":"zh-Hans","ZH-HANS":"zh-Hans","ZH-HK":"yue","ZH-HANT":"zh-Hant"},
+				"DeepL":{"AUTO":"","BG":"BG","CS":"CS","DA":"DA","DE":"de","EL":"el","EN":"EN-US","EN-GB":"EN-GB","EN-US":"EN-US","EN-US SDH":"EN-US","ES":"ES","ES-419":"ES","ES-ES":"ES","ET":"ET","FI":"FI","FR":"FR","HU":"HU","IT":"IT","JA":"JA","KO":"ko","LT":"LT","LV":"LV","NL":"NL","PL":"PL","PT":"PT-PT","PT-PT":"PT-PT","PT-BR":"PT-BR","RO":"RO","RU":"RU","SK":"SK","SL":"SL","SV":"SV","TR":"TR","ZH":"ZH","ZH-HANS":"ZH","ZH-HK":"ZH","ZH-HANT":"ZH"}
 			}
 		}
 	},
@@ -47,7 +47,7 @@ const DataBase = {
 		"Settings":{"URL":undefined,"ShowOnly":false,"Position":"Forward","Offset":0,"Tolerance":1000}
 	},
 	"API":{
-		"Settings":{"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Azure":{"Version":"Azure","Region":undefined,"Mode":"Key","Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined}}
+		"Settings":{"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Microsoft":{"Version":"Azure","Mode":"Token","Region":undefined,"Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined},"DeepLX":{"Endpoint":undefined,"Auth":undefined}}
 	}
 };
 
@@ -98,6 +98,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/x-mpegURL":
 						case "application/x-mpegurl":
 						case "application/vnd.apple.mpegurl":
+						case "audio/mpegurl":
 							//body = M3U8.parse($response.body);
 							//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
 							//$response.body = M3U8.stringify(body);
@@ -124,6 +125,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							//$request.body = JSON.stringify(body);
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
@@ -241,6 +243,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							$.done({ status: $response.status, headers: $response.headers, body: $response.body });
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						//case "applecation/octet-stream":
@@ -267,6 +270,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							$.done({ url: $request.url, headers: $request.headers, body: $request.body })
 							break;
 						case "application/x-protobuf":
+						case "application/vnd.google.protobuf":
 						case "application/grpc":
 						case "application/grpc+proto":
 						//case "applecation/octet-stream":
@@ -285,21 +289,24 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 function detectPlatform(url) {
 	$.log(`☑️ ${$.name}, Detect Platform`, "");
 	/***************** Platform *****************/
-	let Platform = /\.apple\.com/i.test(url) ? "Apple"
-		: /\.(dssott|starott)\.com/i.test(url) ? "Disney+"
-			: /(\.(hls\.row\.aiv-cdn|akamaihd|cloudfront)\.net)|s3\.amazonaws\.com\/aiv-prod-timedtext\//i.test(url) ? "PrimeVideo"
-				: /prd\.media\.h264\.io/i.test(url) ? "Max"
-					: /\.(api\.hbo|hbomaxcdn)\.com/i.test(url) ? "HBOMax"
-						: /\.(hulustream|huluim)\.com/i.test(url) ? "Hulu"
-							: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(url) ? "Paramount+"
-								: /dplus-ph-/i.test(url) ? "Discovery+Ph"
-									: /\.peacocktv\.com/i.test(url) ? "PeacockTV"
-										: /\.uplynk\.com/i.test(url) ? "Discovery+"
-											: /\.fubo\.tv/i.test(url) ? "FuboTV"
-												: /\.viki\.io/i.test(url) ? "Viki"
-													: /(\.youtube|youtubei\.googleapis)\.com/i.test(url) ? "YouTube"
-														: /\.(netflix\.com|nflxvideo\.net)/i.test(url) ? "Netflix"
-															: "Universal";
+	let Platform = /\.(netflix\.com|nflxvideo\.net)/i.test(url) ? "Netflix"
+		: /(\.youtube|youtubei\.googleapis)\.com/i.test(url) ? "YouTube"
+			: /\.spotify\.com/i.test(url) ? "Spotify"
+				: /\.apple\.com/i.test(url) ? "Apple"
+					: /\.(dssott|starott)\.com/i.test(url) ? "Disney+"
+						: /(\.(pv-cdn|aiv-cdn|akamaihd|cloudfront)\.net)|s3\.amazonaws\.com\/aiv-prod-timedtext\//i.test(url) ? "PrimeVideo"
+							: /prd\.media\.h264\.io/i.test(url) ? "Max"
+								: /\.(api\.hbo|hbomaxcdn)\.com/i.test(url) ? "HBOMax"
+									: /\.(hulustream|huluim)\.com/i.test(url) ? "Hulu"
+										: /\.(cbsaavideo|cbsivideo|cbs)\.com/i.test(url) ? "Paramount+"
+											: /\.uplynk\.com/i.test(url) ? "Discovery+"
+												: /dplus-ph-/i.test(url) ? "Discovery+Ph"
+													: /\.peacocktv\.com/i.test(url) ? "PeacockTV"
+														: /\.fubo\.tv/i.test(url) ? "FuboTV"
+															: /\.viki\.io/i.test(url) ? "Viki"
+																: /(epixhls\.akamaized\.net|epix\.services\.io)/i.test(url) ? "MGM+"
+																	: /\.nebula\.app|/i.test(url) ? "Nebula"
+																		: "Universal";
 	$.log(`✅ ${$.name}, Detect Platform, Platform: ${Platform}`, "");
 	return Platform;
 };
@@ -371,8 +378,7 @@ function setENV(name, platforms, database) {
  */
 function detectFormat(url, body) {
 	let format = undefined;
-	$.log(`☑️ ${$.name}`, `detectFormat`, "");
-	$.log(`🚧 ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
+	$.log(`☑️ ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
 	switch (url?.format ?? url?.query?.fmt ?? url?.query?.format) {
 		case "txt":
 			format = "text/plain";
@@ -402,25 +408,35 @@ function detectFormat(url, body) {
 		case undefined:
 			const HEADER = body?.substring?.(0, 6).trim?.();
 			$.log(`🚧 ${$.name}`, `detectFormat, HEADER: ${HEADER}`, "");
-			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0): ${HEADER?.substring?.(0)}`, "");
-			switch (HEADER?.substring?.(0)) {
-				case "<":
-				case "W":
-				default:
+			$.log(`🚧 ${$.name}`, `detectFormat, HEADER?.substring?.(0, 1): ${HEADER?.substring?.(0, 1)}`, "");
 					switch (HEADER) {
 						case "<?xml":
 							format = "text/xml";
 							break;
 						case "WEBVTT":
-						default:
 							format = "text/vtt";
 							break;
-						case undefined:
+						default:
+							switch (HEADER?.substring?.(0, 1)) {
+								case "0":
+								case "1":
+								case "2":
+								case "3":
+								case "4":
+								case "5":
+								case "6":
+								case "7":
+								case "8":
+								case "9":
+									format = "text/vtt";
+									break;
+								case "{":
+									format = "application/json";
+									break;
+								case undefined:
+								default:
 							break;
 					};
-					break;
-				case "{":
-					format = "application/json";
 					break;
 				case undefined:
 					break;
