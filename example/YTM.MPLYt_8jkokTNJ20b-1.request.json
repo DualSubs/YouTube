@@ -1,0 +1,133 @@
+{
+    "context": {
+        "client": {
+            "hl": "zh-CN",
+            "gl": "HK",
+            "remoteHost": "38.181.77.15",
+            "deviceMake": "Apple",
+            "deviceModel": "",
+            "visitorData": "CgszMW13NDVxWjZzVSjW5risBjIKCgJUVxIEGgAgQQ%3D%3D",
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15,gzip(gfe)",
+            "clientName": "WEB_REMIX",
+            "clientVersion": "1.20231214.00.00",
+            "osName": "Macintosh",
+            "osVersion": "10_15_7",
+            "originalUrl": "https://music.youtube.com/",
+            "screenPixelDensity": 2,
+            "platform": "DESKTOP",
+            "clientFormFactor": "UNKNOWN_FORM_FACTOR",
+            "configInfo": {
+                "appInstallData": "CNbmuKwGENCNsAUQzZWwBRCp968FEJT6_hIQ-Z-wBRCI468FELiLrgUQ_bj9EhCoobAFEKXC_hIQyfevBRC3768FEMzfrgUQ_Z-wBRCst68FEKaBsAUQvoqwBRC--a8FEOvo_hIQvZmwBRC36v4SENKVsAUQiIewBRDMrv4SEOeG_xIQ0-GvBRD1-a8FEN3o_hIQ4fKvBRDamLAFEJj8_hIQpqCwBRCa8K8FEMeDsAUQ6sOvBRDxnLAFEKuCsAUQ2cmvBRDpjLAFEKSgsAUQnouwBRCpoLAFEL22rgUQj6KwBRCigbAFEPyFsAUQ57qvBRCikrAFEJmUsAUQ5LP-EhCu1P4SEKiasAUQtp2wBRDViLAFEPufsAUQvPmvBRC_o7AFENeksAUQqIL_EhC2krAF",
+                "coldConfigData": "CNbmuKwGEOu6rQUQvbauBRDX7q4FEKTFrwUQzYGwBRDhgbAFELCIsAUQsoiwBRC4irAFEL6KsAUQtpKwBRDSlbAFEJKWsAUQnZmwBRDymrAFEPGcsAUQtp2wBRD5n7AFEPufsAUQ_Z-wBRCkoLAFEKagsAUQqaCwBRCyoLAFELagsAUQ3KCwBRD8oLAFEKihsAUQj6KwBRCTorAFEL-jsAUQhqSwBRDXpLAFGjJBT2pGb3gwWDRTMUxTa0haMUNpNHJvVzl6UFRCY3AzUXphZDRrWjhId1Y3TFZGQUZZZyIyQU9qRm94MnhJaUpWQmRsS0tFZmp0TUxhcmIwYTB0aGMtU2l6RjNoeUNDSFdOSm5hMncqTENBTVNNdzBUZ3Bhb0FzNFRwaF9TRXYwR2p4blZBTjBhdndBVkhKS0MwQXpiOWdhT0hxM0lCcERaQkpfUnpBdmJPSS04QlFiQ1NnPT0%3D",
+                "coldHashData": "CNbmuKwGEhM2ODk0MzM4NTMwODI4MTMwMjIyGNbmuKwGMjJBT2pGb3gwWDRTMUxTa0haMUNpNHJvVzl6UFRCY3AzUXphZDRrWjhId1Y3TFZGQUZZZzoyQU9qRm94MnhJaUpWQmRsS0tFZmp0TUxhcmIwYTB0aGMtU2l6RjNoeUNDSFdOSm5hMndCTENBTVNNdzBUZ3Bhb0FzNFRwaF9TRXYwR2p4blZBTjBhdndBVkhKS0MwQXpiOWdhT0hxM0lCcERaQkpfUnpBdmJPSS04QlFiQ1NnPT0%3D",
+                "hotHashData": "CNbmuKwGEhM4OTU5NzY2ODYzMDAzNzQ3NjI3GNbmuKwGKJTk_BIo25P9EijGsv0SKKq0_RIonpH-Eiiarf4SKMjK_hIo3c7-Eiio4f4SKMLu_hIolfj-EijF_v4SKKiC_xIouoL_Eiibg_8SKMiD_xIo54b_EjIyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWc6MkFPakZveDJ4SWlKVkJkbEtLRWZqdE1MYXJiMGEwdGhjLVNpekYzaHlDQ0hXTkpuYTJ3QjRDQU1TSVEwTDJJXzVGY29BcURuQUVlOElGUmFONHMwTWktNEI4ZUFPdFlBRXpMbkxDdz09"
+            },
+            "screenDensityFloat": 2,
+            "userInterfaceTheme": "USER_INTERFACE_THEME_DARK",
+            "timeZone": "Asia/Shanghai",
+            "browserName": "Safari",
+            "browserVersion": "17.2.1",
+            "acceptHeader": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "deviceExperimentId": "ChxOek14TnpnME1qZzRORFk1TnpFNU5EY3hNQT09ENbmuKwGGNXmuKwG",
+            "screenWidthPoints": 593,
+            "screenHeightPoints": 664,
+            "utcOffsetMinutes": 480,
+            "musicAppInfo": {
+                "pwaInstallabilityStatus": "PWA_INSTALLABILITY_STATUS_UNKNOWN",
+                "webDisplayMode": "WEB_DISPLAY_MODE_BROWSER",
+                "storeDigitalGoodsApiSupportStatus": {
+                    "playStoreDigitalGoodsApiSupportStatus": "DIGITAL_GOODS_API_SUPPORT_STATUS_UNSUPPORTED"
+                }
+            }
+        },
+        "user": {
+            "lockedSafetyMode": false
+        },
+        "request": {
+            "useSsl": true,
+            "internalExperimentFlags": [],
+            "consistencyTokenJars": []
+        },
+        "clickTracking": {
+            "clickTrackingParams": "CBEQpLQFGAciEwiGqoyL0bODAxX75kwCHc3rB_0="
+        },
+        "adSignalsInfo": {
+            "params": [
+                {
+                    "key": "dt",
+                    "value": "1703818071265"
+                },
+                {
+                    "key": "flash",
+                    "value": "0"
+                },
+                {
+                    "key": "frm",
+                    "value": "0"
+                },
+                {
+                    "key": "u_tz",
+                    "value": "480"
+                },
+                {
+                    "key": "u_his",
+                    "value": "5"
+                },
+                {
+                    "key": "u_h",
+                    "value": "800"
+                },
+                {
+                    "key": "u_w",
+                    "value": "1280"
+                },
+                {
+                    "key": "u_ah",
+                    "value": "719"
+                },
+                {
+                    "key": "u_aw",
+                    "value": "1280"
+                },
+                {
+                    "key": "u_cd",
+                    "value": "24"
+                },
+                {
+                    "key": "bc",
+                    "value": "31"
+                },
+                {
+                    "key": "bih",
+                    "value": "664"
+                },
+                {
+                    "key": "biw",
+                    "value": "593"
+                },
+                {
+                    "key": "brdim",
+                    "value": "0,25,0,25,1280,25,1280,716,593,664"
+                },
+                {
+                    "key": "vis",
+                    "value": "1"
+                },
+                {
+                    "key": "wgl",
+                    "value": "true"
+                },
+                {
+                    "key": "ca_type",
+                    "value": "image"
+                }
+            ]
+        },
+        "activePlayers": [
+            {
+                "playerContextParams": "Q0FFU0FnZ0I="
+            }
+        ]
+    },
+    "browseId": "MPLYt_8jkokTNJ20b-1"
+}

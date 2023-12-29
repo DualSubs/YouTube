@@ -1,0 +1,105 @@
+1 { context
+  1 { client
+    12: "Apple" deviceMake
+    13: "iPhone14,3" deviceModel
+    17: "6.31.2" clientVersion
+    18: "iOS" osName
+    19: "17.2.1.21C66" osVersion
+    80: "Asia/Shanghai" timeZone
+    10: "CN"
+    16: 26 clientName
+    21: "zh-CN" hl
+    22: "US" gl
+    30: 5
+    35: 1
+    37: 428
+    38: 926
+    41: 3
+    46: 1
+    55: 428
+    56: 926
+    61: 3
+    62 { configInfo?
+      1: "CL7ApKwGEMaFrQUQ67qtBRCWyq0FEIirrgUQvbauBRDX7q4FEIuRrwUQpMWvBRDm-K8FEM2BsAUQ4YGwBRCwiLAFELKIsAUQuIqwBRCci7AFENKVsAUQkpawBRCQmLAFEJSasAUQ8pqwBRDBm7AFELadsAUQ-Z-wBRD7n7AFEP2fsAUQpKCwBRCmoLAFEKmgsAUQsqCwBRC2oLAFENygsAUQ_KCwBRCoobAFEI-isAUQk6KwBRD7orAFEL-jsAUQhqSwBRoyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWciMkFPakZveDNJenBIVE1mVDhKYUFxM1dhX3dFYnh5bzE2SndnYkdRWWhFamJWQ3h0WUZnKmRDQU1TUlEwYjRzMnBBcGhCemhQd0tnRDFCdEFTdHdfVkFMa1ItZ0VhblFhYUFSVWl2TUhORE42NUM5djJCbWtIbmgtdHlBYVo3c2tMamp5QUY5czQzN0VGcUFNRzRRN1pSQT09"
+      3: "CJLiuKwGEhQxMDk5NDYyNzI5NTYxNzYxODA5ORi-wKSsBjIyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWc6MkFPakZveDNJenBIVE1mVDhKYUFxM1dhX3dFYnh5bzE2SndnYkdRWWhFamJWQ3h0WUZnQmRDQU1TUlEwYjRzMnBBcGhCemhQd0tnRDFCdEFTdHdfVkFMa1ItZ0VhblFhYUFSVWl2TUhORE42NUM5djJCbWtIbmgtdHlBYVo3c2tMamp5QUY5czQzN0VGcUFNRzRRN1pSQT09"
+      5: "CJLiuKwGEhM5OTUwMTU3MzYzOTE5ODIwMjA2GJLiuKwGKJTk_BIo25P9EijGsv0SKKq0_RIonpH-Eiiarf4SKMjK_hIo3c7-Eiio4f4SKMLu_hIolfj-Eii5-f4SKMX-_hIowf_-Eijr__4SKIOA_xIoyYD_Eiiogv8SKLqC_xIom4P_EijGg_8SKMiD_xIoy4P_EiiGhv8SKOeG_xIoyIf_EjIyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWc6MkFPakZveDNJenBIVE1mVDhKYUFxM1dhX3dFYnh5bzE2SndnYkdRWWhFamJWQ3h0WUZnQjxDQU1TS0EwSjJJXzVGY29BcURta0U2UUY3d2dWRVkzaXpReUw3Z0hsekE0REJnYU5HN1dBQk15NXl3cz0%3D"
+    }
+    65: 0x40400000
+    67: 480 utcOffsetMinutes?
+    70 { musicAppInfo?
+      5: 1
+      6: 3
+      7: 30
+      11: 3
+    }
+    76: "UICTContentSizeCategoryM"
+    78: 2
+    95: 5890129
+    97 {
+      1: 1
+      2: 38175877
+    }
+    99 {
+      1: "TWN"
+    }
+    100 {
+      1 {
+        1: 747
+        3: 1
+      }
+    }
+  }
+  3: ""
+  5 {
+    33 {
+      1 {
+        1: 2
+        2 {
+          2 { clickTracking
+            1: "QPDWI3imfq7IXfVVEkWeMJJ1tSohZYf9X86" clickTrackingParams
+            2: 0
+          }
+        }
+        3: 86400
+        5: 1703817490388311
+      }
+    }
+  }
+  6 {
+    2 {
+      1: 24
+      2: 88612
+      3: 6
+      4 {
+        1: 1703766405205241
+        2: 0x084c6503
+        3: 0x3f0df41b
+      }
+    }
+  }
+  9 { adSignalsInfo
+    1 { params (map)
+      1: "ms" key value
+      2: "vFOoWXT1zxCgja6-8O5L-qa10AJIiC2_vkH6WccH86A9h6JuRwXWJn7sU9Dqv_UhEFtWk27uOXpDuslEr2ok4m4fSvdDxWUdPqU5S-UkMU3U4XQuVp7DcSy40AETGjgaNyeHqBaFMvchx9w0W7o5_A0IyJQWmuUSgtpz9lvQGlKp6h-zI-CzhxB9qstUHaelj9lX2O-u5BWHI5MbsbNYVMunfcP9SxL8aLc4a0aPisu0R2bzwQaXvGRScNXj8H6HcdtnBajf9nU3aDxaPe49p-JVQPnnwOSqyy_kmWx1fyzhj49w2rIYa2vMmjJm-mPJo4aUptXJyS0fGTIjJv7bCg"
+    }
+    6: 4
+    7 {
+      6: 48
+      6: 48
+      6: 48
+      6: 48
+      5: 0x30303030
+      5: 0x30303030
+      5: 0x30303030
+      5: 0x30303030
+      6: 48
+      6: 48
+      6: 48
+      6: 48
+    }
+    8: 4
+    9: 1
+  }
+}
+2: "MPLYt_8jkokTNJ20b-1" browseId
+31: 6
