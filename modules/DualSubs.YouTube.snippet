@@ -1,5 +1,5 @@
 #!name=🍿️ DualSubs: ▶️ YouTube
-#!desc=YouTube字幕增强及双语模块(兼容模式，仅可官方字幕)
+#!desc=YouTube字幕&歌词增强及双语模块(兼容)
 #!openUrl=http://boxjs.com/#/app/DualSubs.YouTube
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs/YouTube
@@ -10,14 +10,29 @@
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ url reject-img
 
 #[Script]
+# YouTube
+# DualSubs.YouTube.Player.request.json
+^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
 # DualSubs.YouTube.Player.response.json
 ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
+# DualSubs.YouTube.Player.request.proto
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
 # DualSubs.YouTube.Player.response.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
 # DualSubs.YouTube.TimedText.request
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js
-# DualSubs.Subtitles.Composite.response
+# DualSubs.YouTube.TimedText.Composite.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
 
+# YouTube Music
+# DualSubs.YouTubeMusic.Browse.request.json
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+# DualSubs.YouTube.Browse.request.proto
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+# DualSubs.YouTubeMusic.Lyrics.Translate.response.json
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
+# DualSubs.YouTubeMusic.Lyrics.Translate.response.proto
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
+
 #[MITM]
-hostname = www.youtube.com, m.youtube.com, tv.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
+hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
