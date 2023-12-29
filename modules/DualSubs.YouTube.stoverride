@@ -41,7 +41,7 @@ http:
       binary-mode: true
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext
-      name: DualSubs.YouTube.TimedText.request
+      name: DualSubs.YouTube.request
       type: request
       require-body: false
       argument:
@@ -85,9 +85,6 @@ script-providers:
     interval: 86400
   DualSubs.YouTube.Player.response:
     url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
-    interval: 86400
-  DualSubs.YouTube.TimedText.request:
-    url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.TimedText.request.js
     interval: 86400
   DualSubs.YouTube.TimedText.Composite.response:
     url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
