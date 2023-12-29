@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.2.0(1) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.2.0(2) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -156,10 +156,10 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							switch (FORMAT) {
 								case "application/x-protobuf":
 								case "application/vnd.google.protobuf":
-									switch (url.path) {
+									switch (PATH) {
 										case "youtubei/v1/player":
 										/******************  initialization start  *******************/
-										// proto/youtube.player.request.js
+										// proto/player.request.js
 										class Player$Type extends MessageType{constructor(){super("Player",[{no:1,name:"context",kind:"message",T:()=>Player_Context},{no:2,name:"videoId",kind:"scalar",T:9},{no:4,name:"playbackContext",kind:"message",T:()=>Player_PlaybackContext}])}create(value){const message={videoId:""};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.context=Player_Context.internalBinaryRead(reader,reader.uint32(),options,message.context);break;case 2:message.videoId=reader.string();break;case 4:message.playbackContext=Player_PlaybackContext.internalBinaryRead(reader,reader.uint32(),options,message.playbackContext);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.context&&Player_Context.internalBinaryWrite(message.context,writer.tag(1,WireType.LengthDelimited).fork(),options).join(),""!==message.videoId&&writer.tag(2,WireType.LengthDelimited).string(message.videoId),message.playbackContext&&Player_PlaybackContext.internalBinaryWrite(message.playbackContext,writer.tag(4,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
 										const Player = new Player$Type();
 										class Player_Context$Type extends MessageType{constructor(){super("Player.Context",[{no:1,name:"client",kind:"message",T:()=>Player_Context_Client}])}create(value){const message={};return globalThis.Object.defineProperty(message,MESSAGE_TYPE,{enumerable:!1,value:this}),void 0!==value&&reflectionMergePartial(this,message,value),message}internalBinaryRead(reader,length,options,target){let message=target??this.create(),end=reader.pos+length;for(;reader.pos<end;){let[fieldNo,wireType]=reader.tag();switch(fieldNo){case 1:message.client=Player_Context_Client.internalBinaryRead(reader,reader.uint32(),options,message.client);break;default:let u=options.readUnknownField;if("throw"===u)throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);let d=reader.skip(wireType);!1!==u&&(!0===u?UnknownFieldHandler.onRead:u)(this.typeName,message,fieldNo,wireType,d)}}return message}internalBinaryWrite(message,writer,options){message.client&&Player_Context_Client.internalBinaryWrite(message.client,writer.tag(1,WireType.LengthDelimited).fork(),options).join();let u=options.writeUnknownFields;return!1!==u&&(1==u?UnknownFieldHandler.onWrite:u)(this.typeName,message,writer),writer}}
@@ -184,12 +184,12 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												body.playbackContext.contentPlaybackContext.id9 = 1; // 
 											};
 										};
-										// 找功能
+										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
 										rawBody = Player.toBinary(body);
 										break;
 									case "youtubei/v1/browse":
 										/******************  initialization start  *******************/
-										// proto/youtube.player.request.js
+										// proto/browse.request.js
 										class Browse$Type extends MessageType {
 											constructor() {
 												super("Browse", [
@@ -202,7 +202,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										class Context$Type extends MessageType {
 											constructor() {
 												super("Context", [
-													{ no: 1, name: "client", kind: "message", T: () => Client }
+													{ no: 1, name: "client", kind: "message", T: () => Client },
+													{ no: 9, name: "adSignalsInfo", kind: "message", T: () => AdSignalsInfo }
 												]);
 											}
 										};
@@ -210,10 +211,11 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										class Client$Type extends MessageType {
 											constructor() {
 												super("Client", [
-													{ no: 1, name: "hl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-													{ no: 2, name: "gl", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 1, name: "hl", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+													{ no: 2, name: "gl", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
 													{ no: 12, name: "deviceMake", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 													{ no: 13, name: "deviceModel", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+													{ no: 16, name: "clientName", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
 													{ no: 17, name: "clientVersion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 													{ no: 18, name: "osName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 													{ no: 19, name: "osVersion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -222,6 +224,14 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											}
 										};
 										const Client = new Client$Type();
+										class AdSignalsInfo$Type extends MessageType {
+											constructor() {
+												super("AdSignalsInfo", [
+													{ no: 1, name: "params", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+												]);
+											}
+										};
+										const AdSignalsInfo = new AdSignalsInfo$Type();
 										/******************  initialization finish  *******************/
 										body = Browse.fromBinary(rawBody);
 										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
