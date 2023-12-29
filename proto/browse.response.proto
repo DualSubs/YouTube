@@ -4,97 +4,110 @@ option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/browse
 message Browse {
-	Context context = 1 [json_name = "responseContext"];
-	n1F9 n1F9 = 9;
-	n1F10 n1F10 = 10;
+	//Context context = 1 [json_name = "responseContext"];
+	Contents contents = 9;
+	Contents continuationContents = 10;
+	//FrameworkUpdates frameworkUpdates = 777;
 };
-
+/*
 message Context {
 	repeated ServiceTrackingParams serviceTrackingParams = 6;
-
-	message ServiceTrackingParams {
-		//serviceType service = 1;
-		map<string, string> params = 2;
-	};
+};
+*/
+message Contents {
+	SectionListRenderer sectionListRenderer = 49399797; // ??Renderer ?? sectionListRenderer
+	n4F50195462 n4F50195462 = 50195462; // sectionListRenderer ?? musicDescriptionShelfRenderer
+	//n4F51845067 n4F51845067 = 51845067;
+	SingleColumnBrowseResultsRenderer singleColumnBrowseResultsRenderer = 58173949;
+	MusicSideAlignedItemRenderer musicSideAlignedItemRenderer = 90823135;
+	GridRenderer gridRenderer = 91303872;
+	n6F153515154 n6F153515154 = 153515154;
+	//n11F172035250 n11F172035250 = 172035250;
+	MusicDescriptionShelfRenderer musicDescriptionShelfRenderer = 221496734;
+};
+/*
+message ServiceTrackingParams {
+	//serviceType service = 1;
+	map<string, string> params = 2;
+};
+*/
+message SingleColumnBrowseResultsRenderer {
+	repeated Tabs tabs = 1;
 };
 
-message n1F9 {
-	//m2F58173949 m2F58173949 = 58173949;
-	//n6F153515154 n6F153515154 = 153515154;
-	n2F49399797 n2F49399797 = 49399797; // ??Renderer ?? sectionListRenderer
-}
-message n1F10 {
-	n2F49399797 n2F49399797 = 49399797; // ??Renderer ?? sectionListRenderer
-}
-/*
-message m2F58173949 { repeated m3F1 m3F1 = 1; }
-message m3F1 { m4F58174010 m4F58174010 = 58174010; }
-message m4F58174010 { n1F10 n1F10 = 4; }
-*/
-message n2F49399797 { // ??Renderer ?? sectionListRenderer
-	repeated n3F1 n3F1 = 1; // Tabs ?? contents
-}
+message MusicSideAlignedItemRenderer {
+	repeated Contents startItems = 1;
+};
 
-message n3F1 { // Tabs ?? contents
-  n4F50195462 n4F50195462 = 50195462; // sectionListRenderer ?? musicDescriptionShelfRenderer
-  //n4F51845067 n4F51845067 = 51845067;
-  n4F221496734 m4F221496734 = 221496734; // musicDescriptionShelfRenderer ?? sectionListRenderer
-}
+message GridRenderer {
+	repeated Contents items = 1;
+};
+
+message Tabs {
+	TabRenderer tabRenderer = 58174010;
+};
+
+message TabRenderer {
+	optional string title = 2;
+	bool selected = 3;
+	Contents content = 4;
+	optional string tabIdentifier = 11;
+};
+
+message SectionListRenderer {
+	repeated Contents contents = 1;
+	Contents header = 6;
+};
 
 message n4F50195462 { // sectionListRenderer ?? musicDescriptionShelfRenderer
-	repeated n5F1 n5F1 = 1; // contents ?? description
-}
-
+	repeated Contents n5F1 = 1; // contents ?? description
+};
 /*
 message n4F51845067 {
 	n5F5 n5F5 = 5;
-}
+};
 */
+message MusicDescriptionShelfRenderer {
+	Description description = 3;
+	Footer footer = 10;
+};
 
-message n4F221496734 { // musicDescriptionShelfRenderer ?? sectionListRenderer
-  n5F3 n5F3 = 3; // description ?? content
-  //n5F10 n5F10 = 10;
-}
+message Description {
+	//n6F1 n6F1 = 1; // Runs
+	repeated Runs runs = 1;
 
-message n5F1 { // contents ?? description
-	n6F153515154 n6F153515154 = 153515154; // description?
-}
-
-message n5F3 {  // contents ?? description
-	n6F1 n6F1 = 1; // Runs
-
-}
+};
 
 /*
 message n5F5 {
 	n6F51431404 n6F51431404 = 51431404;
-}
-*/
+};
 
 message n6F1 { // Runs
-	string staticLyric = 1; // text
-}
+	string text = 1; // text
+};
+*/
 
 message n6F153515154 { // description?
 	n7F172660663 n7F172660663 = 172660663; // description?
-}
+};
 
 /*
 message n6F51431404 {
 	repeated n5F1 n5F1 = 1;
-}
+};
 */
 
 message n7F172660663 {
-  n8F1 n8F1 = 1; // content?
-  //n8F2 n8F2 = 2; // header?
-  //n8F3 n8F3 = 3; // continuations?
+	n8F1 n8F1 = 1; // content?
+	//n8F2 n8F2 = 2; // header?
+	//n8F3 n8F3 = 3; // continuations?
+};
+
+message Footer {
+	//Origin origin = 1;
+	repeated Runs runs = 1;
 }
-/*
-message n5F10 {
-	Origin origin = 1;
-}
-*/
 
 message n8F1 { // content?
 	n9F168777401 n9F168777401 = 168777401;
@@ -103,50 +116,90 @@ message n8F1 { // content?
 /*
 message n8F2 { // header?
 	n9F183314536 n9F183314536 = 183314536;
-}
+};
+
 message n8F3 {
-  n8F1 n8F1 = 1;
-  n8F2 n8F2 = 2;
-}
+	n8F1 n8F1 = 1;
+	n8F2 n8F2 = 2;
+};
 
-message Origin {
-	string originText = 1;
-}
+message Origin { // runs
+	string originText = 1; //text
+};
 */
-
 message n9F168777401 {
-  //n10F3 n10F3 = 3;
-  n10F5 n10F5 = 5;
-}
+	//n10F3 n10F3 = 3;
+	n10F5 n10F5 = 5;
+};
 
 /*
 message n9F183314536 {
 	string type = 1;
-}
+};
 
 message n10F3 {
 	n11F172035250 n11F172035250 = 172035250;
-}
+};
 */
 
 message n10F5 {
 	n11F465160965 n11F465160965 = 465160965;
-}
+};
 
 message n11F465160965 {
 	n12F4 n12F4 = 4; // Name
-}
+};
 
 message n12F4 { // Name
 	repeated n13F1 n13F1 = 1; // Runs
 	string originText = 2;
-}
+};
+
 message n13F1 { // Runs
 	string f1 = 1; // text
-}
-message n11F172035250 { string type = 1; }
-
+};
 /*
+message n11F172035250 {
+	string type = 1;
+};
+*/
+message Runs { // Runs
+	string text = 1; // text
+};
+/*
+message FrameworkUpdates {
+	EntityBatchUpdate entityBatchUpdate = 1;
+};
+
+message EntityBatchUpdate {
+	repeated Mutations mutations = 1;
+};
+
+message Mutations {
+	string entityKey = 1;
+	//Type type = 2;
+	Payload payload = 3;
+
+	//enum Type {};
+};
+
+message Payload {
+	MusicForm musicForm = 144;
+	MusicFormBooleanChoice musicFormBooleanChoice = 145;
+};
+
+message MusicForm {
+	string id = 1;
+	repeated string booleanChoiceEntityKeys = 2;
+};
+
+message MusicFormBooleanChoice {
+	string id = 1;
+	string booleanChoiceEntityKey = 2;
+	bool selected = 3;
+	string opaqueToken = 4;
+};
+
 enum serviceType {
 	GFEEDBACK = 2;
 	//CSI = ?; //??

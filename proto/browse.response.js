@@ -9,9 +9,8 @@ import { MessageType } from "@protobuf-ts/runtime";
 class Browse$Type extends MessageType {
     constructor() {
         super("Browse", [
-            { no: 1, name: "context", kind: "message", jsonName: "responseContext", T: () => Context },
-            { no: 9, name: "n1F9", kind: "message", T: () => n1F9 },
-            { no: 10, name: "n1F10", kind: "message", T: () => n1F10 }
+            { no: 9, name: "contents", kind: "message", T: () => Contents },
+            { no: 10, name: "continuationContents", kind: "message", T: () => Contents }
         ]);
     }
 }
@@ -20,83 +19,104 @@ class Browse$Type extends MessageType {
  */
 export const Browse = new Browse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Context$Type extends MessageType {
+class Contents$Type extends MessageType {
     constructor() {
-        super("Context", [
-            { no: 6, name: "serviceTrackingParams", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Context_ServiceTrackingParams }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message Context
- */
-export const Context = new Context$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Context_ServiceTrackingParams$Type extends MessageType {
-    constructor() {
-        super("Context.ServiceTrackingParams", [
-            { no: 2, name: "params", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message Context.ServiceTrackingParams
- */
-export const Context_ServiceTrackingParams = new Context_ServiceTrackingParams$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n1F9$Type extends MessageType {
-    constructor() {
-        super("n1F9", [
-            { no: 49399797, name: "n2F49399797", kind: "message", T: () => n2F49399797 }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message n1F9
- */
-export const n1F9 = new n1F9$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n1F10$Type extends MessageType {
-    constructor() {
-        super("n1F10", [
-            { no: 49399797, name: "n2F49399797", kind: "message", T: () => n2F49399797 }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message n1F10
- */
-export const n1F10 = new n1F10$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n2F49399797$Type extends MessageType {
-    constructor() {
-        super("n2F49399797", [
-            { no: 1, name: "n3F1", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => n3F1 }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message n2F49399797
- */
-export const n2F49399797 = new n2F49399797$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n3F1$Type extends MessageType {
-    constructor() {
-        super("n3F1", [
+        super("Contents", [
+            { no: 49399797, name: "sectionListRenderer", kind: "message", T: () => SectionListRenderer },
             { no: 50195462, name: "n4F50195462", kind: "message", T: () => n4F50195462 },
-            { no: 221496734, name: "m4F221496734", kind: "message", T: () => n4F221496734 }
+            { no: 58173949, name: "singleColumnBrowseResultsRenderer", kind: "message", T: () => SingleColumnBrowseResultsRenderer },
+            { no: 90823135, name: "musicSideAlignedItemRenderer", kind: "message", T: () => MusicSideAlignedItemRenderer },
+            { no: 91303872, name: "gridRenderer", kind: "message", T: () => GridRenderer },
+            { no: 153515154, name: "n6F153515154", kind: "message", T: () => n6F153515154 },
+            { no: 221496734, name: "musicDescriptionShelfRenderer", kind: "message", T: () => MusicDescriptionShelfRenderer }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message n3F1
+ * @generated MessageType for protobuf message Contents
  */
-export const n3F1 = new n3F1$Type();
+export const Contents = new Contents$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SingleColumnBrowseResultsRenderer$Type extends MessageType {
+    constructor() {
+        super("SingleColumnBrowseResultsRenderer", [
+            { no: 1, name: "tabs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Tabs }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message SingleColumnBrowseResultsRenderer
+ */
+export const SingleColumnBrowseResultsRenderer = new SingleColumnBrowseResultsRenderer$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MusicSideAlignedItemRenderer$Type extends MessageType {
+    constructor() {
+        super("MusicSideAlignedItemRenderer", [
+            { no: 1, name: "startItems", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message MusicSideAlignedItemRenderer
+ */
+export const MusicSideAlignedItemRenderer = new MusicSideAlignedItemRenderer$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GridRenderer$Type extends MessageType {
+    constructor() {
+        super("GridRenderer", [
+            { no: 1, name: "items", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message GridRenderer
+ */
+export const GridRenderer = new GridRenderer$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Tabs$Type extends MessageType {
+    constructor() {
+        super("Tabs", [
+            { no: 58174010, name: "tabRenderer", kind: "message", T: () => TabRenderer }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message Tabs
+ */
+export const Tabs = new Tabs$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TabRenderer$Type extends MessageType {
+    constructor() {
+        super("TabRenderer", [
+            { no: 2, name: "title", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "selected", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "content", kind: "message", T: () => Contents },
+            { no: 11, name: "tabIdentifier", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message TabRenderer
+ */
+export const TabRenderer = new TabRenderer$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SectionListRenderer$Type extends MessageType {
+    constructor() {
+        super("SectionListRenderer", [
+            { no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents },
+            { no: 6, name: "header", kind: "message", T: () => Contents }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message SectionListRenderer
+ */
+export const SectionListRenderer = new SectionListRenderer$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class n4F50195462$Type extends MessageType {
     constructor() {
         super("n4F50195462", [
-            { no: 1, name: "n5F1", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => n5F1 }
+            { no: 1, name: "n5F1", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
         ]);
     }
 }
@@ -105,53 +125,30 @@ class n4F50195462$Type extends MessageType {
  */
 export const n4F50195462 = new n4F50195462$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class n4F221496734$Type extends MessageType {
+class MusicDescriptionShelfRenderer$Type extends MessageType {
     constructor() {
-        super("n4F221496734", [
-            { no: 3, name: "n5F3", kind: "message", T: () => n5F3 }
+        super("MusicDescriptionShelfRenderer", [
+            { no: 3, name: "description", kind: "message", T: () => Description },
+            { no: 10, name: "footer", kind: "message", T: () => Footer }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message n4F221496734
+ * @generated MessageType for protobuf message MusicDescriptionShelfRenderer
  */
-export const n4F221496734 = new n4F221496734$Type();
+export const MusicDescriptionShelfRenderer = new MusicDescriptionShelfRenderer$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class n5F1$Type extends MessageType {
+class Description$Type extends MessageType {
     constructor() {
-        super("n5F1", [
-            { no: 153515154, name: "n6F153515154", kind: "message", T: () => n6F153515154 }
+        super("Description", [
+            { no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Runs }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message n5F1
+ * @generated MessageType for protobuf message Description
  */
-export const n5F1 = new n5F1$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n5F3$Type extends MessageType {
-    constructor() {
-        super("n5F3", [
-            { no: 1, name: "n6F1", kind: "message", T: () => n6F1 }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message n5F3
- */
-export const n5F3 = new n5F3$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class n6F1$Type extends MessageType {
-    constructor() {
-        super("n6F1", [
-            { no: 1, name: "staticLyric", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message n6F1
- */
-export const n6F1 = new n6F1$Type();
+export const Description = new Description$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class n6F153515154$Type extends MessageType {
     constructor() {
@@ -176,6 +173,18 @@ class n7F172660663$Type extends MessageType {
  * @generated MessageType for protobuf message n7F172660663
  */
 export const n7F172660663 = new n7F172660663$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Footer$Type extends MessageType {
+    constructor() {
+        super("Footer", [
+            { no: 1, name: "runs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Runs }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message Footer
+ */
+export const Footer = new Footer$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class n8F1$Type extends MessageType {
     constructor() {
@@ -250,14 +259,14 @@ class n13F1$Type extends MessageType {
  */
 export const n13F1 = new n13F1$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class n11F172035250$Type extends MessageType {
+class Runs$Type extends MessageType {
     constructor() {
-        super("n11F172035250", [
-            { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("Runs", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message n11F172035250
+ * @generated MessageType for protobuf message Runs
  */
-export const n11F172035250 = new n11F172035250$Type();
+export const Runs = new Runs$Type();

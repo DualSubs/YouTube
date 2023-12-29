@@ -9,83 +9,29 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface Browse {
     /**
-     * @generated from protobuf field: Context context = 1 [json_name = "responseContext"];
-     */
-    context?: Context;
-    /**
-     * @generated from protobuf field: n1F9 n1F9 = 9;
-     */
-    n1F9?: n1F9;
-    /**
-     * @generated from protobuf field: n1F10 n1F10 = 10;
-     */
-    n1F10?: n1F10;
-}
-/**
- * @generated from protobuf message Context
- */
-export interface Context {
-    /**
-     * @generated from protobuf field: repeated Context.ServiceTrackingParams serviceTrackingParams = 6;
-     */
-    serviceTrackingParams: Context_ServiceTrackingParams[];
-}
-/**
- * @generated from protobuf message Context.ServiceTrackingParams
- */
-export interface Context_ServiceTrackingParams {
-    /**
-     * serviceType service = 1;
+     * Context context = 1 [json_name = "responseContext"];
      *
-     * @generated from protobuf field: map<string, string> params = 2;
+     * @generated from protobuf field: Contents contents = 9;
      */
-    params: {
-        [key: string]: string;
-    };
-}
-/**
- * @generated from protobuf message n1F9
- */
-export interface n1F9 {
+    contents?: Contents;
     /**
-     * m2F58173949 m2F58173949 = 58173949;
-     * n6F153515154 n6F153515154 = 153515154;
-     *
-     * @generated from protobuf field: n2F49399797 n2F49399797 = 49399797;
+     * @generated from protobuf field: Contents continuationContents = 10;
      */
-    n2F49399797?: n2F49399797;
+    continuationContents?: Contents;
 }
 /**
- * @generated from protobuf message n1F10
+ *
+ * message Context {
+ * repeated ServiceTrackingParams serviceTrackingParams = 6;
+ * };
+ *
+ * @generated from protobuf message Contents
  */
-export interface n1F10 {
+export interface Contents {
     /**
-     * @generated from protobuf field: n2F49399797 n2F49399797 = 49399797;
+     * @generated from protobuf field: SectionListRenderer sectionListRenderer = 49399797;
      */
-    n2F49399797?: n2F49399797;
-}
-/**
- *
- * message m2F58173949 { repeated m3F1 m3F1 = 1; }
- * message m3F1 { m4F58174010 m4F58174010 = 58174010; }
- * message m4F58174010 { n1F10 n1F10 = 4; }
- *
- * sectionListRenderer
- *
- * @generated from protobuf message n2F49399797
- */
-export interface n2F49399797 {
-    /**
-     * @generated from protobuf field: repeated n3F1 n3F1 = 1;
-     */
-    n3F1: n3F1[];
-}
-/**
- * contents
- *
- * @generated from protobuf message n3F1
- */
-export interface n3F1 {
+    sectionListRenderer?: SectionListRenderer;
     /**
      * @generated from protobuf field: n4F50195462 n4F50195462 = 50195462;
      */
@@ -93,60 +39,143 @@ export interface n3F1 {
     /**
      * n4F51845067 n4F51845067 = 51845067;
      *
-     * @generated from protobuf field: n4F221496734 m4F221496734 = 221496734;
+     * @generated from protobuf field: SingleColumnBrowseResultsRenderer singleColumnBrowseResultsRenderer = 58173949;
      */
-    m4F221496734?: n4F221496734;
+    singleColumnBrowseResultsRenderer?: SingleColumnBrowseResultsRenderer;
+    /**
+     * @generated from protobuf field: MusicSideAlignedItemRenderer musicSideAlignedItemRenderer = 90823135;
+     */
+    musicSideAlignedItemRenderer?: MusicSideAlignedItemRenderer;
+    /**
+     * @generated from protobuf field: GridRenderer gridRenderer = 91303872;
+     */
+    gridRenderer?: GridRenderer;
+    /**
+     * @generated from protobuf field: n6F153515154 n6F153515154 = 153515154;
+     */
+    n6F153515154?: n6F153515154;
+    /**
+     * n11F172035250 n11F172035250 = 172035250;
+     *
+     * @generated from protobuf field: MusicDescriptionShelfRenderer musicDescriptionShelfRenderer = 221496734;
+     */
+    musicDescriptionShelfRenderer?: MusicDescriptionShelfRenderer;
 }
 /**
- * musicDescriptionShelfRenderer
+ *
+ * message ServiceTrackingParams {
+ * //serviceType service = 1;
+ * map<string, string> params = 2;
+ * };
+ *
+ * @generated from protobuf message SingleColumnBrowseResultsRenderer
+ */
+export interface SingleColumnBrowseResultsRenderer {
+    /**
+     * @generated from protobuf field: repeated Tabs tabs = 1;
+     */
+    tabs: Tabs[];
+}
+/**
+ * @generated from protobuf message MusicSideAlignedItemRenderer
+ */
+export interface MusicSideAlignedItemRenderer {
+    /**
+     * @generated from protobuf field: repeated Contents startItems = 1;
+     */
+    startItems: Contents[];
+}
+/**
+ * @generated from protobuf message GridRenderer
+ */
+export interface GridRenderer {
+    /**
+     * @generated from protobuf field: repeated Contents items = 1;
+     */
+    items: Contents[];
+}
+/**
+ * @generated from protobuf message Tabs
+ */
+export interface Tabs {
+    /**
+     * @generated from protobuf field: TabRenderer tabRenderer = 58174010;
+     */
+    tabRenderer?: TabRenderer;
+}
+/**
+ * @generated from protobuf message TabRenderer
+ */
+export interface TabRenderer {
+    /**
+     * @generated from protobuf field: optional string title = 2;
+     */
+    title?: string;
+    /**
+     * @generated from protobuf field: bool selected = 3;
+     */
+    selected: boolean;
+    /**
+     * @generated from protobuf field: Contents content = 4;
+     */
+    content?: Contents;
+    /**
+     * @generated from protobuf field: optional string tabIdentifier = 11;
+     */
+    tabIdentifier?: string;
+}
+/**
+ * @generated from protobuf message SectionListRenderer
+ */
+export interface SectionListRenderer {
+    /**
+     * @generated from protobuf field: repeated Contents contents = 1;
+     */
+    contents: Contents[];
+    /**
+     * @generated from protobuf field: Contents header = 6;
+     */
+    header?: Contents;
+}
+/**
+ * sectionListRenderer ?? musicDescriptionShelfRenderer
  *
  * @generated from protobuf message n4F50195462
  */
 export interface n4F50195462 {
     /**
-     * @generated from protobuf field: repeated n5F1 n5F1 = 1;
+     * @generated from protobuf field: repeated Contents n5F1 = 1;
      */
-    n5F1: n5F1[];
+    n5F1: Contents[];
 }
 /**
- * @generated from protobuf message n4F221496734
- */
-export interface n4F221496734 {
-    /**
-     * @generated from protobuf field: n5F3 n5F3 = 3;
-     */
-    n5F3?: n5F3;
-}
-/**
- * contents
  *
- * @generated from protobuf message n5F1
- */
-export interface n5F1 {
-    /**
-     * @generated from protobuf field: n6F153515154 n6F153515154 = 153515154;
-     */
-    n6F153515154?: n6F153515154;
-}
-/**
- * @generated from protobuf message n5F3
- */
-export interface n5F3 {
-    /**
-     * @generated from protobuf field: n6F1 n6F1 = 1;
-     */
-    n6F1?: n6F1;
-}
-/**
- * Runs
+ * message n4F51845067 {
+ * n5F5 n5F5 = 5;
+ * };
  *
- * @generated from protobuf message n6F1
+ * @generated from protobuf message MusicDescriptionShelfRenderer
  */
-export interface n6F1 {
+export interface MusicDescriptionShelfRenderer {
     /**
-     * @generated from protobuf field: string staticLyric = 1;
+     * @generated from protobuf field: Description description = 3;
      */
-    staticLyric: string;
+    description?: Description;
+    /**
+     * @generated from protobuf field: Footer footer = 10;
+     */
+    footer?: Footer;
+}
+/**
+ * @generated from protobuf message Description
+ */
+export interface Description {
+    /**
+     * n6F1 n6F1 = 1; // Runs
+     *
+     * @generated from protobuf field: repeated Runs runs = 1;
+     */
+    runs: Runs[];
 }
 /**
  * description?
@@ -169,6 +198,17 @@ export interface n7F172660663 {
     n8F1?: n8F1;
 }
 /**
+ * @generated from protobuf message Footer
+ */
+export interface Footer {
+    /**
+     * Origin origin = 1;
+     *
+     * @generated from protobuf field: repeated Runs runs = 1;
+     */
+    runs: Runs[];
+}
+/**
  * content?
  *
  * @generated from protobuf message n8F1
@@ -180,6 +220,20 @@ export interface n8F1 {
     n9F168777401?: n9F168777401;
 }
 /**
+ *
+ * message n8F2 { // header?
+ * n9F183314536 n9F183314536 = 183314536;
+ * };
+ *
+ * message n8F3 {
+ * n8F1 n8F1 = 1;
+ * n8F2 n8F2 = 2;
+ * };
+ *
+ * message Origin { // runs
+ * string originText = 1; //text
+ * };
+ *
  * @generated from protobuf message n9F168777401
  */
 export interface n9F168777401 {
@@ -235,13 +289,20 @@ export interface n13F1 {
     f1: string;
 }
 /**
- * @generated from protobuf message n11F172035250
+ *
+ * message n11F172035250 {
+ * string type = 1;
+ * };
+ *
+ * Runs
+ *
+ * @generated from protobuf message Runs
  */
-export interface n11F172035250 {
+export interface Runs {
     /**
-     * @generated from protobuf field: string type = 1;
+     * @generated from protobuf field: string text = 1;
      */
-    type: string;
+    text: string;
 }
 declare class Browse$Type extends MessageType<Browse> {
     constructor();
@@ -250,48 +311,55 @@ declare class Browse$Type extends MessageType<Browse> {
  * @generated MessageType for protobuf message Browse
  */
 export declare const Browse: Browse$Type;
-declare class Context$Type extends MessageType<Context> {
+declare class Contents$Type extends MessageType<Contents> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message Context
+ * @generated MessageType for protobuf message Contents
  */
-export declare const Context: Context$Type;
-declare class Context_ServiceTrackingParams$Type extends MessageType<Context_ServiceTrackingParams> {
+export declare const Contents: Contents$Type;
+declare class SingleColumnBrowseResultsRenderer$Type extends MessageType<SingleColumnBrowseResultsRenderer> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message Context.ServiceTrackingParams
+ * @generated MessageType for protobuf message SingleColumnBrowseResultsRenderer
  */
-export declare const Context_ServiceTrackingParams: Context_ServiceTrackingParams$Type;
-declare class n1F9$Type extends MessageType<n1F9> {
+export declare const SingleColumnBrowseResultsRenderer: SingleColumnBrowseResultsRenderer$Type;
+declare class MusicSideAlignedItemRenderer$Type extends MessageType<MusicSideAlignedItemRenderer> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n1F9
+ * @generated MessageType for protobuf message MusicSideAlignedItemRenderer
  */
-export declare const n1F9: n1F9$Type;
-declare class n1F10$Type extends MessageType<n1F10> {
+export declare const MusicSideAlignedItemRenderer: MusicSideAlignedItemRenderer$Type;
+declare class GridRenderer$Type extends MessageType<GridRenderer> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n1F10
+ * @generated MessageType for protobuf message GridRenderer
  */
-export declare const n1F10: n1F10$Type;
-declare class n2F49399797$Type extends MessageType<n2F49399797> {
+export declare const GridRenderer: GridRenderer$Type;
+declare class Tabs$Type extends MessageType<Tabs> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n2F49399797
+ * @generated MessageType for protobuf message Tabs
  */
-export declare const n2F49399797: n2F49399797$Type;
-declare class n3F1$Type extends MessageType<n3F1> {
+export declare const Tabs: Tabs$Type;
+declare class TabRenderer$Type extends MessageType<TabRenderer> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n3F1
+ * @generated MessageType for protobuf message TabRenderer
  */
-export declare const n3F1: n3F1$Type;
+export declare const TabRenderer: TabRenderer$Type;
+declare class SectionListRenderer$Type extends MessageType<SectionListRenderer> {
+    constructor();
+}
+/**
+ * @generated MessageType for protobuf message SectionListRenderer
+ */
+export declare const SectionListRenderer: SectionListRenderer$Type;
 declare class n4F50195462$Type extends MessageType<n4F50195462> {
     constructor();
 }
@@ -299,34 +367,20 @@ declare class n4F50195462$Type extends MessageType<n4F50195462> {
  * @generated MessageType for protobuf message n4F50195462
  */
 export declare const n4F50195462: n4F50195462$Type;
-declare class n4F221496734$Type extends MessageType<n4F221496734> {
+declare class MusicDescriptionShelfRenderer$Type extends MessageType<MusicDescriptionShelfRenderer> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n4F221496734
+ * @generated MessageType for protobuf message MusicDescriptionShelfRenderer
  */
-export declare const n4F221496734: n4F221496734$Type;
-declare class n5F1$Type extends MessageType<n5F1> {
+export declare const MusicDescriptionShelfRenderer: MusicDescriptionShelfRenderer$Type;
+declare class Description$Type extends MessageType<Description> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n5F1
+ * @generated MessageType for protobuf message Description
  */
-export declare const n5F1: n5F1$Type;
-declare class n5F3$Type extends MessageType<n5F3> {
-    constructor();
-}
-/**
- * @generated MessageType for protobuf message n5F3
- */
-export declare const n5F3: n5F3$Type;
-declare class n6F1$Type extends MessageType<n6F1> {
-    constructor();
-}
-/**
- * @generated MessageType for protobuf message n6F1
- */
-export declare const n6F1: n6F1$Type;
+export declare const Description: Description$Type;
 declare class n6F153515154$Type extends MessageType<n6F153515154> {
     constructor();
 }
@@ -341,6 +395,13 @@ declare class n7F172660663$Type extends MessageType<n7F172660663> {
  * @generated MessageType for protobuf message n7F172660663
  */
 export declare const n7F172660663: n7F172660663$Type;
+declare class Footer$Type extends MessageType<Footer> {
+    constructor();
+}
+/**
+ * @generated MessageType for protobuf message Footer
+ */
+export declare const Footer: Footer$Type;
 declare class n8F1$Type extends MessageType<n8F1> {
     constructor();
 }
@@ -383,11 +444,11 @@ declare class n13F1$Type extends MessageType<n13F1> {
  * @generated MessageType for protobuf message n13F1
  */
 export declare const n13F1: n13F1$Type;
-declare class n11F172035250$Type extends MessageType<n11F172035250> {
+declare class Runs$Type extends MessageType<Runs> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message n11F172035250
+ * @generated MessageType for protobuf message Runs
  */
-export declare const n11F172035250: n11F172035250$Type;
+export declare const Runs: Runs$Type;
 export {};
