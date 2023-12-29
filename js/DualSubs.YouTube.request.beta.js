@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.2.0(2) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.0(1) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -79,7 +79,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 			const Type = url?.query?.subtype ?? Settings.Type, Languages = [(url?.query?.lang ?? Settings.Languages[0])?.split?.(/[-_]/)?.[0]?.toUpperCase(), (url?.query?.tlang ?? Caches?.tlang ?? Settings.Languages[1])?.split?.(/[-_]/)?.[0]?.toUpperCase()];
 			$.log(`⚠ ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
-			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
+			let body = {};
 			// 方法判断
 			switch (METHOD) {
 				case "POST":
@@ -121,7 +121,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "text/json":
 						case "application/json":
 							body = JSON.parse($request.body);
-							switch (url.path) {
+							switch (PATH) {
 								case "youtubei/v1/player":
 									// 找功能
 									if (body?.playbackContext) { // 有播放设置
@@ -253,6 +253,77 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				case "GET":
 				case "HEAD":
 				case "OPTIONS":
+					// 主机判断
+					switch (HOST) {
+						case "www.youtube.com":
+						case "m.youtube.com":
+							// 路径判断
+							switch (PATH) {
+								case "api/timedtext":
+									if (!url?.query?.tlang) {
+										$.log(`⚠ ${$.name}, 翻译语言：未指定`, "");
+										// 保存原文语言
+										if (url?.query?.v && url?.query?.lang) {
+											Caches.Playlists.Subtitle.set(url.query.v, url.query.lang);
+											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
+											$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Official"}.Caches.Playlists.Subtitle`);
+										};
+										// 自动翻译字幕
+										switch (Settings.AutoCC) {
+											case true:
+											default:
+												$.log(`⚠ ${$.name}, 自动翻译字幕：开启`, "");
+												if (Caches?.tlang) {
+													if (Caches?.tlang !== url?.query?.lang) url.query.tlang = Caches.tlang;
+												}
+												break;
+											case false:
+												$.log(`⚠ ${$.name}, 自动翻译字幕：关闭`, "");
+												break;
+										};
+									};
+									if (url?.query?.tlang) {
+										$.log(`⚠ ${$.name}, 翻译语言：已指定`, "");
+										// 保存目标语言
+										Caches.tlang = url.query.tlang;
+										$.setdata(Caches.tlang, `@DualSubs.${"YouTube"}.Caches.tlang`);
+										// 字幕类型判断
+										switch (Settings.Type) {
+											case "Official":
+											default:
+												$.log(`⚠ ${$.name}, 官方字幕：自动翻译`, "");
+												if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
+												break;
+											case "Translate":
+												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
+												delete url?.query?.tlang;
+												url.query.subtype = "Translate"; // 翻译字幕
+												/*
+												switch (url?.query?.kind) { // 类型判断
+													case "asr":
+														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
+														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
+														if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
+														break;
+													case "captions":
+													default:
+														$.log(`⚠ ${$.name}, 普通字幕`, "");
+														delete url?.query?.tlang;
+														url.query.subtype = "Translate"; // 翻译字幕
+												};
+												*/
+												break;
+											case "External":
+												$.log(`⚠ ${$.name}, 外挂字幕：URL`, "");
+												delete url?.query?.tlang
+												url.query.subtype = "External"; // 外挂字幕
+												break;
+										};
+									};
+									break;
+							};
+							break;
+					};
 					if ($request?.headers?.Host) $request.headers.Host = url.host;
 					$request.url = URL.stringify(url);
 					$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
@@ -303,7 +374,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				break;
 			};
 			case undefined: { // 无构造回复数据，发送修改的请求数据
-				const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
+				//const FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
 				$.log(`🎉 ${$.name}, finally`, `$request`, `FORMAT: ${FORMAT}`, "");
 				//$.log(`🚧 ${$.name}, finally`, `$request: ${JSON.stringify($request)}`, "");
 				if ($.isQuanX()) {
@@ -494,6 +565,20 @@ function detectFormat(url, body) {
 	return format;
 };
 
+/**
+ * Set Cache
+ * @author VirgilClyne
+ * @param {Map} cache - Playlists Cache / Subtitles Cache
+ * @param {Number} cacheSize - Cache Size
+ * @return {Boolean} isSaved
+ */
+function setCache(cache, cacheSize = 100) {
+	$.log(`☑️ ${$.name}, Set Cache, cacheSize: ${cacheSize}`, "");
+	cache = Array.from(cache || []); // Map转Array
+	cache = cache.slice(-cacheSize); // 限制缓存大小
+	$.log(`✅ ${$.name}, Set Cache`, "");
+	return cache;
+};
 
 /***************** Env *****************/
 // prettier-ignore
