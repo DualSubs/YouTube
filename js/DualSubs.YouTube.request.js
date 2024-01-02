@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.1(1) request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.1(2) request");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -190,7 +190,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												constructor() {
 													super("Player", [
 														{ no: 1, name: "context", kind: "message", T: () => Context },
-														{ no: 2, name: "id", kind: "scalar", jsonName: "videoId", T: 9 /*ScalarType.STRING*/ },
+														{ no: 2, name: "videoId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
 														{ no: 4, name: "playbackContext", kind: "message", T: () => PlaybackContext }
 													]);
 												}
