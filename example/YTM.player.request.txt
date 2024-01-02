@@ -1,0 +1,146 @@
+1 {
+  1 {
+    12: "Apple"
+    13: "iPhone14,3"
+    17: "6.31.2"
+    18: "iOS"
+    19: "17.2.1.21C66"
+    80: "Asia/Shanghai"
+    10: "CN"
+    16: 26
+    21: "zh-CN" hl
+    22: "US" gl
+    25: "12DA99AD-B8C0-4F30-AE71-55BEE5C823E9"
+    30: 5
+    35: 1
+    37: 428
+    38: 926
+    41: 3
+    46: 1
+    55: 428
+    56: 926
+    61: 3
+    62 {
+      1: "CL7ApKwGEMaFrQUQ67qtBRCWyq0FEIirrgUQvbauBRDX7q4FEIuRrwUQpMWvBRDm-K8FEM2BsAUQ4YGwBRCwiLAFELKIsAUQuIqwBRCci7AFENKVsAUQkpawBRCQmLAFEJSasAUQ8pqwBRDBm7AFELadsAUQ-Z-wBRD7n7AFEP2fsAUQpKCwBRCmoLAFEKmgsAUQsqCwBRC2oLAFENygsAUQ_KCwBRCoobAFEI-isAUQk6KwBRD7orAFEL-jsAUQhqSwBRoyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWciMkFPakZveDNJenBIVE1mVDhKYUFxM1dhX3dFYnh5bzE2SndnYkdRWWhFamJWQ3h0WUZnKmRDQU1TUlEwYjRzMnBBcGhCemhQd0tnRDFCdEFTdHdfVkFMa1ItZ0VhblFhYUFSVWl2TUhORE42NUM5djJCbWtIbmgtdHlBYVo3c2tMamp5QUY5czQzN0VGcUFNRzRRN1pSQT09"
+      3: "COjSzawGEhQxMDk5NDYyNzI5NTYxNzYxODA5ORi-wKSsBjIyQU9qRm94MFg0UzFMU2tIWjFDaTRyb1c5elBUQmNwM1F6YWQ0a1o4SHdWN0xWRkFGWWc6MkFPakZveDNJenBIVE1mVDhKYUFxM1dhX3dFYnh5bzE2SndnYkdRWWhFamJWQ3h0WUZnQmRDQU1TUlEwYjRzMnBBcGhCemhQd0tnRDFCdEFTdHdfVkFMa1ItZ0VhblFhYUFSVWl2TUhORE42NUM5djJCbWtIbmgtdHlBYVo3c2tMamp5QUY5czQzN0VGcUFNRzRRN1pSQT09"
+      5: "COjSzawGEhQxMTYwOTY2ODg3NDc0ODkyMzQxMhjo0s2sBiiU5PwSKNuT_RIoxrL9EiiqtP0SKJ6R_hIomq3-EijIyv4SKN3O_hIoqOH-EijC7v4SKJX4_hIoufn-EijF_v4SKMH__hIo6__-EiiDgP8SKMmA_xIoqIL_Eii6gv8SKJuD_xIoxoP_EijIg_8SKMuD_xIohob_Eijnhv8SKMiH_xIyMkFPakZveDBYNFMxTFNrSFoxQ2k0cm9XOXpQVEJjcDNRemFkNGtaOEh3VjdMVkZBRllnOjJBT2pGb3gzSXpwSFRNZlQ4SmFBcTNXYV93RWJ4eW8xNkp3Z2JHUVloRWpiVkN4dFlGZ0I8Q0FNU0tBMEoySV81RmNvQXFEbWtFNlFGN3dnVkVZM2l6UXlMN2dIbHpBNERCZ2FORzdXQUJNeTV5d3M9"
+    }
+    65: 0x40400000
+    67: 480
+    70 {
+      5: 1
+      6: 3
+      7: 30
+      11: 3
+    }
+    76: "UICTContentSizeCategoryM"
+    78: 2
+    95: 5890129
+    97 {
+      1: 1
+      2: 38517923
+    }
+    99 {
+      1: "TWN"
+    }
+    100 {
+      1 {
+        1: 747
+        3: 1
+      }
+    }
+  }
+  3: ""
+  5 {
+    33 {
+      1 {
+        1: 2
+        2 {
+          2 {
+            1: "QPTh9yI9TEYFKYuvlbKPywetD770fMHBzFB"
+            2: 0
+          }
+        }
+        3: 86400
+        5: 1704159587779021
+      }
+    }
+  }
+  6 {
+    2 {
+      1: 405
+      2: 4168
+      4 {
+        1: 1703837978159707
+        2: 0x084c5cd8
+        3: 0xa30a1761
+      }
+      6: "BFa"
+      19 {
+        1: 12
+        2: 3832
+      }
+    }
+  }
+  9 { adSignalsInfo
+    1 {
+      1: "ms"
+      2: "0zFaujAn1yboV0c8x709Kx5zQjhyv9pKLma45FeMsTgLosLYamcLSy7UZ7T5cojJuRgqHgoQqpBIdYyifNXQCPL2tv2-t8eaygXN_wCLYJ1ptXnNjZtS1G2cWO2OS1kC2PMRK4ojPI1Sb39PjvuB613Pk_Fotmo5ugSl81u0ZeUd__W2hKk7oYzaTJSeC3hdFazTMh1OrIA5IQ5DaiDEeTYWl6EKa-Ntm1iw6Pdup_pKTEx5MU6sLTO14oxfY7aqWaBimNzOvVAg27ZJIn5xGxLKoEn16Q_mOXWLplhBIlt0os0AFhZuLwP6iHgXDo-Rd4iiGW9rMrdhVOQ_CpazJg"
+    }
+    6: 4
+    7 {
+      6: 48
+      6: 48
+      6: 48
+      6: 48
+      5: 0x30303030
+      5: 0x30303030
+      5: 0x30303030
+      5: 0x30303030
+      6: 48
+      6: 48
+      6: 48
+      6: 48
+    }
+    8: 4
+    9: 1
+  }
+}
+2: "Dlh-dzB2U4Y"
+4 {
+  1 {
+    4: 1
+    6: 1
+    8: 1
+    9: 1
+    5: 2
+    7: 3
+    11: 0
+    12: "video_format=22&sdkv=i.6.31&output=xml_vast2"
+    29: 0
+    31 {
+      7 {
+        3: 1704159611
+        4: 0
+      }
+    }
+    58: ""
+  }
+  7 {
+    1: ""
+  }
+}
+5: 0
+8: 0
+9: "RDAMVMtX2ncrjdZ3o"
+10: 0
+12: "igYjUVBUaDl5STlURVlGS1l1dmxiS1B5d2V0RDc3MGZNSEJ6RkLKBhA5ODRDNTg0QjA4NkFBNkQy"
+23: "4Z1I7JYBe01LRgjf"
+26 {
+  1: 0
+}
+28 {
+  1: 0
+  2: 0
+  3: 0
+}
