@@ -13,9 +13,9 @@ export interface Browse {
      */
     context?: Context;
     /**
-     * @generated from protobuf field: string id = 2 [json_name = "browseId"];
+     * @generated from protobuf field: string browseId = 2;
      */
-    id: string;
+    browseId: string;
 }
 /**
  * @generated from protobuf message Context

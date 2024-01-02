@@ -13,9 +13,9 @@ export interface Player {
      */
     context?: Context;
     /**
-     * @generated from protobuf field: string id = 2 [json_name = "videoId"];
+     * @generated from protobuf field: string videoId = 2;
      */
-    id: string;
+    videoId: string;
     /**
      * optional int32 startTimeSecs = 3;
      *

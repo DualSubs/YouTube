@@ -4,8 +4,8 @@ syntax = "proto3";
 
 // https://youtubei.googleapis.com/youtubei/v1/browse
 message Browse {
-  Context context = 1 [ json_name = "context" ];
-  string id = 2 [ json_name = "browseId" ];
+  Context context = 1;
+  string browseId = 2;
 };
 
 message Context {

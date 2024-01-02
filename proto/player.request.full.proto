@@ -4,28 +4,27 @@ syntax = "proto3";
 
 // https://youtubei.googleapis.com/youtubei/v1/player
 message Player {
-	Context context = 1 [json_name = "context"];
-	//Context context = 1 [json_name = "responseContext"];
+	Context context = 1;
 	string videoId = 2;
 	//optional int32 startTimeSecs = 3;
 	PlaybackContext playbackContext = 4;
-    //Captions captions = 10 [json_name = "captions"];
+    //Captions captions = 10;
 
 	message Context {
-		Client client = 1 [json_name = "client"];
+		Client client = 1;
 
 		message Client {
-			string hl = 1 [json_name = "hl"];
-			string gl = 2 [json_name = "gl"];
-			string deviceMake = 12 [json_name = "deviceMake"];
-			string deviceModel = 13 [json_name = "deviceModel"];
-			//string visitorData = 14 [json_name = "visitorData"];
-			//string userAgent = 15 [json_name = "userAgent"];
-			//string clientName = 16 [json_name = "clientName"];
-			string clientVersion = 17 [json_name = "clientVersion"];
-			//string browserVersion = 17 [json_name = "browserVersion"];
-			string osName = 18 [json_name = "osName"];
-			string osVersion = 19 [json_name = "osVersion"];
+			string hl = 1;
+			string gl = 2;
+			string deviceMake = 12;
+			string deviceModel = 13;
+			//string visitorData = 14;
+			//string userAgent = 15;
+			//string clientName = 16;
+			string clientVersion = 17;
+			//string browserVersion = 17;
+			string osName = 18;
+			string osVersion = 19;
 			//int32 screenWidthPoints = 37; //??
 			//int32 screenHeightPoints = 38; //??
 			//optional int32 screenPixelDensity = 41 //??
@@ -35,7 +34,7 @@ message Player {
 			//optional int32 screenDensityFloat = 65; //??
 			//optional int32 utcOffsetMinutes = 63;
 			//userInterfaceThemType userInterfaceTheme = 78; //??
-			string timeZone = 80 [json_name = "timeZone"];
+			string timeZone = 80;
 		};
 	};
 

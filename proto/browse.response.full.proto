@@ -4,7 +4,7 @@ option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/browse
 message Browse {
-	Context context = 1 [json_name = "responseContext"];
+	Context responseContext = 1;
 	Contents contents = 9;
 	Contents continuationContents = 10;
 	FrameworkUpdates frameworkUpdates = 777;
