@@ -3,7 +3,7 @@
 // tslint:disable
 import { MessageType } from "@protobuf-ts/runtime";
 /**
- * https://youtubei.googleapis.com/youtubei/v1/player
+ * https://youtubei.googleapis.com/youtubei/v1/browse
  *
  * @generated from protobuf message Browse
  */
