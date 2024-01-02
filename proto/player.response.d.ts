@@ -9,10 +9,11 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface Player {
     /**
-     * Context context = 1 [json_name = "context"];
      * Context context = 1 [json_name = "responseContext"];
      * PlaybackTracking playbackTracking = 9;
      * StreamingData streamingData = 4;
+     * PlaybackTracking playbackTracking = 9;
+     * HeartbeatParams heartbeatParams = 6;
      *
      * @generated from protobuf field: Captions captions = 10;
      */

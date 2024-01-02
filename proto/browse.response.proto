@@ -12,6 +12,7 @@ message Browse {
 /*
 message Context {
 	repeated ServiceTrackingParams serviceTrackingParams = 6;
+	int32 maxAgeSeconds = 7;
 };
 */
 message Contents {
@@ -205,6 +206,7 @@ enum serviceType {
 	//CSI = ?; //??
 	//??? = 3; //??
 	GUIDED_HELP = 4;
+	//CSI = 5; //??
 	ECATCHER = 6;
 	//??? = 7; //??
 };

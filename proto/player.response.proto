@@ -4,10 +4,11 @@ option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/player
 message Player {
-	//Context context = 1 [json_name = "context"];
 	//Context context = 1 [json_name = "responseContext"];
 	//PlaybackTracking playbackTracking = 9;
 	//StreamingData streamingData = 4;
+	//PlaybackTracking playbackTracking = 9;
+	//HeartbeatParams heartbeatParams = 6;
 	Captions captions = 10;
 	//VideoDetails videoDetails = 11;
 	//repeated Annotations annotations = 13;
@@ -26,8 +27,6 @@ message PlayerCaptionsTracklistRenderer {
 	repeated TranslationLanguages translationLanguages = 3;
 	optional int32 defaultAudioTrackIndex = 4;
 	optional int32 defaultCaptionTrackIndex = 6;
-
-
 };
 
 message CaptionTracks {
@@ -54,7 +53,7 @@ message AudioTracks {
 message TranslationLanguages {
 	string languageCode = 1;
 	Name languageName = 2;
-	//??? ??? = 3 [json_name = "???"];
+	//??? ??? = 3;
 };
 
 message Name {
@@ -74,13 +73,13 @@ enum AudioQuality {
 	AUDIO_QUALITY_MEDIUM = 20;
 };
 
-enum visibilityType {
+enum VisibilityType {
 	UNKNOWN = 0;
 	OFF = 1;
 	ON = 2;
 };
 
-enum captionsInitialStateType {
+enum CaptionsInitialStateType {
 	CAPTIONS_INITIAL_STATE_UNKNOWN = 0;
 	CAPTIONS_INITIAL_STATE_ON_REQUIRED = 1;
 	CAPTIONS_INITIAL_STATE_OFF_REQUIRED = 2;
