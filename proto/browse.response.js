@@ -9,8 +9,8 @@ import { MessageType } from "@protobuf-ts/runtime";
 class Browse$Type extends MessageType {
     constructor() {
         super("Browse", [
-            { no: 9, name: "contents", kind: "message", T: () => Contents },
-            { no: 10, name: "continuationContents", kind: "message", T: () => Contents }
+            { no: 9, name: "contents", kind: "message", T: () => Renderers },
+            { no: 10, name: "continuationContents", kind: "message", T: () => Renderers }
         ]);
     }
 }
@@ -19,9 +19,9 @@ class Browse$Type extends MessageType {
  */
 export const Browse = new Browse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Contents$Type extends MessageType {
+class Renderers$Type extends MessageType {
     constructor() {
-        super("Contents", [
+        super("Renderers", [
             { no: 49399797, name: "sectionListRenderer", kind: "message", T: () => SectionListRenderer },
             { no: 50195462, name: "n4F50195462", kind: "message", T: () => n4F50195462 },
             { no: 58173949, name: "singleColumnBrowseResultsRenderer", kind: "message", T: () => SingleColumnBrowseResultsRenderer },
@@ -33,9 +33,9 @@ class Contents$Type extends MessageType {
     }
 }
 /**
- * @generated MessageType for protobuf message Contents
+ * @generated MessageType for protobuf message Renderers
  */
-export const Contents = new Contents$Type();
+export const Renderers = new Renderers$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SingleColumnBrowseResultsRenderer$Type extends MessageType {
     constructor() {
@@ -52,7 +52,7 @@ export const SingleColumnBrowseResultsRenderer = new SingleColumnBrowseResultsRe
 class MusicSideAlignedItemRenderer$Type extends MessageType {
     constructor() {
         super("MusicSideAlignedItemRenderer", [
-            { no: 1, name: "startItems", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+            { no: 1, name: "startItems", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Renderers }
         ]);
     }
 }
@@ -64,7 +64,7 @@ export const MusicSideAlignedItemRenderer = new MusicSideAlignedItemRenderer$Typ
 class GridRenderer$Type extends MessageType {
     constructor() {
         super("GridRenderer", [
-            { no: 1, name: "items", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+            { no: 1, name: "items", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Renderers }
         ]);
     }
 }
@@ -90,7 +90,7 @@ class TabRenderer$Type extends MessageType {
         super("TabRenderer", [
             { no: 2, name: "title", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "selected", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "content", kind: "message", T: () => Contents },
+            { no: 4, name: "content", kind: "message", T: () => Renderers },
             { no: 11, name: "tabIdentifier", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -103,8 +103,8 @@ export const TabRenderer = new TabRenderer$Type();
 class SectionListRenderer$Type extends MessageType {
     constructor() {
         super("SectionListRenderer", [
-            { no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents },
-            { no: 6, name: "header", kind: "message", T: () => Contents }
+            { no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Renderers },
+            { no: 6, name: "header", kind: "message", T: () => Renderers }
         ]);
     }
 }
@@ -116,7 +116,7 @@ export const SectionListRenderer = new SectionListRenderer$Type();
 class n4F50195462$Type extends MessageType {
     constructor() {
         super("n4F50195462", [
-            { no: 1, name: "n5F1", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+            { no: 1, name: "n5F1", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Renderers }
         ]);
     }
 }

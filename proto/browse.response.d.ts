@@ -9,25 +9,26 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface Browse {
     /**
-     * Context context = 1 [json_name = "responseContext"];
+     * Context responseContext = 1;
      *
-     * @generated from protobuf field: Contents contents = 9;
+     * @generated from protobuf field: Renderers contents = 9;
      */
-    contents?: Contents;
+    contents?: Renderers;
     /**
-     * @generated from protobuf field: Contents continuationContents = 10;
+     * @generated from protobuf field: Renderers continuationContents = 10;
      */
-    continuationContents?: Contents;
+    continuationContents?: Renderers;
 }
 /**
  *
  * message Context {
  * repeated ServiceTrackingParams serviceTrackingParams = 6;
+ * int32 maxAgeSeconds = 7;
  * };
  *
- * @generated from protobuf message Contents
+ * @generated from protobuf message Renderers
  */
-export interface Contents {
+export interface Renderers {
     /**
      * @generated from protobuf field: SectionListRenderer sectionListRenderer = 49399797;
      */
@@ -37,6 +38,7 @@ export interface Contents {
      */
     n4F50195462?: n4F50195462;
     /**
+     * n6F51431404 n6F51431404 = 51431404;
      * n4F51845067 n4F51845067 = 51845067;
      *
      * @generated from protobuf field: SingleColumnBrowseResultsRenderer singleColumnBrowseResultsRenderer = 58173949;
@@ -56,6 +58,7 @@ export interface Contents {
     n6F153515154?: n6F153515154;
     /**
      * n11F172035250 n11F172035250 = 172035250;
+     * n7F172660663 n7F172660663 = 172660663;
      *
      * @generated from protobuf field: MusicDescriptionShelfRenderer musicDescriptionShelfRenderer = 221496734;
      */
@@ -81,18 +84,18 @@ export interface SingleColumnBrowseResultsRenderer {
  */
 export interface MusicSideAlignedItemRenderer {
     /**
-     * @generated from protobuf field: repeated Contents startItems = 1;
+     * @generated from protobuf field: repeated Renderers startItems = 1;
      */
-    startItems: Contents[];
+    startItems: Renderers[];
 }
 /**
  * @generated from protobuf message GridRenderer
  */
 export interface GridRenderer {
     /**
-     * @generated from protobuf field: repeated Contents items = 1;
+     * @generated from protobuf field: repeated Renderers items = 1;
      */
-    items: Contents[];
+    items: Renderers[];
 }
 /**
  * @generated from protobuf message Tabs
@@ -116,9 +119,9 @@ export interface TabRenderer {
      */
     selected: boolean;
     /**
-     * @generated from protobuf field: Contents content = 4;
+     * @generated from protobuf field: Renderers content = 4;
      */
-    content?: Contents;
+    content?: Renderers;
     /**
      * @generated from protobuf field: optional string tabIdentifier = 11;
      */
@@ -129,13 +132,13 @@ export interface TabRenderer {
  */
 export interface SectionListRenderer {
     /**
-     * @generated from protobuf field: repeated Contents contents = 1;
+     * @generated from protobuf field: repeated Renderers contents = 1;
      */
-    contents: Contents[];
+    contents: Renderers[];
     /**
-     * @generated from protobuf field: Contents header = 6;
+     * @generated from protobuf field: Renderers header = 6;
      */
-    header?: Contents;
+    header?: Renderers;
 }
 /**
  * sectionListRenderer ?? musicDescriptionShelfRenderer
@@ -144,14 +147,18 @@ export interface SectionListRenderer {
  */
 export interface n4F50195462 {
     /**
-     * @generated from protobuf field: repeated Contents n5F1 = 1;
+     * @generated from protobuf field: repeated Renderers n5F1 = 1;
      */
-    n5F1: Contents[];
+    n5F1: Renderers[];
 }
 /**
  *
  * message n4F51845067 {
- * n5F5 n5F5 = 5;
+ * Renderers n5F5 = 5;
+ * };
+ *
+ * message n6F51431404 {
+ * repeated Renderers n5F1 = 1;
  * };
  *
  * @generated from protobuf message MusicDescriptionShelfRenderer
@@ -311,13 +318,13 @@ declare class Browse$Type extends MessageType<Browse> {
  * @generated MessageType for protobuf message Browse
  */
 export declare const Browse: Browse$Type;
-declare class Contents$Type extends MessageType<Contents> {
+declare class Renderers$Type extends MessageType<Renderers> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message Contents
+ * @generated MessageType for protobuf message Renderers
  */
-export declare const Contents: Contents$Type;
+export declare const Renderers: Renderers$Type;
 declare class SingleColumnBrowseResultsRenderer$Type extends MessageType<SingleColumnBrowseResultsRenderer> {
     constructor();
 }

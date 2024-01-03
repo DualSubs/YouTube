@@ -5,8 +5,8 @@ option optimize_for = CODE_SIZE;
 // https://youtubei.googleapis.com/youtubei/v1/browse
 message Browse {
 	//Context responseContext = 1;
-	Contents contents = 9;
-	Contents continuationContents = 10;
+	Renderers contents = 9;
+	Renderers continuationContents = 10;
 	//FrameworkUpdates frameworkUpdates = 777;
 };
 /*
@@ -15,15 +15,17 @@ message Context {
 	int32 maxAgeSeconds = 7;
 };
 */
-message Contents {
+message Renderers {
 	SectionListRenderer sectionListRenderer = 49399797; // ??Renderer ?? sectionListRenderer
 	n4F50195462 n4F50195462 = 50195462; // sectionListRenderer ?? musicDescriptionShelfRenderer
+	//n6F51431404 n6F51431404 = 51431404;
 	//n4F51845067 n4F51845067 = 51845067;
 	SingleColumnBrowseResultsRenderer singleColumnBrowseResultsRenderer = 58173949;
 	MusicSideAlignedItemRenderer musicSideAlignedItemRenderer = 90823135;
 	GridRenderer gridRenderer = 91303872;
 	n6F153515154 n6F153515154 = 153515154;
 	//n11F172035250 n11F172035250 = 172035250;
+	//n7F172660663 n7F172660663 = 172660663;
 	MusicDescriptionShelfRenderer musicDescriptionShelfRenderer = 221496734;
 };
 /*
@@ -37,11 +39,11 @@ message SingleColumnBrowseResultsRenderer {
 };
 
 message MusicSideAlignedItemRenderer {
-	repeated Contents startItems = 1;
+	repeated Renderers startItems = 1;
 };
 
 message GridRenderer {
-	repeated Contents items = 1;
+	repeated Renderers items = 1;
 };
 
 message Tabs {
@@ -51,21 +53,25 @@ message Tabs {
 message TabRenderer {
 	optional string title = 2;
 	bool selected = 3;
-	Contents content = 4;
+	Renderers content = 4;
 	optional string tabIdentifier = 11;
 };
 
 message SectionListRenderer {
-	repeated Contents contents = 1;
-	Contents header = 6;
+	repeated Renderers contents = 1;
+	Renderers header = 6;
 };
 
 message n4F50195462 { // sectionListRenderer ?? musicDescriptionShelfRenderer
-	repeated Contents n5F1 = 1; // contents ?? description
+	repeated Renderers n5F1 = 1; // contents ?? description
 };
 /*
 message n4F51845067 {
-	n5F5 n5F5 = 5;
+	Renderers n5F5 = 5;
+};
+
+message n6F51431404 {
+	repeated Renderers n5F1 = 1;
 };
 */
 message MusicDescriptionShelfRenderer {
@@ -200,10 +206,8 @@ message MusicFormBooleanChoice {
 	bool selected = 3;
 	string opaqueToken = 4;
 };
-
 enum serviceType {
 	GFEEDBACK = 2;
-	//CSI = ?; //??
 	//??? = 3; //??
 	GUIDED_HELP = 4;
 	//CSI = 5; //??
