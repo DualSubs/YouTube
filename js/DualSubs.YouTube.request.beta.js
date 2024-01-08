@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(1) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(2) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -138,7 +138,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									};
 									break;
 								case "youtubei/v1/browse":
-									if (body?.browseId?.startsWith?.("MPLYt_")) url.query.subtype = "Translate";
+									if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(url, "query.subtype" , "Translate");
 									break;
 								};
 							$request.body = JSON.stringify(body);
@@ -150,7 +150,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
 							//$.log(`🚧 ${$.name}`, `$request.body: ${JSON.stringify($request.body)}`, "");
-							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes) : $request?.body ?? new Uint8Array();
+							let rawBody = $.isQuanX() ? new Uint8Array($request?.bodyBytes ?? []) : $request?.body ?? new Uint8Array();
 							//$.log(`🚧 ${$.name}`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							/******************  initialization start  *******************/
 							// timostamm/protobuf-ts 2.9.0
@@ -201,72 +201,72 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									/******************  initialization finish  *******************/
 									switch (PATH) {
 										case "youtubei/v1/player":
-										/******************  initialization start  *******************/
-										// proto/player.request.js
-										class Player$Type extends MessageType {
-											constructor() {
-												super("Player", [
-													{ no: 1, name: "context", kind: "message", T: () => Context },
-													{ no: 2, name: "videoId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-													{ no: 4, name: "playbackContext", kind: "message", T: () => PlaybackContext }
-												]);
+											/******************  initialization start  *******************/
+											// proto/player.request.js
+											class Player$Type extends MessageType {
+												constructor() {
+													super("Player", [
+														{ no: 1, name: "context", kind: "message", T: () => Context },
+														{ no: 2, name: "videoId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+														{ no: 4, name: "playbackContext", kind: "message", T: () => PlaybackContext }
+													]);
+												}
 											}
-										}
-										const Player = new Player$Type();
-										class PlaybackContext$Type extends MessageType {
-											constructor() {
-												super("PlaybackContext", [
-													{ no: 1, name: "contentPlaybackContext", kind: "message", T: () => ContentPlaybackContext }
-												]);
+											const Player = new Player$Type();
+											class PlaybackContext$Type extends MessageType {
+												constructor() {
+													super("PlaybackContext", [
+														{ no: 1, name: "contentPlaybackContext", kind: "message", T: () => ContentPlaybackContext }
+													]);
+												}
 											}
-										}
-										const PlaybackContext = new PlaybackContext$Type();
-										class ContentPlaybackContext$Type extends MessageType {
-											constructor() {
-												super("ContentPlaybackContext", [
-													{ no: 4, name: "id4", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
-													{ no: 6, name: "id6", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
-													{ no: 8, name: "id8", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
-													{ no: 9, name: "id9", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
-												]);
+											const PlaybackContext = new PlaybackContext$Type();
+											class ContentPlaybackContext$Type extends MessageType {
+												constructor() {
+													super("ContentPlaybackContext", [
+														{ no: 4, name: "id4", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+														{ no: 6, name: "id6", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+														{ no: 8, name: "id8", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+														{ no: 9, name: "id9", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ }
+													]);
+												}
 											}
-										}
-										const ContentPlaybackContext = new ContentPlaybackContext$Type();
-										/******************  initialization finish  *******************/
-										body = Player.fromBinary(rawBody);
-										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
-										// 找功能
-										if (body?.playbackContext) { // 有播放设置
-											$.log(`⚠ ${$.name}, playbackContext`, "");
-											if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
-												//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
-												body.playbackContext.contentPlaybackContext.id4 = 1; // 
-												body.playbackContext.contentPlaybackContext.id6 = 1; // 
-												body.playbackContext.contentPlaybackContext.id8 = 1; // 
-												body.playbackContext.contentPlaybackContext.id9 = 1; // 
+											const ContentPlaybackContext = new ContentPlaybackContext$Type();
+											/******************  initialization finish  *******************/
+											body = Player.fromBinary(rawBody);
+											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+											// 找功能
+											if (body?.playbackContext) { // 有播放设置
+												$.log(`⚠ ${$.name}, playbackContext`, "");
+												if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
+													//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+													body.playbackContext.contentPlaybackContext.id4 = 1; // 
+													body.playbackContext.contentPlaybackContext.id6 = 1; // 
+													body.playbackContext.contentPlaybackContext.id8 = 1; // 
+													body.playbackContext.contentPlaybackContext.id9 = 1; // 
+												};
 											};
-										};
-										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
-										rawBody = Player.toBinary(body);
-										break;
-									case "youtubei/v1/browse":
-										/******************  initialization start  *******************/
-										// proto/browse.request.js
-										class Browse$Type extends MessageType {
-											constructor() {
-												super("Browse", [
-													{ no: 1, name: "context", kind: "message", T: () => Context },
-													{ no: 2, name: "browseId", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
-												]);
-											}
-										};
-										const Browse = new Browse$Type();
-										/******************  initialization finish  *******************/
-										body = Browse.fromBinary(rawBody);
-										$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
-										if (body?.browseId?.startsWith?.("MPLYt_")) url.query.subtype = "Translate";
-										rawBody = Browse.toBinary(body);
-										break;
+											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+											rawBody = Player.toBinary(body);
+											break;
+										case "youtubei/v1/browse":
+											/******************  initialization start  *******************/
+											// proto/browse.request.js
+											class Browse$Type extends MessageType {
+												constructor() {
+													super("Browse", [
+														{ no: 1, name: "context", kind: "message", T: () => Context },
+														{ no: 2, name: "browseId", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+													]);
+												}
+											};
+											const Browse = new Browse$Type();
+											/******************  initialization finish  *******************/
+											body = Browse.fromBinary(rawBody);
+											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+											if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(url, "query.subtype", "Translate");
+											rawBody = Browse.toBinary(body);
+											break;
 									};
 									break;
 								case "application/grpc":
@@ -478,11 +478,12 @@ function setENV(name, platforms, database) {
 		Settings.AutoCC = $persistentStore.read("自动显示翻译字幕") ?? Settings.AutoCC;
 		switch (Settings.AutoCC) {
 			case "是":
-			default:
 				Settings.AutoCC = true;
 				break;
 			case "否":
 				Settings.AutoCC = false;
+				break;
+			default:
 				break;
 		};
 		Settings.ShowOnly = $persistentStore.read("仅输出译文") ?? Settings.ShowOnly;
