@@ -24,7 +24,7 @@ http:
       require-body: true
       argument:
     - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player
-      name: DualSubs.YouTube.Player.response
+      name: DualSubs.YouTube.response
       type: response
       require-body: true
       argument:
@@ -35,7 +35,7 @@ http:
       binary-mode: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player
-      name: DualSubs.YouTube.Player.response
+      name: DualSubs.YouTube.response
       type: response
       require-body: true
       binary-mode: true
@@ -83,8 +83,8 @@ script-providers:
   DualSubs.YouTube.request:
     url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
     interval: 86400
-  DualSubs.YouTube.Player.response:
-    url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.Player.response.js
+  DualSubs.YouTube.response:
+    url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js
     interval: 86400
   DualSubs.YouTube.TimedText.Composite.response:
     url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
