@@ -2,11 +2,11 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.1(3) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(1) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
-		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":50}
+		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":20}
 	},
 	"Universal":{
 		"Settings":{"Switch":true,"Types":["Official","Translate"],"Languages":["EN","ZH"]},
@@ -15,7 +15,7 @@ const DataBase = {
 		}
 	},
 	"YouTube": {
-		"Settings":{"Switch":true,"Type":"Official","Languages":["AUTO","AUTO"],"AutoCC":true,"ShowOnly":false},
+		"Settings":{"Switch":true,"Type":"Official","Types":["Translate","External"],"Languages":["AUTO","AUTO"],"AutoCC":true,"ShowOnly":false},
 		"Configs":{
 			"Languages":{"BG":"bg-BG","CS":"cs","DA":"da-DK","DE":"de","EL":"el","EN":"en","EN-GB":"en-GB","EN-US":"en-US","EN-US SDH":"en-US SDH","ES":"es","ES-419":"es-419","ES-ES":"es-ES","ET":"et-EE","FI":"fi","FR":"fr","HU":"hu-HU","ID":"id","IS":"is-IS","IT":"it","JA":"ja","KO":"ko","LT":"lt-LT","LV":"lv-LV","NL":"nl-NL","NO":"nb-NO","PL":"pl-PL","PT":"pt","PT-PT":"pt-PT","PT-BR":"pt-BR","RO":"ro-RO","RU":"ru-RU","SK":"sk-SK","SL":"sl-SI","SV":"sv-SE","YUE":"yue","YUE-HK":"yue-HK","ZH":"zh","ZH-HANS":"zh-Hans","ZH-HK":"zh-Hant-HK","ZH-HANT":"zh-Hant","ZH-TW":"zh-TW"},
 			"translationLanguages":{
@@ -25,13 +25,16 @@ const DataBase = {
 		}
 	},
 	"Netflix":{
-		"Settings":{"Switch":true,"Type":"Translate","Languages":["EN","ZH"]},
+		"Settings":{"Switch":true,"Type":"Translate","Languages":["AUTO","ZH"]},
 		"Configs":{
 			"Languages":{"AR":"ar","CS":"cs","DA":"da","DE":"de","EN":"en","EN-GB":"en-GB","EN-US":"en-US","EN-US SDH":"en-US SDH","ES":"es","ES-419":"es-419","ES-ES":"es-ES","FI":"fi","FR":"fr","HE":"he","HR":"hr","HU":"hu","ID":"id","IT":"it","JA":"ja","KO":"ko","MS":"ms","NB":"nb","NL":"nl","PL":"pl","PT":"pt","PT-PT":"pt-PT","PT-BR":"pt-BR","RO":"ro","RU":"ru","SV":"sv","TH":"th","TR":"tr","UK":"uk","VI":"vi","IS":"is","ZH":"zh","ZH-HANS":"zh-Hans","ZH-HK":"zh-HK","ZH-HANT":"zh-Hant"}
 		}
 	},
-	"Official":{
-		"Settings":{"CacheSize":50,"Position":"Reverse","Offset":0,"Tolerance":1000}
+	"Spotify":{
+		"Settings":{"Switch":true,"Types":["Translate","External"],"Languages":["AUTO","ZH"]}
+	},
+	"Composite":{
+		"Settings":{"CacheSize":20,"Position":"Reverse","Offset":0,"Tolerance":1000}
 	},
 	"Translate":{
 		"Settings":{"Vendor":"Google","ShowOnly":false,"Position":"Forward","CacheSize":10,"Method":"Part","Times":3,"Interval":500,"Exponential":true},
@@ -44,10 +47,13 @@ const DataBase = {
 		}
 	},
 	"External":{
-		"Settings":{"URL":undefined,"ShowOnly":false,"Position":"Forward","Offset":0,"Tolerance":1000}
+		"Settings":{"SubVendor":"URL","LrcVendor":"NeteaseMusicNodeJS","CacheSize":50}
 	},
 	"API":{
-		"Settings":{"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Microsoft":{"Version":"Azure","Mode":"Token","Region":undefined,"Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined},"DeepLX":{"Endpoint":undefined,"Auth":undefined}}
+		"Settings":{
+			"GoogleCloud":{"Version":"v2","Mode":"Key","Auth":undefined},"Microsoft":{"Version":"Azure","Mode":"Token","Region":undefined,"Auth":undefined},"DeepL":{"Version":"Free","Auth":undefined},"DeepLX":{"Endpoint":undefined,"Auth":undefined},
+			"URL":undefined,"NeteaseMusic":{"PhoneNumber":undefined,"Password":undefined}
+		}
 	}
 };
 
@@ -70,7 +76,7 @@ if (FORMAT === "application/octet-stream" || FORMAT === "text/plain") FORMAT = d
 $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 (async () => {
 	// 读取设置
-	const { Settings, Caches, Configs } = setENV("DualSubs", [(["YouTube", "Netflix", "BiliBili"].includes(PLATFORM)) ? PLATFORM : "Universal", url?.query?.subtype], DataBase);
+	const { Settings, Caches, Configs } = setENV("DualSubs", [(["YouTube", "Netflix", "BiliBili", "Spotify"].includes(PLATFORM)) ? PLATFORM : "Universal"], DataBase);
 	$.log(`⚠ ${$.name}`, `Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
@@ -120,7 +126,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							break;
 						case "text/json":
 						case "application/json":
-							body = JSON.parse($request.body);
+							body = JSON.parse($request?.body ?? "{}");
 							switch (PATH) {
 								case "youtubei/v1/player":
 									// 找功能
@@ -144,7 +150,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
 							//$.log(`🚧 ${$.name}`, `$request.body: ${JSON.stringify($request.body)}`, "");
-							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes) : $request.body;
+							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes) : $request?.body ?? new Uint8Array();
 							//$.log(`🚧 ${$.name}`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							/******************  initialization start  *******************/
 							// timostamm/protobuf-ts 2.9.0
@@ -289,7 +295,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										if (url?.query?.v && url?.query?.lang) {
 											Caches.Playlists.Subtitle.set(url.query.v, url.query.lang);
 											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
-											$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Official"}.Caches.Playlists.Subtitle`);
+											$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`);
 										};
 										// 自动翻译字幕
 										switch (Settings.AutoCC) {
@@ -312,9 +318,10 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										$.setdata(Caches.tlang, `@DualSubs.${"YouTube"}.Caches.tlang`);
 										// 字幕类型判断
 										switch (Settings.Type) {
+											case "Composite":
 											case "Official":
 											default:
-												$.log(`⚠ ${$.name}, 官方字幕：自动翻译`, "");
+												$.log(`⚠ ${$.name}, 官方字幕：合成器`, "");
 												if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
 												break;
 											case "Translate":
@@ -337,7 +344,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												*/
 												break;
 											case "External":
-												$.log(`⚠ ${$.name}, 外挂字幕：URL`, "");
+												$.log(`⚠ ${$.name}, 外部字幕：外部源`, "");
 												delete url?.query?.tlang
 												url.query.subtype = "External"; // 外挂字幕
 												break;
@@ -347,14 +354,14 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							};
 							break;
 					};
-					if ($request?.headers?.Host) $request.headers.Host = url.host;
-					$request.url = URL.stringify(url);
-					$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 					break;
 				case "CONNECT":
 				case "TRACE":
 					break;
 			};
+			if ($request?.headers?.Host) $request.headers.Host = url.host;
+			$request.url = URL.stringify(url);
+			$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 			break;
 		case false:
 			break;
@@ -508,6 +515,8 @@ function setENV(name, platforms, database) {
 	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
 	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
 	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
+	if (typeof Caches.Metadatas !== "object" || Array.isArray(Caches.Metadatas)) Caches.Metadatas = {}; // 创建Playlists缓存
+	if (typeof Caches?.Metadatas?.Tracks !== "object") Caches.Metadatas.Tracks = new Map(JSON.parse(Caches?.Metadatas?.Tracks || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
 };
