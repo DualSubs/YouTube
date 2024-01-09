@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.0.1(1) response.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.0.1(2) response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -165,7 +165,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				case "application/grpc+proto":
 				case "applecation/octet-stream":
 					//$.log(`🚧 ${$.name}`, `$response.body: ${JSON.stringify($response.body)}`, "");
-					let rawBody = $.isQuanX() ? new Uint8Array($response.bodyBytes) : $response?.body ?? new Uint8Array();
+					let rawBody = $.isQuanX() ? new Uint8Array($response?.bodyBytes ?? []) : $response?.body ?? new Uint8Array();
 					//$.log(`🚧 ${$.name}`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 					/******************  initialization start  *******************/
 					// timostamm/protobuf-ts 2.9.0
