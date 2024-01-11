@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(3) request");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(4) request");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -252,7 +252,10 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											const Browse = new Browse$Type();
 											/******************  initialization finish  *******************/
 											body = Browse.fromBinary(rawBody);
-											if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(url, "query.subtype", "Translate");
+											if (body?.browseId?.startsWith?.("MPLYt_")) {
+												if (Settings.Types.includes("Translate")) $.lodash_set(url, "query.subtype", "Translate");
+												else if (Settings.Types.includes("External")) $.lodash_set(url, "query.subtype", "External");
+											};
 											rawBody = Browse.toBinary(body);
 											break;
 									};

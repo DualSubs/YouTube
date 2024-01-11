@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(3) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(4) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -234,7 +234,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											const ContentPlaybackContext = new ContentPlaybackContext$Type();
 											/******************  initialization finish  *******************/
 											body = Player.fromBinary(rawBody);
-											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											// 找功能
 											if (body?.playbackContext) { // 有播放设置
 												$.log(`⚠ ${$.name}, playbackContext`, "");
@@ -246,7 +246,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 													body.playbackContext.contentPlaybackContext.id9 = 1; // 
 												};
 											};
-											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
+											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											rawBody = Player.toBinary(body);
 											break;
 										case "youtubei/v1/browse":
@@ -263,8 +263,11 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											const Browse = new Browse$Type();
 											/******************  initialization finish  *******************/
 											body = Browse.fromBinary(rawBody);
-											$.log(`🚧 ${$.name}`, `data: ${JSON.stringify(body)}`, "");
-											if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(url, "query.subtype", "Translate");
+											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
+											if (body?.browseId?.startsWith?.("MPLYt_")) {
+												if (Settings.Types.includes("Translate")) $.lodash_set(url, "query.subtype", "Translate");
+												else if (Settings.Types.includes("External")) $.lodash_set(url, "query.subtype", "External");
+											};
 											rawBody = Browse.toBinary(body);
 											break;
 									};
