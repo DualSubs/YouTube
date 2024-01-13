@@ -2,7 +2,7 @@
 README:https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(4) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(5) request.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -283,8 +283,6 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 					};
 					//break; // 不中断，继续处理URL
 				case "GET":
-				case "HEAD":
-				case "OPTIONS":
 					// 主机判断
 					switch (HOST) {
 						case "www.youtube.com":
@@ -306,7 +304,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											default:
 												$.log(`⚠ ${$.name}, 自动翻译字幕：开启`, "");
 												if (Caches?.tlang) {
-													if (Caches?.tlang !== url?.query?.lang) url.query.tlang = Caches.tlang;
+													if (Caches?.tlang !== url?.query?.lang) $.lodash_set(url, "query.tlang", Caches.tlang);
 												}
 												break;
 											case false:
@@ -325,31 +323,31 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											case "Official":
 											default:
 												$.log(`⚠ ${$.name}, 官方字幕：合成器`, "");
-												if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
+												if (!Settings.ShowOnly) $.lodash_set(url, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
 												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
 												delete url?.query?.tlang;
-												url.query.subtype = "Translate"; // 翻译字幕
+												$.lodash_set(url, "query.subtype", "Translate"); // 翻译字幕
 												/*
 												switch (url?.query?.kind) { // 类型判断
 													case "asr":
 														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
 														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
-														if (!Settings.ShowOnly) url.query.subtype = "Official"; // 官方字幕
+														if (!Settings.ShowOnly) $.lodash_set(url, "query.subtype", "Official"); // 官方字幕
 														break;
 													case "captions":
 													default:
 														$.log(`⚠ ${$.name}, 普通字幕`, "");
 														delete url?.query?.tlang;
-														url.query.subtype = "Translate"; // 翻译字幕
+														$.lodash_set(url, "query.subtype", "Translate"); // 翻译字幕
 												};
 												*/
 												break;
 											case "External":
 												$.log(`⚠ ${$.name}, 外部字幕：外部源`, "");
 												delete url?.query?.tlang
-												url.query.subtype = "External"; // 外挂字幕
+												$.lodash_set(url, "query.subtype", "External"); // 外挂字幕
 												break;
 										};
 									};
@@ -357,6 +355,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							};
 							break;
 					};
+				case "HEAD":
+				case "OPTIONS":
 					break;
 				case "CONNECT":
 				case "TRACE":
