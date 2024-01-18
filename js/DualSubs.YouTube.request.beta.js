@@ -1,9 +1,9 @@
 /*
-README:https://github.com/DualSubs/YouTube
+README: https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(5) request.beta");
-const URL = new URLs();
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(6) request.beta");
+const URI = new URIs();
 const DataBase = {
 	"Default":{
 		"Settings":{"Switch":true,"Type":"Translate","Types":["Official","Translate"],"Languages":["EN","ZH"],"CacheSize":50}
@@ -62,17 +62,17 @@ let $response = undefined;
 
 /***************** Processing *****************/
 // 解构URL
-let url = URL.parse($request?.url);
-$.log(`⚠ ${$.name}`, `URL: ${JSON.stringify(url)}`, "");
+const URL = URI.parse($request.url);
+$.log(`⚠ ${$.name}`, `URL: ${JSON.stringify(URL)}`, "");
 // 获取连接参数
-const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = url?.paths;
+const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
 $.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, "");
 // 获取平台
 const PLATFORM = detectPlatform(HOST);
 $.log(`⚠ ${$.name}, PLATFORM: ${PLATFORM}`, "");
 // 解析格式
-let FORMAT = ($request?.headers?.["Content-Type"] ?? $request?.headers?.["content-type"])?.split(";")?.[0];
-if (FORMAT === "application/octet-stream" || FORMAT === "text/plain") FORMAT = detectFormat(url, $response?.body);
+let FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
+if (FORMAT === "application/octet-stream" || FORMAT === "text/plain") FORMAT = detectFormat(URL, $request.body);
 $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 (async () => {
 	// 读取设置
@@ -82,7 +82,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 		case true:
 		default:
 			// 获取字幕类型与语言
-			const Type = url?.query?.subtype ?? Settings.Type, Languages = [url?.query?.lang?.split?.(/[-_]/)?.[0]?.toUpperCase?.() ?? Settings.Languages[0], (url?.query?.tlang?.split?.(/[-_]/)?.[0] ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
+			const Type = URL.query?.subtype ?? Settings.Type, Languages = [URL.query?.lang?.split?.(/[-_]/)?.[0]?.toUpperCase?.() ?? Settings.Languages[0], (URL.query?.tlang?.split?.(/[-_]/)?.[0] ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
 			$.log(`⚠ ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
@@ -106,7 +106,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/vnd.apple.mpegurl":
 						case "audio/mpegurl":
 							//body = M3U8.parse($response.body);
-							//$.log(`🚧 ${$.name}`, "M3U8.parse($response.body)", JSON.stringify(body), "");
+							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
 							//$response.body = M3U8.stringify(body);
 							break;
 						case "text/xml":
@@ -115,13 +115,13 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/plist":
 						case "application/x-plist":
 							//body = XML.parse($response.body);
-							//$.log(body);
+							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
 							//$response.body = XML.stringify(body);
 							break;
 						case "text/vtt":
 						case "application/vtt":
 							//body = VTT.parse($response.body);
-							//$.log(body);
+							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
 							//$response.body = VTT.stringify(body);
 							break;
 						case "text/json":
@@ -138,7 +138,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									};
 									break;
 								case "youtubei/v1/browse":
-									if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(url, "query.subtype" , "Translate");
+									if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash_set(URL, "query.subtype" , "Translate");
 									break;
 								};
 							$request.body = JSON.stringify(body);
@@ -149,9 +149,9 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
-							//$.log(`🚧 ${$.name}`, `$request.body: ${JSON.stringify($request.body)}`, "");
+							//$.log(`🚧 ${$.name}, 调试信息`, `$request.body: ${JSON.stringify($request.body)}`, "");
 							let rawBody = $.isQuanX() ? new Uint8Array($request?.bodyBytes ?? []) : $request?.body ?? new Uint8Array();
-							//$.log(`🚧 ${$.name}`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
+							//$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							/******************  initialization start  *******************/
 							// timostamm/protobuf-ts 2.9.0
 							// text-decoder
@@ -265,8 +265,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											body = Browse.fromBinary(rawBody);
 											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
-												if (Settings.Types.includes("Translate")) $.lodash_set(url, "query.subtype", "Translate");
-												else if (Settings.Types.includes("External")) $.lodash_set(url, "query.subtype", "External");
+												if (Settings.Types.includes("Translate")) $.lodash_set(URL, "query.subtype", "Translate");
+												else if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
 											};
 											rawBody = Browse.toBinary(body);
 											break;
@@ -290,11 +290,11 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							// 路径判断
 							switch (PATH) {
 								case "api/timedtext":
-									if (!url?.query?.tlang) {
+									if (!URL.query?.tlang) {
 										$.log(`⚠ ${$.name}, 翻译语言：未指定`, "");
 										// 保存原文语言
-										if (url?.query?.v && url?.query?.lang) {
-											Caches.Playlists.Subtitle.set(url.query.v, url.query.lang);
+										if (URL.query?.v && URL.query?.lang) {
+											Caches.Playlists.Subtitle.set(URL.query.v, URL.query.lang);
 											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
 											$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`);
 										};
@@ -303,8 +303,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											case true:
 											default:
 												$.log(`⚠ ${$.name}, 自动翻译字幕：开启`, "");
-												if (Caches?.tlang) {
-													if (Caches?.tlang !== url?.query?.lang) $.lodash_set(url, "query.tlang", Caches.tlang);
+												if (Caches.tlang) {
+													if (Caches.tlang !== URL.query?.lang) $.lodash_set(URL, "query.tlang", Caches.tlang);
 												}
 												break;
 											case false:
@@ -312,10 +312,10 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												break;
 										};
 									};
-									if (url?.query?.tlang) {
+									if (URL.query?.tlang) {
 										$.log(`⚠ ${$.name}, 翻译语言：已指定`, "");
 										// 保存目标语言
-										Caches.tlang = url.query.tlang;
+										Caches.tlang = URL.query.tlang;
 										$.setdata(Caches.tlang, `@DualSubs.${"YouTube"}.Caches.tlang`);
 										// 字幕类型判断
 										switch (Settings.Type) {
@@ -323,31 +323,31 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											case "Official":
 											default:
 												$.log(`⚠ ${$.name}, 官方字幕：合成器`, "");
-												if (!Settings.ShowOnly) $.lodash_set(url, "query.subtype", "Official"); // 官方字幕
+												if (!Settings.ShowOnly) $.lodash_set(URL, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
 												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
-												delete url?.query?.tlang;
-												$.lodash_set(url, "query.subtype", "Translate"); // 翻译字幕
+												delete URL.query?.tlang;
+												$.lodash_set(URL, "query.subtype", "Translate"); // 翻译字幕
 												/*
-												switch (url?.query?.kind) { // 类型判断
+												switch (URL.query?.kind) { // 类型判断
 													case "asr":
 														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
 														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
-														if (!Settings.ShowOnly) $.lodash_set(url, "query.subtype", "Official"); // 官方字幕
+														if (!Settings.ShowOnly) $.lodash_set(URL, "query.subtype", "Official"); // 官方字幕
 														break;
 													case "captions":
 													default:
 														$.log(`⚠ ${$.name}, 普通字幕`, "");
-														delete url?.query?.tlang;
-														$.lodash_set(url, "query.subtype", "Translate"); // 翻译字幕
+														delete URL.query?.tlang;
+														$.lodash_set(URL, "query.subtype", "Translate"); // 翻译字幕
 												};
 												*/
 												break;
 											case "External":
 												$.log(`⚠ ${$.name}, 外部字幕：外部源`, "");
-												delete url?.query?.tlang
-												$.lodash_set(url, "query.subtype", "External"); // 外挂字幕
+												delete URL.query?.tlang
+												$.lodash_set(URL, "query.subtype", "External"); // 外挂字幕
 												break;
 										};
 									};
@@ -362,8 +362,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				case "TRACE":
 					break;
 			};
-			if ($request?.headers?.Host) $request.headers.Host = url.host;
-			$request.url = URL.stringify(url);
+			if ($request.headers?.Host) $request.headers.Host = URL.host;
+			$request.url = URI.stringify(URL);
 			$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
 			break;
 		case false:
@@ -374,7 +374,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 	.finally(() => {
 		switch ($response) {
 			default: { // 有构造回复数据，返回构造的回复数据
-				//const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
+				const FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
 				$.log(`🎉 ${$.name}, finally`, `echo $response`, `FORMAT: ${FORMAT}`, "");
 				//$.log(`🚧 ${$.name}, finally`, `echo $response: ${JSON.stringify($response)}`, "");
 				if ($response?.headers?.["Content-Encoding"]) $response.headers["Content-Encoding"] = "identity";
@@ -515,11 +515,11 @@ function setENV(name, platforms, database) {
 	$.log(`✅ ${$.name}, Set Environment Variables`, `Settings: ${typeof Settings}`, `Settings内容: ${JSON.stringify(Settings)}`, "");
 	/***************** Caches *****************/
 	//$.log(`✅ ${$.name}, Set Environment Variables`, `Caches: ${typeof Caches}`, `Caches内容: ${JSON.stringify(Caches)}`, "");
-	if (typeof Caches.Playlists !== "object" || Array.isArray(Caches.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
+	if (typeof Caches?.Playlists !== "object" || Array.isArray(Caches?.Playlists)) Caches.Playlists = {}; // 创建Playlists缓存
 	Caches.Playlists.Master = new Map(JSON.parse(Caches?.Playlists?.Master || "[]")); // Strings转Array转Map
 	Caches.Playlists.Subtitle = new Map(JSON.parse(Caches?.Playlists?.Subtitle || "[]")); // Strings转Array转Map
 	if (typeof Caches?.Subtitles !== "object") Caches.Subtitles = new Map(JSON.parse(Caches?.Subtitles || "[]")); // Strings转Array转Map
-	if (typeof Caches.Metadatas !== "object" || Array.isArray(Caches.Metadatas)) Caches.Metadatas = {}; // 创建Playlists缓存
+	if (typeof Caches?.Metadatas !== "object" || Array.isArray(Caches?.Metadatas)) Caches.Metadatas = {}; // 创建Playlists缓存
 	if (typeof Caches?.Metadatas?.Tracks !== "object") Caches.Metadatas.Tracks = new Map(JSON.parse(Caches?.Metadatas?.Tracks || "[]")); // Strings转Array转Map
 	/***************** Configs *****************/
 	return { Settings, Caches, Configs };
@@ -534,8 +534,8 @@ function setENV(name, platforms, database) {
  */
 function detectFormat(url, body) {
 	let format = undefined;
-	$.log(`☑️ ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
-	switch (url?.format ?? url?.query?.fmt ?? url?.query?.format) {
+	$.log(`☑️ ${$.name}`, `detectFormat, format: ${url.format ?? url.query?.fmt ?? url.query?.format}`, "");
+	switch (url.format ?? url.query?.fmt ?? url.query?.format) {
 		case "txt":
 			format = "text/plain";
 			break;
@@ -634,5 +634,5 @@ function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==
  */
 function getENV(key,names,database){let BoxJs=$.getjson(key,database),Argument={};if("undefined"!=typeof $argument&&Boolean($argument)){let arg=Object.fromEntries($argument.split("&").map((item=>item.split("="))));for(let item in arg)setPath(Argument,item,arg[item])}const Store={Settings:database?.Default?.Settings||{},Configs:database?.Default?.Configs||{},Caches:{}};Array.isArray(names)||(names=[names]);for(let name of names)Store.Settings={...Store.Settings,...database?.[name]?.Settings,...BoxJs?.[name]?.Settings,...Argument},Store.Configs={...Store.Configs,...database?.[name]?.Configs},BoxJs?.[name]?.Caches&&"string"==typeof BoxJs?.[name]?.Caches&&(BoxJs[name].Caches=JSON.parse(BoxJs?.[name]?.Caches)),Store.Caches={...Store.Caches,...BoxJs?.[name]?.Caches};return function traverseObject(o,c){for(var t in o){var n=o[t];o[t]="object"==typeof n&&null!==n?traverseObject(n,c):c(t,n)}return o}(Store.Settings,((key,value)=>("true"===value||"false"===value?value=JSON.parse(value):"string"==typeof value&&(value?.includes(",")?value=value.split(","):value&&!isNaN(value)&&(value=parseInt(value,10))),value))),Store;function setPath(object,path,value){path.split(".").reduce(((o,p,i)=>o[p]=path.split(".").length===++i?value:o[p]||{}),object)}}
 
-// https://github.com/VirgilClyne/GetSomeFries/blob/main/function/URL/URLs.embedded.min.js
-function URLs(t){return new class{constructor(t=[]){this.name="URL v1.2.5",this.opts=t,this.json={scheme:"",host:"",path:"",query:{}}}parse(t){let s=t.match(/(?:(?<scheme>.+):\/\/(?<host>[^/]+))?\/?(?<path>[^?]+)?\??(?<query>[^?]+)?/)?.groups??null;if(s?.path?s.paths=s.path.split("/"):s.path="",s?.paths){const t=s.paths[s.paths.length-1];if(t?.includes(".")){const e=t.split(".");s.format=e[e.length-1]}}return s?.query&&(s.query=Object.fromEntries(s.query.split("&").map((t=>t.split("="))))),s}stringify(t=this.json){let s="";return t?.scheme&&t?.host&&(s+=t.scheme+"://"+t.host),t?.path&&(s+=t?.host?"/"+t.path:t.path),t?.query&&(s+="?"+Object.entries(t.query).map((t=>t.join("="))).join("&")),s}}(t)}
+// https://github.com/VirgilClyne/GetSomeFries/blob/main/function/URI/URIs.embedded.min.js
+function URIs(t){return new class{constructor(t=[]){this.name="URI v1.2.6",this.opts=t,this.json={scheme:"",host:"",path:"",query:{}}}parse(t){let s=t.match(/(?:(?<scheme>.+):\/\/(?<host>[^/]+))?\/?(?<path>[^?]+)?\??(?<query>[^?]+)?/)?.groups??null;if(s?.path?s.paths=s.path.split("/"):s.path="",s?.paths){const t=s.paths[s.paths.length-1];if(t?.includes(".")){const e=t.split(".");s.format=e[e.length-1]}}return s?.query&&(s.query=Object.fromEntries(s.query.split("&").map((t=>t.split("="))))),s}stringify(t=this.json){let s="";return t?.scheme&&t?.host&&(s+=t.scheme+"://"+t.host),t?.path&&(s+=t?.host?"/"+t.path:t.path),t?.query&&(s+="?"+Object.entries(t.query).map((t=>t.join("="))).join("&")),s}}(t)}
