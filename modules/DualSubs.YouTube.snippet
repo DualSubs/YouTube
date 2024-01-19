@@ -21,6 +21,8 @@
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js
 # DualSubs.YouTube.TimedText.request
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+# DualSubs.YouTube.TimedText.Translate.response
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
 # DualSubs.YouTube.TimedText.Composite.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
 
