@@ -117,7 +117,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							break;
 						case "text/json":
 						case "application/json":
-							body = JSON.parse($request?.body ?? "{}");
+							body = JSON.parse($request.body ?? "{}");
 							switch (PATH) {
 								case "youtubei/v1/player":
 									// 找功能
@@ -140,7 +140,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "applecation/octet-stream":
-							let rawBody = $.isQuanX() ? new Uint8Array($request?.bodyBytes ?? []) : $request?.body ?? new Uint8Array();
+							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes ?? []) : $request.body ?? new Uint8Array();
 							/******************  initialization start  *******************/
 							// timostamm/protobuf-ts 2.9.0
 							// text-decoder
