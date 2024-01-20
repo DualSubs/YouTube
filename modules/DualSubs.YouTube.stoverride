@@ -5,6 +5,7 @@ author: "VirgilClyne"
 homepage: "https://github.com/DualSubs/YouTube"
 manual: "https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube"
 icon: "https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png"
+category: "🍿️ DualSubs"
 
 http:
   mitm:

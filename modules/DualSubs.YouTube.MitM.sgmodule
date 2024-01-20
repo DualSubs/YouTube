@@ -5,6 +5,7 @@
 #!homepage=https://github.com/DualSubs/YouTube
 #!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Unlock.png
+#!category=🍿️ DualSubs
 
 [Rule]
 URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJECT-TINYGIF
