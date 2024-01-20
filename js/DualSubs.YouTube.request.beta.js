@@ -2,7 +2,7 @@
 README: https://github.com/DualSubs/YouTube
 */
 
-const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.2(6) request.beta");
+const $ = new Env("🍿 DualSubs: ▶ YouTube v1.3.3(2) request.beta");
 const URI = new URIs();
 const DataBase = {
 	"Default":{
@@ -265,8 +265,52 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											body = Browse.fromBinary(rawBody);
 											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
+												/*
 												if (Settings.Types.includes("Translate")) $.lodash_set(URL, "query.subtype", "Translate");
 												else if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+												*/
+												const detectStutus = $.http.post($request);
+												//const detectTrack = $.http.get(_request);
+												await Promise.allSettled([detectStutus]).then(results => {
+													/*
+													results.forEach((result, i) => {
+														$.log(`🚧 ${$.name}, 调试信息`, `result[${i}]: ${JSON.stringify(result)}`, "");
+													});
+													*/
+													switch (results[0].status) {
+														case "fulfilled":
+															let response = results[0].value;
+															switch (response?.headers?.["content-encoding"] ?? response?.headers?.["Content-Encoding"]) {
+																case "identity":
+																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 4000) {
+																		if (Settings.Types.includes("Translate")) $.lodash_set(URL, "query.subtype", "Translate");
+																		else if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+																	} else {
+																		if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+																	};
+																	break;
+																case "gzip":
+																	break;
+																case "br":
+																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 2000) {
+																		if (Settings.Types.includes("Translate")) $.lodash_set(URL, "query.subtype", "Translate");
+																		else if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+																	} else {
+																		if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+																	};
+																	break;
+																case "deflate":
+																	break;
+																default:
+																	break;
+															};
+															break;
+														case "rejected":
+															$.log(`🚧 ${$.name}, 调试信息`, `detectStutus.reason: ${JSON.stringify(results[0].reason)}`, "");
+															if (Settings.Types.includes("External")) $.lodash_set(URL, "query.subtype", "External");
+															break;
+													};
+												});
 											};
 											rawBody = Browse.toBinary(body);
 											break;
