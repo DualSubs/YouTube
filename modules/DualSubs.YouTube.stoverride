@@ -47,12 +47,12 @@ http:
       require-body: false
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External)
-      name: DualSubs.YouTube.TimedText.Composite.response
+      name: DualSubs.YouTube.Composite.TimedText.response
       type: response
       require-body: true
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate
-      name: DualSubs.YouTube.TimedText.Translate.response
+      name: DualSubs.YouTube.Translate.TimedText.response
       type: response
       require-body: true
       argument:
@@ -69,12 +69,12 @@ http:
       binary-mode: true
       argument:
     - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
-      name: DualSubs.YouTube.TimedText.Translate.response
+      name: DualSubs.YouTube.Translate.TimedText.response
       type: request
       require-body: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
-      name: DualSubs.YouTube.TimedText.Translate.response
+      name: DualSubs.YouTube.Translate.TimedText.response
       type: response
       require-body: true
       binary-mode: true
@@ -87,9 +87,9 @@ script-providers:
   DualSubs.YouTube.response:
     url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js
     interval: 86400
-  DualSubs.YouTube.TimedText.Composite.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
+  DualSubs.YouTube.Composite.TimedText.response:
+    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/Composite.Subtitles.response.js
     interval: 86400
-  DualSubs.YouTube.TimedText.Translate.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
+  DualSubs.YouTube.Translate.TimedText.response:
+    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
     interval: 86400
