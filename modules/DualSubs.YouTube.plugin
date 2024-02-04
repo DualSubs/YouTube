@@ -4,7 +4,7 @@
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs/YouTube
 #!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
-#!icon=https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png
+#!icon=https://github.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png
 #!category=🍿️ DualSubs
 #!select=自动显示翻译字幕,是,否
 #!select=仅输出译文,是,否
@@ -15,17 +15,17 @@
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
 
 [Script]
-http-request https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js, tag=DualSubs.YouTube.Player.request.json, argument=
-http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js, tag=DualSubs.YouTube.Player.response.json, argument=
-http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js, tag=DualSubs.YouTube.Player.request.proto, argument=
-http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js, tag=DualSubs.YouTube.Player.response.proto, argument=
-http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js, tag=DualSubs.YouTube.TimedText.request, argument=
+http-request https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, tag=DualSubs.YouTube.Player.request.json, argument=
+http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, tag=DualSubs.YouTube.Player.response.json, argument=
+http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, tag=DualSubs.YouTube.Player.request.proto, argument=
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, tag=DualSubs.YouTube.Player.response.proto, argument=
+http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, tag=DualSubs.YouTube.TimedText.request, argument=
 http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Composite.Subtitles.response.js, tag=DualSubs.YouTube.Composite.TimedText.response, argument=
 http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTube.Translate.TimedText.response, argument=
 
 # YouTube Music
-http-request ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js, tag=DualSubs.YouTubeMusic.Browse.request.json, argument=
-http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js, tag=DualSubs.YouTube.Browse.request.proto, argument=
+http-request ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, tag=DualSubs.YouTubeMusic.Browse.request.json, argument=
+http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, tag=DualSubs.YouTube.Browse.request.proto, argument=
 http-response ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTubeMusic.Translate.Lyrics.response.json, argument=
 http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTubeMusic.Translate.Lyrics.response.proto, argument=
 

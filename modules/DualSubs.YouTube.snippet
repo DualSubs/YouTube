@@ -4,7 +4,7 @@
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs/YouTube
 #!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
-#!icon=https://github.com/DualSubs/YouTube/raw/main/database/icon_rounded.png
+#!icon=https://github.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png
 #!category=🍿️ DualSubs
 
 #[rewrite_local]
@@ -13,15 +13,15 @@
 #[Script]
 # YouTube
 # DualSubs.YouTube.Player.request.json
-^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTube.Player.response.json
-^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js
+^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js
 # DualSubs.YouTube.Player.request.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTube.Player.response.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.response.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js
 # DualSubs.YouTube.TimedText.request
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTube.Translate.TimedText.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
 # DualSubs.YouTube.Composite.TimedText.response
@@ -29,9 +29,9 @@
 
 # YouTube Music
 # DualSubs.YouTubeMusic.Browse.request.json
-^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTube.Browse.request.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/DualSubs.YouTube.request.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.json
 ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
