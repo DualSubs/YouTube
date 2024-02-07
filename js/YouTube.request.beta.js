@@ -9175,7 +9175,7 @@ class MessageType {
     }
 }
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(1) request.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(2) request.beta");
 const URI = new URI$1();
 
 // 构造回复数据
@@ -9372,8 +9372,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												if (Settings.Types.includes("Translate")) $.lodash.set(URL, "query.subtype", "Translate");
 												else if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
 												*/
-												const detectStutus = $.http.post($request);
-												//const detectTrack = $.http.get(_request);
+												const detectStutus = $.fetch($request);
+												//const detectTrack = $.fetch(_request);
 												await Promise.allSettled([detectStutus]).then(results => {
 													/*
 													results.forEach((result, i) => {

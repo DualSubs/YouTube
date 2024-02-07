@@ -8,7 +8,7 @@ import setCache from "./function/setCache.mjs";
 import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENVs("🍿 DualSubs: ▶ YouTube v1.3.4(1) request.beta");
+const $ = new ENVs("🍿 DualSubs: ▶ YouTube v1.3.4(2) request.beta");
 const URI = new URIs();
 
 // 构造回复数据
@@ -211,8 +211,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												if (Settings.Types.includes("Translate")) $.lodash.set(URL, "query.subtype", "Translate");
 												else if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
 												*/
-												const detectStutus = $.http.post($request);
-												//const detectTrack = $.http.get(_request);
+												const detectStutus = $.fetch($request);
+												//const detectTrack = $.fetch(_request);
 												await Promise.allSettled([detectStutus]).then(results => {
 													/*
 													results.forEach((result, i) => {
