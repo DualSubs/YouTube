@@ -40,7 +40,7 @@ class Lodash {
 class ENV {
 	constructor(name, opts) {
 		this.name = name;
-		this.version = '1.5.4';
+		this.version = '1.5.6';
 		this.data = null;
 		this.dataFile = 'box.dat';
 		this.logs = [];
@@ -345,9 +345,11 @@ class ENV {
 				});
 			case 'Quantumult X':
 				// 移除不可写字段
-				delete request.scheme;
-				delete request.sessionIndex;
-				delete request.charset;
+				delete object.charset;
+				delete object.path;
+				delete object.scheme;
+				delete object.sessionIndex;
+				delete object.statusCode;
 				// 添加策略组
 				if (request.policy) this.lodash.set(request, "opts.policy", request.policy);
 				// 判断请求数据类型
@@ -578,6 +580,8 @@ class ENV {
 		this.log("", `🚩 ${this.name}, 结束! 🕛 ${costTime} 秒`, "");
 		if (object.headers?.["Content-Encoding"]) object.headers["Content-Encoding"] = "identity";
 		if (object.headers?.["content-encoding"]) object.headers["content-encoding"] = "identity";
+		delete object.headers?.["Content-Length"];
+		delete object.headers?.["content-length"];
 		switch (this.platform()) {
 			case 'Surge':
 			case 'Loon':
@@ -588,10 +592,12 @@ class ENV {
 				$done(object);
 				break;
 			case 'Quantumult X':
-				delete object.statusCode;
+				// 移除不可写字段
+				delete object.charset;
+				delete object.path;
 				delete object.scheme;
 				delete object.sessionIndex;
-				delete object.charset;
+				delete object.statusCode;
 				if (object.body instanceof ArrayBuffer) {
 					object.bodyBytes = object.body;
 					delete object.body;
@@ -9516,18 +9522,16 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 	.catch((e) => $.logErr(e))
 	.finally(() => {
 		switch ($response) {
-			default: { // 有构造回复数据，返回构造的回复数据
-				$.log(`🚧 ${$.name}, finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
+			default: // 有构造回复数据，返回构造的回复数据
+				//$.log(`🚧 ${$.name}, finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
 				if ($.isQuanX()) {
 					if (!$response.status) $response.status = "HTTP/1.1 200 OK";
-					delete $response.headers?.["Content-Length"];
-					delete $response.headers?.["content-length"];
 					delete $response.headers?.["Transfer-Encoding"];
 					$.done($response);
 				} else $.done({ response: $response });
 				break;
-			}			case undefined: { // 无构造回复数据，发送修改的请求数据
-				$.log(`🚧 ${$.name}, finally`, `$request: ${JSON.stringify($request, null, 2)}`, "");
+			case undefined: // 无构造回复数据，发送修改的请求数据
+				//$.log(`🚧 ${$.name}, finally`, `$request: ${JSON.stringify($request, null, 2)}`, "");
 				$.done($request);
 				break;
-			}		}	});
+		}	});
