@@ -2,7 +2,7 @@
 class Lodash {
 	constructor() {
 		this.name = "Lodash";
-		this.version = '1.0.0';
+		this.version = '1.2.0';
 		console.log(`\n${this.name} v${this.version}\n`);
 	}
 
@@ -31,8 +31,42 @@ class Lodash {
 		return object
 	}
 
+	unset(object = {}, path = "") {
+		if (!Array.isArray(path)) path = this.toPath(path);
+		let result = path.reduce((previousValue, currentValue, currentIndex) => {
+			if (currentIndex === path.length - 1) {
+				delete previousValue[currentValue];
+				return true
+			}
+			return Object(previousValue)[currentValue]
+		}, object);
+		return result
+	}
+
 	toPath(value) {
 		return value.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+	}
+
+	escape(string) {
+		const map = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#39;',
+		};
+		return string.replace(/[&<>"']/g, m => map[m])
+	};
+
+	unescape(string) {
+		const map = {
+			'&amp;': '&',
+			'&lt;': '<',
+			'&gt;': '>',
+			'&quot;': '"',
+			'&#39;': "'",
+		};
+		return string.replace(/&amp;|&lt;|&gt;|&quot;|&#39;/g, m => map[m])
 	}
 
 }
@@ -40,7 +74,7 @@ class Lodash {
 class ENV {
 	constructor(name, opts) {
 		this.name = name;
-		this.version = '1.5.7';
+		this.version = '1.5.8';
 		this.data = null;
 		this.dataFile = 'box.dat';
 		this.logs = [];
@@ -594,6 +628,7 @@ class ENV {
 			case 'Quantumult X':
 				// 移除不可写字段
 				delete object.charset;
+				delete object.host;
 				delete object.path;
 				delete object.scheme;
 				delete object.sessionIndex;
@@ -9296,9 +9331,9 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "application/octet-stream":
-							//$.log(`🚧 ${$.name}, 调试信息`, `$request.body: ${JSON.stringify($request.body)}`, "");
+							$.log(`🚧 ${$.name}, 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
 							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes ?? []) : $request.body ?? new Uint8Array();
-							//$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
+							$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							switch (FORMAT) {
 								case "application/protobuf":
 								case "application/x-protobuf":
