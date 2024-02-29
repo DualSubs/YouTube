@@ -33,9 +33,9 @@
 # DualSubs.YouTube.Browse.request.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.json
-^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
 
 #[MITM]
 hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

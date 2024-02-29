@@ -74,7 +74,7 @@ class Lodash {
 class ENV {
 	constructor(name, opts) {
 		this.name = name;
-		this.version = '1.5.8';
+		this.version = '1.5.9';
 		this.data = null;
 		this.dataFile = 'box.dat';
 		this.logs = [];
@@ -629,6 +629,7 @@ class ENV {
 				// 移除不可写字段
 				delete object.charset;
 				delete object.host;
+				delete object.method; // 1.4.x 不可写
 				delete object.path;
 				delete object.scheme;
 				delete object.sessionIndex;
