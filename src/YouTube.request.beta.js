@@ -362,6 +362,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				//$.log(`🚧 ${$.name}, finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
 				if ($.isQuanX()) {
 					if (!$response.status) $response.status = "HTTP/1.1 200 OK";
+					delete $response.headers?.["Content-Length"];
+					delete $response.headers?.["content-length"];
 					delete $response.headers?.["Transfer-Encoding"];
 					$.done($response);
 				} else $.done({ response: $response });
