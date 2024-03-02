@@ -1,5 +1,7 @@
-import ENVs from "./ENV/ENV.mjs";
-import URIs from "./URI/URI.mjs";
+import _ from './ENV/Lodash.mjs'
+import $Storage from './ENV/$Storage.mjs'
+import ENV from "./ENV/ENV.mjs";
+import URI from "./URI/URI.mjs";
 
 import Database from "./database/index.mjs";
 import setENV from "./function/setENV.mjs";
@@ -8,8 +10,7 @@ import setCache from "./function/setCache.mjs";
 import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENVs("🍿 DualSubs: ▶ YouTube v1.3.4(3) request.beta");
-const URI = new URIs();
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(4) request.beta");
 
 // 构造回复数据
 let $response = undefined;
@@ -88,7 +89,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									};
 									break;
 								case "youtubei/v1/browse":
-									if (body?.browseId?.startsWith?.("MPLYt_")) $.lodash.set(URL, "query.subtype" , "Translate");
+									if (body?.browseId?.startsWith?.("MPLYt_")) _.set(URL, "query.subtype" , "Translate");
 									break;
 								};
 							$request.body = JSON.stringify(body);
@@ -99,9 +100,9 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "application/octet-stream":
-							$.log(`🚧 ${$.name}, 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
+							//$.log(`🚧 ${$.name}, 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
 							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes ?? []) : $request.body ?? new Uint8Array();
-							$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
+							//$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							switch (FORMAT) {
 								case "application/protobuf":
 								case "application/x-protobuf":
@@ -208,8 +209,8 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
 												/*
-												if (Settings.Types.includes("Translate")) $.lodash.set(URL, "query.subtype", "Translate");
-												else if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+												if (Settings.Types.includes("Translate")) _.set(URL, "query.subtype", "Translate");
+												else if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 												*/
 												const detectStutus = $.fetch($request);
 												//const detectTrack = $.fetch(_request);
@@ -225,20 +226,20 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 															switch (response?.headers?.["content-encoding"] ?? response?.headers?.["Content-Encoding"]) {
 																case "identity":
 																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 4000) {
-																		if (Settings.Types.includes("Translate")) $.lodash.set(URL, "query.subtype", "Translate");
-																		else if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+																		if (Settings.Types.includes("Translate")) _.set(URL, "query.subtype", "Translate");
+																		else if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 																	} else {
-																		if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+																		if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 																	};
 																	break;
 																case "gzip":
 																	break;
 																case "br":
 																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 2000) {
-																		if (Settings.Types.includes("Translate")) $.lodash.set(URL, "query.subtype", "Translate");
-																		else if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+																		if (Settings.Types.includes("Translate")) _.set(URL, "query.subtype", "Translate");
+																		else if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 																	} else {
-																		if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+																		if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 																	};
 																	break;
 																case "deflate":
@@ -249,7 +250,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 															break;
 														case "rejected":
 															$.log(`🚧 ${$.name}, 调试信息`, `detectStutus.reason: ${JSON.stringify(results[0].reason)}`, "");
-															if (Settings.Types.includes("External")) $.lodash.set(URL, "query.subtype", "External");
+															if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 															break;
 													};
 												});
@@ -281,7 +282,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										if (URL.query?.v && URL.query?.lang) {
 											Caches.Playlists.Subtitle.set(URL.query.v, URL.query.lang);
 											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
-											$.setjson(Caches.Playlists.Subtitle, `@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`);
+											$Storage.setItem(`@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`, Caches.Playlists.Subtitle);
 										};
 										// 自动翻译字幕
 										switch (Settings.AutoCC) {
@@ -289,7 +290,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											default:
 												$.log(`⚠ ${$.name}, 自动翻译字幕：开启`, "");
 												if (Caches.tlang) {
-													if (Caches.tlang !== URL.query?.lang) $.lodash.set(URL, "query.tlang", Caches.tlang);
+													if (Caches.tlang !== URL.query?.lang) _.set(URL, "query.tlang", Caches.tlang);
 												}
 												break;
 											case false:
@@ -301,38 +302,38 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										$.log(`⚠ ${$.name}, 翻译语言：已指定`, "");
 										// 保存目标语言
 										Caches.tlang = URL.query.tlang;
-										$.setdata(Caches.tlang, `@DualSubs.${"YouTube"}.Caches.tlang`);
+										$Storage.setItem(`@DualSubs.${"YouTube"}.Caches.tlang`, Caches.tlang);
 										// 字幕类型判断
 										switch (Settings.Type) {
 											case "Composite":
 											case "Official":
 											default:
 												$.log(`⚠ ${$.name}, 官方字幕：合成器`, "");
-												if (!Settings.ShowOnly) $.lodash.set(URL, "query.subtype", "Official"); // 官方字幕
+												if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
 												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
 												delete URL.query?.tlang;
-												$.lodash.set(URL, "query.subtype", "Translate"); // 翻译字幕
+												_.set(URL, "query.subtype", "Translate"); // 翻译字幕
 												/*
 												switch (URL.query?.kind) { // 类型判断
 													case "asr":
 														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
 														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
-														if (!Settings.ShowOnly) $.lodash.set(URL, "query.subtype", "Official"); // 官方字幕
+														if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
 														break;
 													case "captions":
 													default:
 														$.log(`⚠ ${$.name}, 普通字幕`, "");
 														delete URL.query?.tlang;
-														$.lodash.set(URL, "query.subtype", "Translate"); // 翻译字幕
+														_.set(URL, "query.subtype", "Translate"); // 翻译字幕
 												};
 												*/
 												break;
 											case "External":
 												$.log(`⚠ ${$.name}, 外部字幕：外部源`, "");
 												delete URL.query?.tlang
-												$.lodash.set(URL, "query.subtype", "External"); // 外挂字幕
+												_.set(URL, "query.subtype", "External"); // 外挂字幕
 												break;
 										};
 									};
