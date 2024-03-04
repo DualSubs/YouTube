@@ -10,28 +10,28 @@ import setCache from "./function/setCache.mjs";
 import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.0.2(2) response");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.0.2(3) response");
 
 /***************** Processing *****************/
 // 解构URL
 const URL = URI.parse($request.url);
-$.log(`⚠ ${$.name}`, `URL: ${JSON.stringify(URL)}`, "");
+$.log(`⚠ URL: ${JSON.stringify(URL)}`, "");
 // 获取连接参数
 const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
-$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, "");
+$.log(`⚠ METHOD: ${METHOD}`, "");
 // 解析格式
 const FORMAT = ($response.headers?.["Content-Type"] ?? $response.headers?.["content-type"])?.split(";")?.[0];
-$.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
+$.log(`⚠ FORMAT: ${FORMAT}`, "");
 (async () => {
 	// 读取设置
-	const { Settings, Caches, Configs } = setENV($, "DualSubs", "YouTube", Database);
-	$.log(`⚠ ${$.name}`, `Settings.Switch: ${Settings?.Switch}`, "");
+	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", Database);
+	$.log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
 		default:
 			// 获取字幕类型与语言
 			const Type = URL.query?.subtype ?? Settings.Type, Languages = [URL.query?.lang?.toUpperCase?.() ?? Settings.Languages[0], (URL.query?.tlang ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
-			$.log(`⚠ ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
+			$.log(`⚠ Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
 			// 格式判断
@@ -64,7 +64,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "youtubei/v1/player":
 							// 找功能
 							if (body?.captions) { // 有基础字幕
-								$.log(`⚠ ${$.name}, Captions`, "");
+								$.log(`⚠ Captions`, "");
 								// 有播放器字幕渲染器
 								if (body?.captions.playerCaptionsRenderer) {
 									body.captions.playerCaptionsRenderer.visibility = "ON" // 字幕选项按钮可见
@@ -72,7 +72,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 								}
 								// 有播放器字幕列表渲染器
 								if (body?.captions?.playerCaptionsTracklistRenderer) {
-									$.log(`⚠ ${$.name}, Tracklist`, "");
+									$.log(`⚠ Tracklist`, "");
 									if (body?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
 										// 改字幕可用性
 										body.captions.playerCaptionsTracklistRenderer.captionTracks = body?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
@@ -199,13 +199,13 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 									const Runs = new Runs$Type();
 									/******************  initialization finish  *******************/
 									body = Player.fromBinary(rawBody);
-									$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
+									$.log(`🚧 body: ${JSON.stringify(body)}`, "");
 									// 找功能
 									if (body?.captions) { // 有基础字幕
-										$.log(`⚠ ${$.name}, Captions`, "");
+										$.log(`⚠ Captions`, "");
 										// 有播放器字幕列表渲染器
 										if (body?.captions?.playerCaptionsTracklistRenderer) {
-											$.log(`⚠ ${$.name}, Tracklist`, "");
+											$.log(`⚠ Tracklist`, "");
 											if (body?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
 												// 改字幕可用性
 												body.captions.playerCaptionsTracklistRenderer.captionTracks = body?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {

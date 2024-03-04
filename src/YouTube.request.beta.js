@@ -10,7 +10,7 @@ import setCache from "./function/setCache.mjs";
 import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(4) request.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(5) request.beta");
 
 // 构造回复数据
 let $response = undefined;
@@ -18,23 +18,23 @@ let $response = undefined;
 /***************** Processing *****************/
 // 解构URL
 const URL = URI.parse($request.url);
-$.log(`⚠ ${$.name}`, `URL: ${JSON.stringify(URL)}`, "");
+$.log(`⚠ URL: ${JSON.stringify(URL)}`, "");
 // 获取连接参数
 const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
-$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, "");
+$.log(`⚠ METHOD: ${METHOD}`, "");
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
-$.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
+$.log(`⚠ FORMAT: ${FORMAT}`, "");
 (async () => {
 	// 读取设置
-	const { Settings, Caches, Configs } = setENV($, "DualSubs", "YouTube", Database);
-	$.log(`⚠ ${$.name}`, `Settings.Switch: ${Settings?.Switch}`, "");
+	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", Database);
+	$.log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
 		default:
 			// 获取字幕类型与语言
 			const Type = URL.query?.subtype ?? Settings.Type, Languages = [URL.query?.lang?.toUpperCase?.() ?? Settings.Languages[0], (URL.query?.tlang ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
-			$.log(`⚠ ${$.name}, Type: ${Type}, Languages: ${Languages}`, "");
+			$.log(`⚠ Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
 			// 方法判断
@@ -57,7 +57,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/vnd.apple.mpegurl":
 						case "audio/mpegurl":
 							//body = M3U8.parse($request.body);
-							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
+							//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
 							//$request.body = M3U8.stringify(body);
 							break;
 						case "text/xml":
@@ -66,13 +66,13 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/plist":
 						case "application/x-plist":
 							//body = XML.parse($request.body);
-							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
+							//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
 							//$request.body = XML.stringify(body);
 							break;
 						case "text/vtt":
 						case "application/vtt":
 							//body = VTT.parse($request.body);
-							//$.log(`🚧 ${$.name}`, `body: ${JSON.stringify(body)}`, "");
+							//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
 							//$request.body = VTT.stringify(body);
 							break;
 						case "text/json":
@@ -82,7 +82,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 								case "youtubei/v1/player":
 									// 找功能
 									if (body?.playbackContext) { // 有播放设置
-										$.log(`⚠ ${$.name}, playbackContext`, "");
+										$.log(`⚠ playbackContext`, "");
 										if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
 											body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
 										};
@@ -100,9 +100,9 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 						case "application/grpc":
 						case "application/grpc+proto":
 						case "application/octet-stream":
-							//$.log(`🚧 ${$.name}, 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
+							//$.log(`🚧 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
 							let rawBody = $.isQuanX() ? new Uint8Array($request.bodyBytes ?? []) : $request.body ?? new Uint8Array();
-							//$.log(`🚧 ${$.name}, 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
+							//$.log(`🚧 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
 							switch (FORMAT) {
 								case "application/protobuf":
 								case "application/x-protobuf":
@@ -177,10 +177,10 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											const ContentPlaybackContext = new ContentPlaybackContext$Type();
 											/******************  initialization finish  *******************/
 											body = Player.fromBinary(rawBody);
-											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
+											$.log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											// 找功能
 											if (body?.playbackContext) { // 有播放设置
-												$.log(`⚠ ${$.name}, playbackContext`, "");
+												$.log(`⚠ playbackContext`, "");
 												if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
 													//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
 													body.playbackContext.contentPlaybackContext.id4 = 1; // 
@@ -189,7 +189,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 													body.playbackContext.contentPlaybackContext.id9 = 1; // 
 												};
 											};
-											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
+											$.log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											rawBody = Player.toBinary(body);
 											break;
 										case "youtubei/v1/browse":
@@ -206,7 +206,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											const Browse = new Browse$Type();
 											/******************  initialization finish  *******************/
 											body = Browse.fromBinary(rawBody);
-											$.log(`🚧 ${$.name}, 调试信息`, `data: ${JSON.stringify(body)}`, "");
+											$.log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
 												/*
 												if (Settings.Types.includes("Translate")) _.set(URL, "query.subtype", "Translate");
@@ -217,7 +217,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 												await Promise.allSettled([detectStutus]).then(results => {
 													/*
 													results.forEach((result, i) => {
-														$.log(`🚧 ${$.name}, 调试信息`, `result[${i}]: ${JSON.stringify(result)}`, "");
+														$.log(`🚧 调试信息`, `result[${i}]: ${JSON.stringify(result)}`, "");
 													});
 													*/
 													switch (results[0].status) {
@@ -249,7 +249,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 															};
 															break;
 														case "rejected":
-															$.log(`🚧 ${$.name}, 调试信息`, `detectStutus.reason: ${JSON.stringify(results[0].reason)}`, "");
+															$.log(`🚧 调试信息`, `detectStutus.reason: ${JSON.stringify(results[0].reason)}`, "");
 															if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
 															break;
 													};
@@ -277,7 +277,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 							switch (PATH) {
 								case "api/timedtext":
 									if (!URL.query?.tlang) {
-										$.log(`⚠ ${$.name}, 翻译语言：未指定`, "");
+										$.log(`⚠ 翻译语言：未指定`, "");
 										// 保存原文语言
 										if (URL.query?.v && URL.query?.lang) {
 											Caches.Playlists.Subtitle.set(URL.query.v, URL.query.lang);
@@ -288,18 +288,18 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 										switch (Settings.AutoCC) {
 											case true:
 											default:
-												$.log(`⚠ ${$.name}, 自动翻译字幕：开启`, "");
+												$.log(`⚠ 自动翻译字幕：开启`, "");
 												if (Caches.tlang) {
 													if (Caches.tlang !== URL.query?.lang) _.set(URL, "query.tlang", Caches.tlang);
 												}
 												break;
 											case false:
-												$.log(`⚠ ${$.name}, 自动翻译字幕：关闭`, "");
+												$.log(`⚠ 自动翻译字幕：关闭`, "");
 												break;
 										};
 									};
 									if (URL.query?.tlang) {
-										$.log(`⚠ ${$.name}, 翻译语言：已指定`, "");
+										$.log(`⚠ 翻译语言：已指定`, "");
 										// 保存目标语言
 										Caches.tlang = URL.query.tlang;
 										$Storage.setItem(`@DualSubs.${"YouTube"}.Caches.tlang`, Caches.tlang);
@@ -308,30 +308,30 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 											case "Composite":
 											case "Official":
 											default:
-												$.log(`⚠ ${$.name}, 官方字幕：合成器`, "");
+												$.log(`⚠ 官方字幕：合成器`, "");
 												if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
-												$.log(`⚠ ${$.name}, 翻译字幕：翻译器`, "");
+												$.log(`⚠ 翻译字幕：翻译器`, "");
 												delete URL.query?.tlang;
 												_.set(URL, "query.subtype", "Translate"); // 翻译字幕
 												/*
 												switch (URL.query?.kind) { // 类型判断
 													case "asr":
-														$.log(`⚠ ${$.name}, 自动生成（听译）字幕`, "");
-														$.log(`⚠ ${$.name}, 仅支持官方字幕`, "");
+														$.log(`⚠ 自动生成（听译）字幕`, "");
+														$.log(`⚠ 仅支持官方字幕`, "");
 														if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
 														break;
 													case "captions":
 													default:
-														$.log(`⚠ ${$.name}, 普通字幕`, "");
+														$.log(`⚠ 普通字幕`, "");
 														delete URL.query?.tlang;
 														_.set(URL, "query.subtype", "Translate"); // 翻译字幕
 												};
 												*/
 												break;
 											case "External":
-												$.log(`⚠ ${$.name}, 外部字幕：外部源`, "");
+												$.log(`⚠ 外部字幕：外部源`, "");
 												delete URL.query?.tlang
 												_.set(URL, "query.subtype", "External"); // 外挂字幕
 												break;
@@ -350,7 +350,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 			};
 			if ($request.headers?.Host) $request.headers.Host = URL.host;
 			$request.url = URI.stringify(URL);
-			$.log(`🚧 ${$.name}, 调试信息`, `$request.url: ${$request.url}`, "");
+			$.log(`🚧 调试信息`, `$request.url: ${$request.url}`, "");
 			break;
 		case false:
 			break;
@@ -360,7 +360,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 	.finally(() => {
 		switch ($response) {
 			default: // 有构造回复数据，返回构造的回复数据
-				//$.log(`🚧 ${$.name}, finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
+				//$.log(`🚧 finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
 				if ($response.headers?.["Content-Encoding"]) $response.headers["Content-Encoding"] = "identity";
 				if ($response.headers?.["content-encoding"]) $response.headers["content-encoding"] = "identity";
 				if ($.isQuanX()) {
@@ -372,7 +372,7 @@ $.log(`⚠ ${$.name}, FORMAT: ${FORMAT}`, "");
 				} else $.done({ response: $response });
 				break;
 			case undefined: // 无构造回复数据，发送修改的请求数据
-				//$.log(`🚧 ${$.name}, finally`, `$request: ${JSON.stringify($request, null, 2)}`, "");
+				//$.log(`🚧 finally`, `$request: ${JSON.stringify($request, null, 2)}`, "");
 				$.done($request);
 				break;
 		};
