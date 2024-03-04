@@ -7,8 +7,8 @@
 #!icon=https://github.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png
 #!category=🍿️ DualSubs
 #!select=自动显示翻译字幕,是,否
-#!select=仅输出译文,是,否
-#!select=字幕译文位置,译文位于外文之上,译文位于外文之下
+#!select=仅输出字幕译文,是,否
+#!select=字幕译文的位置,译文位于原文之上,译文位于原文之下
 
 [Rewrite]
 # 使用reject-img减少开销
