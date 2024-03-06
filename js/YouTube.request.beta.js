@@ -9292,7 +9292,7 @@ class MessageType {
     }
 }
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(5) request.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(6) request.beta");
 
 // 构造回复数据
 let $response = undefined;
@@ -9567,6 +9567,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											case "Official":
 											default:
 												$.log(`⚠ 官方字幕：合成器`, "");
+												if (URL.query.lang?.split?.(/[-_]/)?.[0] === URL.query.tlang?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
 												if (!Settings.ShowOnly) Lodash.set(URL, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":

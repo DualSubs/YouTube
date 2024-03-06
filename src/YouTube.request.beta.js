@@ -10,7 +10,7 @@ import setCache from "./function/setCache.mjs";
 import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(5) request.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(6) request.beta");
 
 // 构造回复数据
 let $response = undefined;
@@ -309,6 +309,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											case "Official":
 											default:
 												$.log(`⚠ 官方字幕：合成器`, "");
+												if (URL.query.lang?.split?.(/[-_]/)?.[0] === URL.query.tlang?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
 												if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
