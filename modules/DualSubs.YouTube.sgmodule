@@ -6,17 +6,19 @@
 #!manual=https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube
 #!icon=https://github.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png
 #!category=🍿️ DualSubs
+#!arguments=AutoCC:true,ShowOnly:false
+#!arguments-desc=AutoCC: 自动显示字幕\nShowOnly: 只显示“自动翻译”字幕
 
 [Rule]
 URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJECT-TINYGIF
 
 [Script]
 # YouTube
-DualSubs.YouTube.Player.request.json = type=http-request, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player, requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=
-DualSubs.YouTube.Player.response.json = type=http-response, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player, requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, argument=
-DualSubs.YouTube.Player.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player, requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=
-DualSubs.YouTube.Player.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player, requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, argument=
-DualSubs.YouTube.TimedText.request = type=http-request, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext, requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=
+DualSubs.YouTube.Player.request.json = type=http-request, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player, requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}
+DualSubs.YouTube.Player.response.json = type=http-response, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player, requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, argument=AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}
+DualSubs.YouTube.Player.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player, requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}
+DualSubs.YouTube.Player.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player, requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js, argument=AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}
+DualSubs.YouTube.TimedText.request = type=http-request, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext, requires-body=0, script-path=https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js, argument=AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}
 DualSubs.YouTube.Composite.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External), requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Composite.Subtitles.response.js, argument=
 DualSubs.YouTube.Translate.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate, requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, argument=
 
