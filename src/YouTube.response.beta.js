@@ -7,7 +7,6 @@ import Database from "./database/index.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
 
-import { TextEncoder , TextDecoder } from "./text-encoding/index.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
 const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.0.2(3) response.beta");
