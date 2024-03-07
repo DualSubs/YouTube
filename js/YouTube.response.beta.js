@@ -2934,7 +2934,7 @@ function setENV(name, platforms, database) {
 	/***************** Settings *****************/
 	if (!Array.isArray(Settings?.Types)) Settings.Types = (Settings.Types) ? [Settings.Types] : []; // 只有一个选项时，无逗号分隔
 	if (platforms.includes("YouTube")) {
-		Settings.AutoCC = $persistentStore.read("自动显示翻译字幕") ?? Settings.AutoCC;
+		Settings.AutoCC = $Storage.getItem("自动显示翻译字幕") ?? Settings.AutoCC;
 		switch (Settings.AutoCC) {
 			case "是":
 				Settings.AutoCC = true;
@@ -2942,7 +2942,7 @@ function setENV(name, platforms, database) {
 			case "否":
 				Settings.AutoCC = false;
 				break;
-		}		Settings.ShowOnly = $persistentStore.read("仅输出字幕译文") ?? Settings.ShowOnly;
+		}		Settings.ShowOnly = $Storage.getItem("仅输出字幕译文") ?? Settings.ShowOnly;
 		switch (Settings.ShowOnly) {
 			case "是":
 				Settings.ShowOnly = true;
@@ -2950,7 +2950,7 @@ function setENV(name, platforms, database) {
 			case "否":
 				Settings.ShowOnly = false;
 				break;
-		}		Settings.Position = $persistentStore.read("字幕译文的位置") ?? Settings.Position;
+		}		Settings.Position = $Storage.getItem("字幕译文的位置") ?? Settings.Position;
 		switch (Settings.Position) {
 			case "译文位于原文之上":
 				Settings.Position = "Forward";
