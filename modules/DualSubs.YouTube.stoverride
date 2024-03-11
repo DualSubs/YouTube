@@ -9,15 +9,14 @@ category: "🍿️ DualSubs"
 
 http:
   mitm:
-    - "-redirector*.googlevideo.com"
-    - "*.googlevideo.com"
     - "www.youtube.com"
     - "m.youtube.com"
     - "tv.youtube.com"
     - "music.youtube.com"
     - "youtubei.googleapis.com"
+    - "redirector.googlevideo.com"
   rewrite:
-    - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
+    - ^https?:\/\/redirector\.googlevideo\.com\/initplayback - reject
   script:
     - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player
       name: DualSubs.YouTube.request
