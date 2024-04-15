@@ -8,7 +8,7 @@
 #!category=🍿️ DualSubs
 
 #[rewrite_local]
-^https?:\/\/redirector\.googlevideo\.com\/initplayback url reject-dict
+^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ url reject-dict
 
 #[Script]
 # YouTube
@@ -38,4 +38,4 @@
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js
 
 #[MITM]
-hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, redirector.googlevideo.com
+hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

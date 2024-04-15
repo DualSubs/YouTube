@@ -9,7 +9,7 @@ category: "🍿️ DualSubs"
 
 rules:
 - url_regex:
-    match: ^https?:\/\/redirector\.googlevideo\.com\/initplayback
+    match: ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$
     policy: REJECT
 scriptings:
 - http_request:
@@ -100,4 +100,5 @@ mitm:
   - tv.youtube.com
   - music.youtube.com
   - youtubei.googleapis.com
-  - redirector.googlevideo.com
+  - -redirector*.googlevideo.com
+  - '*.googlevideo.com'
