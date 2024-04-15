@@ -1,7 +1,6 @@
 import _ from './ENV/Lodash.mjs'
 import $Storage from './ENV/$Storage.mjs'
 import ENV from "./ENV/ENV.mjs";
-import URI from "./URI/URI.mjs";
 
 import Database from "./database/index.mjs";
 import setENV from "./function/setENV.mjs";
@@ -9,18 +8,18 @@ import setCache from "./function/setCache.mjs";
 
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.3.4(6) request");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.4.0(4) request");
 
 // 构造回复数据
 let $response = undefined;
 
 /***************** Processing *****************/
 // 解构URL
-const URL = URI.parse($request.url);
-$.log(`⚠ URL: ${JSON.stringify(URL)}`, "");
+const url = new URL($request.url);
+$.log(`⚠ url: ${url.toJSON()}`, "");
 // 获取连接参数
-const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
-$.log(`⚠ METHOD: ${METHOD}`, "");
+const METHOD = $request.method, HOST = url.hostname, PATH = url.pathname;
+$.log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
 $.log(`⚠ FORMAT: ${FORMAT}`, "");
@@ -32,7 +31,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 		case true:
 		default:
 			// 获取字幕类型与语言
-			const Type = URL.query?.subtype ?? Settings.Type, Languages = [URL.query?.lang?.toUpperCase?.() ?? Settings.Languages[0], (URL.query?.tlang ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
+			const Type = url.searchParams.get("subtype") ?? Settings.Type, Languages = [url.searchParams.get("lang")?.toUpperCase?.() ?? Settings.Languages[0], (url.searchParams.get("tlang") ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
 			$.log(`⚠ Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = {};
@@ -48,7 +47,6 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 							break;
 						case "application/x-www-form-urlencoded":
 						case "text/plain":
-						case "text/html":
 						default:
 							break;
 						case "application/x-mpegURL":
@@ -57,6 +55,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 						case "audio/mpegurl":
 							break;
 						case "text/xml":
+						case "text/html":
 						case "text/plist":
 						case "application/xml":
 						case "application/plist":
@@ -69,7 +68,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 						case "application/json":
 							body = JSON.parse($request.body ?? "{}");
 							switch (PATH) {
-								case "youtubei/v1/player":
+								case "/youtubei/v1/player":
 									// 找功能
 									if (body?.playbackContext) { // 有播放设置
 										$.log(`⚠ playbackContext`, "");
@@ -78,8 +77,8 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 										};
 									};
 									break;
-								case "youtubei/v1/browse":
-									if (body?.browseId?.startsWith?.("MPLYt_")) _.set(URL, "query.subtype" , "Translate");
+								case "/youtubei/v1/browse":
+									if (body?.browseId?.startsWith?.("MPLYt_")) url.searchParams.set("subtype", "Translate");
 									break;
 								};
 							$request.body = JSON.stringify(body);
@@ -131,7 +130,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 									const AdSignalsInfo = new AdSignalsInfo$Type();
 									/******************  initialization finish  *******************/
 									switch (PATH) {
-										case "youtubei/v1/player":
+										case "/youtubei/v1/player":
 											/******************  initialization start  *******************/
 											// proto/player.request.js
 											class Player$Type extends MessageType {
@@ -178,7 +177,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											};
 											rawBody = Player.toBinary(body);
 											break;
-										case "youtubei/v1/browse":
+										case "/youtubei/v1/browse":
 											/******************  initialization start  *******************/
 											// proto/browse.request.js
 											class Browse$Type extends MessageType {
@@ -216,12 +215,17 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 						case "m.youtube.com":
 							// 路径判断
 							switch (PATH) {
-								case "api/timedtext":
-									if (!URL.query?.tlang) {
+								case "/api/timedtext":
+									const v = url.searchParams.get("v");
+									const kind = url.searchParams.get("kind");
+									const lang = url.searchParams.get("lang");
+									const tlang = url.searchParams.get("tlang");
+									$.log(`⚠ v: ${v}, kind: ${kind}, lang: ${lang}, tlang: ${tlang}`, "");
+									if (!tlang) {
 										$.log(`⚠ 翻译语言：未指定`, "");
 										// 保存原文语言
-										if (URL.query?.v && URL.query?.lang) {
-											Caches.Playlists.Subtitle.set(URL.query.v, URL.query.lang);
+										if (v && lang) {
+											Caches.Playlists.Subtitle.set(v, lang);
 											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
 											$Storage.setItem(`@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`, Caches.Playlists.Subtitle);
 										};
@@ -231,7 +235,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											default:
 												$.log(`⚠ 自动翻译字幕：开启`, "");
 												if (Caches.tlang) {
-													if (Caches.tlang !== URL.query?.lang) _.set(URL, "query.tlang", Caches.tlang);
+													if (Caches.tlang !== lang) url.searchParams.set("tlang", Caches.tlang);
 												}
 												break;
 											case false:
@@ -239,10 +243,10 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 												break;
 										};
 									};
-									if (URL.query?.tlang) {
+									if (url.searchParams.get("tlang")) {
 										$.log(`⚠ 翻译语言：已指定`, "");
 										// 保存目标语言
-										Caches.tlang = URL.query.tlang;
+										Caches.tlang = url.searchParams.get("tlang");
 										$Storage.setItem(`@DualSubs.${"YouTube"}.Caches.tlang`, Caches.tlang);
 										// 字幕类型判断
 										switch (Settings.Type) {
@@ -250,18 +254,18 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											case "Official":
 											default:
 												$.log(`⚠ 官方字幕：合成器`, "");
-												if (URL.query.lang?.split?.(/[-_]/)?.[0] === URL.query.tlang?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
-												if (!Settings.ShowOnly) _.set(URL, "query.subtype", "Official"); // 官方字幕
+												if (lang?.split?.(/[-_]/)?.[0] === url.searchParams.get("tlang")?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
+												if (!Settings.ShowOnly) url.searchParams.set("subtype", "Official"); // 官方字幕
 												break;
 											case "Translate":
 												$.log(`⚠ 翻译字幕：翻译器`, "");
-												delete URL.query?.tlang;
-												_.set(URL, "query.subtype", "Translate"); // 翻译字幕
+												url.searchParams.delete("tlang");
+												url.searchParams.set("subtype", "Translate"); // 翻译字幕
 												break;
 											case "External":
 												$.log(`⚠ 外部字幕：外部源`, "");
-												delete URL.query?.tlang
-												_.set(URL, "query.subtype", "External"); // 外挂字幕
+												url.searchParams.delete("tlang");
+												url.searchParams.set("subtype", "External"); // 外挂字幕
 												break;
 										};
 									};
@@ -276,8 +280,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 				case "TRACE":
 					break;
 			};
-			if ($request.headers?.Host) $request.headers.Host = URL.host;
-			$request.url = URI.stringify(URL);
+			$request.url = url.toString();
 			$.log(`🚧 调试信息`, `$request.url: ${$request.url}`, "");
 			break;
 		case false:
