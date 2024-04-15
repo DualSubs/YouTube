@@ -1,7 +1,6 @@
 import _ from './ENV/Lodash.mjs'
 import $Storage from './ENV/$Storage.mjs'
 import ENV from "./ENV/ENV.mjs";
-import URI from "./URI/URI.mjs";
 
 import Database from "./database/index.mjs";
 import setENV from "./function/setENV.mjs";
@@ -9,15 +8,15 @@ import setCache from "./function/setCache.mjs";
 
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.0.2(3) response.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.1.0(1) response.beta");
 
 /***************** Processing *****************/
 // 解构URL
-const URL = URI.parse($request.url);
-$.log(`⚠ URL: ${JSON.stringify(URL)}`, "");
+const url = new URL($request.url);
+$.log(`⚠ url: ${url.toJSON()}`, "");
 // 获取连接参数
-const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
-$.log(`⚠ METHOD: ${METHOD}`, "");
+const METHOD = $request.method, HOST = url.hostname, PATH = url.pathname;
+$.log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
 // 解析格式
 const FORMAT = ($response.headers?.["Content-Type"] ?? $response.headers?.["content-type"])?.split(";")?.[0];
 $.log(`⚠ FORMAT: ${FORMAT}`, "");
@@ -29,7 +28,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 		case true:
 		default:
 			// 获取字幕类型与语言
-			const Type = URL.query?.subtype ?? Settings.Type, Languages = [URL.query?.lang?.toUpperCase?.() ?? Settings.Languages[0], (URL.query?.tlang ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
+			const Type = url.searchParams.get("subtype") ?? Settings.Type, Languages = [url.searchParams.get("lang")?.toUpperCase?.() ?? Settings.Languages[0], (url.searchParams.get("tlang") ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
 			$.log(`⚠ Type: ${Type}, Languages: ${Languages}`, "");
 			// 创建空数据
 			let body = { "captions": { "playerCaptionsTracklistRenderer": { "captionTracks": [], "audioTracks": [], "translationLanguages": [] } } };
@@ -39,7 +38,6 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 					break;
 				case "application/x-www-form-urlencoded":
 				case "text/plain":
-				case "text/html":
 				default:
 					break;
 				case "application/x-mpegURL":
@@ -51,6 +49,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 					//$response.body = M3U8.stringify(body);
 					break;
 				case "text/xml":
+				case "text/html":
 				case "text/plist":
 				case "application/xml":
 				case "application/plist":
@@ -69,7 +68,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 				case "application/json":
 					body = JSON.parse($response.body ?? "{}");
 					switch (PATH) {
-						case "youtubei/v1/player":
+						case "/youtubei/v1/player":
 							// 找功能
 							if (body?.captions) { // 有基础字幕
 								$.log(`⚠ Captions`, "");
@@ -103,7 +102,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 								};
 							};
 							break;
-						case "youtubei/v1/browse":
+						case "/youtubei/v1/browse":
 							break;
 					};
 					$response.body = JSON.stringify(body);
@@ -122,7 +121,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 						case "application/x-protobuf":
 						case "application/vnd.google.protobuf":
 							switch (PATH) {
-								case "youtubei/v1/player":
+								case "/youtubei/v1/player":
 									/******************  initialization start  *******************/
 									// proto/player.response.proto
 									class Player$Type extends MessageType {
@@ -264,7 +263,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 									};
 									rawBody = Player.toBinary(body);
 									break;
-								case "youtubei/v1/browse":
+								case "/youtubei/v1/browse":
 									break;
 							};
 							break;
