@@ -23,7 +23,7 @@ $.log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
 $.log(`⚠ FORMAT: ${FORMAT}`, "");
-(async () => {
+!(async () => {
 	// 读取设置
 	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", Database);
 	$.log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
