@@ -19,29 +19,29 @@ http:
   rewrite:
     - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
   script:
-    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player
+    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*)
       name: DualSubs.YouTube.request
       type: request
       require-body: true
       argument:
-    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player
+    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*)
       name: DualSubs.YouTube.response
       type: response
       require-body: true
       argument:
-    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*)
       name: DualSubs.YouTube.request
       type: request
       require-body: true
       binary-mode: true
       argument:
-    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*)
       name: DualSubs.YouTube.response
       type: response
       require-body: true
       binary-mode: true
       argument:
-    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)
       name: DualSubs.YouTube.request
       type: request
       require-body: false
@@ -57,12 +57,12 @@ http:
       require-body: true
       argument:
 
-    - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse
+    - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)
       name: DualSubs.YouTube.request
       type: request
       require-body: true
       argument:
-    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)
       name: DualSubs.YouTube.request
       type: request
       require-body: true

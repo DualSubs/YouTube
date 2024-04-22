@@ -21,17 +21,17 @@
 # DualSubs.YouTube.Player.response.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player url script-response-body https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.response.beta.js
 # DualSubs.YouTube.TimedText.request
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*) url script-request-header https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
+# DualSubs.YouTube.Composite.TimedText.response
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Composite.Subtitles.response.beta.js
 # DualSubs.YouTube.Translate.TimedText.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Translate.response.beta.js
-# DualSubs.YouTube.Composite.TimedText.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Composite.Subtitles.response.beta.js
 
 # YouTube Music
 # DualSubs.YouTubeMusic.Browse.request.json
-^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*) url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
 # DualSubs.YouTube.Browse.request.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*) url script-request-body https://raw.githubusercontent.com/DualSubs/YouTube/beta/js/YouTube.request.beta.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.json
 ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Translate.response.beta.js
 # DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
