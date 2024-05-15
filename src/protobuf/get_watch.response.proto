@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option optimize_for = CODE_SIZE;
+
+// https://youtubei.googleapis.com/youtubei/v1/get_watch
+message watchResponse {
+  repeated watchResponse contents = 1;
+  optional Player playerResponse = 2;
+  optional Player playerConfig = 3;
+  bool playerAds = 7;
+  bool adPlacements = 10;
+  //???? ???? = 15;
+};
+
+message PlayerResponse {
+  optional Player playerResponse = 2;
+  optional Player playerConfig = 3;
+  bool playerAds = 7;
+  bool adPlacements = 10;
+  //???? ???? = 15;
+};
+
+message Player {
+	//Context responseContext = 1;
+	//PlaybackTracking playbackTracking = 9;
+	//StreamingData streamingData = 4;
+	//PlaybackTracking playbackTracking = 9;
+	//HeartbeatParams heartbeatParams = 6;
+	//Captions captions = 10;
+	//VideoDetails videoDetails = 11;
+	//repeated Annotations annotations = 13;
+	//Storyboards storyboards = 16;
+	//Attestation attestation = 22;
+	//Endscreen endscreen = 32;
+};
