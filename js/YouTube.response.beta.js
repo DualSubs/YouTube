@@ -2982,43 +2982,6 @@ function setENV(name, platforms, database) {
 	return { Settings, Caches, Configs };
 }
 
-function setCaptions(captions, translationLanguages) {
-    console.log(`☑️ Set Captions`);
-    // 有播放器字幕列表渲染器
-    if (captions?.playerCaptionsTracklistRenderer) {
-        console.log(`⚠ Tracklist`);
-        if (captions?.playerCaptionsTracklistRenderer?.captionTracks) {
-            // 改字幕可用性
-            captions.playerCaptionsTracklistRenderer.captionTracks = captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
-                caption.isTranslatable = true;
-                return caption;
-            });
-        }        if (captions?.playerCaptionsTracklistRenderer?.audioTracks) {
-            // 改音轨可用性
-            captions.playerCaptionsTracklistRenderer.audioTracks = captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
-                audio.visibility = 2; //"ON";
-                audio.hasDefaultTrack = true;
-                audio.captionsInitialState = 3; //"CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
-                return audio;
-            });
-        }        // 增加自动翻译可用语言
-        switch (HOST) {
-            case "www.youtube.com":
-            case "tv.youtube.com":
-            default:
-                captions.playerCaptionsTracklistRenderer.translationLanguages = translationLanguages.DESKTOP;
-                break;
-            case "m.youtube.com":
-            case "youtubei.googleapis.com":
-                captions.playerCaptionsTracklistRenderer.translationLanguages = translationLanguages.MOBILE;
-                break;
-        }        // 改默认字幕索引值，来指定“源语言”，从而启用“自动翻译”
-        if (!captions?.playerCaptionsTracklistRenderer?.defaultCaptionTrackIndex) {
-            captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
-        }    }    console.log(`✅ Set Captions, `);
-    return captions;
-}
-
 /**
  * Get the type of a JSON value.
  * Distinguishes between array, null and object.
@@ -5964,15 +5927,15 @@ class MessageType {
     }
 }
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.2.0(1004) response.beta");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.2.1(1006) response.beta");
 
 /***************** Processing *****************/
 // 解构URL
 const url = new URL($request.url);
 $.log(`⚠ url: ${url.toJSON()}`, "");
 // 获取连接参数
-const METHOD = $request.method, HOST$1 = url.hostname, PATH = url.pathname;
-$.log(`⚠ METHOD: ${METHOD}, HOST: ${HOST$1}, PATH: ${PATH}` , "");
+const METHOD = $request.method, HOST = url.hostname, PATH = url.pathname;
+$.log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
 // 解析格式
 const FORMAT = ($response.headers?.["Content-Type"] ?? $response.headers?.["content-type"])?.split(";")?.[0];
 $.log(`⚠ FORMAT: ${FORMAT}`, "");
@@ -6043,7 +6006,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 											return caption;
 										});
 									}									// 增加自动翻译可用语言
-									switch (HOST$1) {
+									switch (HOST) {
 										case "www.youtube.com":
 										case "tv.youtube.com":
 										default:
@@ -6073,14 +6036,34 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 								case "/youtubei/v1/get_watch":
 								case "/youtubei/v1/player":
 									/******************  initialization start  *******************/
-									// proto/player.response.proto
-									class Player$Type extends MessageType {
+									// get_watch.response.proto
+									class getWatchResponse$Type extends MessageType {
 										constructor() {
-											super("Player", [
+											super("getWatchResponse", [
+												{ no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+											]);
+										}
+									}
+									const getWatchResponse = new getWatchResponse$Type();
+									class Contents$Type extends MessageType {
+										constructor() {
+											super("Contents", [
+												{ no: 2, name: "playerResponse", kind: "message", T: () => playerResponse },
+												{ no: 3, name: "playerConfig", kind: "message", T: () => playerResponse },
+												{ no: 7, name: "playerAds", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+												{ no: 10, name: "adPlacements", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+											]);
+										}
+									}
+									const Contents = new Contents$Type();
+									// proto/player.response.proto
+									class playerResponse$Type extends MessageType {
+										constructor() {
+											super("playerResponse", [
 												{ no: 10, name: "captions", kind: "message", T: () => Captions }
 											]);
 										}
-									}									const Player = new Player$Type();
+									}									const playerResponse = new playerResponse$Type();
 									class Captions$Type extends MessageType {
 										constructor() {
 											super("Captions", [
@@ -6149,31 +6132,17 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 										}
 									}									const Runs = new Runs$Type();
 									/******************  initialization finish  *******************/
+									let captions;
 									switch (PATH) {
 										case "/youtubei/v1/get_watch":
-											/******************  initialization start  *******************/
-											// get_watch.response.proto
-											class PlayerResponse$Type extends MessageType {
-												constructor() {
-													super("PlayerResponse", [
-														{ no: 1, name: "playerResponse", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PlayerResponse },
-														{ no: 2, name: "playerData", kind: "message", T: () => Player },
-														{ no: 3, name: "playerConfig", kind: "message", T: () => Player },
-														{ no: 7, name: "playerAds", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-														{ no: 10, name: "adPlacements", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-													]);
-												}
-											}
-											const PlayerResponse = new PlayerResponse$Type();
-											/******************  initialization finish  *******************/
-											body = PlayerResponse.fromBinary(rawBody);
+											body = getWatchResponse.fromBinary(rawBody);
 											$.log(`🚧 body: ${JSON.stringify(body)}`, "");
-											if (body?.playerResponse?.[0]?.playerData?.captions) body.playerResponse[0].playerData.captions = setCaptions(body.playerResponse[0].playerData.captions, Configs.translationLanguages);
-											rawBody = PlayerResponse.toBinary(body);
+											if (body?.contents?.[0]?.playerResponse?.captions) captions = body.contents[0].playerResponse.captions;
 											break;
 										case "/youtubei/v1/player":
-											body = Player.fromBinary(rawBody);
+											body = playerResponse.fromBinary(rawBody);
 											$.log(`🚧 body: ${JSON.stringify(body)}`, "");
+											/*
 											let UF = UnknownFieldHandler.list(body?.streamingData?.adaptiveFormats[body?.streamingData?.adaptiveFormats?.length - 2]);
 											$.log(`🚧 UF: ${JSON.stringify(UF)}`, "");
 											if (UF) {
@@ -6185,8 +6154,49 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 													let addedNumber = reader.int32(); // 7777
 													$.log(`🚧 no: ${uf.no}, wireType: ${uf.wireType}, reader: ${reader}, addedNumber: ${addedNumber}`, "");
 												});
-											}											if (body?.captions) body.captions = setCaptions(body.captions, Configs.translationLanguages);
-											rawBody = Player.toBinary(body);
+											};
+											*/
+											if (body?.captions) captions = body.captions;
+											break;
+									}									if (captions) { // 有基础字幕
+										$.log(`⚠ Captions`, "");
+										// 有播放器字幕列表渲染器
+										if (captions?.playerCaptionsTracklistRenderer) {
+											$.log(`⚠ Tracklist`, "");
+											if (captions?.playerCaptionsTracklistRenderer?.captionTracks) {
+												// 改字幕可用性
+												captions.playerCaptionsTracklistRenderer.captionTracks = captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
+													caption.isTranslatable = true;
+													return caption;
+												});
+											}											if (captions?.playerCaptionsTracklistRenderer?.audioTracks) {
+												// 改音轨可用性
+												captions.playerCaptionsTracklistRenderer.audioTracks = captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
+													audio.visibility = 2; //"ON";
+													audio.hasDefaultTrack = true;
+													audio.captionsInitialState = 3; //"CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
+													return audio;
+												});
+											}											// 增加自动翻译可用语言
+											switch (HOST) {
+												case "www.youtube.com":
+												case "tv.youtube.com":
+												default:
+													captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+													break;
+												case "m.youtube.com":
+												case "youtubei.googleapis.com":
+													captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+													break;
+											}											// 改默认字幕索引值，来指定“源语言”，从而启用“自动翻译”
+											if (!captions?.playerCaptionsTracklistRenderer?.defaultCaptionTrackIndex) {
+												captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
+											}										}									}									switch (PATH) {
+										case "/youtubei/v1/get_watch":
+											rawBody = getWatchResponse.toBinary(body);
+											break;
+										case "/youtubei/v1/player":
+											rawBody = playerResponse.toBinary(body);
 											break;
 									}									break;
 							}							break;

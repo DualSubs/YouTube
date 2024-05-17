@@ -6,11 +6,22 @@
 // tslint:disable
 import { MessageType } from "@protobuf-ts/runtime";
 // @generated message type with reflection information, may provide speed optimized methods
-class PlayerResponse$Type extends MessageType {
+class getWatchResponse$Type extends MessageType {
     constructor() {
-        super("PlayerResponse", [
-            { no: 1, name: "playerResponse", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PlayerResponse },
-            { no: 2, name: "playerData", kind: "message", T: () => Player },
+        super("getWatchResponse", [
+            { no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message getWatchResponse
+ */
+export const getWatchResponse = new getWatchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Contents$Type extends MessageType {
+    constructor() {
+        super("Contents", [
+            { no: 2, name: "playerResponse", kind: "message", T: () => Player },
             { no: 3, name: "playerConfig", kind: "message", T: () => Player },
             { no: 7, name: "playerAds", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "adPlacements", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
@@ -18,9 +29,9 @@ class PlayerResponse$Type extends MessageType {
     }
 }
 /**
- * @generated MessageType for protobuf message PlayerResponse
+ * @generated MessageType for protobuf message Contents
  */
-export const PlayerResponse = new PlayerResponse$Type();
+export const Contents = new Contents$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Player$Type extends MessageType {
     constructor() {

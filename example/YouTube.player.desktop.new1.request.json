@@ -1,0 +1,146 @@
+{
+  "contentCheckOk": false,
+  "racyCheckOk": false,
+  "videoId": "JO7Nav6fT5I",
+  "context": {
+    "adSignalsInfo": {
+      "params": [
+        {
+          "key": "dt",
+          "value": "1715918738958"
+        },
+        {
+          "key": "flash",
+          "value": "0"
+        },
+        {
+          "key": "frm",
+          "value": "0"
+        },
+        {
+          "key": "u_tz",
+          "value": "480"
+        },
+        {
+          "key": "u_his",
+          "value": "2"
+        },
+        {
+          "key": "u_h",
+          "value": "800"
+        },
+        {
+          "key": "u_w",
+          "value": "1280"
+        },
+        {
+          "key": "u_ah",
+          "value": "721"
+        },
+        {
+          "key": "u_aw",
+          "value": "1280"
+        },
+        {
+          "key": "u_cd",
+          "value": "24"
+        },
+        {
+          "key": "bc",
+          "value": "31"
+        },
+        {
+          "key": "bih",
+          "value": "666"
+        },
+        {
+          "key": "biw",
+          "value": "1264"
+        },
+        {
+          "key": "brdim",
+          "value": "0,25,0,25,1280,25,1280,718,1280,666"
+        },
+        {
+          "key": "vis",
+          "value": "1"
+        },
+        {
+          "key": "wgl",
+          "value": "true"
+        },
+        {
+          "key": "ca_type",
+          "value": "image"
+        }
+      ]
+    },
+    "clickTracking": {
+      "clickTrackingParams": "CNECENwwIhMIhOO0tueThgMVl1kPAh1ZTAy2MgpnLWhpZ2gtcmVjWg9GRXdoYXRfdG9fd2F0Y2iaAQYQjh4YngE="
+    },
+    "client": {
+      "osVersion": "10_15_7",
+      "screenPixelDensity": 2,
+      "clientName": "WEB",
+      "screenDensityFloat": 2,
+      "deviceExperimentId": "ChxOek0yT1RneE5EZzFPVFV4TURFNU16UXhNUT09EJGvm7IGGJGvm7IG",
+      "hl": "zh-CN",
+      "deviceMake": "Apple",
+      "browserName": "Safari",
+      "clientScreen": "WATCH",
+      "remoteHost": "123.203.13.180",
+      "clientFormFactor": "UNKNOWN_FORM_FACTOR",
+      "screenWidthPoints": 1280,
+      "userInterfaceTheme": "USER_INTERFACE_THEME_DARK",
+      "platform": "DESKTOP",
+      "userAgent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/17.5 Safari\/605.1.15,gzip(gfe)",
+      "clientVersion": "2.20240514.03.00",
+      "originalUrl": "https:\/\/www.youtube.com\/watch?v=JO7Nav6fT5I",
+      "configInfo": {
+        "appInstallData": "CJGvm7IGENCNsAUQiIewBRDT4a8FEM3XsAUQ__CwBRCBxrAFEPGcsAUQqtiwBRCI468FEOvo_hIQ2cmvBRDi1K4FENbnsAUQooGwBRCN6LAFEPCysAUQyfevBRDZ4LAFEPPgsAUQ7qKvBRCDv7AFELfq_hIQkLKwBRCn47AFEJjxsAUQzN-uBRD14LAFELvSrwUQ86n_EhDV3bAFEIKi_xIQgqKwBRCr77AFEParsAUQj8SwBRC-irAFEIvPsAUQjtqwBRCd0LAFEP_fsAUQ56-wBRD30LAFEI3MsAUQro__EhDd6P4SELfvrwUQgOWwBRCL7LAFELersAUQ1-CwBRComrAFEPvasAUQ26-vBRDeiP8SEL75rwUQvZmwBRD40rAFEKaasAUQ7rOwBRCa8K8FELHcsAUQopKwBRCs2LAFEKvksAUQnuSwBRDJ17AFEMf9tyIQgO2wBRDzobAFEOrDrwUQ9eSwBRDj0bAFEPnrsAUQlp__EhD0q7AFEJaVsAUQ-eSwBRDX6a8FEMTMsAUQlfGwBRDT4LAFEJeDsAUQieiuBRCs6rAFEKXC_hIQmvGwBRCD368FEKPtsAUQ9OuwBRDViLAFEO_NsAUQvbauBRD8hbAFEK3jsAUQ192wBRDPqLAFENShrwUQ69uwBRD36LAFEIKt_xIQidawBRCH87AFEPDBsAUqHENBTVNEeFVNb0wyd0RQbjk4d3ZMMUFRZEJ3PT0%3D"
+      },
+      "timeZone": "Asia\/Shanghai",
+      "deviceModel": "",
+      "screenHeightPoints": 666,
+      "mainAppWebInfo": {
+        "webDisplayMode": "WEB_DISPLAY_MODE_BROWSER",
+        "isWebNativeShareAvailable": true,
+        "graftUrl": "\/watch?v=JO7Nav6fT5I"
+      },
+      "acceptHeader": "text\/html,application\/xhtml+xml,application\/xml;q=0.9,*\/*;q=0.8",
+      "gl": "US",
+      "visitorData": "CgszMW13NDVxWjZzVSiRr5uyBjIKCgJUVxIEGgAgQQ%3D%3D",
+      "utcOffsetMinutes": 480,
+      "osName": "Macintosh",
+      "browserVersion": "17.5"
+    },
+    "request": {
+      "useSsl": true,
+      "consistencyTokenJars": [
+      ],
+      "internalExperimentFlags": [
+      ]
+    },
+    "user": {
+      "lockedSafetyMode": false
+    }
+  },
+  "playbackContext": {
+    "contentPlaybackContext": {
+      "referer": "https:\/\/www.youtube.com\/",
+      "autoCaptionsDefaultOn": true,
+      "html5Preference": "HTML5_PREF_WANTS",
+      "signatureTimestamp": 19857,
+      "lactMilliseconds": "-1",
+      "watchAmbientModeContext": {
+        "hasShownAmbientMode": true,
+        "watchAmbientModeEnabled": true,
+        "hasToggledOffAmbientMode": true
+      },
+      "vis": 0,
+      "currentUrl": "\/watch?v=JO7Nav6fT5I",
+      "splay": false,
+      "autonavState": "STATE_OFF"
+    }
+  }
+}

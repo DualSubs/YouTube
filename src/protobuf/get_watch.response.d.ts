@@ -5,17 +5,22 @@ import { MessageType } from "@protobuf-ts/runtime";
 /**
  * https://youtubei.googleapis.com/youtubei/v1/get_watch
  *
- * @generated from protobuf message PlayerResponse
+ * @generated from protobuf message getWatchResponse
  */
-export interface PlayerResponse {
+export interface getWatchResponse {
     /**
-     * @generated from protobuf field: repeated PlayerResponse playerResponse = 1;
+     * @generated from protobuf field: repeated Contents contents = 1;
      */
-    playerResponse: PlayerResponse[];
+    contents: Contents[];
+}
+/**
+ * @generated from protobuf message Contents
+ */
+export interface Contents {
     /**
-     * @generated from protobuf field: optional Player playerData = 2;
+     * @generated from protobuf field: optional Player playerResponse = 2;
      */
-    playerData?: Player;
+    playerResponse?: Player;
     /**
      * @generated from protobuf field: optional Player playerConfig = 3;
      */
@@ -46,13 +51,20 @@ export interface PlayerResponse {
  */
 export interface Player {
 }
-declare class PlayerResponse$Type extends MessageType<PlayerResponse> {
+declare class getWatchResponse$Type extends MessageType<getWatchResponse> {
     constructor();
 }
 /**
- * @generated MessageType for protobuf message PlayerResponse
+ * @generated MessageType for protobuf message getWatchResponse
  */
-export declare const PlayerResponse: PlayerResponse$Type;
+export declare const getWatchResponse: getWatchResponse$Type;
+declare class Contents$Type extends MessageType<Contents> {
+    constructor();
+}
+/**
+ * @generated MessageType for protobuf message Contents
+ */
+export declare const Contents: Contents$Type;
 declare class Player$Type extends MessageType<Player> {
     constructor();
 }

@@ -3,16 +3,12 @@ syntax = "proto3";
 option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/get_watch
-message watchResponse {
-  repeated watchResponse contents = 1;
-  optional Player playerResponse = 2;
-  optional Player playerConfig = 3;
-  bool playerAds = 7;
-  bool adPlacements = 10;
+message getWatchResponse {
+  repeated Contents contents = 1;
   //???? ???? = 15;
 };
 
-message PlayerResponse {
+message Contents {
   optional Player playerResponse = 2;
   optional Player playerConfig = 3;
   bool playerAds = 7;
