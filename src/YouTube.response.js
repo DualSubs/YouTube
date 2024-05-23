@@ -8,7 +8,7 @@ import setCache from "./function/setCache.mjs";
 
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "../node_modules/@protobuf-ts/runtime/build/es2015/index.js";
 
-const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.1.0(1) response");
+const $ = new ENV("🍿 DualSubs: ▶ YouTube v1.2.1(1006) response");
 
 /***************** Processing *****************/
 // 解构URL
@@ -110,17 +110,38 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 						case "application/x-protobuf":
 						case "application/vnd.google.protobuf":
 							switch (PATH) {
+								case "/youtubei/v1/get_watch":
 								case "/youtubei/v1/player":
 									/******************  initialization start  *******************/
-									// proto/player.response.proto
-									class Player$Type extends MessageType {
+									// get_watch.response.proto
+									class getWatchResponse$Type extends MessageType {
 										constructor() {
-											super("Player", [
+											super("getWatchResponse", [
+												{ no: 1, name: "contents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Contents }
+											]);
+										}
+									}
+									const getWatchResponse = new getWatchResponse$Type();
+									class Contents$Type extends MessageType {
+										constructor() {
+											super("Contents", [
+												{ no: 2, name: "playerResponse", kind: "message", T: () => playerResponse },
+												{ no: 3, name: "playerConfig", kind: "message", T: () => playerResponse },
+												{ no: 7, name: "playerAds", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+												{ no: 10, name: "adPlacements", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+											]);
+										}
+									}
+									const Contents = new Contents$Type();
+									// proto/player.response.proto
+									class playerResponse$Type extends MessageType {
+										constructor() {
+											super("playerResponse", [
 												{ no: 10, name: "captions", kind: "message", T: () => Captions }
 											]);
 										}
 									};
-									const Player = new Player$Type();
+									const playerResponse = new playerResponse$Type();
 									class Captions$Type extends MessageType {
 										constructor() {
 											super("Captions", [
@@ -196,24 +217,32 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 									};
 									const Runs = new Runs$Type();
 									/******************  initialization finish  *******************/
-									body = Player.fromBinary(rawBody);
-									$.log(`🚧 body: ${JSON.stringify(body)}`, "");
-									// 找功能
-									if (body?.captions) { // 有基础字幕
+									let captions;
+									switch (PATH) {
+										case "/youtubei/v1/get_watch":
+										body = getWatchResponse.fromBinary(rawBody);
+										if (body?.contents?.[0]?.playerResponse?.captions) captions = body.contents[0].playerResponse.captions;
+										break;
+										case "/youtubei/v1/player":
+											body = playerResponse.fromBinary(rawBody);
+											if (body?.captions) captions = body.captions;
+											break;
+									};
+									if (captions) { // 有基础字幕
 										$.log(`⚠ Captions`, "");
 										// 有播放器字幕列表渲染器
-										if (body?.captions?.playerCaptionsTracklistRenderer) {
+										if (captions?.playerCaptionsTracklistRenderer) {
 											$.log(`⚠ Tracklist`, "");
-											if (body?.captions?.playerCaptionsTracklistRenderer?.captionTracks) {
+											if (captions?.playerCaptionsTracklistRenderer?.captionTracks) {
 												// 改字幕可用性
-												body.captions.playerCaptionsTracklistRenderer.captionTracks = body?.captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
+												captions.playerCaptionsTracklistRenderer.captionTracks = captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
 													caption.isTranslatable = true;
 													return caption;
 												});
 											};
-											if (body?.captions?.playerCaptionsTracklistRenderer?.audioTracks) {
+											if (captions?.playerCaptionsTracklistRenderer?.audioTracks) {
 												// 改音轨可用性
-												body.captions.playerCaptionsTracklistRenderer.audioTracks = body?.captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
+												captions.playerCaptionsTracklistRenderer.audioTracks = captions?.playerCaptionsTracklistRenderer.audioTracks.map(audio => {
 													audio.visibility = 2 //"ON";
 													audio.hasDefaultTrack = true;
 													audio.captionsInitialState = 3 //"CAPTIONS_INITIAL_STATE_ON_RECOMMENDED";
@@ -225,20 +254,27 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 												case "www.youtube.com":
 												case "tv.youtube.com":
 												default:
-													body.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
+													captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.DESKTOP;
 													break;
 												case "m.youtube.com":
 												case "youtubei.googleapis.com":
-													body.captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
+													captions.playerCaptionsTracklistRenderer.translationLanguages = Configs.translationLanguages.MOBILE;
 													break;
 											};
 											// 改默认字幕索引值，来指定“源语言”，从而启用“自动翻译”
-											if (!body?.captions?.playerCaptionsTracklistRenderer?.defaultCaptionTrackIndex) {
-												body.captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
+											if (!captions?.playerCaptionsTracklistRenderer?.defaultCaptionTrackIndex) {
+												captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
 											};
 										};
 									};
-									rawBody = Player.toBinary(body);
+									switch (PATH) {
+										case "/youtubei/v1/get_watch":
+											rawBody = getWatchResponse.toBinary(body);
+											break;
+										case "/youtubei/v1/player":
+											rawBody = playerResponse.toBinary(body);
+											break;
+									};
 									break;
 								case "/youtubei/v1/browse":
 									break;
