@@ -3,18 +3,18 @@ syntax = "proto3";
 option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/player
-message Player {
+message PlayerResponse {
 	Context responseContext = 1;
-	PlayabilityStatus playabilityStatus = 2;
-	StreamingData streamingData = 4;
-	HeartbeatParams heartbeatParams = 6;
+	optional PlayabilityStatus playabilityStatus = 2;
+	optional StreamingData streamingData = 4;
+	optional HeartbeatParams heartbeatParams = 6;
 	PlaybackTracking playbackTracking = 9;
-	Captions captions = 10;
-	VideoDetails videoDetails = 11;
+	optional Captions captions = 10;
+	optional VideoDetails videoDetails = 11;
 	repeated Annotations annotations = 13;
 	Storyboards storyboards = 16;
-	Attestation attestation = 22;
-	Endscreen endscreen = 32;
+	optional Attestation attestation = 22;
+	optional Endscreen endscreen = 32;
 };
 
 message Context {

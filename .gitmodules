@@ -1,6 +1,6 @@
 [submodule "BoxJs"]
 	path = BoxJs
 	url = https://github.com/DualSubs/BoxJs.git
-[submodule "src/ENV"]
-	path = src/ENV
-	url = https://github.com/NanoCat-Me/ENV.git
+[submodule "src/utils"]
+	path = src/utils
+	url = https://github.com/NanoCat-Me/utils.git

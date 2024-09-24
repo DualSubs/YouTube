@@ -3,13 +3,13 @@ syntax = "proto3";
 option optimize_for = CODE_SIZE;
 
 // https://youtubei.googleapis.com/youtubei/v1/player
-message Player {
+message PlayerResponse {
 	//Context responseContext = 1;
 	//PlaybackTracking playbackTracking = 9;
 	//StreamingData streamingData = 4;
 	//PlaybackTracking playbackTracking = 9;
 	//HeartbeatParams heartbeatParams = 6;
-	Captions captions = 10;
+	optional Captions captions = 10;
 	//VideoDetails videoDetails = 11;
 	//repeated Annotations annotations = 13;
 	//Storyboards storyboards = 16;
