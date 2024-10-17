@@ -1,0 +1,38 @@
+#!name = {{@package 'displayName'}}
+#!desc = {{inline (@package 'description')}}
+#!openUrl = {{@package 'openUrl'}}
+#!author = {{@package 'contributors'}}
+#!homepage = {{@package 'homepage'}}
+#!icon = {{@package 'icon'}}
+#!tag = {{@package 'organizationName'}}
+#!system = {{@package 'system'}}
+#!date = {{now "yyyy-MM-dd HH:mm:ss"}}
+#!version = {{@package 'version'}}
+#!system_version = {{ @package 'systemVersion'}}
+
+[Argument]
+{{{arguments}}}
+
+[Rewrite]
+# 使用reject-img减少开销
+^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
+
+[Script]
+# YouTube
+http-request ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, tag=DualSubs.YouTube.Player.request.json, argument={{{scriptParams}}}
+http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js, tag=DualSubs.YouTube.Player.response.json, argument={{{scriptParams}}}
+http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, tag=DualSubs.YouTube.Player.request.proto, argument={{{scriptParams}}}
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js, tag=DualSubs.YouTube.Player.response.proto, argument={{{scriptParams}}}
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$ requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js, tag=DualSubs.YouTube.GetWatch.response.proto, argument={{{scriptParams}}}
+http-request ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$ script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, tag=DualSubs.YouTube.TimedText.request, argument={{{scriptParams}}}
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Composite.Subtitles.response.js, tag=DualSubs.YouTube.Composite.TimedText.response, argument={{{scriptParams}}}
+http-response ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTube.Translate.TimedText.response, argument={{{scriptParams}}}
+
+# YouTube Music
+http-request ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$ requires-body=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, tag=DualSubs.YouTubeMusic.Browse.request.json, argument={{{scriptParams}}}
+http-request ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$ requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, tag=DualSubs.YouTube.Browse.request.proto, argument={{{scriptParams}}}
+http-response ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate requires-body=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTubeMusic.Translate.Lyrics.response.json, argument={{{scriptParams}}}
+http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate requires-body=1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/main/js/Translate.response.js, tag=DualSubs.YouTubeMusic.Translate.Lyrics.response.proto, argument={{{scriptParams}}}
+
+[MITM]
+hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

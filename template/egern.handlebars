@@ -1,11 +1,18 @@
-name: "🍿️ DualSubs: ▶️ YouTube"
-description: "YouTube字幕&歌词增强及双语模块"
-open_url: "http://boxjs.com/#/app/DualSubs.YouTube"
-author: "VirgilClyne"
-homepage: "https://github.com/DualSubs/YouTube"
-manual: "https://github.com/DualSubs/YouTube/wiki/🍿-DualSubs:-▶-YouTube"
-icon: "https://github.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png"
-category: "🍿️ DualSubs"
+name: "{{@package 'displayName'}}"
+description: |-
+  {{#each (split (@package 'description') "\n")}}
+  {{{this}}}
+  {{/each}}
+open_url: "{{@package 'openUrl'}}"
+author: |-
+  {{#each (@package 'contributors')}}
+  {{this}}
+  {{/each}}
+homepage: "{{@package 'homepage'}}"
+icon: "{{@package 'icon'}}"
+category: "{{@package 'organizationName'}}"
+date: "{{now "yyyy-MM-dd HH:mm:ss"}}"
+version: "{{@package 'version'}}"
 
 rules:
 - url_regex:
@@ -14,46 +21,46 @@ rules:
 scriptings:
 - http_request:
     name: 'DualSubs.YouTube.Player.request.json'
-    match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
+    match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
 - http_response:
     name: 'DualSubs.YouTube.Player.response.json'
-    match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js
+    match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
 - http_request:
     name: 'DualSubs.YouTube.Player.request.proto'
-    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
+    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
     binary_body: true
 - http_response:
     name: 'DualSubs.YouTube.Player.response.proto'
-    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js
+    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
     binary_body: true
 - http_response:
     name: 'DualSubs.YouTube.GetWatch.response.proto'
-    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.response.js
+    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
     binary_body: true
 - http_request:
     name: 'DualSubs.YouTube.TimedText.request'
-    match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
+    match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: false
@@ -73,15 +80,15 @@ scriptings:
     body_required: true
 - http_request:
     name: 'DualSubs.YouTubeMusic.Browse.request.json'
-    match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
+    match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
 - http_request:
     name: 'DualSubs.YouTube.Browse.request.proto'
-    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)
-    script_url: https://raw.githubusercontent.com/DualSubs/YouTube/main/js/YouTube.request.js
+    match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$
+    script_url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     arguments:
       _compat.$argument: ''
     body_required: true
