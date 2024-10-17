@@ -1,10 +1,9 @@
 import { $platform, _, Storage, fetch, notification, log, logError, wait, done, getScript, runScript } from "./utils/utils.mjs";
-import Database from "./database/index.mjs";
+import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
 import { PlayerRequest } from "./protobuf/player.request.js";
 import { Browse } from "./protobuf/browse.request.js";
-log("v1.5.1(1005)")
 // 构造回复数据
 let $response = undefined;
 /***************** Processing *****************/
@@ -18,8 +17,11 @@ log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
 log(`⚠ FORMAT: ${FORMAT}`, "");
 !(async () => {
-	// 读取设置
-	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", Database);
+	/**
+	 * 设置
+	 * @type {{Settings: import('./types').Settings}}
+	 */
+	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", database);
 	log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
 		case true:
@@ -107,8 +109,8 @@ log(`⚠ FORMAT: ${FORMAT}`, "");
 										case "/youtubei/v1/browse":
 											body = Browse.fromBinary(rawBody);
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
-												if (Settings.Types.includes("Translate")) _.set(URL, "query.subtype", "Translate");
-												else if (Settings.Types.includes("External")) _.set(URL, "query.subtype", "External");
+												if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
+												else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
 											};
 											rawBody = Browse.toBinary(body);
 											break;

@@ -1,0 +1,37 @@
+name: Deploy
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      - dev
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  debug:
+    uses: ./.github/workflows/dev.yml
+    secrets: inherit
+  deploy:
+    needs: debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+          name: artifact
+      - name: Deploy Request
+        uses: exuanbo/actions-deploy-gist@main
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: 069cf057ee7b3d82b35e2dcb59ed481e
+          gist_description: "🍿️ DualSubs: ▶️ YouTube β"
+          file_path: dist/request.bundle.js
+      - name: Deploy Reponse
+        uses: exuanbo/actions-deploy-gist@main
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: 069cf057ee7b3d82b35e2dcb59ed481e
+          gist_description: "🍿️ DualSubs: ▶️ YouTube β"
+          file_path: dist/response.bundle.js
