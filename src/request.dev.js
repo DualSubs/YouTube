@@ -2,8 +2,8 @@ import { $platform, _, Storage, fetch, notification, log, logError, wait, done, 
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
-import { PlayerRequest } from "./protobuf/player.request.js";
-import { Browse } from "./protobuf/browse.request.js";
+import { PlayerRequest } from "./protobuf/google/protos/youtube/api/innertube/PlayerRequest.js";
+import { BrowseRequest } from "./protobuf/google/protos/youtube/api/innertube/BrowseRequest.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "@protobuf-ts/runtime";
 // 构造回复数据
 let $response = undefined;
@@ -121,7 +121,7 @@ log(`⚠ FORMAT: ${FORMAT}`, "");
 											rawBody = PlayerRequest.toBinary(body);
 											break;
 										case "/youtubei/v1/browse":
-											body = Browse.fromBinary(rawBody);
+											body = BrowseRequest.fromBinary(rawBody);
 											log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
 												/*
@@ -171,7 +171,7 @@ log(`⚠ FORMAT: ${FORMAT}`, "");
 													};
 												});
 											};
-											rawBody = Browse.toBinary(body);
+											rawBody = BrowseRequest.toBinary(body);
 											break;
 									};
 									break;

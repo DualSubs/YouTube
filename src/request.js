@@ -2,8 +2,8 @@ import { $platform, _, Storage, fetch, notification, log, logError, wait, done, 
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
-import { PlayerRequest } from "./protobuf/player.request.js";
-import { Browse } from "./protobuf/browse.request.js";
+import { PlayerRequest } from "./protobuf/google/protos/youtube/api/innertube/PlayerRequest.js";
+import { BrowseRequest } from "./protobuf/google/protos/youtube/api/innertube/BrowseRequest.js";
 // 构造回复数据
 let $response = undefined;
 /***************** Processing *****************/
@@ -107,12 +107,12 @@ log(`⚠ FORMAT: ${FORMAT}`, "");
 											rawBody = PlayerRequest.toBinary(body);
 											break;
 										case "/youtubei/v1/browse":
-											body = Browse.fromBinary(rawBody);
+											body = BrowseRequest.fromBinary(rawBody);
 											if (body?.browseId?.startsWith?.("MPLYt_")) {
 												if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
 												else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
 											};
-											rawBody = Browse.toBinary(body);
+											rawBody = BrowseRequest.toBinary(body);
 											break;
 									};
 									break;
