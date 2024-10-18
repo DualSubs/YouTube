@@ -16,7 +16,7 @@ export default defineConfig({
 			//additionalAliases: ['console'],
 		}),
 		new rspack.BannerPlugin({
-			banner: `console.log('version: ${pkg.version}');`,
+			banner: `console.log('Version: ${pkg.version}');`,
 			raw: true,
 		}),
 		new rspack.BannerPlugin({
