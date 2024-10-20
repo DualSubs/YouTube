@@ -42,7 +42,7 @@
 		"iOS >= 15"
 	],
 	"devDependencies": {
-		"@iringo/arguments-builder": "^1.7.4",
+		"@iringo/arguments-builder": "^1.7.7",
 		"@iringo/sgmoudle-tools": "^1.2.1",
 		"@protobuf-ts/plugin": "^2.9.3",
 		"@protobuf-ts/runtime-rpc": "^2.9.3",
