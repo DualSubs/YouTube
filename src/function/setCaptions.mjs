@@ -1,8 +1,10 @@
+import { log } from "@nsnanocat/util";
+
 export default function setCaptions(captions, translationLanguages) {
-    console.log(`☑️ Set Captions`);
+    log(`☑️ Set Captions`);
     // 有播放器字幕列表渲染器
     if (captions?.playerCaptionsTracklistRenderer) {
-        console.log(`⚠ Tracklist`);
+        log(`⚠ Tracklist`);
         if (captions?.playerCaptionsTracklistRenderer?.captionTracks) {
             // 改字幕可用性
             captions.playerCaptionsTracklistRenderer.captionTracks = captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
@@ -36,6 +38,6 @@ export default function setCaptions(captions, translationLanguages) {
             captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
         };
     };
-    console.log(`✅ Set Captions, `);
+    log(`✅ Set Captions, `);
     return captions;
 };

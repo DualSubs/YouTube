@@ -1,4 +1,4 @@
-import { $platform, _, Storage, fetch, notification, log, logError, wait, done, getScript, runScript } from "./utils/utils.mjs";
+import { $platform, Lodash as _, Storage, fetch, notification, log, logError, wait, done, getScript, runScript } from "@nsnanocat/util";
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";

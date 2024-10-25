@@ -1,5 +1,8 @@
 ### 🛠️ Bug Fixes
-  * 修复 `YouTube Music` 没有正确为 URL 添加参数的问题
-
+  * 修复 `Surge` 模块内置`参数面板`
+  * 修复 `Loon` 插件内置`设置面板`
+  * 修复 `$argument` 和 `$persistentStore` 载入顺序颠倒的问题
+    * 正确顺序为先读取 `$argument` 再读取 `$persistentStore (BoxJs)`
+    * 即，有相同键名时，`$persistentStore (BoxJs)` 的值会覆盖 `$argument` 的值
 ### 🔄 Other Changes
-  * 打包器由 `rollup` 更改为 `rspack`
+  * util 由 `submodule` 更改为 `package`
