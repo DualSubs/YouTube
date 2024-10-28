@@ -27,82 +27,82 @@ http:
     - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
   script:
     - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
-      name: DualSubs.YouTube.request
+      name: 🍿️ DualSubs.YouTube.request
       type: request
       require-body: true
       argument:
     - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
-      name: DualSubs.YouTube.response
+      name: 🍿️ DualSubs.YouTube.response
       type: response
       require-body: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
-      name: DualSubs.YouTube.request
+      name: 🍿️ DualSubs.YouTube.request
       type: request
       require-body: true
       binary-mode: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
-      name: DualSubs.YouTube.response
+      name: 🍿️ DualSubs.YouTube.response
       type: response
       require-body: true
       binary-mode: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$
-      name: DualSubs.YouTube.response
+      name: 🍿️ DualSubs.YouTube.response
       type: response
       require-body: true
       binary-mode: true
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$
-      name: DualSubs.YouTube.request
+      name: 🍿️ DualSubs.YouTube.request
       type: request
       require-body: false
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External)
-      name: DualSubs.YouTube.Composite.TimedText.response
+      name: 🍿️ DualSubs.YouTube.Composite.TimedText.response
       type: response
       require-body: true
       argument:
     - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate
-      name: DualSubs.YouTube.Translate.TimedText.response
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
       type: response
       require-body: true
       argument:
 
     - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$
-      name: DualSubs.YouTube.request
+      name: 🍿️ DualSubs.YouTube.request
       type: request
       require-body: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$
-      name: DualSubs.YouTube.request
+      name: 🍿️ DualSubs.YouTube.request
       type: request
       require-body: true
       binary-mode: true
       argument:
     - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
-      name: DualSubs.YouTube.Translate.TimedText.response
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
       type: request
       require-body: true
       argument:
     - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
-      name: DualSubs.YouTube.Translate.TimedText.response
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
       type: response
       require-body: true
       binary-mode: true
       argument:
 
 script-providers:
-  DualSubs.YouTube.request:
+  🍿️ DualSubs.YouTube.request:
     url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     interval: 86400
-  DualSubs.YouTube.response:
+  🍿️ DualSubs.YouTube.response:
     url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
     interval: 86400
-  DualSubs.YouTube.Composite.TimedText.response:
+  🍿️ DualSubs.YouTube.Composite.TimedText.response:
     url: https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.bundle.js
     interval: 86400
-  DualSubs.YouTube.Translate.TimedText.response:
+  🍿️ DualSubs.YouTube.Translate.TimedText.response:
     url: https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
     interval: 86400

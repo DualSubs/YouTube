@@ -13,31 +13,31 @@
 
 #[Script]
 # YouTube
-# DualSubs.YouTube.Player.request.json
+# 🍿️ DualSubs.YouTube.Player.request.json
 ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ url script-request-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
-# DualSubs.YouTube.Player.response.json
+# 🍿️ DualSubs.YouTube.Player.response.json
 ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ url script-response-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
-# DualSubs.YouTube.Player.request.proto
+# 🍿️ DualSubs.YouTube.Player.request.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$ url script-request-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
-# DualSubs.YouTube.Player.response.proto
+# 🍿️ DualSubs.YouTube.Player.response.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$ url script-response-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
-# DualSubs.YouTube.GetWatch.response.proto
+# 🍿️ DualSubs.YouTube.GetWatch.response.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$ url script-response-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/response.bundle.js
-# DualSubs.YouTube.TimedText.request
+# 🍿️ DualSubs.YouTube.TimedText.request
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
-# DualSubs.YouTube.Composite.TimedText.response
+# 🍿️ DualSubs.YouTube.Composite.TimedText.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.bundle.js
-# DualSubs.YouTube.Translate.TimedText.response
+# 🍿️ DualSubs.YouTube.Translate.TimedText.response
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
 
 # YouTube Music
-# DualSubs.YouTubeMusic.Browse.request.json
+# 🍿️ DualSubs.YouTubeMusic.Browse.request.json
 ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$ url script-request-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
-# DualSubs.YouTube.Browse.request.proto
+# 🍿️ DualSubs.YouTube.Browse.request.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$ url script-request-body https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
-# DualSubs.YouTubeMusic.Translate.Lyrics.response.json
+# 🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.json
 ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
-# DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
+# 🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
 
 #[MITM]
