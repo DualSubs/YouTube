@@ -3,22 +3,22 @@ import { defineConfig } from "@iringo/arguments-builder";
 export default defineConfig({
 	output: {
 		surge: {
-			path: "./dist/YouTube.sgmodule",
+			path: "./dist/DualSubs.YouTube.sgmodule",
 		},
 		loon: {
-			path: "./dist/YouTube.plugin",
+			path: "./dist/DualSubs.YouTube.plugin",
 		},
 		customItems: [
 			{
-				path: "./dist/YouTube.snippet",
+				path: "./dist/DualSubs.YouTube.snippet",
 				template: "./template/quantumultx.handlebars",
 			},
 			{
-				path: "./dist/YouTube.stoverride",
+				path: "./dist/DualSubs.YouTube.stoverride",
 				template: "./template/stash.handlebars",
 			},
 			{
-				path: "./dist/YouTube.yaml",
+				path: "./dist/DualSubs.YouTube.yaml",
 				template: "./template/egern.handlebars",
 			},
 		],
