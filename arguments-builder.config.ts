@@ -33,14 +33,6 @@ export default defineConfig({
 	},
 	args: [
 		{
-			key: "Switch",
-			name: "总功能开关",
-			defaultValue: true,
-			type: "boolean",
-			description: "是否启用此APP修改",
-			exclude: ["surge", "loon"],
-		},
-		{
 			key: "Type",
 			name: "[字幕] 启用类型",
 			defaultValue: "Official",

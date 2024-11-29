@@ -16,6 +16,10 @@ export default defineConfig({
 			//additionalAliases: ['console'],
 		}),
 		new rspack.BannerPlugin({
+			banner: `console.log('Date: ${new Date().toLocaleString("zh-CN", { timeZone: "PRC" })}');`,
+			raw: true,
+		}),
+		new rspack.BannerPlugin({
 			banner: `console.log('Version: ${pkg.version}');`,
 			raw: true,
 		}),
@@ -24,13 +28,14 @@ export default defineConfig({
 			raw: true,
 		}),
 		new rspack.BannerPlugin({
-			banner: "console.log('🍿️ DualSubs: ▶️ YouTube β');",
+			banner: `console.log('${pkg.displayName}');`,
 			raw: true,
 		}),
 		new rspack.BannerPlugin({
-			banner: "https://DualSubs.github.io",
+			banner: pkg.homepage,
 		}),
 	],
+	devtool: false,
 	performance: false,
 	module: {
 		rules: [

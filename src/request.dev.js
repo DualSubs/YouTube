@@ -1,4 +1,5 @@
-import { $platform, Lodash as _, Storage, fetch, notification, log, logError, wait, done, getScript, runScript } from "@nsnanocat/util";
+import { $app, Console, done, fetch, Lodash as _, notification, Storage, wait } from "@nsnanocat/util";
+import { URL } from "@nsnanocat/url";
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
@@ -10,281 +11,283 @@ let $response = undefined;
 /***************** Processing *****************/
 // 解构URL
 const url = new URL($request.url);
-log(`⚠ url: ${url.toJSON()}`, "");
+Console.info(`url: ${url.toJSON()}`);
 // 获取连接参数
-const METHOD = $request.method, HOST = url.hostname, PATH = url.pathname;
-log(`⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}` , "");
+const PATHs = url.pathname.split("/").filter(Boolean);
+Console.info(`PATHs: ${PATHs}`);
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
-log(`⚠ FORMAT: ${FORMAT}`, "");
+Console.info(`FORMAT: ${FORMAT}`);
 !(async () => {
 	/**
 	 * 设置
 	 * @type {{Settings: import('./types').Settings}}
 	 */
 	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", database);
-	log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
-	switch (Settings.Switch) {
-		case true:
-		default:
-			// 获取字幕类型与语言
-			const Type = url.searchParams.get("subtype") ?? Settings.Type, Languages = [url.searchParams.get("lang")?.toUpperCase?.() ?? Settings.Languages[0], (url.searchParams.get("tlang") ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
-			log(`⚠ Type: ${Type}, Languages: ${Languages}`, "");
-			// 创建空数据
-			let body = {};
-			// 方法判断
-			switch (METHOD) {
-				case "POST":
-				case "PUT":
-				case "PATCH":
-				case "DELETE":
-					// 格式判断
+	// 获取字幕类型与语言
+	const Type = url.searchParams.get("subtype") ?? Settings.Type,
+		Languages = [url.searchParams.get("lang")?.toUpperCase?.() ?? Settings.Languages[0], (url.searchParams.get("tlang") ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];
+	Console.info(`Type: ${Type}`, `Languages: ${Languages}`);
+	// 创建空数据
+	let body = {};
+	// 方法判断
+	switch ($request.method) {
+		case "POST":
+		case "PUT":
+		case "PATCH":
+		// biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
+		case "DELETE":
+			// 格式判断
+			switch (FORMAT) {
+				case undefined: // 视为无body
+					break;
+				case "application/x-www-form-urlencoded":
+				case "text/plain":
+				default:
+					break;
+				case "application/x-mpegURL":
+				case "application/x-mpegurl":
+				case "application/vnd.apple.mpegurl":
+				case "audio/mpegurl":
+					//body = M3U8.parse($request.body);
+					//Console.debug(`body: ${JSON.stringify(body)}`);
+					//$request.body = M3U8.stringify(body);
+					break;
+				case "text/xml":
+				case "text/html":
+				case "text/plist":
+				case "application/xml":
+				case "application/plist":
+				case "application/x-plist":
+					//body = XML.parse($request.body);
+					//Console.debug(`body: ${JSON.stringify(body)}`);
+					//$request.body = XML.stringify(body);
+					break;
+				case "text/vtt":
+				case "application/vtt":
+					//body = VTT.parse($request.body);
+					//Console.debug(`body: ${JSON.stringify(body)}`);
+					//$request.body = VTT.stringify(body);
+					break;
+				case "text/json":
+				case "application/json":
+					body = JSON.parse($request.body ?? "{}");
+					switch (url.pathname) {
+						case "/youtubei/v1/player":
+							// 找功能
+							if (body?.playbackContext) {
+								// 有播放设置
+								Console.info("playbackContext");
+								if (body?.playbackContext.contentPlaybackContext) {
+									// 有播放设置内容
+									body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+								}
+							}
+							break;
+						case "/youtubei/v1/browse":
+							if (body?.browseId?.startsWith?.("MPLYt_")) url.searchParams.set("subtype", "Translate");
+							break;
+					}
+					$request.body = JSON.stringify(body);
+					break;
+				case "application/protobuf":
+				case "application/x-protobuf":
+				case "application/vnd.google.protobuf":
+				case "application/grpc":
+				case "application/grpc+proto":
+				case "application/octet-stream": {
+					//Console.debug(`调试信息`, `$request: ${JSON.stringify($request, null, 2)}`);
+					let rawBody = $app === "Quantumult X" ? new Uint8Array($request.bodyBytes ?? []) : ($request.body ?? new Uint8Array());
+					//Console.debug(`调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`);
 					switch (FORMAT) {
-						case undefined: // 视为无body
-							break;
-						case "application/x-www-form-urlencoded":
-						case "text/plain":
-						default:
-							break;
-						case "application/x-mpegURL":
-						case "application/x-mpegurl":
-						case "application/vnd.apple.mpegurl":
-						case "audio/mpegurl":
-							//body = M3U8.parse($request.body);
-							//log(`🚧 body: ${JSON.stringify(body)}`, "");
-							//$request.body = M3U8.stringify(body);
-							break;
-						case "text/xml":
-						case "text/html":
-						case "text/plist":
-						case "application/xml":
-						case "application/plist":
-						case "application/x-plist":
-							//body = XML.parse($request.body);
-							//log(`🚧 body: ${JSON.stringify(body)}`, "");
-							//$request.body = XML.stringify(body);
-							break;
-						case "text/vtt":
-						case "application/vtt":
-							//body = VTT.parse($request.body);
-							//log(`🚧 body: ${JSON.stringify(body)}`, "");
-							//$request.body = VTT.stringify(body);
-							break;
-						case "text/json":
-						case "application/json":
-							body = JSON.parse($request.body ?? "{}");
-							switch (PATH) {
-								case "/youtubei/v1/player":
-									// 找功能
-									if (body?.playbackContext) { // 有播放设置
-										log(`⚠ playbackContext`, "");
-										if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
-											body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
-										};
-									};
-									break;
-								case "/youtubei/v1/browse":
-									if (body?.browseId?.startsWith?.("MPLYt_")) url.searchParams.set("subtype", "Translate");
-									break;
-								};
-							$request.body = JSON.stringify(body);
-							break;
 						case "application/protobuf":
 						case "application/x-protobuf":
 						case "application/vnd.google.protobuf":
-						case "application/grpc":
-						case "application/grpc+proto":
-						case "application/octet-stream":
-							//log(`🚧 调试信息`, `$request: ${JSON.stringify($request, null, 2)}`, "");
-							let rawBody = ($platform === "Quantumult X") ? new Uint8Array($request.bodyBytes ?? []) : $request.body ?? new Uint8Array();
-							//log(`🚧 调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`, "");
-							switch (FORMAT) {
-								case "application/protobuf":
-								case "application/x-protobuf":
-								case "application/vnd.google.protobuf":
-									switch (PATH) {
-										case "/youtubei/v1/player":
-											body = PlayerRequest.fromBinary(rawBody);
-											log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
-											// 找功能
-											if (body?.playbackContext) { // 有播放设置
-												log(`⚠ playbackContext`, "");
-												if (body?.playbackContext.contentPlaybackContext) { // 有播放设置内容
-													//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
-													body.playbackContext.contentPlaybackContext.id4 = 1; // 
-													body.playbackContext.contentPlaybackContext.id6 = 1; // 
-													body.playbackContext.contentPlaybackContext.id8 = 1; // 
-													body.playbackContext.contentPlaybackContext.id9 = 1; // 
-												};
-											};
-											log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
-											rawBody = PlayerRequest.toBinary(body);
-											break;
-										case "/youtubei/v1/browse":
-											body = BrowseRequest.fromBinary(rawBody);
-											log(`🚧 调试信息`, `data: ${JSON.stringify(body)}`, "");
-											if (body?.browseId?.startsWith?.("MPLYt_")) {
-												/*
+							switch (url.pathname) {
+								case "/youtubei/v1/player":
+									body = PlayerRequest.fromBinary(rawBody);
+									Console.debug(`data: ${JSON.stringify(body)}`);
+									// 找功能
+									if (body?.playbackContext) {
+										// 有播放设置
+										Console.info("playbackContext");
+										if (body?.playbackContext.contentPlaybackContext) {
+											// 有播放设置内容
+											//body.playbackContext.contentPlaybackContext.autoCaptionsDefaultOn = true; // 默认开启自动字幕
+											body.playbackContext.contentPlaybackContext.id4 = 1; //
+											body.playbackContext.contentPlaybackContext.id6 = 1; //
+											body.playbackContext.contentPlaybackContext.id8 = 1; //
+											body.playbackContext.contentPlaybackContext.id9 = 1; //
+										}
+									}
+									Console.debug(`data: ${JSON.stringify(body)}`);
+									rawBody = PlayerRequest.toBinary(body);
+									break;
+								case "/youtubei/v1/browse":
+									body = BrowseRequest.fromBinary(rawBody);
+									Console.debug(`data: ${JSON.stringify(body)}`);
+									if (body?.browseId?.startsWith?.("MPLYt_")) {
+										/*
 												if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
 												else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
 												*/
-												const detectStutus = fetch($request);
-												//const detectTrack = fetch(_request);
-												await Promise.allSettled([detectStutus]).then(results => {
-													/*
+										const detectStutus = fetch($request);
+										//const detectTrack = fetch(_request);
+										await Promise.allSettled([detectStutus]).then(results => {
+											/*
 													results.forEach((result, i) => {
-														log(`🚧 调试信息`, `result[${i}]: ${JSON.stringify(result)}`, "");
+														Console.debug(`调试信息`, `result[${i}]: ${JSON.stringify(result)}`);
 													});
 													*/
-													switch (results[0].status) {
-														case "fulfilled":
-															let response = results[0].value;
-															switch (response?.headers?.["content-encoding"] ?? response?.headers?.["Content-Encoding"]) {
-																case "identity":
-																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 4000) {
-																		if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
-																		else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
-																	} else {
-																		if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
-																	};
-																	break;
-																case "gzip":
-																	break;
-																case "br":
-																	if (parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 2000) {
-																		if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
-																		else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
-																	} else {
-																		if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
-																	};
-																	break;
-																case "deflate":
-																	break;
-																default:
-																	break;
-															};
+											switch (results[0].status) {
+												case "fulfilled": {
+													const response = results[0].value;
+													switch (response?.headers?.["content-encoding"] ?? response?.headers?.["Content-Encoding"]) {
+														case "identity":
+															if (Number.parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 4000) {
+																if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
+																else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+															} else {
+																if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+															}
 															break;
-														case "rejected":
-															log(`🚧 调试信息`, `detectStutus.reason: ${JSON.stringify(results[0].reason)}`, "");
-															if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+														case "gzip":
 															break;
-													};
-												});
-											};
-											rawBody = BrowseRequest.toBinary(body);
-											break;
-									};
-									break;
-								case "application/grpc":
-								case "application/grpc+proto":
-									break;
-							};
-							// 写入二进制数据
-							$request.body = rawBody;
-							break;
-					};
-					//break; // 不中断，继续处理URL
-				case "GET":
-					// 主机判断
-					switch (HOST) {
-						case "www.youtube.com":
-						case "m.youtube.com":
-							// 路径判断
-							switch (PATH) {
-								case "/api/timedtext":
-									const v = url.searchParams.get("v");
-									const kind = url.searchParams.get("kind");
-									const lang = url.searchParams.get("lang");
-									const tlang = url.searchParams.get("tlang");
-									log(`⚠ v: ${v}, kind: ${kind}, lang: ${lang}, tlang: ${tlang}`, "");
-									if (!tlang) {
-										log(`⚠ 翻译语言：未指定`, "");
-										// 保存原文语言
-										if (v && lang) {
-											Caches.Playlists.Subtitle.set(v, lang);
-											Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
-											Storage.setItem(`@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`, Caches.Playlists.Subtitle);
-										};
-										// 自动翻译字幕
-										switch (Settings.AutoCC) {
-											case true:
-											default:
-												log(`⚠ 自动翻译字幕：开启`, "");
-												if (Caches.tlang) {
-													if (Caches.tlang !== lang) url.searchParams.set("tlang", Caches.tlang);
+														case "br":
+															if (Number.parseInt(response?.headers?.["content-length"] ?? response?.headers?.["Content-Length"], 10) > 2000) {
+																if (Settings.Types.includes("Translate")) url.searchParams.set("subtype", "Translate");
+																else if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+															} else {
+																if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+															}
+															break;
+														case "deflate":
+															break;
+														default:
+															break;
+													}
+													break;
 												}
-												break;
-											case false:
-												log(`⚠ 自动翻译字幕：关闭`, "");
-												break;
-										};
-									};
-									if (url.searchParams.get("tlang")) {
-										log(`⚠ 翻译语言：已指定`, "");
-										// 保存目标语言
-										Caches.tlang = url.searchParams.get("tlang");
-										Storage.setItem(`@DualSubs.${"YouTube"}.Caches.tlang`, Caches.tlang);
-										// 字幕类型判断
-										switch (Settings.Type) {
-											case "Composite":
-											case "Official":
-											default:
-												log(`⚠ 官方字幕：合成器`, "");
-												if (lang?.split?.(/[-_]/)?.[0] === url.searchParams.get("tlang")?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
-												if (!Settings.ShowOnly) url.searchParams.set("subtype", "Official"); // 官方字幕
-												break;
-											case "Translate":
-												log(`⚠ 翻译字幕：翻译器`, "");
-												url.searchParams.delete("tlang");
-												url.searchParams.set("subtype", "Translate"); // 翻译字幕
-												/*
+												case "rejected":
+													Console.debug(`detectStutus.reason: ${JSON.stringify(results[0].reason)}`);
+													if (Settings.Types.includes("External")) url.searchParams.set("subtype", "External");
+													break;
+											}
+										});
+									}
+									rawBody = BrowseRequest.toBinary(body);
+									break;
+							}
+							break;
+						case "application/grpc":
+						case "application/grpc+proto":
+							break;
+					}
+					// 写入二进制数据
+					$request.body = rawBody;
+					break;
+				}
+			}
+		//break; // 不中断，继续处理URL
+		// biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
+		case "GET":
+			// 主机判断
+			switch (url.hostname) {
+				case "www.youtube.com":
+				case "m.youtube.com":
+					// 路径判断
+					switch (url.pathname) {
+						case "/api/timedtext": {
+							const v = url.searchParams.get("v");
+							const kind = url.searchParams.get("kind");
+							const lang = url.searchParams.get("lang");
+							const tlang = url.searchParams.get("tlang");
+							Console.info(`v: ${v}`, `kind: ${kind}`, `lang: ${lang}`, `tlang: ${tlang}`);
+							if (!tlang) {
+								Console.info("翻译语言：未指定");
+								// 保存原文语言
+								if (v && lang) {
+									Caches.Playlists.Subtitle.set(v, lang);
+									Caches.Playlists.Subtitle = setCache(Caches?.Playlists.Subtitle, Settings.CacheSize);
+									Storage.setItem(`@DualSubs.${"Composite"}.Caches.Playlists.Subtitle`, Caches.Playlists.Subtitle);
+								}
+								// 自动翻译字幕
+								switch (Settings.AutoCC) {
+									case true:
+									default:
+										Console.info("自动翻译字幕：开启");
+										if (Caches.tlang) {
+											if (Caches.tlang !== lang) url.searchParams.set("tlang", Caches.tlang);
+										}
+										break;
+									case false:
+										Console.info("自动翻译字幕：关闭");
+										break;
+								}
+							}
+							if (url.searchParams.get("tlang")) {
+								Console.info("翻译语言：已指定");
+								// 保存目标语言
+								Caches.tlang = url.searchParams.get("tlang");
+								Storage.setItem(`@DualSubs.${"YouTube"}.Caches.tlang`, Caches.tlang);
+								// 字幕类型判断
+								switch (Settings.Type) {
+									case "Composite":
+									case "Official":
+									default:
+										Console.info("官方字幕：合成器");
+										if (lang?.split?.(/[-_]/)?.[0] === url.searchParams.get("tlang")?.split?.(/[-_]/)?.[0]) Settings.ShowOnly = true;
+										if (!Settings.ShowOnly) url.searchParams.set("subtype", "Official"); // 官方字幕
+										break;
+									case "Translate":
+										Console.info("翻译字幕：翻译器");
+										url.searchParams.delete("tlang");
+										url.searchParams.set("subtype", "Translate"); // 翻译字幕
+										/*
 												switch (URL.query?.kind) { // 类型判断
 													case "asr":
-														log(`⚠ 自动生成（听译）字幕`, "");
-														log(`⚠ 仅支持官方字幕`, "");
+														Console.info(`自动生成（听译）字幕`);
+														Console.info(`仅支持官方字幕`);
 														if (!Settings.ShowOnly) url.searchParams.set("subtype", "Official"); // 官方字幕
 														break;
 													case "captions":
 													default:
-														log(`⚠ 普通字幕`, "");
+														Console.info(`普通字幕`);
 														url.searchParams.delete("tlang");
 														url.searchParams.set("subtype", "Translate"); // 翻译字幕
 												};
 												*/
-												break;
-											case "External":
-												log(`⚠ 外部字幕：外部源`, "");
-												url.searchParams.delete("tlang");
-												url.searchParams.set("subtype", "External"); // 外挂字幕
-												break;
-										};
-									};
-									break;
-							};
+										break;
+									case "External":
+										Console.info("外部字幕：外部源");
+										url.searchParams.delete("tlang");
+										url.searchParams.set("subtype", "External"); // 外挂字幕
+										break;
+								}
+							}
 							break;
-					};
-				case "HEAD":
-				case "OPTIONS":
+						}
+					}
 					break;
-				case "CONNECT":
-				case "TRACE":
-					break;
-			};
-			$request.url = url.toString();
-			log(`🚧 调试信息`, `$request.url: ${$request.url}`, "");
+			}
+		case "HEAD":
+		case "OPTIONS":
 			break;
-		case false:
+		case "CONNECT":
+		case "TRACE":
 			break;
-	};
+	}
+	$request.url = url.toString();
+	Console.debug(`$request.url: ${$request.url}`);
 })()
-	.catch((e) => logError(e))
+	.catch(e => Console.error(e))
 	.finally(() => {
 		switch ($response) {
 			default: // 有构造回复数据，返回构造的回复数据
-				//log(`🚧 finally`, `echo $response: ${JSON.stringify($response, null, 2)}`, "");
+				//Console.debug(`finally`, `echo $response: ${JSON.stringify($response, null, 2)}`);
 				if ($response.headers?.["Content-Encoding"]) $response.headers["Content-Encoding"] = "identity";
 				if ($response.headers?.["content-encoding"]) $response.headers["content-encoding"] = "identity";
-				switch ($platform) {
+				switch ($app) {
 					default:
 						done({ response: $response });
 						break;
@@ -295,11 +298,11 @@ log(`⚠ FORMAT: ${FORMAT}`, "");
 						delete $response.headers?.["Transfer-Encoding"];
 						done($response);
 						break;
-				};
+				}
 				break;
 			case undefined: // 无构造回复数据，发送修改的请求数据
-				//log(`🚧 finally`, `$request: ${JSON.stringify($request, null, 2)}`, "");
+				//Console.debug(`finally`, `$request: ${JSON.stringify($request, null, 2)}`);
 				done($request);
 				break;
-		};
-	})
+		}
+	});

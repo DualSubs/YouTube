@@ -1,7 +1,6 @@
 export default {
 	Default: {
 		Settings: {
-			Switch: true,
 			Type: "Translate",
 			Types: ["Official", "Translate"],
 			Languages: ["EN", "ZH"],
@@ -20,7 +19,6 @@ export default {
 	},
 	YouTube: {
 		Settings: {
-			Switch: true,
 			Type: "Official",
 			Types: ["Translate", "External"],
 			Languages: ["AUTO", "ZH"],

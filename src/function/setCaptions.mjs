@@ -1,10 +1,10 @@
-import { log } from "@nsnanocat/util";
+import { Console } from "@nsnanocat/util";
 
-export default function setCaptions(captions, translationLanguages) {
-    log(`☑️ Set Captions`);
+export default function setCaptions(captions, translationLanguages, hostname) {
+    Console.log("☑️ Set Captions");
     // 有播放器字幕列表渲染器
-    if (captions?.playerCaptionsTracklistRenderer) {
-        log(`⚠ Tracklist`);
+    if (captions?.playerCaptionsTracklistRenderer) { // 有播放器字幕列表渲染器
+        Console.info("Tracklist");
         if (captions?.playerCaptionsTracklistRenderer?.captionTracks) {
             // 改字幕可用性
             captions.playerCaptionsTracklistRenderer.captionTracks = captions?.playerCaptionsTracklistRenderer.captionTracks.map(caption => {
@@ -22,7 +22,7 @@ export default function setCaptions(captions, translationLanguages) {
             });
         };
         // 增加自动翻译可用语言
-        switch (HOST) {
+        switch (hostname) {
             case "www.youtube.com":
             case "tv.youtube.com":
             default:
@@ -38,6 +38,6 @@ export default function setCaptions(captions, translationLanguages) {
             captions.playerCaptionsTracklistRenderer.defaultCaptionTrackIndex = 0;
         };
     };
-    log(`✅ Set Captions, `);
+    Console.log("✅ Set Captions");
     return captions;
 };
