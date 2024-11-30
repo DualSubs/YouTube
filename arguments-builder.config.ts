@@ -4,6 +4,10 @@ export default defineConfig({
 	output: {
 		surge: {
 			path: "./dist/DualSubs.YouTube.sgmodule",
+			transformEgern: {
+				enable: true,
+				path: "./dist/DualSubs.YouTube.yaml",
+			},
 		},
 		loon: {
 			path: "./dist/DualSubs.YouTube.plugin",
@@ -16,10 +20,6 @@ export default defineConfig({
 			{
 				path: "./dist/DualSubs.YouTube.stoverride",
 				template: "./template/stash.handlebars",
-			},
-			{
-				path: "./dist/DualSubs.YouTube.yaml",
-				template: "./template/egern.handlebars",
 			},
 		],
 		dts: {
