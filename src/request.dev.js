@@ -95,9 +95,9 @@ Console.info(`FORMAT: ${FORMAT}`);
 				case "application/grpc":
 				case "application/grpc+proto":
 				case "application/octet-stream": {
-					//Console.debug(`调试信息`, `$request: ${JSON.stringify($request, null, 2)}`);
+					//Console.debug(`$request: ${JSON.stringify($request, null, 2)}`);
 					let rawBody = $app === "Quantumult X" ? new Uint8Array($request.bodyBytes ?? []) : ($request.body ?? new Uint8Array());
-					//Console.debug(`调试信息`, `isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`);
+					//Console.debug(`isBuffer? ${ArrayBuffer.isView(rawBody)}: ${JSON.stringify(rawBody)}`);
 					switch (FORMAT) {
 						case "application/protobuf":
 						case "application/x-protobuf":
@@ -134,10 +134,10 @@ Console.info(`FORMAT: ${FORMAT}`);
 										//const detectTrack = fetch(_request);
 										await Promise.allSettled([detectStutus]).then(results => {
 											/*
-													results.forEach((result, i) => {
-														Console.debug(`调试信息`, `result[${i}]: ${JSON.stringify(result)}`);
-													});
-													*/
+											results.forEach((result, i) => {
+												Console.debug(`result[${i}]: ${JSON.stringify(result)}`);
+											});
+											*/
 											switch (results[0].status) {
 												case "fulfilled": {
 													const response = results[0].value;
@@ -281,9 +281,9 @@ Console.info(`FORMAT: ${FORMAT}`);
 })()
 	.catch(e => Console.error(e))
 	.finally(() => {
-		switch ($response) {
-			default: // 有构造回复数据，返回构造的回复数据
-				//Console.debug(`finally`, `echo $response: ${JSON.stringify($response, null, 2)}`);
+		switch (typeof $response) {
+			case "object": // 有构造回复数据，返回构造的回复数据
+				//Console.debug("finally", `echo $response: ${JSON.stringify($response, null, 2)}`);
 				if ($response.headers?.["Content-Encoding"]) $response.headers["Content-Encoding"] = "identity";
 				if ($response.headers?.["content-encoding"]) $response.headers["content-encoding"] = "identity";
 				switch ($app) {
@@ -299,9 +299,12 @@ Console.info(`FORMAT: ${FORMAT}`);
 						break;
 				}
 				break;
-			case undefined: // 无构造回复数据，发送修改的请求数据
-				//Console.debug(`finally`, `$request: ${JSON.stringify($request, null, 2)}`);
+			case "undefined": // 无构造回复数据，发送修改的请求数据
+				//Console.debug("finally", `$request: ${JSON.stringify($request, null, 2)}`);
 				done($request);
+				break;
+			default:
+				Console.error(`不合法的 $response 类型: ${typeof $response}`);
 				break;
 		}
 	});
