@@ -39,14 +39,12 @@
 		"@iringo/arguments-builder": "^1.7.8",
 		"@iringo/sgmoudle-tools": "^1.2.1",
 		"@protobuf-ts/plugin": "^2.9.3",
-		"@protobuf-ts/runtime": "^2.9.3",
-		"@protobuf-ts/runtime-rpc": "^2.9.3",
 		"@rspack/cli": "^1.0.11",
 		"@rspack/core": "^1.0.11",
 		"node-polyfill-webpack-plugin": "^4.0.0"
 	},
 	"dependencies": {
-		"@nsnanocat/url": "^1.2.3",
-		"@nsnanocat/util": "^1.6.3"
+		"@nsnanocat/util": "^1.6.4",
+		"@protobuf-ts/runtime": "^2.9.3"
 	}
 }
