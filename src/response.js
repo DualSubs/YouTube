@@ -1,5 +1,4 @@
 import { $app, Console, done, fetch, Lodash as _, notification, Storage, wait } from "@nsnanocat/util";
-import { URL } from "@nsnanocat/url";
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
