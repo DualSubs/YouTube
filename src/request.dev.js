@@ -1,4 +1,4 @@
-import { $app, Console, done, fetch, Lodash as _, notification, Storage, wait } from "@nsnanocat/util";
+import { $app, Console, done, Lodash as _, Storage } from "@nsnanocat/util";
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
@@ -6,7 +6,9 @@ import { PlayerRequest } from "./protobuf/google/protos/youtube/api/innertube/Pl
 import { BrowseRequest } from "./protobuf/google/protos/youtube/api/innertube/BrowseRequest.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "@protobuf-ts/runtime";
 // 构造回复数据
+// biome-ignore lint/style/useConst: <explanation>
 let $response = undefined;
+Console.logLevel = "DEBUG";
 /***************** Processing *****************/
 // 解构URL
 const url = new URL($request.url);
