@@ -6,7 +6,6 @@ import setCaptions from "./function/setCaptions.mjs";
 import { GetWatchResponse } from "./protobuf/google/protos/youtube/api/innertube/GetWatchResponse.js";
 import { PlayerResponse } from "./protobuf/google/protos/youtube/api/innertube/PlayerResponse.js";
 import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, MessageType, BinaryReader, isJsonObject, typeofJsonValue, jsonWriteOptions } from "@protobuf-ts/runtime";
-Console.logLevel = "DEBUG";
 /***************** Processing *****************/
 // 解构URL
 const url = new URL($request.url);
@@ -17,12 +16,13 @@ Console.info(`PATHs: ${PATHs}`);
 // 解析格式
 const FORMAT = ($response.headers?.["Content-Type"] ?? $response.headers?.["content-type"])?.split(";")?.[0];
 Console.info(`FORMAT: ${FORMAT}`);
-!(async () => {
+(async () => {
 	/**
 	 * 设置
 	 * @type {{Settings: import('./types').Settings}}
 	 */
 	const { Settings, Caches, Configs } = setENV("DualSubs", "YouTube", database);
+	Console.logLevel = Settings.LogLevel;
 	// 获取字幕类型与语言
 	const Type = url.searchParams.get("subtype") ?? Settings.Type,
 		Languages = [url.searchParams.get("lang")?.toUpperCase?.() ?? Settings.Languages[0], (url.searchParams.get("tlang") ?? Caches?.tlang)?.toUpperCase?.() ?? Settings.Languages[1]];

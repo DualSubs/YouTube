@@ -1,22 +1,4 @@
 export default {
-	Default: {
-		Settings: {
-			Type: "Translate",
-			Types: ["Official", "Translate"],
-			Languages: ["EN", "ZH"],
-			CacheSize: 50,
-		},
-		Configs: {
-			breakLine: {
-				"text/xml": "&#x000A;",
-				"application/xml": "&#x000A;",
-				"text/vtt": "\n",
-				"application/vtt": "\n",
-				"text/json": "\n",
-				"application/json": "\n",
-			},
-		},
-	},
 	YouTube: {
 		Settings: {
 			Type: "Official",
@@ -1057,6 +1039,25 @@ export default {
 						languageName: { runs: [{ text: "Krìì - 克里语" }] },
 					},
 				],
+			},
+		},
+	},
+	Default: {
+		Settings: {
+			Type: "Translate",
+			Types: ["Official", "Translate"],
+			Languages: ["EN", "ZH"],
+			CacheSize: 50,
+			LogLevel: "WARN",
+		},
+		Configs: {
+			breakLine: {
+				"text/xml": "&#x000A;",
+				"application/xml": "&#x000A;",
+				"text/vtt": "\n",
+				"application/vtt": "\n",
+				"text/json": "\n",
+				"application/json": "\n",
 			},
 		},
 	},
