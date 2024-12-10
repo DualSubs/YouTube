@@ -8,7 +8,6 @@ import { WireType, UnknownFieldHandler, reflectionMergePartial, MESSAGE_TYPE, Me
 // 构造回复数据
 // biome-ignore lint/style/useConst: <explanation>
 let $response = undefined;
-Console.logLevel = "DEBUG";
 /***************** Processing *****************/
 // 解构URL
 const url = new URL($request.url);
@@ -19,7 +18,7 @@ Console.info(`PATHs: ${PATHs}`);
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
 Console.info(`FORMAT: ${FORMAT}`);
-!(async () => {
+(async () => {
 	/**
 	 * 设置
 	 * @type {{Settings: import('./types').Settings}}
