@@ -18,7 +18,7 @@ Console.info(`PATHs: ${PATHs}`);
 // 解析格式
 const FORMAT = ($request.headers?.["Content-Type"] ?? $request.headers?.["content-type"])?.split(";")?.[0];
 Console.info(`FORMAT: ${FORMAT}`);
-(async () => {
+!(async () => {
 	/**
 	 * 设置
 	 * @type {{Settings: import('./types').Settings}}
@@ -225,6 +225,11 @@ Console.info(`FORMAT: ${FORMAT}`);
 										Console.info("自动翻译字幕：关闭");
 										break;
 								}
+							}
+							if (Settings.Compatibility) {
+								$request.headers.cookie = "PREF=f4=4000000&f6=40000000&tz=Asia.Shanghai&f5=30000&f7=100;"
+								//url.hostname = "video.google.com";
+								//url.pathname = "/timedtext";
 							}
 							if (url.searchParams.get("tlang")) {
 								Console.info("翻译语言：已指定");

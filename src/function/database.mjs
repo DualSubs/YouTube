@@ -6,6 +6,7 @@ export default {
 			Languages: ["AUTO", "ZH"],
 			AutoCC: true,
 			ShowOnly: false,
+			Compatibility: true,
 		},
 		Configs: {
 			Languages: {

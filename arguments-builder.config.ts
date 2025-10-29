@@ -111,6 +111,13 @@ export default defineConfig({
 			description: "是否仅显示“自动翻译”字幕，不显示源语言字幕。",
 		},
 		{
+			key: "Compatibility",
+			name: "[字幕] 兼容模式",
+			defaultValue: true,
+			type: "boolean",
+			description: "是否启用兼容模式以解决 Google 风控导致无法加载字幕的问题。",
+		},
+		{
 			key: "LogLevel",
 			name: "[调试] 日志等级",
 			type: "string",
