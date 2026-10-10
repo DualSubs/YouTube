@@ -22,12 +22,25 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
+      # Egern conversion uses Puppeteer Chrome on Ubuntu.
+      - name: Disable AppArmor
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm install
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+      - name: Install Puppeteer Chrome
+        run: node node_modules/puppeteer/install.mjs
+        env:
+          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
       - name: Build
-        run: npm run build:dev
+        run: |
+          npm run build:dev
+          BUILD_VERSION=dev.$(git rev-parse --short HEAD) npm run build:dev-args
+        env:
+          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
+      - name: Verify settings and Egern module
+        run: npm test && test -s dist/DualSubs.YouTube.dev.yaml
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:

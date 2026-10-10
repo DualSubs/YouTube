@@ -9,6 +9,7 @@
 #!version = {{@package 'version'}}
 
 #[rewrite_local]
+^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$ url echo-response application/json\r\nX-PreferencePanes-Version: {{@package 'version'}} echo-response https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/DualSubs.YouTube.PreferencePanes.json
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ url reject-dict
 
 #[Script]
@@ -41,4 +42,4 @@
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
 
 #[MITM]
-hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
+hostname = dualsubs.github.io, www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

@@ -35,3 +35,14 @@ jobs:
           gist_id: 069cf057ee7b3d82b35e2dcb59ed481e
           gist_description: "🍿️ DualSubs: ▶️ YouTube β"
           file_path: dist/response.bundle.js
+      - name: Deploy module settings and development templates
+        env:
+          GH_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          node --input-type=module <<'JS'
+          import { readFile, writeFile } from "node:fs/promises";
+          const names = ["DualSubs.YouTube.dev.sgmodule", "DualSubs.YouTube.dev.plugin", "DualSubs.YouTube.dev.snippet", "DualSubs.YouTube.dev.stoverride", "DualSubs.YouTube.dev.yaml", "DualSubs.YouTube.dev.PreferencePanes.json", "config.dev.bundle.js"];
+          const files = Object.fromEntries(await Promise.all(names.map(async name => [name, { content: await readFile(`dist/${name}`, "utf8") }])));
+          await writeFile("gist-update.json", JSON.stringify({ files }));
+          JS
+          gh api --method PATCH gists/069cf057ee7b3d82b35e2dcb59ed481e --input gist-update.json --silent

@@ -14,6 +14,7 @@
 {{{arguments}}}
 
 [Rewrite]
+response if ${url} ~= /^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$/i then response.body.mock_file("json", "https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/DualSubs.YouTube.PreferencePanes.json", 200) | response.header.add(["X-PreferencePanes-Version", "Cache-Control"], ["{{@package 'version'}}", "no-store"])
 # 使用reject-img减少开销
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
 
@@ -35,4 +36,4 @@ http-response ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype
 http-response ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, tag=🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto, argument={{{scriptParams}}}
 
 [MITM]
-hostname = www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
+hostname = dualsubs.github.io, www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

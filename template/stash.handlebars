@@ -16,6 +16,7 @@ version: "{{@package 'version'}}"
 
 http:
   mitm:
+    - "dualsubs.github.io"
     - "-redirector*.googlevideo.com"
     - "*.googlevideo.com"
     - "www.youtube.com"
@@ -26,6 +27,10 @@ http:
   rewrite:
     - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
   script:
+    - match: ^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$
+      name: 📺 DualSubs.YouTube.Config
+      type: request
+      require-body: false
     - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
       name: 🍿️ DualSubs.YouTube.request
       type: request
@@ -94,6 +99,9 @@ http:
       argument:
 
 script-providers:
+  📺 DualSubs.YouTube.Config:
+    url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/config.bundle.js
+    interval: 86400
   🍿️ DualSubs.YouTube.request:
     url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js
     interval: 86400

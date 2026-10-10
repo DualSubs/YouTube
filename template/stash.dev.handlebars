@@ -1,0 +1,116 @@
+name: "{{@package 'displayName'}}"
+desc: |-
+  {{#each (split (@package 'description') "\n")}}
+  {{{this}}}
+  {{/each}}
+openUrl: "{{@package 'openUrl'}}"
+author: |-
+  {{#each (@package 'contributors')}}
+  {{this}}
+  {{/each}}
+homepage: "{{@package 'homepage'}}"
+icon: "{{@package 'icon'}}"
+category: "{{@package 'organizationName'}}"
+date: "{{now "yyyy-MM-dd HH:mm:ss"}}"
+version: "dev"
+
+http:
+  mitm:
+    - "dualsubs.github.io"
+    - "-redirector*.googlevideo.com"
+    - "*.googlevideo.com"
+    - "www.youtube.com"
+    - "m.youtube.com"
+    - "tv.youtube.com"
+    - "music.youtube.com"
+    - "youtubei.googleapis.com"
+  rewrite:
+    - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
+  script:
+    - match: ^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$
+      name: 📺 DualSubs.YouTube.Config
+      type: request
+      require-body: false
+    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.request
+      type: request
+      require-body: true
+      argument:
+    - match: ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.response
+      type: response
+      require-body: true
+      argument:
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.request
+      type: request
+      require-body: true
+      binary-mode: true
+      argument:
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.response
+      type: response
+      require-body: true
+      binary-mode: true
+      argument:
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.response
+      type: response
+      require-body: true
+      binary-mode: true
+      argument:
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.request
+      type: request
+      require-body: false
+      argument:
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External)
+      name: 🍿️ DualSubs.YouTube.Composite.TimedText.response
+      type: response
+      require-body: true
+      argument:
+    - match: ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
+      type: response
+      require-body: true
+      argument:
+
+    - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.request
+      type: request
+      require-body: true
+      argument:
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$
+      name: 🍿️ DualSubs.YouTube.request
+      type: request
+      require-body: true
+      binary-mode: true
+      argument:
+    - match: ^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
+      type: request
+      require-body: true
+      argument:
+    - match: ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate
+      name: 🍿️ DualSubs.YouTube.Translate.TimedText.response
+      type: response
+      require-body: true
+      binary-mode: true
+      argument:
+
+script-providers:
+  📺 DualSubs.YouTube.Config:
+    url: https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/config.dev.bundle.js
+    interval: 86400
+  🍿️ DualSubs.YouTube.request:
+    url: https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js
+    interval: 86400
+  🍿️ DualSubs.YouTube.response:
+    url: https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.bundle.js
+    interval: 86400
+  🍿️ DualSubs.YouTube.Composite.TimedText.response:
+    url: https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.bundle.js
+    interval: 86400
+  🍿️ DualSubs.YouTube.Translate.TimedText.response:
+    url: https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
+    interval: 86400

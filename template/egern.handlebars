@@ -14,6 +14,15 @@ category: "{{@package 'organizationName'}}"
 date: "{{now "yyyy-MM-dd HH:mm:ss"}}"
 version: "{{@package 'version'}}"
 
+map_locals:
+- match: ^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$
+  status_code: 200
+  to: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/DualSubs.YouTube.PreferencePanes.json
+  headers:
+    Content-Type: application/json; charset=utf-8
+    Cache-Control: no-store
+    X-PreferencePanes-Version: "{{@package 'version'}}"
+
 rules:
 - url_regex:
     match: ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$
@@ -110,6 +119,7 @@ scriptings:
     binary_body: true
 mitm:
   hostnames:
+  - dualsubs.github.io
   - www.youtube.com
   - m.youtube.com
   - tv.youtube.com

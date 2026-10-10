@@ -13,6 +13,9 @@
 [Rule]
 URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJECT-TINYGIF
 
+[Map Local]
+^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$ data-type=file data="https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/DualSubs.YouTube.PreferencePanes.json" status-code=200 header="Content-Type:application/json; charset=utf-8|Cache-Control:no-store|X-PreferencePanes-Version:{{@package 'version'}}"
+
 [Script]
 # YouTube
 🍿️ DualSubs.YouTube.Player.request.json = type=http-request, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, engine=webview, script-path=https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/request.bundle.js, argument={{{scriptParams}}}
@@ -31,4 +34,4 @@ URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJE
 🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate, requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, argument={{{scriptParams}}}
 
 [MITM]
-hostname = %APPEND% www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
+hostname = %APPEND% dualsubs.github.io, www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
