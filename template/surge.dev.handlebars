@@ -6,7 +6,7 @@
 #!icon = {{@package 'icon'}}
 #!category = {{@package 'organizationName'}}
 #!date = {{now "yyyy-MM-dd HH:mm:ss"}}
-#!version = dev
+#!version = {{version}}
 #!arguments = {{{arguments}}}
 #!arguments-desc = {{{argumentsDesc}}}
 
@@ -14,24 +14,24 @@
 URL-REGEX,^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$,REJECT-TINYGIF
 
 [Map Local]
-^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$ data-type=file data="https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/DualSubs.YouTube.dev.PreferencePanes.json" status-code=200 header="Content-Type:application/json; charset=utf-8|Cache-Control:no-store|X-PreferencePanes-Version:dev"
+^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$ data-type=file data="https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/DualSubs.YouTube.dev.PreferencePanes.json" status-code=200 header="Content-Type:application/json; charset=utf-8|Cache-Control:no-store|X-PreferencePanes-Version:{{version}}"
 
 [Script]
 # YouTube
-🍿️ DualSubs.YouTube.Player.request.json = type=http-request, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Player.response.json = type=http-response, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Player.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Player.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.GetWatch.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.TimedText.request = type=http-request, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Composite.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External), requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Translate.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate, requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Player.request.json = type=http-request, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Player.response.json = type=http-response, pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Player.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Player.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.GetWatch.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.TimedText.request = type=http-request, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext(\?.+)?$, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Composite.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External), requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Translate.TimedText.response = type=http-response, pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate, requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js, argument={{{scriptParams}}}
 
 # YouTube Music
-🍿️ DualSubs.YouTubeMusic.Browse.request.json = type=http-request, pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTube.Browse.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.json = type=http-response, pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate, requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, argument={{{scriptParams}}}
-🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate, requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTubeMusic.Browse.request.json = type=http-request, pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse(\?.+)?$, requires-body=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTube.Browse.request.proto = type=http-request, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$, requires-body=1, binary-body-mode=1, engine=webview, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.json = type=http-response, pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate, requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js, argument={{{scriptParams}}}
+🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate, requires-body=1, binary-body-mode=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js, argument={{{scriptParams}}}
 
 [MITM]
 hostname = %APPEND% dualsubs.github.io, www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com

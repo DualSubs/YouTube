@@ -1,5 +1,6 @@
 name: Deploy
 on:
+  workflow_dispatch:
   push:
     # Sequence of patterns matched against refs/heads
     branches:
@@ -10,39 +11,25 @@ permissions:
   contents: read
 
 jobs:
-  debug:
+  dev:
     uses: ./.github/workflows/dev.yml
     secrets: inherit
   deploy:
-    needs: debug
+    needs: dev
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v8
         with:
           name: artifact
-      - name: Deploy Request
-        uses: exuanbo/actions-deploy-gist@main
-        with:
-          token: ${{ secrets.GIST_TOKEN }}
-          gist_id: 069cf057ee7b3d82b35e2dcb59ed481e
-          gist_description: "🍿️ DualSubs: ▶️ YouTube β"
-          file_path: dist/request.bundle.js
-      - name: Deploy Reponse
-        uses: exuanbo/actions-deploy-gist@main
-        with:
-          token: ${{ secrets.GIST_TOKEN }}
-          gist_id: 069cf057ee7b3d82b35e2dcb59ed481e
-          gist_description: "🍿️ DualSubs: ▶️ YouTube β"
-          file_path: dist/response.bundle.js
-      - name: Deploy module settings and development templates
+      - name: Publish scripts, configuration and subscriptions together
         env:
           GH_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
           node --input-type=module <<'JS'
           import { readFile, writeFile } from "node:fs/promises";
-          const names = ["DualSubs.YouTube.dev.sgmodule", "DualSubs.YouTube.dev.plugin", "DualSubs.YouTube.dev.snippet", "DualSubs.YouTube.dev.stoverride", "DualSubs.YouTube.dev.yaml", "DualSubs.YouTube.dev.PreferencePanes.json", "config.dev.bundle.js"];
+          const names = ["request.dev.bundle.js", "response.dev.bundle.js", "DualSubs.YouTube.dev.sgmodule", "DualSubs.YouTube.dev.plugin", "DualSubs.YouTube.dev.snippet", "DualSubs.YouTube.dev.stoverride", "DualSubs.YouTube.dev.yaml", "DualSubs.YouTube.dev.boxjs.json", "DualSubs.YouTube.dev.PreferencePanes.json", "config.dev.bundle.js"];
           const files = Object.fromEntries(await Promise.all(names.map(async name => [name, { content: await readFile(`dist/${name}`, "utf8") }])));
-          await writeFile("gist-update.json", JSON.stringify({ files }));
+          await writeFile("gist-update.json", JSON.stringify({ description: "🍿️ DualSubs: ▶️ YouTube β", files }));
           JS
           gh api --method PATCH gists/069cf057ee7b3d82b35e2dcb59ed481e --input gist-update.json --silent

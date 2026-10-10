@@ -11,3 +11,6 @@
     * `util` 由 `submodule` 更改为 `package`
     * `$platform` 改为 `$app`
     * 使用了全新的 `Console` polyfill
+
+### 🔄 Other Changes
+  * 开发版模块显示实际构建版本，便于区分更新前后的配置与脚本。

@@ -26,26 +26,37 @@
 		"example": "example"
 	},
 	"scripts": {
-		"serve": "webpack serve",
-		"build": "rspack build",
-		"build:dev": "rspack build -c rspack.dev.config.js --mode=development",
-		"build:args": "arguments-builder build && node scripts/prepare-preference-panes.mjs",
-		"build:dev-args": "arguments-builder build -c arguments-builder.dev.config.ts && node scripts/prepare-preference-panes.mjs --dev",
-		"dts": "arguments-builder dts",
-		"test": "node --test tests/*.test.mjs"
+		"build": "npm run clean && npm run build:args && npm run build:scripts",
+		"build:dev": "rollup -c rollup.dev.config.mjs",
+		"build:args": "npm run build:release-args && npm run build:full-args",
+		"build:dev-args": "arguments-builder build -c arguments-builder.dev.config.ts && test -s dist/DualSubs.YouTube.dev.yaml && node scripts/prepare-preference-panes.mjs --dev",
+		"dts": "arguments-builder dts -c arguments-builder.full.config.ts",
+		"test": "node --test tests/*.test.mjs",
+		"clean": "node --input-type=module -e 'import { rm } from \"node:fs/promises\"; await rm(\"dist\", { recursive: true, force: true });'",
+		"dev": "BUILD_VERSION=dev.$(git rev-parse --short HEAD) sh -c 'npm run clean && npm run build:dev-args && npm run build:dev'",
+		"build:scripts": "rollup -c",
+		"build:release-args": "arguments-builder build -c arguments-builder.release.config.ts && test -s dist/DualSubs.YouTube.yaml",
+		"build:full-args": "arguments-builder boxjs -c arguments-builder.full.config.ts && node scripts/prepare-preference-panes.mjs",
+		"check:args": "tsc --noEmit --skipLibCheck --module nodenext --moduleResolution nodenext --target es2022 --allowImportingTsExtensions arguments-builder.*.config.ts"
 	},
 	"browserslist": [
 		"iOS >= 15"
 	],
 	"devDependencies": {
-		"@iringo/arguments-builder": "^1.8.5",
+		"@nsnanocat/arguments-builder": "^1.8.6",
 		"@protobuf-ts/plugin": "^2.11.1",
-		"@rspack/cli": "^1.5.8",
-		"@rspack/core": "^1.5.8",
-		"node-polyfill-webpack-plugin": "^4.1.0"
+		"rollup": "4.63.1",
+		"@rollup/plugin-node-resolve": "16.0.3",
+		"@rollup/plugin-terser": "1.0.0",
+		"typescript": "^5.9.3"
 	},
 	"dependencies": {
-		"@nsnanocat/util": "^1.8.10",
+		"@nsnanocat/util": "^2.7.6",
 		"@protobuf-ts/runtime": "^2.11.1"
+	},
+	"overrides": {
+		"@nsnanocat/surge2egern": {
+			"puppeteer": "25.7.0"
+		}
 	}
 }

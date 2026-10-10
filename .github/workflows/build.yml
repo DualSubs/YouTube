@@ -11,42 +11,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
+      - name: Checkout Repository
+        uses: actions/checkout@v7
         with:
           submodules: recursive
           token: ${{ secrets.SUBMODULE_TOKEN }}
-      - name: Set up Node.js
-        uses: actions/setup-node@main
-        with:
-          node-version: '24'
-          cache: 'npm'
-      # Egern conversion uses Puppeteer Chrome on Ubuntu.
-      - name: Disable AppArmor
-        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
-      - name: Install dependencies
-        run: npm install
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
-      - name: Install Puppeteer Chrome
-        run: node --input-type=module -e 'import { downloadBrowsers } from "puppeteer/internal/node/install.js"; await downloadBrowsers()'
-        env:
-          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
-      - name: Update local package.json version from release tag
+      - name: Update Package Version from Tag
         if: github.ref_type == 'tag'
         uses: BellCubeDev/update-package-version-by-release-tag@v2
         with:
           version: ${{ github.ref_name }}
           keep-v: "false" # If set to "true", will not remove any 'v' prefix from the version number.
           ignore-semver-check: "false" # If set to "true", will not check if the version number is a valid semver version.
-      - name: Build scripts
-        run: npm run build
-      - name: Generate modules
-        run: npm run build:args && test -s dist/DualSubs.YouTube.yaml
-        env:
-          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
-      - name: Upload artifact
-        uses: actions/upload-artifact@master
+      - name: Run Build Pipeline
+        uses: ./.github/actions/node-build
+        with:
+          package-token: ${{ secrets.PACKAGE_TOKEN }}
+          node-version: "24"
+          build-command: npm run build
+          extra-command: npm run check:args && SETTINGS_CHANNEL=formal npm test && test -s dist/DualSubs.YouTube.yaml
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v7
         with:
           name: artifact
           path: |

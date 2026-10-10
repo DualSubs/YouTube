@@ -3,9 +3,11 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
+const suffix = process.env.SETTINGS_CHANNEL === "dev" ? ".dev" : "";
+
 test("module settings retain both proxy response protocols and bodyless HEAD detection", async () => {
-	const expected = JSON.parse(await readFile("dist/DualSubs.YouTube.dev.PreferencePanes.json", "utf8"));
-	const source = await readFile("dist/config.dev.bundle.js", "utf8");
+	const expected = JSON.parse(await readFile(`dist/DualSubs.YouTube${suffix}.PreferencePanes.json`, "utf8"));
+	const source = await readFile(`dist/config${suffix}.bundle.js`, "utf8");
 	for (const method of ["GET", "HEAD"])
 		for (const quantumult of [false, true]) {
 			let result;
@@ -33,5 +35,30 @@ test("module templates intercept only their own configuration and leave backing 
 				assert.equal(regex.test(`https://dualsubs.github.io/api/${panel}`), false, `${platform}${suffix}: ${panel}`);
 			for (const [url] of template.matchAll(/https:\/\/[^\s"',)]+/g))
 				assert.equal(regex.test(url), false, `${platform}${suffix}: download intercepted: ${url}`);
+		}
+});
+
+test("bundled requests preserve argument precedence and cached subtitle languages without Node globals", { timeout: 10000 }, async () => {
+	const source = await readFile(`dist/request${suffix}.bundle.js`, "utf8");
+	for (const objectArgument of [false, true])
+		for (const storage of ["PersistentStore", "Argument"]) {
+			const argument = { Storage: storage, Type: "Translate", LogLevel: "OFF" };
+			const state = { YouTube: { Settings: { Type: "Official", ShowOnly: false, AutoCC: true }, Caches: { tlang: "ja" } } };
+			const errors = [];
+			const result = await new Promise(resolve => vm.runInNewContext(source, {
+				URL,
+				console: { log() {}, info() {}, debug() {}, warn() {}, error: (...args) => errors.push(args) },
+				$environment: { "surge-version": "test" },
+				$script: { startTime: Date.now() / 1000 },
+				$argument: objectArgument ? argument : new URLSearchParams(argument).toString(),
+				$persistentStore: { read: key => key === "DualSubs" ? JSON.stringify(state) : null, write: (value, key) => { assert.equal(key, "DualSubs"); Object.assign(state, JSON.parse(value)); return true; } },
+				$request: { method: "GET", url: "https://www.youtube.com/api/timedtext?v=video&lang=en", headers: {} },
+				$done: resolve,
+			}));
+			assert.deepEqual(errors, []);
+			const url = new URL(result.url);
+			assert.equal(url.searchParams.get("subtype"), storage === "Argument" ? "Translate" : "Official");
+			assert.equal(url.searchParams.get("tlang"), storage === "Argument" ? null : "ja");
+			assert.deepEqual(JSON.parse(state.Composite.Caches.Playlists.Subtitle), [["video", "en"]]);
 		}
 });
