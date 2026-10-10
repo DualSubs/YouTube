@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@main
         with:
-          node-version: 'latest'
+          node-version: '24'
           cache: 'npm'
       # Egern conversion uses Puppeteer Chrome on Ubuntu.
       - name: Disable AppArmor
@@ -30,7 +30,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
       - name: Install Puppeteer Chrome
-        run: node node_modules/puppeteer/install.mjs
+        run: node --input-type=module -e 'import { downloadBrowsers } from "puppeteer/internal/node/install.js"; await downloadBrowsers()'
         env:
           PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
       - name: Build
