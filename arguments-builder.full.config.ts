@@ -96,6 +96,20 @@ export const argShowOnly: ArgumentItem = {
 	description: "是否仅显示“自动翻译”字幕，不显示源语言字幕。"
 };
 
+export const argStorage: ArgumentItem = {
+	key: "Storage",
+	name: "[储存] 配置类型",
+	defaultValue: "PersistentStore",
+	type: "string",
+	exclude: ["boxjs"],
+	options: [
+		{ key: "Argument", label: "插件配置优先" },
+		{ key: "PersistentStore", label: "持久化存储优先" },
+		{ key: "database", label: "仅使用默认配置" }
+	],
+	description: "默认优先使用设置面板或 BoxJS 保存的配置，其次使用插件配置，最后使用脚本默认配置。"
+};
+
 export const argLogLevel: ArgumentItem = {
 	key: "LogLevel",
 	name: "[调试] 日志等级",
@@ -124,6 +138,6 @@ export const panelYouTubeTypesDev: ArgumentItem = {
 	]
 };
 
-export const moduleArgs: ArgumentItem[] = [argType, argTypes, argAutoCC, argPosition, argVendor, argShowOnly, argLogLevel];
+export const moduleArgs: ArgumentItem[] = [argType, argTypes, argAutoCC, argPosition, argVendor, argShowOnly, argStorage, argLogLevel];
 
 export default defineConfig({ output, args: moduleArgs });
