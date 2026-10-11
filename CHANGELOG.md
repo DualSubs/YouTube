@@ -1,5 +1,5 @@
 ### 🆕 New Features
-  * 新增本地网页设置入口，由 YouTube 模块独立提供配置，复用 Universal 的设置页面与存储 API。
+  * 新增官网在线设置首页入口，由 YouTube 模块独立提供配置，复用 Universal 的存储 API。
 
 ### 🛠️ Bug Fixes
   * 修复 `$argument` 和 `$persistentStore` 载入顺序颠倒的问题
