@@ -60,7 +60,7 @@ function host({ quantumult = false, response = { status: 200, headers: { "Set-Co
 test("browser headers extract all four server cookies from folded and array headers on Surge and Quantumult X", async () => {
 	for (const quantumult of [false, true])
 		for (const array of [false, true]) {
-			const runtime = host({ quantumult, response: { status: 200, headers: { "sEt-CoOkIe": array ? setCookies : setCookies.join(", ") } } });
+			const runtime = host({ quantumult, response: { status: 200, headers: { "sEt-CoOkIe": array ? setCookies : setCookies.join(", ") } }, state: { YouTube: { Caches: { tlang: "zh-Hans" } } } });
 			vm.runInContext(helperSource, runtime.context);
 			const headers = await runtime.context.BrowserHeaders.getHeader();
 			assert.equal(headers.Cookie, cookie);
@@ -70,7 +70,7 @@ test("browser headers extract all four server cookies from folded and array head
 			assert.equal(request.headers["User-Agent"], headers["User-Agent"]);
 			assert.equal(request.headers.Cookie, undefined);
 			assert.equal(request.headers.Authorization, undefined);
-			assert.deepEqual(JSON.parse(runtime.state().YouTube.Caches.Cookies), { cookie, expires });
+			assert.deepEqual(runtime.state().YouTube.Caches, { tlang: "zh-Hans", Cookies: cookie, Expires: String(expires) });
 		}
 });
 
@@ -86,7 +86,7 @@ test("browser cookies persist across script invocations and refresh after the se
 	second.clock.now = expires;
 	assert.equal((await second.context.BrowserHeaders.getHeader()).Cookie, cookie.replace("YSC=session", "YSC=renewed"));
 	assert.equal(second.requests.length, 1);
-	assert.equal(JSON.parse(second.state().YouTube.Caches.Cookies).expires, Date.parse("2027-10-10T00:00:00Z"));
+	assert.equal(second.state().YouTube.Caches.Expires, String(Date.parse("2027-10-10T00:00:00Z")));
 });
 
 test("failed and incomplete cookie responses reject without persisting partial results", async () => {
