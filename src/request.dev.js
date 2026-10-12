@@ -266,6 +266,11 @@ Console.info(`FORMAT: ${FORMAT}`);
 										break;
 								}
 							}
+							if (url.searchParams.get("tlang")) {
+								delete $request.headers["user-agent"];
+								$request.headers["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+								Console.info("翻译字幕请求：使用桌面 Chrome 140 User-Agent");
+							}
 							break;
 						}
 					}
