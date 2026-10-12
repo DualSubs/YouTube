@@ -27,9 +27,9 @@
 # 🍿️ DualSubs.YouTube.TimedText.request
 ^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext url script-request-header https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js
 # 🍿️ DualSubs.YouTube.Composite.TimedText.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Composite.Subtitles.response.dev.bundle.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External) url script-response-body https://gist.githubusercontent.com/VirgilClyne/92cd6fbcde657fb43c67ed7f2430a994/raw/Composite.Subtitles.response.dev.bundle.js
 # 🍿️ DualSubs.YouTube.Translate.TimedText.response
-^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js
+^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate url script-response-body https://gist.githubusercontent.com/VirgilClyne/92cd6fbcde657fb43c67ed7f2430a994/raw/Translate.response.dev.bundle.js
 
 # YouTube Music
 # 🍿️ DualSubs.YouTubeMusic.Browse.request.json
@@ -37,9 +37,9 @@
 # 🍿️ DualSubs.YouTube.Browse.request.proto
 ^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse(\?.+)?$ url script-request-body https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js
 # 🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.json
-^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js
+^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://gist.githubusercontent.com/VirgilClyne/92cd6fbcde657fb43c67ed7f2430a994/raw/Translate.response.dev.bundle.js
 # 🍿️ DualSubs.YouTubeMusic.Translate.Lyrics.response.proto
-^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.dev.bundle.js
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate url script-response-body https://gist.githubusercontent.com/VirgilClyne/92cd6fbcde657fb43c67ed7f2430a994/raw/Translate.response.dev.bundle.js
 
 #[MITM]
 hostname = dualsubs.github.io, www.youtube.com, m.youtube.com, tv.youtube.com, music.youtube.com, youtubei.googleapis.com, -redirector*.googlevideo.com, *.googlevideo.com
