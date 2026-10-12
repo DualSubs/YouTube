@@ -41,9 +41,6 @@ export default class BrowserHeaders {
 	static async setHeader(headers) {
 		const lowerCase = "user-agent" in headers;
 		const browserHeaders = await this.getHeader();
-		for (const name of Object.keys(headers)) {
-			if (["user-agent", "cookie"].includes(name.toLowerCase())) delete headers[name];
-		}
 		return Object.assign(headers, lowerCase ? { "user-agent": browserHeaders["User-Agent"], cookie: browserHeaders.Cookie } : browserHeaders);
 	}
 }

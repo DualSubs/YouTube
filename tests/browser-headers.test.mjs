@@ -109,7 +109,7 @@ test("failed and incomplete cookie responses reject without persisting partial r
 	assert.deepEqual(runtime.state(), {});
 });
 
-test("setHeader follows original UA casing and removes duplicate UA and Cookie keys", async () => {
+test("setHeader overwrites UA and Cookie using original UA casing without deleting other keys", async () => {
 	for (const [source, userAgentKey, cookieKey] of [
 		[{ "user-agent": "native-app" }, "user-agent", "cookie"],
 		[{ "User-Agent": "native-app" }, "User-Agent", "Cookie"],
@@ -118,13 +118,13 @@ test("setHeader follows original UA casing and removes duplicate UA and Cookie k
 		const runtime = host();
 		vm.runInContext(helperSource, runtime.context);
 		const headers = { ...source, Cookie: "old-cookie", cookie: "second-cookie", COOKIE: "third-cookie", Authorization: "app-auth", Accept: "*/*" };
+		const original = { ...headers };
 		await runtime.context.BrowserHeaders.setHeader(headers);
-		assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "user-agent"), [userAgentKey]);
-		assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "cookie"), [cookieKey]);
 		assert.match(headers[userAgentKey], /Chrome\/140\.0\.0\.0/);
 		assert.equal(headers[cookieKey], cookie);
-		assert.equal(headers.Authorization, "app-auth");
-		assert.equal(headers.Accept, "*/*");
+		for (const [name, value] of Object.entries(original)) {
+			if (name !== userAgentKey && name !== cookieKey) assert.equal(headers[name], value);
+		}
 	}
 });
 
@@ -154,8 +154,8 @@ test("dev requests set browser headers only when the final timedtext URL keeps t
 			if (fetchCookies) {
 				assert.equal(result.headers.cookie, cookie);
 				assert.match(result.headers["user-agent"], /Chrome\/140\.0\.0\.0/);
-				assert.equal(result.headers["User-Agent"], undefined);
-				assert.equal(result.headers.Cookie, undefined);
+				assert.equal(result.headers["User-Agent"], "old-desktop");
+				assert.equal(result.headers.Cookie, "old-cookie");
 			} else assert.equal(result.headers["user-agent"], "native-app");
 		}
 });
