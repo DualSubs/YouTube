@@ -109,17 +109,23 @@ test("failed and incomplete cookie responses reject without persisting partial r
 	assert.deepEqual(runtime.state(), {});
 });
 
-test("setHeader removes every casing of UA and Cookie before installing browser headers", async () => {
-	const runtime = host();
-	vm.runInContext(helperSource, runtime.context);
-	const headers = { "User-Agent": "old-desktop", "user-agent": "native-app", "USER-AGENT": "third-ua", Cookie: "old-cookie", cookie: "second-cookie", COOKIE: "third-cookie", Authorization: "app-auth", Accept: "*/*" };
-	await runtime.context.BrowserHeaders.setHeader(headers);
-	assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "user-agent"), ["User-Agent"]);
-	assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "cookie"), ["Cookie"]);
-	assert.match(headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
-	assert.equal(headers.Cookie, cookie);
-	assert.equal(headers.Authorization, "app-auth");
-	assert.equal(headers.Accept, "*/*");
+test("setHeader follows original UA casing and removes duplicate UA and Cookie keys", async () => {
+	for (const [source, userAgentKey, cookieKey] of [
+		[{ "user-agent": "native-app" }, "user-agent", "cookie"],
+		[{ "User-Agent": "native-app" }, "User-Agent", "Cookie"],
+		[{ "User-Agent": "old-desktop", "user-agent": "native-app", "USER-AGENT": "third-ua" }, "user-agent", "cookie"],
+	]) {
+		const runtime = host();
+		vm.runInContext(helperSource, runtime.context);
+		const headers = { ...source, Cookie: "old-cookie", cookie: "second-cookie", COOKIE: "third-cookie", Authorization: "app-auth", Accept: "*/*" };
+		await runtime.context.BrowserHeaders.setHeader(headers);
+		assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "user-agent"), [userAgentKey]);
+		assert.deepEqual(Object.keys(headers).filter(name => name.toLowerCase() === "cookie"), [cookieKey]);
+		assert.match(headers[userAgentKey], /Chrome\/140\.0\.0\.0/);
+		assert.equal(headers[cookieKey], cookie);
+		assert.equal(headers.Authorization, "app-auth");
+		assert.equal(headers.Accept, "*/*");
+	}
 });
 
 test("dev requests set browser headers only when the final timedtext URL keeps tlang", async () => {
@@ -146,10 +152,10 @@ test("dev requests set browser headers only when the final timedtext URL keeps t
 			assert.equal(result.headers.Authorization, "app-auth");
 			assert.equal(result.headers.Accept, "*/*");
 			if (fetchCookies) {
-				assert.equal(result.headers.Cookie, cookie);
-				assert.match(result.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
-				assert.equal(result.headers["user-agent"], undefined);
-				assert.equal(result.headers.cookie, undefined);
+				assert.equal(result.headers.cookie, cookie);
+				assert.match(result.headers["user-agent"], /Chrome\/140\.0\.0\.0/);
+				assert.equal(result.headers["User-Agent"], undefined);
+				assert.equal(result.headers.Cookie, undefined);
 			} else assert.equal(result.headers["user-agent"], "native-app");
 		}
 });
