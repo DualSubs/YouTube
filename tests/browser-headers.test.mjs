@@ -24,7 +24,7 @@ async function bundle(input, name) {
 	}
 }
 
-const helperSource = await bundle("src/function/getCaptionHeaders.mjs", "getCaptionHeaders");
+const helperSource = await bundle("src/function/getBrowserHeaders.mjs", "getBrowserHeaders");
 const requestSource = await bundle("src/request.dev.js");
 
 function host({ quantumult = false, response = { status: 200, headers: { "Set-Cookie": setCookies.join(", ") } }, state = {}, networkError } = {}) {
@@ -57,12 +57,12 @@ function host({ quantumult = false, response = { status: 200, headers: { "Set-Co
 	return { context, requests, errors, clock, state: () => JSON.parse(data.DualSubs) };
 }
 
-test("caption headers extract all four server cookies from folded and array headers on Surge and Quantumult X", async () => {
+test("browser headers extract all four server cookies from folded and array headers on Surge and Quantumult X", async () => {
 	for (const quantumult of [false, true])
 		for (const array of [false, true]) {
 			const runtime = host({ quantumult, response: { status: 200, headers: { "sEt-CoOkIe": array ? setCookies : setCookies.join(", ") } } });
 			vm.runInContext(helperSource, runtime.context);
-			const headers = await runtime.context.getCaptionHeaders();
+			const headers = await runtime.context.getBrowserHeaders();
 			assert.equal(headers.Cookie, cookie);
 			assert.match(headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
 			const [request] = runtime.requests;
@@ -74,17 +74,17 @@ test("caption headers extract all four server cookies from folded and array head
 		}
 });
 
-test("caption cookies persist across script invocations and refresh after the server expiry", async () => {
+test("browser cookies persist across script invocations and refresh after the server expiry", async () => {
 	const first = host();
 	vm.runInContext(helperSource, first.context);
-	await first.context.getCaptionHeaders();
+	await first.context.getBrowserHeaders();
 	const renewedCookies = setCookies.map(value => value.replace("10 Apr 2027", "10 Oct 2027").replace("YSC=session", "YSC=renewed"));
 	const second = host({ state: first.state(), response: { status: 200, headers: { "Set-Cookie": renewedCookies } } });
 	vm.runInContext(helperSource, second.context);
-	assert.equal((await second.context.getCaptionHeaders()).Cookie, cookie);
+	assert.equal((await second.context.getBrowserHeaders()).Cookie, cookie);
 	assert.equal(second.requests.length, 0);
 	second.clock.now = expires;
-	assert.equal((await second.context.getCaptionHeaders()).Cookie, cookie.replace("YSC=session", "YSC=renewed"));
+	assert.equal((await second.context.getBrowserHeaders()).Cookie, cookie.replace("YSC=session", "YSC=renewed"));
 	assert.equal(second.requests.length, 1);
 	assert.equal(JSON.parse(second.state().YouTube.Caches.Cookies).expires, Date.parse("2027-10-10T00:00:00Z"));
 });
@@ -100,16 +100,16 @@ test("failed and incomplete cookie responses reject without persisting partial r
 	]) {
 		const runtime = host({ response });
 		vm.runInContext(helperSource, runtime.context);
-		await assert.rejects(runtime.context.getCaptionHeaders(), /获取字幕 Cookie 失败/);
+		await assert.rejects(runtime.context.getBrowserHeaders(), /获取浏览器 Cookie 失败/);
 		assert.deepEqual(runtime.state(), {});
 	}
 	const runtime = host({ networkError: "network unavailable" });
 	vm.runInContext(helperSource, runtime.context);
-	await assert.rejects(runtime.context.getCaptionHeaders(), reason => reason === "network unavailable");
+	await assert.rejects(runtime.context.getBrowserHeaders(), reason => reason === "network unavailable");
 	assert.deepEqual(runtime.state(), {});
 });
 
-test("dev requests merge caption headers only when the final timedtext URL keeps tlang", async () => {
+test("dev requests merge browser headers only when the final timedtext URL keeps tlang", async () => {
 	for (const quantumult of [false, true])
 		for (const [type, query, cachedLanguage, fetchCookies] of [
 			["Official", "&tlang=zh-Hans", undefined, true],

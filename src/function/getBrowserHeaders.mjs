@@ -1,10 +1,10 @@
 import { fetch, Storage } from "@nsnanocat/util";
 
 /**
- * 获取并缓存 YouTube 字幕请求的 User-Agent 与 Cookie。
+ * 获取并缓存 YouTube 浏览器的 User-Agent 与 Cookie 请求头。
  * @returns {Promise<Record<string, string>>}
  */
-export default async function getCaptionHeaders() {
+export default async function getBrowserHeaders() {
 	const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 	const cacheKey = "@DualSubs.YouTube.Caches.Cookies";
 	let cache = Storage.getItem(cacheKey);
@@ -15,7 +15,7 @@ export default async function getCaptionHeaders() {
 			redirection: true,
 			"auto-cookie": false,
 		});
-		if (response.status !== 200) throw new Error(`获取字幕 Cookie 失败：HTTP ${response.status}`);
+		if (response.status !== 200) throw new Error(`获取浏览器 Cookie 失败：HTTP ${response.status}`);
 		const setCookies = Object.entries(response.headers).find(([name]) => name.toLowerCase() === "set-cookie")?.[1];
 		const cookies = new Map();
 		let expires = Infinity;
@@ -28,8 +28,8 @@ export default async function getCaptionHeaders() {
 			const expiration = attributes.find(attribute => attribute.trim().toLowerCase().startsWith("expires="));
 			if (expiration) expires = Math.min(expires, Date.parse(expiration.trim().slice(8)));
 		}
-		if (cookies.size !== 4) throw new Error("获取字幕 Cookie 失败：未取得完整的四项 Cookie");
-		if (!Number.isFinite(expires) || expires <= Date.now()) throw new Error("获取字幕 Cookie 失败：有效期无效或已过期");
+		if (cookies.size !== 4) throw new Error("获取浏览器 Cookie 失败：未取得完整的四项 Cookie");
+		if (!Number.isFinite(expires) || expires <= Date.now()) throw new Error("获取浏览器 Cookie 失败：有效期无效或已过期");
 		cache = { cookie: [...cookies.values()].join("; "), expires };
 		Storage.setItem(cacheKey, cache);
 	}

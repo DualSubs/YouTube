@@ -44,7 +44,7 @@ test("bundled requests preserve argument precedence and cached subtitle language
 		for (const storage of [undefined, "PersistentStore", "Argument"]) {
 			const argument = { Type: "Translate", LogLevel: "OFF" };
 			if (storage !== undefined) argument.Storage = storage;
-			const state = { YouTube: { Settings: { Type: "Official", ShowOnly: false, AutoCC: true }, Caches: { tlang: "ja", Cookies: JSON.stringify({ cookie: "cached-caption-cookie", expires: Date.now() + 60000 }) } } };
+			const state = { YouTube: { Settings: { Type: "Official", ShowOnly: false, AutoCC: true }, Caches: { tlang: "ja", Cookies: JSON.stringify({ cookie: "cached-browser-cookie", expires: Date.now() + 60000 }) } } };
 			const errors = [];
 			const result = await new Promise(resolve => vm.runInNewContext(source, {
 				URL,
