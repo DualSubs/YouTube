@@ -7,9 +7,8 @@ export default class BrowserHeaders {
 	static userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 
 	static async getHeader() {
-		const cacheKey = "@DualSubs.YouTube.Caches";
-		let cookie = Storage.getItem(`${cacheKey}.Cookies`);
-		let expires = Storage.getItem(`${cacheKey}.Expires`, 0);
+		let cookie = Storage.getItem("@DualSubs.YouTube.Caches.Cookies");
+		let expires = Storage.getItem("@DualSubs.YouTube.Caches.Expires", 0);
 		if (!cookie || expires <= Date.now()) {
 			const response = await fetch({
 				url: "https://www.youtube.com/sw.js",
@@ -33,8 +32,8 @@ export default class BrowserHeaders {
 			if (cookies.size !== 4) throw new Error("获取浏览器 Cookie 失败：未取得完整的四项 Cookie");
 			if (!Number.isFinite(expires) || expires <= Date.now()) throw new Error("获取浏览器 Cookie 失败：有效期无效或已过期");
 			cookie = [...cookies.values()].join("; ");
-			Storage.setItem(`${cacheKey}.Cookies`, cookie);
-			Storage.setItem(`${cacheKey}.Expires`, expires);
+			Storage.setItem("@DualSubs.YouTube.Caches.Cookies", cookie);
+			Storage.setItem("@DualSubs.YouTube.Caches.Expires", expires);
 		}
 		return cookie;
 	}
