@@ -62,12 +62,10 @@ test("browser headers extract all four server cookies from folded and array head
 		for (const array of [false, true]) {
 			const runtime = host({ quantumult, response: { status: 200, headers: { "sEt-CoOkIe": array ? setCookies : setCookies.join(", ") } }, state: { YouTube: { Caches: { tlang: "zh-Hans" } } } });
 			vm.runInContext(helperSource, runtime.context);
-			const headers = await runtime.context.BrowserHeaders.getHeader();
-			assert.equal(headers.Cookie, cookie);
-			assert.match(headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
+			assert.equal(await runtime.context.BrowserHeaders.getHeader(), cookie);
 			const [request] = runtime.requests;
 			assert.equal(request.url, "https://www.youtube.com/sw.js");
-			assert.equal(request.headers["User-Agent"], headers["User-Agent"]);
+			assert.match(request.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
 			assert.equal(request.headers.Cookie, undefined);
 			assert.equal(request.headers.Authorization, undefined);
 			assert.deepEqual(runtime.state().YouTube.Caches, { tlang: "zh-Hans", Cookies: cookie, Expires: String(expires) });
@@ -81,10 +79,10 @@ test("browser cookies persist across script invocations and refresh after the se
 	const renewedCookies = setCookies.map(value => value.replace("10 Apr 2027", "10 Oct 2027").replace("YSC=session", "YSC=renewed"));
 	const second = host({ state: first.state(), response: { status: 200, headers: { "Set-Cookie": renewedCookies } } });
 	vm.runInContext(helperSource, second.context);
-	assert.equal((await second.context.BrowserHeaders.getHeader()).Cookie, cookie);
+	assert.equal(await second.context.BrowserHeaders.getHeader(), cookie);
 	assert.equal(second.requests.length, 0);
 	second.clock.now = expires;
-	assert.equal((await second.context.BrowserHeaders.getHeader()).Cookie, cookie.replace("YSC=session", "YSC=renewed"));
+	assert.equal(await second.context.BrowserHeaders.getHeader(), cookie.replace("YSC=session", "YSC=renewed"));
 	assert.equal(second.requests.length, 1);
 	assert.equal(second.state().YouTube.Caches.Expires, String(Date.parse("2027-10-10T00:00:00Z")));
 });
@@ -113,13 +111,13 @@ test("setHeader overwrites UA and Cookie using original UA casing without deleti
 	for (const [source, userAgentKey, cookieKey] of [
 		[{ "user-agent": "native-app" }, "user-agent", "cookie"],
 		[{ "User-Agent": "native-app" }, "User-Agent", "Cookie"],
-		[{ "User-Agent": "old-desktop", "user-agent": "native-app", "USER-AGENT": "third-ua" }, "user-agent", "cookie"],
+		[{ "User-Agent": "old-desktop", "user-agent": "native-app", "USER-AGENT": "third-ua" }, "User-Agent", "Cookie"],
 	]) {
 		const runtime = host();
 		vm.runInContext(helperSource, runtime.context);
 		const headers = { ...source, Cookie: "old-cookie", cookie: "second-cookie", COOKIE: "third-cookie", Authorization: "app-auth", Accept: "*/*" };
 		const original = { ...headers };
-		await runtime.context.BrowserHeaders.setHeader(headers);
+		assert.equal(await runtime.context.BrowserHeaders.setHeader(headers), headers);
 		assert.match(headers[userAgentKey], /Chrome\/140\.0\.0\.0/);
 		assert.equal(headers[cookieKey], cookie);
 		for (const [name, value] of Object.entries(original)) {
@@ -152,10 +150,10 @@ test("dev requests set browser headers only when the final timedtext URL keeps t
 			assert.equal(result.headers.Authorization, "app-auth");
 			assert.equal(result.headers.Accept, "*/*");
 			if (fetchCookies) {
-				assert.equal(result.headers.cookie, cookie);
-				assert.match(result.headers["user-agent"], /Chrome\/140\.0\.0\.0/);
-				assert.equal(result.headers["User-Agent"], "old-desktop");
-				assert.equal(result.headers.Cookie, "old-cookie");
+				assert.equal(result.headers.Cookie, cookie);
+				assert.match(result.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
+				assert.equal(result.headers["user-agent"], "native-app");
+				assert.equal(result.headers.cookie, "second-cookie");
 			} else assert.equal(result.headers["user-agent"], "native-app");
 		}
 });

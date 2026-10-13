@@ -4,15 +4,16 @@ import { fetch, Storage } from "@nsnanocat/util";
  * 获取并缓存 YouTube 浏览器的 User-Agent 与 Cookie 请求头。
  */
 export default class BrowserHeaders {
+	static userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+
 	static async getHeader() {
-		const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 		const cacheKey = "@DualSubs.YouTube.Caches";
 		let cookie = Storage.getItem(`${cacheKey}.Cookies`);
 		let expires = Storage.getItem(`${cacheKey}.Expires`, 0);
 		if (!cookie || expires <= Date.now()) {
 			const response = await fetch({
 				url: "https://www.youtube.com/sw.js",
-				headers: { "User-Agent": userAgent, Referer: "https://www.youtube.com/", Accept: "*/*", "Accept-Language": "en-US, en;q=0.9" },
+				headers: { "User-Agent": this.userAgent, Referer: "https://www.youtube.com/", Accept: "*/*", "Accept-Language": "en-US, en;q=0.9" },
 				redirection: true,
 				"auto-cookie": false,
 			});
@@ -35,12 +36,18 @@ export default class BrowserHeaders {
 			Storage.setItem(`${cacheKey}.Cookies`, cookie);
 			Storage.setItem(`${cacheKey}.Expires`, expires);
 		}
-		return { "User-Agent": userAgent, Cookie: cookie };
+		return cookie;
 	}
 
 	static async setHeader(headers) {
-		const lowerCase = "user-agent" in headers;
-		const browserHeaders = await this.getHeader();
-		return Object.assign(headers, lowerCase ? { "user-agent": browserHeaders["User-Agent"], cookie: browserHeaders.Cookie } : browserHeaders);
+		const cookie = await this.getHeader();
+		if (headers["User-Agent"]) {
+			headers["User-Agent"] = this.userAgent;
+			headers.Cookie = cookie;
+		} else if (headers["user-agent"]) {
+			headers["user-agent"] = this.userAgent;
+			headers.cookie = cookie;
+		}
+		return headers;
 	}
 }
