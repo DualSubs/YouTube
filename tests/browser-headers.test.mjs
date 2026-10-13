@@ -87,6 +87,18 @@ test("browser cookies persist across script invocations and refresh after the se
 	assert.equal(second.state().YouTube.Caches.Expires, String(Date.parse("2027-10-10T00:00:00Z")));
 });
 
+test("browser cache uses the earliest required cookie expiry and ignores unrelated cookies", async () => {
+	const responseCookies = setCookies.map(value => {
+		if (value.startsWith("__Secure-BUCKET=")) return `${value}; Expires=Sat, 10 Oct 2026 00:00:00 GMT`;
+		if (value.startsWith("VISITOR_PRIVACY_METADATA=")) return value.replace("Sat, 10 Apr 2027", "Sun, 01 Nov 2026");
+		return value;
+	});
+	const runtime = host({ response: { status: 200, headers: { "Set-Cookie": responseCookies } } });
+	vm.runInContext(helperSource, runtime.context);
+	assert.equal(await runtime.context.BrowserHeaders.getHeader(), cookie);
+	assert.equal(runtime.state().YouTube.Caches.Expires, String(Date.parse("2026-11-01T00:00:00Z")));
+});
+
 test("failed and incomplete cookie responses reject without persisting partial results", async () => {
 	for (const response of [
 		{ status: 429, headers: {} },

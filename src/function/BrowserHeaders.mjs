@@ -17,21 +17,9 @@ export default class BrowserHeaders {
 				"auto-cookie": false,
 			});
 			if (response.status !== 200) throw new Error(`获取浏览器 Cookie 失败：HTTP ${response.status}`);
-			const setCookies = Object.entries(response.headers).find(([name]) => name.toLowerCase() === "set-cookie")?.[1];
-			const cookies = new Map();
-			expires = Infinity;
-			// Expires 日期含逗号，只在下一个 Cookie 的 name=value 前拆分。
-			for (const entry of (Array.isArray(setCookies) ? setCookies.join(", ") : (setCookies ?? "")).split(/,(?=\s*[^=;,\s]+=)/)) {
-				const [cookie, ...attributes] = entry.trim().split(";");
-				const name = cookie.split("=", 1)[0];
-				if (!["YSC", "VISITOR_INFO1_LIVE", "VISITOR_PRIVACY_METADATA", "__Secure-ROLLOUT_TOKEN"].includes(name) || !cookie.slice(name.length + 1)) continue;
-				cookies.set(name, cookie);
-				const expiration = attributes.find(attribute => attribute.trim().toLowerCase().startsWith("expires="));
-				if (expiration) expires = Math.min(expires, Date.parse(expiration.trim().slice(8)));
-			}
-			if (cookies.size !== 4) throw new Error("获取浏览器 Cookie 失败：未取得完整的四项 Cookie");
-			if (!Number.isFinite(expires) || expires <= Date.now()) throw new Error("获取浏览器 Cookie 失败：有效期无效或已过期");
-			cookie = [...cookies.values()].join("; ");
+			const entries = getCookieEntries(response.headers);
+			cookie = getCookieString(entries);
+			expires = getCookieExpires(entries);
 			Storage.setItem("@DualSubs.YouTube.Caches.Cookies", cookie);
 			Storage.setItem("@DualSubs.YouTube.Caches.Expires", expires);
 		}
@@ -49,4 +37,36 @@ export default class BrowserHeaders {
 		}
 		return headers;
 	}
+}
+
+function getCookieEntries(headers) {
+	const setCookies = Object.entries(headers).find(([name]) => name.toLowerCase() === "set-cookie")?.[1];
+	// Expires 日期含逗号，只在下一个 Cookie 的 name=value 前拆分。
+	return (Array.isArray(setCookies) ? setCookies.join(", ") : (setCookies ?? ""))
+		.split(/,(?=\s*[^=;,\s]+=)/)
+		.filter(entry => {
+			const cookie = entry.trim().split(";", 1)[0];
+			const name = cookie.split("=", 1)[0];
+			return ["YSC", "VISITOR_INFO1_LIVE", "VISITOR_PRIVACY_METADATA", "__Secure-ROLLOUT_TOKEN"].includes(name) && cookie.slice(name.length + 1);
+		});
+}
+
+function getCookieString(entries) {
+	const cookies = new Map();
+	for (const entry of entries) {
+		const cookie = entry.trim().split(";", 1)[0];
+		cookies.set(cookie.split("=", 1)[0], cookie);
+	}
+	if (cookies.size !== 4) throw new Error("获取浏览器 Cookie 失败：未取得完整的四项 Cookie");
+	return [...cookies.values()].join("; ");
+}
+
+function getCookieExpires(entries) {
+	let expires = Infinity;
+	for (const entry of entries) {
+		const expiration = entry.split(";").slice(1).find(attribute => attribute.trim().toLowerCase().startsWith("expires="));
+		if (expiration) expires = Math.min(expires, Date.parse(expiration.trim().slice(8)));
+	}
+	if (!Number.isFinite(expires) || expires <= Date.now()) throw new Error("获取浏览器 Cookie 失败：有效期无效或已过期");
+	return expires;
 }
