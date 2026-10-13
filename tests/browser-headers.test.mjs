@@ -25,7 +25,7 @@ async function bundle(input, name) {
 }
 
 const helperSource = await bundle("src/function/BrowserHeaders.mjs", "BrowserHeaders");
-const requestSource = await bundle("src/request.dev.js");
+const requestSources = await Promise.all(["src/request.js", "src/request.dev.js"].map(input => bundle(input)));
 
 function host({ quantumult = false, response = { status: 200, headers: { "Set-Cookie": setCookies.join(", ") } }, state = {}, networkError } = {}) {
 	const requests = [];
@@ -146,39 +146,40 @@ test("setHeader preserves existing cookies and sets missing browser headers usin
 	}
 });
 
-test("dev requests set browser headers only when the final timedtext URL keeps tlang and has no existing cookie", async () => {
-	for (const quantumult of [false, true])
-		for (const [type, query, cachedLanguage, fetchCookies, existingCookie] of [
-			["Official", "&tlang=zh-Hans", undefined, true],
-			["Composite", "&tlang=zh-Hans", undefined, true],
-			["Official", "", "zh-Hans", true],
-			["Official", "", undefined, false],
-			["Official", "&tlang=", undefined, false],
-			["Translate", "&tlang=zh-Hans", undefined, false],
-			["External", "&tlang=zh-Hans", undefined, false],
-			["Official", "&tlang=zh-Hans", undefined, false, "Cookie"],
-			["Official", "&tlang=zh-Hans", undefined, false, "cookie"],
-			["Official", "", "zh-Hans", false, "cookie"],
-		]) {
-			const runtime = host({ quantumult, state: { YouTube: { Settings: { Type: type, ShowOnly: false, AutoCC: true, LogLevel: "OFF" }, Caches: { tlang: cachedLanguage } } } });
-			const headers = { "User-Agent": "old-desktop", "user-agent": "native-app", Authorization: "app-auth", Accept: "*/*" };
-			if (existingCookie) headers[existingCookie] = "web-cookie";
-			const original = { ...headers };
-			const request = { method: "GET", url: `https://www.youtube.com/api/timedtext?v=video&lang=en${query}`, headers };
-			const result = await new Promise(resolve => {
-				runtime.context.$request = request;
-				runtime.context.$done = resolve;
-				vm.runInContext(requestSource, runtime.context);
-			});
-			assert.deepEqual(runtime.errors, []);
-			assert.equal(runtime.requests.length, fetchCookies ? 1 : 0);
-			assert.equal(result.headers.Authorization, "app-auth");
-			assert.equal(result.headers.Accept, "*/*");
-			if (fetchCookies) {
-				assert.equal(result.headers.Cookie, cookie);
-				assert.match(result.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
-				assert.equal(result.headers["user-agent"], "native-app");
-				assert.equal(result.headers.cookie, undefined);
-			} else assert.deepEqual(result.headers, original);
-		}
+test("formal and dev requests set browser headers only when the final timedtext URL keeps tlang and has no existing cookie", async () => {
+	for (const requestSource of requestSources)
+		for (const quantumult of [false, true])
+			for (const [type, query, cachedLanguage, fetchCookies, existingCookie] of [
+				["Official", "&tlang=zh-Hans", undefined, true],
+				["Composite", "&tlang=zh-Hans", undefined, true],
+				["Official", "", "zh-Hans", true],
+				["Official", "", undefined, false],
+				["Official", "&tlang=", undefined, false],
+				["Translate", "&tlang=zh-Hans", undefined, false],
+				["External", "&tlang=zh-Hans", undefined, false],
+				["Official", "&tlang=zh-Hans", undefined, false, "Cookie"],
+				["Official", "&tlang=zh-Hans", undefined, false, "cookie"],
+				["Official", "", "zh-Hans", false, "cookie"],
+			]) {
+				const runtime = host({ quantumult, state: { YouTube: { Settings: { Type: type, ShowOnly: false, AutoCC: true, LogLevel: "OFF" }, Caches: { tlang: cachedLanguage } } } });
+				const headers = { "User-Agent": "old-desktop", "user-agent": "native-app", Authorization: "app-auth", Accept: "*/*" };
+				if (existingCookie) headers[existingCookie] = "web-cookie";
+				const original = { ...headers };
+				const request = { method: "GET", url: `https://www.youtube.com/api/timedtext?v=video&lang=en${query}`, headers };
+				const result = await new Promise(resolve => {
+					runtime.context.$request = request;
+					runtime.context.$done = resolve;
+					vm.runInContext(requestSource, runtime.context);
+				});
+				assert.deepEqual(runtime.errors, []);
+				assert.equal(runtime.requests.length, fetchCookies ? 1 : 0);
+				assert.equal(result.headers.Authorization, "app-auth");
+				assert.equal(result.headers.Accept, "*/*");
+				if (fetchCookies) {
+					assert.equal(result.headers.Cookie, cookie);
+					assert.match(result.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
+					assert.equal(result.headers["user-agent"], "native-app");
+					assert.equal(result.headers.cookie, undefined);
+				} else assert.deepEqual(result.headers, original);
+			}
 });

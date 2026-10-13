@@ -2,6 +2,7 @@ import { $app, Console, done, Lodash as _, Storage } from "@nsnanocat/util";
 import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import setCache from "./function/setCache.mjs";
+import BrowserHeaders from "./function/BrowserHeaders.mjs";
 import { PlayerRequest } from "./protobuf/google/protos/youtube/api/innertube/PlayerRequest.js";
 import { BrowseRequest } from "./protobuf/google/protos/youtube/api/innertube/BrowseRequest.js";
 // 构造回复数据
@@ -191,6 +192,9 @@ Console.info(`FORMAT: ${FORMAT}`);
 										url.searchParams.set("subtype", "External"); // 外挂字幕
 										break;
 								}
+							}
+							if (url.searchParams.get("tlang")) {
+								await BrowserHeaders.setHeader($request.headers);
 							}
 							break;
 						}
