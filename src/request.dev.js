@@ -269,7 +269,6 @@ Console.info(`FORMAT: ${FORMAT}`);
 							}
 							if (url.searchParams.get("tlang")) {
 								await BrowserHeaders.setHeader($request.headers);
-								Console.info("翻译字幕请求：使用浏览器 Cookie 与桌面 Chrome 140 User-Agent");
 							}
 							break;
 						}

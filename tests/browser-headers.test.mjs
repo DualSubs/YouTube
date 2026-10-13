@@ -119,17 +119,25 @@ test("failed and incomplete cookie responses reject without persisting partial r
 	assert.deepEqual(runtime.state(), {});
 });
 
-test("setHeader overwrites UA and Cookie using original UA casing without deleting other keys", async () => {
+test("setHeader preserves existing cookies and sets missing browser headers using original UA casing", async () => {
 	for (const [source, userAgentKey, cookieKey] of [
 		[{ "user-agent": "native-app" }, "user-agent", "cookie"],
 		[{ "User-Agent": "native-app" }, "User-Agent", "Cookie"],
 		[{ "User-Agent": "old-desktop", "user-agent": "native-app", "USER-AGENT": "third-ua" }, "User-Agent", "Cookie"],
+		[{ "user-agent": "web-browser", Cookie: "web-cookie" }, "user-agent", "cookie"],
+		[{ "User-Agent": "web-browser", cookie: "web-cookie" }, "User-Agent", "Cookie"],
 	]) {
 		const runtime = host();
 		vm.runInContext(helperSource, runtime.context);
-		const headers = { ...source, Cookie: "old-cookie", cookie: "second-cookie", COOKIE: "third-cookie", Authorization: "app-auth", Accept: "*/*" };
+		const headers = { ...source, Authorization: "app-auth", Accept: "*/*" };
 		const original = { ...headers };
 		assert.equal(await runtime.context.BrowserHeaders.setHeader(headers), headers);
+		if (source.Cookie || source.cookie) {
+			assert.deepEqual(headers, original);
+			assert.equal(runtime.requests.length, 0);
+			assert.deepEqual(runtime.state(), {});
+			continue;
+		}
 		assert.match(headers[userAgentKey], /Chrome\/140\.0\.0\.0/);
 		assert.equal(headers[cookieKey], cookie);
 		for (const [name, value] of Object.entries(original)) {
@@ -138,9 +146,9 @@ test("setHeader overwrites UA and Cookie using original UA casing without deleti
 	}
 });
 
-test("dev requests set browser headers only when the final timedtext URL keeps tlang", async () => {
+test("dev requests set browser headers only when the final timedtext URL keeps tlang and has no existing cookie", async () => {
 	for (const quantumult of [false, true])
-		for (const [type, query, cachedLanguage, fetchCookies] of [
+		for (const [type, query, cachedLanguage, fetchCookies, existingCookie] of [
 			["Official", "&tlang=zh-Hans", undefined, true],
 			["Composite", "&tlang=zh-Hans", undefined, true],
 			["Official", "", "zh-Hans", true],
@@ -148,9 +156,14 @@ test("dev requests set browser headers only when the final timedtext URL keeps t
 			["Official", "&tlang=", undefined, false],
 			["Translate", "&tlang=zh-Hans", undefined, false],
 			["External", "&tlang=zh-Hans", undefined, false],
+			["Official", "&tlang=zh-Hans", undefined, false, "Cookie"],
+			["Official", "&tlang=zh-Hans", undefined, false, "cookie"],
+			["Official", "", "zh-Hans", false, "cookie"],
 		]) {
 			const runtime = host({ quantumult, state: { YouTube: { Settings: { Type: type, ShowOnly: false, AutoCC: true, LogLevel: "OFF" }, Caches: { tlang: cachedLanguage } } } });
-			const headers = { "User-Agent": "old-desktop", "user-agent": "native-app", Cookie: "old-cookie", cookie: "second-cookie", Authorization: "app-auth", Accept: "*/*" };
+			const headers = { "User-Agent": "old-desktop", "user-agent": "native-app", Authorization: "app-auth", Accept: "*/*" };
+			if (existingCookie) headers[existingCookie] = "web-cookie";
+			const original = { ...headers };
 			const request = { method: "GET", url: `https://www.youtube.com/api/timedtext?v=video&lang=en${query}`, headers };
 			const result = await new Promise(resolve => {
 				runtime.context.$request = request;
@@ -165,7 +178,7 @@ test("dev requests set browser headers only when the final timedtext URL keeps t
 				assert.equal(result.headers.Cookie, cookie);
 				assert.match(result.headers["User-Agent"], /Chrome\/140\.0\.0\.0/);
 				assert.equal(result.headers["user-agent"], "native-app");
-				assert.equal(result.headers.cookie, "second-cookie");
-			} else assert.equal(result.headers["user-agent"], "native-app");
+				assert.equal(result.headers.cookie, undefined);
+			} else assert.deepEqual(result.headers, original);
 		}
 });

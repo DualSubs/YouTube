@@ -27,13 +27,19 @@ export default class BrowserHeaders {
 	}
 
 	static async setHeader(headers) {
-		const cookie = await this.getHeader();
-		if (headers["User-Agent"]) {
-			headers["User-Agent"] = this.userAgent;
-			headers.Cookie = cookie;
-		} else if (headers["user-agent"]) {
-			headers["user-agent"] = this.userAgent;
-			headers.cookie = cookie;
+		switch (false) {
+			case !headers.Cookie: // 已有 Cookie，保留原请求头。
+				break;
+			case !headers.cookie: // 已有 cookie，保留原请求头。
+				break;
+			case !headers["User-Agent"]: // 无 Cookie，按原 UA 使用大写名称。
+				headers.Cookie = await this.getHeader();
+				headers["User-Agent"] = this.userAgent;
+				break;
+			case !headers["user-agent"]: // 无 Cookie，按原 UA 使用小写名称。
+				headers.cookie = await this.getHeader();
+				headers["user-agent"] = this.userAgent;
+				break;
 		}
 		return headers;
 	}
