@@ -3,7 +3,7 @@
 
 ## 本地设置
 
-安装 Universal 提供的共用存储 API 后，通过 `https://dualsubs.github.io/settings/` 进入首页，再选择 YouTube 面板。此仓库独立维护正式／开发配置 JSON、各平台的 `/api/YouTube` Mock 和开发 Gist 产物；Universal 不再提供本模块配置。前端、首页内容与图标由 DualSubs.github.io 在线提供，插件模板不 Mock 前端资源。
+安装 Universal 提供的共用存储 API 后，通过 `https://dualsubs.github.io/preferences/` 进入首页，再选择 YouTube 面板。此仓库独立维护正式／开发配置 JSON、各平台的 `/api/YouTube` Mock 和开发 Gist 产物；Universal 不再提供本模块配置。前端、首页内容与图标由 DualSubs.github.io 在线提供，插件模板不 Mock 前端资源。
 
 ## 构建
 
