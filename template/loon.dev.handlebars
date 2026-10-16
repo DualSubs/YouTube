@@ -19,6 +19,7 @@ response if ${url} ~= /^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$/i
 ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ reject-img
 
 [Script]
+http-request ^https:\/\/dualsubs\.github\.io\/api\/(?:get|set|delete)(?:\?.*)?$ requires-body=1, script-path=https://github.com/NSNanoCat/PreferencePanes/releases/download/v1.3.1/api.js, tag=PreferencePanes.API
 # YouTube
 http-request ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/request.dev.bundle.js, tag=🍿️ DualSubs.YouTube.Player.request.json, argument={{{scriptParams}}}
 http-response ^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player(\?.+)?$ requires-body=1, script-path=https://gist.githubusercontent.com/VirgilClyne/069cf057ee7b3d82b35e2dcb59ed481e/raw/response.dev.bundle.js, tag=🍿️ DualSubs.YouTube.Player.response.json, argument={{{scriptParams}}}

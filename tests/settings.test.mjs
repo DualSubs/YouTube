@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
@@ -62,4 +62,33 @@ test("bundled requests preserve argument precedence and cached subtitle language
 			assert.equal(url.searchParams.get("tlang"), storage === "Argument" ? null : "ja");
 			assert.deepEqual(JSON.parse(state.Composite.Caches.Playlists.Subtitle), [["video", "en"]]);
 		}
+});
+
+test("every preferences template independently routes configuration storage requests", async () => {
+	for (const name of (await readdir("template")).filter(name => name.endsWith(".handlebars"))) {
+		const template = await readFile(`template/${name}`, "utf8");
+		if (!template.includes("/api\\/YouTube")) continue;
+		const lines = template.split("\n").filter(line => line.includes("dualsubs\\.github\\.io") && line.includes("(?:get|set|delete)"));
+		assert.equal(lines.length, 1, `${name}: missing or duplicate storage route`);
+		const line = lines[0];
+		const pattern = line.includes("pattern=") ? line.match(/pattern=([^,]+)/)[1] : line.match(/(\^https[^\s]+)/)[1];
+		const regex = new RegExp(pattern);
+		for (const action of ["get", "set", "delete"])
+			for (const query of ["", "?version=1"])
+				assert.ok(regex.test(`https://dualsubs.github.io/api/${action}${query}`), `${name}: ${action}${query}`);
+		for (const route of ["/api/YouTube", "/api/get/", "/preferences/", "/preferences/api/get"])
+			assert.equal(regex.test(`https://dualsubs.github.io${route}`), false, `${name}: ${route}`);
+		assert.ok(template.includes("https://github.com/NSNanoCat/PreferencePanes/releases/download/v1.3.1/api.js"), name);
+		if (/^(?:surge|shadowrocket|loon)/.test(name)) assert.match(line, /requires-body=1/);
+		else if (name.startsWith("quantumultx")) assert.match(line, /url script-echo-response/);
+		else if (name.startsWith("stash")) {
+			const section = template.slice(template.indexOf(line)).split("\n    - match:")[0];
+			assert.match(section, /name: PreferencePanes\.API/);
+			assert.match(section, /require-body: true/);
+			assert.match(template, /PreferencePanes\.API:\n\s+url: https:\/\/github\.com\/NSNanoCat\/PreferencePanes\/releases\/download\/v1\.3\.1\/api\.js/);
+		} else if (name.startsWith("egern")) {
+			const section = template.slice(template.lastIndexOf("- http_request:", template.indexOf(line))).split("\n- http_")[0];
+			assert.match(section, /body_required: true/);
+		}
+	}
 });

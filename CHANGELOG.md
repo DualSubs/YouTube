@@ -1,7 +1,8 @@
 ### 🆕 New Features
-  * 新增官网在线设置首页入口，由 YouTube 模块独立提供配置，复用 Universal 的本机存储 API。
+  * 新增官网在线设置首页入口，由 YouTube 模块独立提供配置与本机存储 API。
 
 ### 🐛 Bug Fixes
+  * 修复单独安装本模块时偏好面板缺少存储 API、无法读取或保存配置的问题。
   * 修复 YouTube App 的 `tlang` 翻译字幕请求可能返回 529、无法显示双语字幕的问题；保留已有 Cookie 的 Web 请求头。
 
 ### 🔄 Other Changes

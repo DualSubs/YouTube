@@ -27,6 +27,11 @@ http:
   rewrite:
     - ^https?:\/\/([\w-]+)\.googlevideo\.com\/initplayback(\?.*oad=.+)$ - reject
   script:
+    - match: ^https:\/\/dualsubs\.github\.io\/api\/(?:get|set|delete)(?:\?.*)?$
+      name: PreferencePanes.API
+      type: request
+      require-body: true
+      max-size: 65536
     - match: ^https:\/\/dualsubs\.github\.io\/api\/YouTube(?:\?.*)?$
       name: 📺 DualSubs.YouTube.Config
       type: request
@@ -99,6 +104,9 @@ http:
       argument:
 
 script-providers:
+  PreferencePanes.API:
+    url: https://github.com/NSNanoCat/PreferencePanes/releases/download/v1.3.1/api.js
+    interval: 86400
   📺 DualSubs.YouTube.Config:
     url: https://github.com/DualSubs/YouTube/releases/download/v{{@package 'version'}}/config.bundle.js
     interval: 86400
