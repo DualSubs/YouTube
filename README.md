@@ -5,6 +5,14 @@
 
 安装并启用本模块后，通过 `https://dualsubs.github.io/preferences/` 进入首页，再选择 YouTube 面板。此仓库独立维护正式／开发配置 JSON、各平台的 `/api/YouTube` Mock、`/api/get`、`/api/set`、`/api/delete` 存储 API 和开发 Gist 产物；Universal 不再提供本模块配置。前端、首页内容与图标由 DualSubs.github.io 在线提供，插件模板不 Mock 前端资源。
 
+## Shadowrocket（实验性）
+
+导入 [`modules/DualSubs.YouTube.srmodule`](modules/DualSubs.YouTube.srmodule)，需要支持 WebView 脚本引擎的 Shadowrocket（2.2.79 或更新版本）。该独立模块使用 v1.6.0 YouTube 脚本及 Universal 合成／翻译脚本；所有处理器均显式设置 `engine=webview`，避免默认引擎缺少 `URL` 等浏览器 API。
+
+在 YouTube 播放器中选择“字幕 → 自动翻译 → 中文（简体）”（或其他目标语言），触发官方字幕合成。Shadowrocket 的响应规则需要同时匹配原始请求的 `tlang` 参数，不能只依赖请求脚本添加的 `subtype`。规则仍兼容 `Official`／`External`，并排除 `Translate`，避免与翻译器重复处理。
+
+此模块使用脚本参数及可选 BoxJS 配置，不包含上方网页设置面板的 API。已在 macOS 上的 Shadowrocket 2.2.92（3445）与 Safari 验证 YouTube 官方模式的英文／简体中文双语字幕；YouTube 原生 App、Music 和独立翻译模式尚未实测。
+
 ## 构建
 
 `arguments-builder.full.config.ts` 是字段定义来源；`release`、`dev` 和 `PreferencePanes` 配置分别选择模块参数和网页字段，保留原有渠道差异。`npm run check:args` 检查参数类型，`npm run dts` 调用公共库的业务类型生成器。
